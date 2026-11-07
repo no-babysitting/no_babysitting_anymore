@@ -5,7 +5,7 @@
     "v": 1,
     "at": "2026-11-06T15:36:07Z"
   },
-  "title": "No Babysitting",
+  "title": "No Babysitting Design System",
   "namespace": "NoBabysitting",
   "libraries": [],
   "sections": {},
@@ -18,8 +18,8 @@
   },
   "lastChange": {
     "by": "Claude",
-    "at": "2026-11-07T09:00:00Z",
+    "at": "2026-11-07T07:23:09Z",
     "via": "Claude Code",
-    "note": "Thêm SourceButton (nút Nguồn, bảng nguồn để người học tự đối chiếu)."
+    "note": "Đổi tên thành No Babysitting Design System. Thêm Logo Blocks (gõ dòng code → chữ khối, bản xếp hai dòng), DurabilityTag và mọi nhãn dùng ô đánh dấu theo hình, NB.sources.bitmap."
   }
 }

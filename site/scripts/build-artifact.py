@@ -30,7 +30,11 @@ for rel in pages:
     if rel == 'index.html':  # entry page: strip the document wrapper, keep head content at the top
         head = re.search(r'<head>(.*?)</head>', html, re.S).group(1)
         head = re.sub(r'<meta charset="utf-8"\s*/?>|<meta name="viewport"[^>]*>', '', head)
-        body = re.search(r'<body[^>]*>(.*)</body>', html, re.S).group(1)
+        # the artifact's name in the gallery: say it is the website, not the design system
+        head = re.sub(r'<title>[^<]*</title>', '<title>No Babysitting Website</title>', head, count=1)
+        # keep everything after <body ...>: Astro may emit page scripts after </body> and even </html>
+        start = html.index('>', html.index('<body')) + 1
+        body = html[start:].replace('</body>', '').replace('</html>', '')
         html = head + '\n<div class="nb">' + body + '</div>\n'
     open(dst, 'w', encoding='utf-8').write(html)
 print(len(pages), 'pages ->', OUT)

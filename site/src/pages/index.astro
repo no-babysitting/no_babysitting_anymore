@@ -5,12 +5,15 @@ import Intro from '../components/scenes/Intro.astro';
 import TwoFlips from '../components/scenes/TwoFlips.astro';
 import Journey from '../components/scenes/Journey.astro';
 import Harness from '../components/scenes/Harness.astro';
+import Finale from '../components/scenes/Finale.astro';
 ---
 <Base>
   <Hud />
   <Intro />
 
-  <section class="wrap manifesto" aria-label="Tuyên ngôn">
+  <section class="manifesto-wrap" aria-label="Tuyên ngôn">
+  <canvas class="nb-canvas terrain" id="man-cv" aria-hidden="true"></canvas>
+  <div class="wrap manifesto">
     <span class="nb-micro" data-reveal="up">Vì sao có trang này</span>
     <p class="nb-q big" data-reveal="fill">Claude không cần bạn canh từng bước. Nó cần một bản brief rõ, một bộ hướng dẫn gọn, quyền đặt đúng chỗ và một cách tự kiểm chứng. Phần còn lại, nó tự làm.</p>
     <hr class="nb-rule" data-reveal="rule" />
@@ -20,28 +23,40 @@ import Harness from '../components/scenes/Harness.astro';
       <div data-reveal="up"><p class="nb-cond n" data-reveal="count">118</p><span class="nb-micro">phút tự học, khoảng</span></div>
       <div data-reveal="up"><p class="nb-cond n"><span data-reveal="count">350</span>+</p><span class="nb-micro">mục Library, có nguồn</span></div>
     </div>
+  </div>
   </section>
 
   <div class="wrap"><TwoFlips /></div>
   <Journey />
   <div class="wrap"><Harness /></div>
 
-  <section class="wrap cta" aria-labelledby="cta-h">
-    <span class="nb-micro" data-reveal="up">Bắt đầu</span>
-    <h2 class="nb-q big" id="cta-h" data-reveal="words">Hôm nay ta biến đồng xu thành một quy trình.</h2>
-    <p class="go" data-reveal="up"><a class="nb-btn is-solid" href="/c00/">Bắt đầu · Mở đầu</a><a class="nb-btn" href="/library/">Library</a></p>
-    <p class="fine nb-micro" data-reveal="up">No Babysitting là dự án độc lập, không phải trang chính thức của Anthropic.</p>
-  </section>
+  <Finale />
+  <p class="wrap fine nb-micro">No Babysitting là dự án độc lập, không phải trang chính thức của Anthropic.</p>
 </Base>
 
 <style>
-  .manifesto { display: grid; gap: 28px; padding-block: 120px 96px; }
+  .manifesto-wrap { position: relative; overflow: hidden; }
+  .terrain { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; opacity: .5; pointer-events: none; }
+  .manifesto { position: relative; display: grid; gap: 28px; padding-block: 120px 96px; }
+  .facts > div { background: color-mix(in srgb, var(--bg) 70%, transparent); }
+  .fine { color: var(--fg-subtle); padding-block: 20px 40px; margin: 0; }
   .big { margin: 0; font-size: clamp(30px, 4.6vw, 64px); line-height: 1.16; max-width: 22ch; }
   .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .facts > div { display: grid; gap: 6px; }
   .n { margin: 0; font-size: clamp(64px, 9vw, 128px); line-height: .85; color: var(--fg); font-variant-numeric: tabular-nums; }
-  .cta { display: grid; gap: 22px; padding-block: 140px 120px; }
-  .go { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
-  .fine { color: var(--fg-subtle); }
   @media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr; } .manifesto { padding-block: 72px; } }
 </style>
+
+<script>
+  /* manifesto: a low-key ASCII terrain (ChapterOpener's source) rises out of noise as the statement is read */
+  function start(w: any) {
+    const NB = w.NoBabysitting, gsap = w.gsap, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const A = NB.ascii(document.getElementById('man-cv'), {
+      cell: [9, 16], order: reduce ? 1 : 0, sweep: 0.3, noiseFill: 0.25, ambient: true, flicker: 0.006, pointer: false,
+      ramp: ' .·:/\\+*', tone: 'fg-muted', frontColor: 'fg', source: NB.sources.terrain({ scale: 0.055, threshold: 0.56, slope: 0.45, seed: 7 }),
+    });
+    if (reduce || !gsap) return;
+    gsap.to(A.state, { order: 1, ease: 'none', onUpdate: A.redraw, scrollTrigger: { trigger: '.manifesto-wrap', start: 'top 70%', end: 'bottom 60%', scrub: true } });
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>
