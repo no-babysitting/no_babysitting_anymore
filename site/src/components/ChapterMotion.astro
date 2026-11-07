@@ -1,0 +1,37 @@
+---
+/* Chapter choreography (ScrollDriver, motion.md):
+   opener   on exit the giant number zooms past the camera and the title lifts away (scrub)
+   question full screen; words rise (M5 via data-reveal="words"), then dim as it scrolls out (scrub)
+   beats    rows rise in batches; a sticky progress rail marks the beat in view */
+---
+<script>
+  function start(w: any) {
+    const gsap = w.gsap, ST = w.ScrollTrigger;
+    if (!gsap || w.NoBabysitting.reduce()) return;
+    const op = document.querySelector<HTMLElement>('[data-ch-opener] section');
+    if (op) {
+      const idx = op.querySelector('.idx'), ttl = op.querySelector('.ttl'), gh = op.querySelector('.gh'), cv = op.querySelector('canvas');
+      /* exit, not pin: the number sinks below the frame edge and fades while the title lifts away;
+         it never grows over the title (docs/09 §4, D6) */
+      gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: op, start: 'top top+=48', end: 'bottom top+=48', scrub: 0.5 } })
+        .to(idx, { yPercent: 40, autoAlpha: 0 }, 0)
+        .to(ttl, { y: -80, autoAlpha: 0 }, 0.15)
+        .to(gh, { xPercent: -30 }, 0)
+        .to(cv, { opacity: 0.25 }, 0);
+    }
+    document.querySelectorAll<HTMLElement>('[data-ask]').forEach((el) => {
+      gsap.to(el.querySelector('.q'), { opacity: 0.22, ease: 'none', scrollTrigger: { trigger: el, start: 'center 35%', end: 'bottom top', scrub: true } });
+    });
+    const rows = gsap.utils.toArray<HTMLElement>('[data-beats] > li'), ticks = gsap.utils.toArray<HTMLElement>('[data-beat-prog] li');
+    rows.forEach((r, i) => ST.create({ trigger: r, start: 'top 60%', end: 'bottom 60%', onToggle: (s: any) => {
+      if (!s.isActive) return; ticks.forEach((t, k) => { t.classList.toggle('on', k <= i); t.classList.toggle('cur', k === i); });
+    } }));
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>
+
+<style is:global>
+  /* the opener fills the screen under the HUD so the pinned zoom has a full frame */
+  [data-ch-opener] .ds-ChapterOpener .op { height: calc(100svh - var(--hud-height) - 32px); min-height: 520px; }
+  [data-ch-opener] .ds-ChapterOpener .idx { font-size: clamp(220px, 40vw, 520px); bottom: -9%; }
+</style>

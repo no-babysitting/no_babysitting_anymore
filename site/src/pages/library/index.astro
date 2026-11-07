@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hud from '../../components/Hud.astro';
+import FilterBar from '../../components/FilterBar.astro';
+---
+<Base title="Library · No Babysitting">
+  <Hud />
+  <main class="wrap lib">
+    <div class="head">
+      <span class="nb-micro"><span class="nb-sq"></span>Library · khoảng 350–450 mục sau lần ingest đầu (M1)</span>
+      <h1 class="nb-wide">Library</h1>
+      <p>Mọi best practice ở mức bài viết, có nguồn, cấp độ và nhãn độ bền. Bản này dùng 14 mục mẫu.</p>
+    </div>
+    <FilterBar />
+  </main>
+</Base>
+<style>
+  .lib { display: grid; gap: 32px; padding-block: 56px 96px; }
+  .head { display: grid; gap: 10px; }
+  .head h1 { margin: 0; font-size: clamp(32px, 6vw, 72px); }
+  .head p { margin: 0; color: var(--fg-muted); max-width: 60ch; }
+</style>

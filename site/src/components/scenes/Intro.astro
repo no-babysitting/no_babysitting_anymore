@@ -1,0 +1,102 @@
+---
+/* Scene 1 · Mở màn. A white line of code is typed over a field of ASCII noise; scrolling compiles it:
+   the noise converges left to right into the Blocks logo (M11, head of the trail in fg, settled glyphs accent),
+   then the crisp mark settles over it and the promise rises (M5). Pinned for 220% of the viewport. */
+---
+<section class="intro" id="intro" aria-labelledby="intro-h">
+  <div class="stage" id="intro-stage">
+    <canvas class="nb-canvas cv" id="intro-cv" aria-hidden="true"></canvas>
+    <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>NO BABYSITTING · AN UNOFFICIAL GUIDE</span>
+    <span class="nb-corner tr nb-micro"><b id="intro-clk" class="nb-tabular">--:--:--</b></span>
+    <span class="nb-corner bl nb-micro"><span class="long">Dự án cộng đồng độc lập · không phải trang chính thức của Anthropic</span><span class="short">Dự án độc lập · không chính thức</span></span>
+    <span class="nb-corner br nb-micro" id="intro-cue"><span class="long">cuộn để biên dịch ↓</span><span class="short">cuộn ↓</span></span>
+    <div class="code" id="intro-code" aria-hidden="true"><span class="t" id="intro-t"></span><span class="caret">▍</span></div>
+    <div class="mark" id="intro-mark" data-logo-lg></div>
+    <div class="tag">
+      <p class="nb-q l1" id="intro-l1">Từ vibe đến agentic.</p>
+      <p class="l2" id="intro-l2">Giao việc cho Claude như giao cho một đồng nghiệp giỏi, rồi yên tâm làm việc khác.</p>
+    </div>
+    <h1 class="nb-sr" id="intro-h">No babysitting</h1>
+  </div>
+</section>
+
+<style>
+  .intro { position: relative; }
+  .stage { position: relative; height: calc(100svh - var(--hud-height)); min-height: 520px; overflow: hidden; background: var(--bg); }
+  .cv { position: absolute; inset: 0; }
+  .code { position: absolute; left: 0; top: 0; white-space: nowrap; font: 500 16px/1 var(--font-mono); color: var(--fg); pointer-events: none; }
+  .caret { color: var(--fg); }
+  .mark { position: absolute; color: var(--accent); }
+  .mark :global(svg) { display: block; width: 100%; height: auto; }
+  .tag { position: absolute; left: 50%; bottom: 9%; transform: translateX(-50%); width: min(92%, 860px); text-align: center; display: grid; gap: 10px; }
+  .l1 { margin: 0; font-size: clamp(26px, 3.6vw, 44px); color: var(--fg); }
+  .l2 { margin: 0 auto; font-size: clamp(15px, 1.4vw, 18px); line-height: 1.5; color: var(--fg-muted); max-width: 52ch; }
+  .nb-corner { z-index: 4; }
+  .stage .nb-corner { background: transparent; }
+  .short { display: none; }
+  @media (max-width: 520px) { .stage .nb-corner.bl, .stage .nb-corner.br { display: block; } .long { display: none; } .short { display: inline; } }
+</style>
+
+<script>
+  function start(w: any) {
+    const NB = w.NoBabysitting, gsap = w.gsap, ST = w.ScrollTrigger;
+    const reduce = NB.reduce();
+    const $ = (id: string) => document.getElementById(id)!;
+    const caret = document.querySelector<HTMLElement>('#intro-code .caret')!;
+    const stage = $('intro-stage'), cv = $('intro-cv') as HTMLCanvasElement, code = $('intro-code'), t = $('intro-t'), mark = $('intro-mark');
+    const small = innerWidth < 640;
+    /* tall screens get the stacked lockup so the compiled mark is large enough to read */
+    const L = small ? NB.LOGO.st : NB.LOGO.lg, TEXT = 'No babysitting', FILL = small ? 0.9 : 0.86, VFILL = small ? 0.4 : 0.34, CY = 0.42;
+    NB.clock($('intro-clk'));
+    mark.innerHTML = NB.logoSVG(L);
+    const A = NB.ascii(cv, {
+      /* phones: cells close to one logo pixel, otherwise the letters break into noise */
+      host: stage, cell: small ? [6, 10] : [9, 16], font: small ? '600 9px "JetBrains Mono", monospace' : undefined,
+      ramp: ' .:-=+*#%@', noise: '/\\|<>{}[]~^!?;:.', order: reduce ? 1 : 0, sweep: 0.62, noiseFill: 0.4, noiseAlpha: 0.5,
+      /* quiet field: no noise on the words, a faint ring around them, slow breathing at rest (docs/09 §1–2) */
+      breathe: 0.03, calm: () => stage.querySelectorAll('.nb-corner, #intro-code, .tag'), tone: 'accent', frontColor: 'fg', lensColor: 'fg', lensPx: 110,
+      source: NB.sources.bitmap(L, { fill: FILL, vfill: VFILL, cy: CY }),
+    });
+    /* geometry shared by the ASCII logo, the crisp mark and the code line */
+    function place() {
+      const W = stage.clientWidth, H = stage.clientHeight;
+      const px = Math.min((W * FILL) / L.w, (H * VFILL) / L.h), w = L.w * px, h = L.h * px;
+      const left = (W - w) / 2, top = H * CY - h / 2;
+      Object.assign(mark.style, { width: w + 'px', left: left + 'px', top: top + 'px' });
+      const fs = Math.min(w / (TEXT.length * 0.6), W * 0.92 / (TEXT.length * 0.6));
+      Object.assign(code.style, { fontSize: fs + 'px', left: (W - fs * 0.6 * TEXT.length) / 2 + 'px', top: top + h / 2 - fs * 0.5 + 'px' });
+    }
+    place(); addEventListener('resize', place);
+    if (reduce || !gsap) { t.textContent = TEXT; code.style.display = 'none'; return; }
+
+    gsap.set(mark, { autoAlpha: 0 });
+    gsap.set(['#intro-l1', '#intro-l2'], { autoAlpha: 0, y: 24 });
+    /* load: the line is typed, the caret blinks three times (M7) */
+    const o = { n: 0 };
+    gsap.timeline({ delay: 0.3 })
+      .to(o, { n: TEXT.length, duration: TEXT.length * 0.06, ease: `steps(${TEXT.length})`, onUpdate: () => { t.textContent = TEXT.slice(0, o.n); } })
+      .to('#intro-code .caret', { autoAlpha: 0, duration: 0.35, repeat: 5, yoyo: true, ease: 'steps(1)' });
+
+    /* scroll: compile */
+    const S = A.state;
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: { trigger: '#intro', start: 'top top+=' + 48, end: '+=220%', pin: true, scrub: 0.6, anticipatePin: 1 },
+    });
+    tl.to(S, { order: 1, duration: 0.62, onUpdate: () => {
+        A.redraw();
+        const front = Math.max(0, Math.min(1, (S.order - (small ? 0.1 : 0.19)) / 0.62));
+        code.style.clipPath = `inset(0 0 0 ${front * 100}%)`;
+        caret.style.display = S.order > 0.02 ? 'none' : '';
+      } }, 0)
+      .to(S, { noiseFill: 0.08, duration: 0.4, onUpdate: A.redraw }, 0.3)
+      .to('#intro-cue', { autoAlpha: 0, duration: 0.05 }, 0)
+      .to(mark, { autoAlpha: 1, duration: 0.1 }, 0.66)
+      .to(cv, { opacity: 0.32, duration: 0.14 }, 0.66)
+      .to('#intro-l1', { autoAlpha: 1, y: 0, duration: 0.12, ease: 'power2.out' }, 0.74)
+      .to('#intro-l2', { autoAlpha: 1, y: 0, duration: 0.12, ease: 'power2.out' }, 0.82)
+      .to({}, { duration: 0.1 });
+    ST.addEventListener('refresh', place);
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>

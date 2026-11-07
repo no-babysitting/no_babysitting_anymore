@@ -19,14 +19,14 @@
   ol{list-style:none;margin:0;padding:8px 0;font:400 13.5px/1.45 var(--font-mono)}
   ol li{display:grid;grid-template-columns:3ch 2ch 11ch 1fr;gap:10px;padding:6px 18px;align-items:baseline}
   .n{color:var(--fg-subtle)} .ic{color:var(--fg-muted)}
-  .verb{font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:11.5px;color:var(--fg-muted)}
+  .verb{font-weight:600;letter-spacing:.04em;font-size:12.5px;color:var(--fg-muted)}
   .obj{color:var(--fg);min-width:0;overflow-wrap:anywhere}
   li.ask{background:var(--bg-raised);border-top:1px dashed var(--warn);border-bottom:1px dashed var(--warn)}
   li.ask .ic,li.ask .verb{color:var(--warn)}
   li.check .ic,li.check .verb{color:var(--signal)}
   .stamp{color:var(--warn);font-weight:600;letter-spacing:.08em}
   .res{margin:0 18px 12px;padding:10px 12px;border:1px solid var(--signal);font:500 13px/1.45 var(--font-mono);color:var(--fg)}
-  .res b{color:var(--signal);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:11.5px;margin-right:8px}
+  .res b{color:var(--signal);font-weight:600;letter-spacing:.04em;font-size:12.5px;margin-right:8px}
   .input{display:flex;align-items:center;gap:12px;border-top:1px solid var(--control);padding:12px 18px;font:400 13.5px/1 var(--font-mono);color:var(--fg-subtle)}
   .input .p{flex:1}
   .blk{display:inline-block;width:.6em;height:1.1em;background:var(--accent);vertical-align:-2px}
@@ -84,9 +84,9 @@
     document.querySelectorAll('#log > li').forEach(function (li, i) {
       var at = 0.3 + i * 0.32 + (i > 3 ? 0.9 : 0);
       tl.from(li, { autoAlpha: 0, y: 6, duration: 0.3, ease: 'power3.out' }, at)
-        .to(li.querySelector('.verb'), { duration: 0.45, scrambleText: { text: verbs[i], chars: 'ĐỌCKIỂMTRAWEB', speed: 0.6 } }, at);
+        .to(li.querySelector('.verb'), { duration: 0.45, scrambleText: { text: verbs[i], chars: NB.SCRAMBLE, speed: 0.6 } }, at);
       if (i === 3) tl.call(function () { state('chờ quyền', 'asking'); }, null, at + 0.2)
-        .call(function () { NB.decode(stamp, '[ đã cho phép ]', 0.4); state('đang chạy', 'working'); }, null, at + 1.0);
+        .call(function () { NB.say(stamp, '[ đã cho phép ]'); state('đang chạy', 'working'); }, null, at + 1.0);
     });
     tl.from('#res', { autoAlpha: 0, y: 6, duration: 0.35, ease: 'power3.out' }, '+=0.15');
   }

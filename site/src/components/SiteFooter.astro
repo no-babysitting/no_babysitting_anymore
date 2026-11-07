@@ -1,0 +1,48 @@
+---
+/* Footer on every page: feedback (docs/08 · D11) and the project's standing (D7, D12). */
+import { SITE } from '../config';
+const { title = '' } = Astro.props as { title?: string };
+const page = new URL(Astro.url.pathname, Astro.site).href;
+const issue = `${SITE.repo}/issues/new?title=${encodeURIComponent('Góp ý: ' + title)}&body=${encodeURIComponent(`Trang: ${page}\n\nĐiều mình muốn góp ý:\n\n`)}`;
+---
+<footer class="sf" aria-label="Thông tin trang">
+  <div class="wrap grid">
+    <section aria-labelledby="sf-fb">
+      <h2 class="nb-micro" id="sf-fb">Phản hồi</h2>
+      {SITE.goatcounter ? (
+        <div class="ask" data-fb>
+          <p>Trang này có giúp được bạn không?</p>
+          <div class="btns"><button class="nb-btn" type="button" data-v="yes">Có</button><button class="nb-btn" type="button" data-v="no">Chưa</button></div>
+          <p class="nb-micro thanks" hidden>Cảm ơn bạn. Phản hồi được dùng để chọn việc cải tiến cho đợt tới.</p>
+        </div>
+      ) : <p>Đây là bản beta, được cải tiến theo từng đợt. Góp ý nào cũng được đọc.</p>}
+      <p><a class="nb-btn" href={issue} target="_blank" rel="noopener">Góp ý chi tiết trên GitHub ↗</a></p>
+    </section>
+    <section aria-labelledby="sf-about">
+      <h2 class="nb-micro" id="sf-about">Về dự án</h2>
+      <p><b>No Babysitting</b> · <span lang="en">{SITE.descriptor}</span>.</p>
+      <p>Dự án cộng đồng độc lập, <b>không liên kết, không được tài trợ hay xác nhận bởi Anthropic</b>. Claude và Claude Code là thương hiệu của Anthropic.</p>
+      <p class="lic">Code: <a href={`${SITE.repo}/blob/main/LICENSE`}>MIT</a> · Nội dung: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" lang="en">CC BY-NC-SA 4.0</a> · Một phần tổng hợp từ <a href={SITE.upstream}>claude-code-best-practice</a> (MIT) · <a href={SITE.repo}>Mã nguồn</a></p>
+    </section>
+  </div>
+</footer>
+<style>
+  .sf { border-top: 1px solid var(--control); background: var(--bg); color: var(--fg-muted); position: relative; z-index: 5; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px 48px; padding-block: 40px 56px; }
+  h2 { margin: 0 0 12px; color: var(--fg-subtle); }
+  p { margin: 0 0 10px; line-height: 1.6; font-size: 15px; max-width: 64ch; }
+  b { color: var(--fg); font-weight: 600; }
+  a:not(.nb-btn) { color: var(--fg); text-underline-offset: 3px; }
+  .lic { font-size: 14px; color: var(--fg-subtle); }
+  .btns { display: flex; gap: 8px; margin: 4px 0 12px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; padding-block: 32px 44px; } }
+</style>
+<script>
+  /* one anonymous event per answer, only when GoatCounter is configured (no cookies, no IP stored) */
+  document.querySelectorAll<HTMLElement>('[data-fb]').forEach((box) => box.querySelectorAll<HTMLButtonElement>('[data-v]').forEach((b) => b.addEventListener('click', () => {
+    const gc = (window as any).goatcounter, yes = b.dataset.v === 'yes';
+    if (gc && gc.count) gc.count({ path: `feedback-${yes ? 'yes' : 'no'}${location.pathname}`, title: yes ? 'Có ích' : 'Chưa có ích', event: true });
+    (box.querySelector('.btns') as HTMLElement).hidden = true; (box.querySelector('.thanks') as HTMLElement).hidden = false;
+  })));
+</script>

@@ -1,0 +1,36 @@
+# Every pull request: the same build and checks as production, without publishing.
+# Claude merges a PR only when this is green (docs/08-kaizen-go-live.md · D14).
+name: Check site
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  NB_BASE: /no_babysitting_anymore/
+  NB_SITE: https://no-babysitting.github.io
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - name: Install Chromium for the checks
+        run: |
+          npm i --no-save playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: Checks (links, JS errors, overflow, reduced motion, idle cost)
+        run: node scripts/check.cjs
+      - name: Contrast of the design tokens
+        working-directory: .
+        run: python3 tools/contrast.py design-system/tokens.json --fail

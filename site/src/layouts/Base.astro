@@ -1,0 +1,59 @@
+---
+import SiteFooter from '../components/SiteFooter.astro';
+import { SITE } from '../config';
+import { url } from '../lib/url';
+const { title = 'No Babysitting', description = SITE.descriptionVi } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(url('og.png'), Astro.site).href;
+---
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="theme-color" content="#14120f" />
+  <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={`${SITE.name} · ${SITE.descriptor}`} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content="vi_VN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" />
+  <link rel="stylesheet" href={url('ds/tokens.css')} />
+  <link rel="stylesheet" href={url('ds/bundle.css')} />
+  <script is:inline>
+    /* motion mode before first paint. Off when the OS asks for reduced motion or the visitor switched it off
+       in the HUD (localStorage 'nb-motion'); falls back to static if the motion core never reports in */
+    (function () {
+      var off = false; try { off = localStorage.getItem('nb-motion') === 'off'; } catch (e) { /* storage blocked */ }
+      if (off || matchMedia('(prefers-reduced-motion: reduce)').matches) { document.documentElement.classList.add('motion-off'); return; }
+      document.documentElement.classList.add('motion');
+      setTimeout(function () { if (!window.gsap) document.documentElement.classList.remove('motion'); }, 4000);
+    })();
+  </script>
+  <script is:inline src={url('ds/bundle.js')}></script>
+  {SITE.goatcounter && <script is:inline async data-goatcounter={`https://${SITE.goatcounter}.goatcounter.com/count`} src="https://gc.zgo.at/count.js"></script>}
+  <style is:global>
+    :root { color-scheme: dark; } :root[data-theme='light'] { color-scheme: light; }
+    html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-text); }
+    .wrap { max-width: var(--page-max); margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+    html.motion:not(.motion-ready) [data-reveal='up'], html.motion:not(.motion-ready) [data-reveal='rule'] { visibility: hidden; }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    ::selection { background: var(--fg); color: var(--bg); }
+  </style>
+</head>
+<body class="nb"><slot />
+<SiteFooter title={title} />
+<script>
+  import '../scripts/motion';
+</script>
+</body>
+</html>

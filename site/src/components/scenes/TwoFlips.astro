@@ -1,0 +1,102 @@
+---
+/* Scene · Hai lần tung đồng xu (c00 b3, content from the script). Pinned; scrolling runs the same request
+   twice on both sides. Vibe: the coin lands differently (rotationY), the two reports disagree.
+   Agentic: same coin, same report, verified. Ends on the chapter's thesis. */
+const runs = {
+  vibe: [['3 trang', 'Giá lấy từ kỳ cũ', 'Không có biểu đồ'], ['7 trang', 'Cấu trúc khác', 'Số liệu lấy từ nguồn khác']],
+  agentic: [['Đúng mẫu tuần trước', 'Số liệu đã đối chiếu', 'Có slide, tự chạy thứ Hai'], ['Đúng mẫu tuần trước', 'Số liệu đã đối chiếu', 'Có slide, tự chạy thứ Hai']],
+};
+---
+<section class="flips" id="flips" aria-labelledby="flips-h">
+  <div class="pin" id="flips-pin">
+    <header class="hd">
+      <span class="nb-micro"><span class="nb-sq"></span>Mở đầu · hai lần tung đồng xu</span>
+      <h2 class="nb-sr" id="flips-h">Cùng một yêu cầu, chạy hai lần</h2>
+      <p class="req"><span class="pr" aria-hidden="true">›</span><span id="flips-req">Làm báo cáo thị trường tuần này</span><span class="caret" aria-hidden="true">▍</span></p>
+    </header>
+    <div class="cols">
+      {(['vibe', 'agentic'] as const).map((k) => (
+        <div class={`col ${k}`}>
+          <div class="ch">
+            <h3 class="nb-wide">{k === 'vibe' ? 'Vibe' : 'Agentic'}</h3>
+            <span class="nb-micro">{k === 'vibe' ? 'giao tuỳ hứng, rồi ngồi trông' : 'giao trong một harness'}</span>
+          </div>
+          {runs[k].map((items, i) => (<>
+            {i === 1 && <div class="coin" aria-hidden="true"><span class="face front">{k === 'vibe' ? '≠' : '='}</span></div>}
+            <article class={`run r${i + 1}`}>
+              <span class="nb-micro">Lần {i + 1}</span>
+              <ul>{items.map((t) => <li>{t}</li>)}</ul>
+            </article>
+          </>))}
+          <p class="verdict">{k === 'vibe' ? <span class="nb-tag is-warn">Mỗi lần một kiểu</span> : <span class="nb-tag is-signal">Lặp lại được</span>}</p>
+        </div>
+      ))}
+    </div>
+    <p class="moral nb-q" id="flips-moral">Model không đổi. Thứ thay đổi là <em>harness</em> bạn dựng quanh nó.</p>
+  </div>
+</section>
+
+<style>
+  .flips { position: relative; overflow-x: clip; }
+  .pin { min-height: calc(100svh - var(--hud-height)); display: grid; grid-template-rows: auto 1fr auto; gap: 22px; padding-block: 36px 32px; }
+  .hd { display: grid; gap: 14px; }
+  .req { margin: 0; font: 500 clamp(18px, 2.4vw, 30px)/1.2 var(--font-mono); color: var(--fg); display: flex; gap: .5em; align-items: baseline; }
+  .pr { color: var(--fg-subtle); } .caret { color: var(--fg); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--control); border-bottom: 1px solid var(--control); }
+  .col { display: grid; align-content: start; gap: 14px; padding: 20px 20px 22px 0; }
+  .col + .col { border-left: 1px solid var(--control); padding-left: 20px; }
+  .ch { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .ch h3 { margin: 0; font-size: clamp(26px, 4vw, 52px); }
+  .vibe .ch h3 { color: var(--fg-muted); }
+  .run { border: 1px solid var(--control); padding: 12px 14px; display: grid; gap: 8px; background: var(--bg-raised); }
+  .run ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 15.5px; }
+  .run li::before { content: '— '; color: var(--fg-subtle); }
+  .agentic .run li::before { content: '✓ '; color: var(--signal); }
+  .coin { justify-self: center; perspective: 600px; }
+  .face { display: grid; place-items: center; width: 54px; height: 54px; border: 1px solid var(--fg); border-radius: 50%; font: 600 26px/1 var(--font-mono); color: var(--fg); backface-visibility: hidden; }
+  .vibe .face { border-color: var(--fg-muted); color: var(--fg-muted); }
+  .moral { margin: 0; font-size: clamp(22px, 3vw, 38px); max-width: 30ch; }
+  .moral em { font-style: italic; }
+  @media (max-width: 720px) {
+    .pin { gap: 14px; padding-block: 18px 16px; }
+    .req { font-size: 17px; }
+    .col { gap: 9px; padding: 12px 8px 14px 0; } .col + .col { padding-left: 8px; }
+    .ch .nb-micro { display: none; }
+    .ch h3 { font-size: 24px; }
+    .run { padding: 8px 9px; gap: 5px; }
+    .run ul { display: block; font-size: 14px; line-height: 1.4; }
+    .run li { display: inline; } .run li + li::before, .agentic .run li + li::before { content: ' · '; color: var(--fg-subtle); }
+    .run li:first-child::before { content: none; } .agentic .run .nb-micro::after { content: ' ✓'; color: var(--signal); }
+    .face { width: 34px; height: 34px; font-size: 17px; }
+    .moral { font-size: 21px; }
+  }
+</style>
+
+<script>
+  function start(w: any) {
+    const gsap = w.gsap;
+    if (!gsap || w.NoBabysitting.reduce()) return;
+    const req = document.getElementById('flips-req')!, TEXT = req.textContent!, o = { n: 0 };
+    const q = (s: string) => gsap.utils.toArray(`#flips ${s}`);
+    /* the two columns are named from the first frame, so the scene never opens on empty boxes */
+    gsap.set(q('.run, .verdict'), { autoAlpha: 0, y: 26 });
+    gsap.set(q('.coin'), { autoAlpha: 0 });
+    gsap.set('#flips-moral', { autoAlpha: 0, y: 20 });
+    req.textContent = '';
+    const tl = gsap.timeline({
+      defaults: { ease: 'power2.out', duration: 0.6 },
+      scrollTrigger: { trigger: '#flips', start: 'top top+=48', end: '+=230%', pin: '#flips-pin', scrub: 0.7 },
+    });
+    tl.to(o, { n: TEXT.length, duration: 0.7, ease: `steps(${TEXT.length})`, onUpdate: () => { req.textContent = TEXT.slice(0, o.n); } })
+      .to(q('.r1'), { autoAlpha: 1, y: 0, stagger: 0.15 }, 0.35)
+      .to(q('.coin'), { autoAlpha: 1 })
+      .fromTo(q('.vibe .face'), { rotationY: 0 }, { rotationY: 1080, duration: 1.4, ease: 'power3.inOut' }, '<')
+      .fromTo(q('.agentic .face'), { rotationY: 0 }, { rotationY: 720, duration: 1.4, ease: 'power3.inOut' }, '<')
+      .to(q('.r2'), { autoAlpha: 1, y: 0, stagger: 0.15 })
+      .fromTo(q('.vibe .r2'), { x: 0 }, { x: 10, duration: 0.12, repeat: 3, yoyo: true, ease: 'steps(1)' }, '<0.4')
+      .to(q('.verdict'), { autoAlpha: 1, y: 0, stagger: 0.12 })
+      .to('#flips-moral', { autoAlpha: 1, y: 0, duration: 0.8 })
+      .to({}, { duration: 0.6 });
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>

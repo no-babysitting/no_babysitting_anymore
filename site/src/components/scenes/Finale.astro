@@ -1,0 +1,56 @@
+---
+import { url } from '../../lib/url';
+/* Scene · Finale. The only full-colour moment on the home page (design system §12: full colour only at the
+   opening and the finale): CinematicAscii's dusk city (NB.sources.scene, own artwork) converges out of noise as you
+   scroll (M11, pinned), the counter reaches 12 / 12, The Colleague turns to verified, and the call to start rises. */
+---
+<section class="fin" id="finale" aria-labelledby="finale-h">
+  <div class="stage" id="finale-stage">
+    <canvas class="nb-canvas cv" id="finale-cv" aria-hidden="true"></canvas>
+    <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>FINALE · FULL-COLOR</span>
+    <span class="nb-corner tr nb-micro">Đồng nghiệp <b id="finale-col">[•_•]</b></span>
+    <span class="nb-corner bl nb-micro">Phần <b id="finale-n" class="nb-tabular">00</b> / 12</span>
+    <div class="ct" id="finale-ct">
+      <span class="nb-micro">Bắt đầu</span>
+      <h2 class="nb-q" id="finale-h">Hôm nay ta biến đồng xu thành một quy trình.</h2>
+      <p class="go"><a class="nb-btn is-solid" href={url('c02/')}>Đọc chương 02 · bản đầy đủ</a><a class="nb-btn" href={url('c00/')}>Mở đầu</a><a class="nb-btn" href={url('library/')}>Library</a></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fin { position: relative; border-top: 1px solid var(--control); }
+  .stage { position: relative; height: calc(100svh - var(--hud-height)); min-height: 560px; overflow: hidden; background: var(--bg); }
+  .cv { position: absolute; inset: 0; }
+  .stage .nb-corner { background: color-mix(in srgb, var(--bg) 80%, transparent); }
+  .ct { position: absolute; left: max(16px, 4vw); right: max(16px, 4vw); bottom: 9%; display: grid; gap: 16px; z-index: 4; }
+  /* the words sit on a plate of background, never straight on dense glyphs (docs/09 §2) */
+  .ct::before { content: ''; position: absolute; z-index: -1; left: calc(-1 * max(16px, 4vw)); right: calc(-1 * max(16px, 4vw)); top: -18vh; bottom: -12vh; background: linear-gradient(to top, var(--bg) 58%, color-mix(in srgb, var(--bg) 70%, transparent) 78%, transparent); pointer-events: none; }
+  .ct h2 { margin: 0; font-size: clamp(30px, 5vw, 68px); max-width: 18ch; color: var(--fg); text-shadow: 0 2px 24px var(--bg); }
+  .go { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
+  .go .nb-btn:not(.is-solid) { background: var(--bg); }
+</style>
+
+<script>
+  function start(w: any) {
+    const NB = w.NoBabysitting, gsap = w.gsap;
+    const reduce = NB.reduce(), small = innerWidth < 640;
+    const col = NB.colleague(document.getElementById('finale-col'), 'working'), n = document.getElementById('finale-n')!;
+    const A = NB.ascii(document.getElementById('finale-cv'), {
+      host: document.getElementById('finale-stage'), cell: small ? [6, 11] : [8, 14], mode: 'color', order: reduce ? 1 : 0, sweep: 0.4, noiseFill: 0.4, breathe: 0.02,
+      font: small ? '500 9.5px "JetBrains Mono", monospace' : '500 12px "JetBrains Mono", ui-monospace, monospace', lensColor: 'fg', lensPx: 120,
+      source: NB.sources.scene({ sunX: small ? 0.6 : 0.68 }),
+    });
+    if (reduce || !gsap) { n.textContent = '12'; col.set('verified', true); return; }
+    gsap.set('#finale-ct', { autoAlpha: 0, y: 40 });
+    const S = A.state, c = { v: 0 };
+    gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: '#finale', start: 'top top+=48', end: '+=160%', pin: true, scrub: 0.6,
+        onUpdate: (s: any) => col.set(s.progress > 0.62 ? 'verified' : 'working') } })
+      .to(S, { order: 1, noiseFill: 0.05, duration: 0.6, onUpdate: A.redraw }, 0)
+      .to(c, { v: 12, duration: 0.55, onUpdate: () => { n.textContent = String(Math.round(c.v)).padStart(2, '0'); } }, 0.05)
+      .to('#finale-ct', { autoAlpha: 1, y: 0, duration: 0.18, ease: 'power2.out' }, 0.66)
+      .to({}, { duration: 0.16 });
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>

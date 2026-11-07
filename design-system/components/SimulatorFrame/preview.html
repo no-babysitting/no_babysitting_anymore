@@ -1,0 +1,147 @@
+<!-- @dsCard group="Simulator" height=860 subtitle="SimulatorFrame · khung chung cho S1–S11 · tiêu đề, mục tiêu, khu thao tác, phản hồi, Kiểm tra / Làm lại · chờ ▍ → đang làm → hoàn tất · ví dụ S4 Linter" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>SimulatorFrame</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .sim{padding:0;display:grid}
+  .sim > header{display:grid;grid-template-columns:auto 1fr auto;gap:6px 16px;align-items:end;padding:44px 18px 14px;border-bottom:1px solid var(--control)}
+  .sid{margin:0;font-size:72px;color:var(--fg)}
+  .sim h2{margin:0;font:600 20px/1.3 var(--font-text);color:var(--fg)}
+  .goal{margin:4px 0 0;font-size:14.5px;line-height:1.5;color:var(--fg-muted);max-width:60ch}
+  .st{font:600 12.5px/1 var(--font-mono);padding:7px 9px;border:1px solid var(--control);color:var(--fg-muted);white-space:nowrap;align-self:start;margin-top:8px}
+  .st .caret{color:var(--accent)}
+  .st.is-done{color:var(--signal);border-color:var(--signal)}
+  .work{padding:4px 18px 0}
+  .doc{font:500 12.5px/1 var(--font-mono);color:var(--fg-subtle);padding:12px 0 8px}
+  ol.lines{list-style:none;margin:0;padding:0;counter-reset:l;border-top:1px solid var(--line)}
+  ol.lines > li{counter-increment:l;display:grid;grid-template-columns:3ch minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+  ol.lines > li::before{content:counter(l,decimal-leading-zero);font:600 12px/1 var(--font-mono);color:var(--fg-subtle)}
+  .ln{margin:0;font:400 14px/1.5 var(--font-mono);color:var(--fg);background:var(--bg-sunken);padding:8px 10px;border-left:2px solid var(--control)}
+  .seg{display:flex;border:1px solid var(--control)}
+  .seg label{position:relative;display:block;cursor:pointer}
+  .seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+  .seg span{display:block;padding:8px 11px;font:600 12.5px/1 var(--font-mono);color:var(--fg-muted);border-left:1px solid var(--control)}
+  .seg label:first-child span{border-left:0}
+  .seg label:hover span{color:var(--fg)}
+  .seg input:checked + span{background:var(--fg);color:var(--bg)}
+  .seg input:focus-visible + span{outline:2px solid var(--focus-ring);outline-offset:1px}
+  .seg input:disabled + span{cursor:default}
+  .fb{grid-column:2 / -1;margin:0;font-size:14px;line-height:1.5;color:var(--fg-muted);display:none}
+  .fb b{font:600 12.5px/1 var(--font-mono);margin-right:6px}
+  .is-checked .fb{display:block}
+  li.ok .fb b{color:var(--signal)} li.diff .fb b{color:var(--warn)}
+  .flash{position:absolute;inset:0;background:var(--signal);opacity:0;pointer-events:none}
+  .sim footer{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px 18px;border-top:1px solid var(--control);margin:14px -18px 0}
+  .score{margin:0;font-size:56px;color:var(--fg)}
+  .score small{font-size:.42em;color:var(--fg-subtle)}
+  .msg{margin:0;font-size:14.5px;line-height:1.5;color:var(--fg-muted);max-width:52ch}
+  .acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .src{padding:0 18px 16px;margin:0;font-size:13px;color:var(--fg-subtle)}
+  @media (max-width:700px){
+    .sim > header{grid-template-columns:1fr;gap:10px}
+    .sid{font-size:52px}
+    .st{grid-column:1/-1;justify-self:start;margin-top:0}
+    ol.lines > li{grid-template-columns:3ch minmax(0,1fr)}
+    .seg{grid-column:2}
+    .sim footer{grid-template-columns:auto 1fr}
+    .acts{grid-column:1/-1;justify-content:flex-start}
+  }
+</style>
+</head>
+<body>
+<section class="nb nb-frame sim" id="sim" aria-labelledby="sh">
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>S4 · CLAUDE.MD LINTER</span>
+  <span class="nb-corner tr nb-micro">mô phỏng · <b>c04</b> · pha làm</span>
+  <header>
+    <p class="nb-cond sid nb-tabular" aria-hidden="true">S4</p>
+    <div>
+      <h2 id="sh">Linter hướng dẫn dự án</h2>
+      <p class="goal">Mục tiêu: hướng dẫn dự án gọn, chủ yếu là gotcha Claude không tự suy ra được. Với mỗi dòng, chọn Giữ, Xoá, hay Chuyển sang chỗ hợp hơn (hook, quyền, skill).</p>
+    </div>
+    <span class="st" id="st" aria-live="polite">Chờ bạn <span class="caret" aria-hidden="true">▍</span></span>
+  </header>
+
+  <form class="work" id="form" novalidate>
+    <div class="doc">CLAUDE.md · bao-cao-thi-truong/</div>
+    <ol class="lines" id="lines"></ol>
+    <footer>
+      <p class="nb-cond score nb-tabular" aria-hidden="true"><span id="sc">0</span><small> / 6</small></p>
+      <p class="msg" id="msg" aria-live="polite">Chọn đủ 6 dòng rồi bấm Kiểm tra. Không có điểm trừ; mỗi dòng có lý do và nguồn.</p>
+      <div class="acts">
+        <button class="nb-btn" type="reset" id="reset">Làm lại</button>
+        <button class="nb-btn is-solid" type="submit" id="check" disabled>Kiểm tra</button>
+      </div>
+    </footer>
+  </form>
+  <p class="src">Mô phỏng. Dòng và đáp án: Script, Phụ lục A (6 trong 12 dòng). Nguồn: Thariq 07/2026; docs về hook và quyền.</p>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  var anim = window.gsap && !NB.reduce();
+  var L = [
+    ['Dự án: báo cáo thị trường cà phê hằng tuần cho ban giám đốc.', 'keep', 'Một dòng nói dự án để làm gì là đủ (Thariq 07/2026).'],
+    ['Danh sách toàn bộ file trong thư mục.', 'drop', 'Claude tự thấy được thư mục; liệt kê chỉ tốn context.'],
+    ['Số liệu T9 trong ban-hang.xlsx đã điều chỉnh: dùng cột Điều chỉnh, không dùng cột Gốc.', 'keep', 'Gotcha điển hình: Claude không thể tự suy ra.'],
+    ['LUÔN xuất thêm bản PDF sau khi sửa báo cáo.', 'move', 'Việc tất định nên là hook (CLI) hoặc một bước trong skill, không phải lời dặn.'],
+    ['KHÔNG BAO GIỜ gửi email cho khách hàng.', 'move', 'Chặn bằng quyền: không cấp công cụ gửi email, hoặc đặt deny (c06).'],
+    ['IMPORTANT: hãy suy nghĩ thật kỹ và kiểm tra lại trước khi trả lời.', 'drop', 'Model mới tự làm điều này; lời dặn chỉ thêm ràng buộc (S1, S4).']
+  ];
+  var NAME = { keep: 'Giữ', drop: 'Xoá', move: 'Chuyển' };
+  var ol = document.getElementById('lines'), form = document.getElementById('form'), st = document.getElementById('st');
+  var check = document.getElementById('check'), msg = document.getElementById('msg'), sc = document.getElementById('sc');
+  L.forEach(function (l, i) {
+    var li = document.createElement('li'); li.style.position = 'relative';
+    var p = document.createElement('p'); p.className = 'ln'; p.id = 'ln' + i; p.textContent = l[0];
+    var seg = document.createElement('div'); seg.className = 'seg'; seg.setAttribute('role', 'radiogroup'); seg.setAttribute('aria-labelledby', 'ln' + i);
+    ['keep', 'drop', 'move'].forEach(function (k) {
+      var lab = document.createElement('label'), inp = document.createElement('input'), sp = document.createElement('span');
+      inp.type = 'radio'; inp.name = 'l' + i; inp.value = k; sp.textContent = NAME[k];
+      lab.appendChild(inp); lab.appendChild(sp); seg.appendChild(lab);
+    });
+    var fb = document.createElement('p'); fb.className = 'fb'; fb.id = 'fb' + i;
+    li.appendChild(p); li.appendChild(seg); li.appendChild(fb); ol.appendChild(li);
+  });
+  function answered() { var n = 0; L.forEach(function (_, i) { if (form['l' + i].value) n++; }); return n; }
+  function setState(s, n) {
+    st.classList.toggle('is-done', s === 'done');
+    if (s === 'wait') st.innerHTML = 'Chờ bạn <span class="caret" aria-hidden="true">▍</span>';
+    else if (s === 'doing') st.textContent = 'Đang làm · ' + n + '/6';
+    else st.textContent = '✓ Hoàn tất';
+  }
+  form.addEventListener('change', function () { var n = answered(); setState(n ? 'doing' : 'wait', n); check.disabled = n < L.length; });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); var ok = 0;
+    L.forEach(function (l, i) {
+      var li = ol.children[i], v = form['l' + i].value, hit = v === l[1]; if (hit) ok++;
+      li.classList.add('is-checked'); li.classList.toggle('ok', hit); li.classList.toggle('diff', !hit);
+      var fb = li.querySelector('.fb'); fb.innerHTML = '<b></b><span></span>';
+      fb.firstChild.textContent = hit ? '✓ Khớp' : '◐ Khuyến nghị: ' + NAME[l[1]]; fb.lastChild.textContent = l[2];
+      li.querySelectorAll('input').forEach(function (x) { x.disabled = true; x.setAttribute('aria-describedby', 'fb' + i); });
+    });
+    sc.textContent = ok; setState('done');
+    msg.textContent = ok === L.length ? 'Khớp cả 6 dòng. Hướng dẫn còn lại chỉ là gotcha và bối cảnh.' : 'Khớp ' + ok + '/6. Đọc lý do ở từng dòng; dòng khác đáp án không bị tính là lỗi.';
+    check.disabled = true;
+    if (anim) {
+      var f = document.createElement('span'); f.className = 'flash'; f.setAttribute('aria-hidden', 'true'); document.getElementById('sim').appendChild(f);
+      gsap.fromTo(f, { opacity: 0.12 }, { opacity: 0, duration: 0.24, ease: 'power2.out', onComplete: function () { f.remove(); } });
+    }
+  });
+  form.addEventListener('reset', function () {
+    setTimeout(function () {
+      [].forEach.call(ol.children, function (li) { li.className = ''; li.querySelectorAll('input').forEach(function (x) { x.disabled = false; x.removeAttribute('aria-describedby'); }); });
+      sc.textContent = '0'; setState('wait'); check.disabled = true;
+      msg.textContent = 'Chọn đủ 6 dòng rồi bấm Kiểm tra. Không có điểm trừ; mỗi dòng có lý do và nguồn.';
+    }, 0);
+  });
+  if (anim) gsap.fromTo('.st .caret', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.5, repeat: 5, yoyo: true, ease: 'steps(1)' });
+})();
+</script>
+</body>
+</html>

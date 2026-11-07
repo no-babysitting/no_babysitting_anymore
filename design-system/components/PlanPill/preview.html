@@ -1,0 +1,112 @@
+<!-- @dsCard group="Nhãn" height=700 subtitle="PlanPill · StatusPill · AvailabilityBadges · gói, trạng thái phát hành, bề mặt · chọn gói của bạn để thấy bước nào có sẵn" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>PlanPill</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .pp{padding:48px 18px 18px;display:grid;gap:0}
+  .blk{display:grid;grid-template-columns:16ch 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--control)}
+  .blk:first-of-type{border-top:0;padding-top:4px}
+  .blk > .nb-micro{padding-top:5px}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  dl.legend{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:14px;color:var(--fg-muted)}
+  dl.legend dt{justify-self:start}
+  dl.legend dd{margin:0}
+  .mine{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px}
+  .mine legend{float:left;margin-right:6px;font:600 12px/1.3 var(--font-mono);color:var(--fg-muted)}
+  fieldset{border:0;margin:0;padding:0}
+  ol.steps{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  ol.steps li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+  ol.steps .t{font-size:15px;line-height:1.45;color:var(--fg)}
+  ol.steps .t small{display:block;font-size:13px;color:var(--fg-subtle)}
+  ol.steps .fit{grid-column:1/-1;font:500 13px/1.4 var(--font-mono);color:var(--fg-muted)}
+  ol.steps li.no .t{color:var(--fg-muted)}
+  ol.steps li.yes .fit{color:var(--signal)}
+  .av{display:flex;flex-wrap:wrap;gap:0}
+  .av > span{display:inline-flex;gap:8px;align-items:center;padding:6px 9px;border:1px solid var(--control);margin:0 -1px -1px 0;font:600 12.5px/1 var(--font-mono);color:var(--fg-muted)}
+  .av > .yes{color:var(--fg)}
+  .note{margin:8px 0 0;font-size:13px;color:var(--fg-subtle);line-height:1.5}
+  @media (max-width:640px){.blk{grid-template-columns:1fr;gap:10px}}
+</style>
+</head>
+<body>
+<section class="nb nb-frame pp" aria-labelledby="ppt">
+  <span class="nb-corner tl nb-micro" id="ppt"><span class="nb-sq"></span>PlanPill · StatusPill · AvailabilityBadges</span>
+  <span class="nb-corner tr nb-micro">dữ liệu từ matrix.yml</span>
+
+  <div class="blk">
+    <span class="nb-micro">StatusPill</span>
+    <div>
+      <div class="row"><span class="nb-pill is-ga">GA</span><span class="nb-pill is-pre">Beta</span><span class="nb-pill is-pre">Research preview</span><span class="nb-pill is-pre">Experimental</span></div>
+      <dl class="legend">
+        <dt><span class="nb-pill is-ga">GA</span></dt><dd>Đã phát hành chính thức. Viền liền, màu <code>signal</code>.</dd>
+        <dt><span class="nb-pill is-pre">Beta</span></dt><dd>Chưa GA: viền đứt nét <code>info</code>, giống nhãn <em>Chưa thống nhất</em>; nghĩa là "có thể đổi".</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="blk">
+    <span class="nb-micro">PlanPill</span>
+    <div>
+      <fieldset class="mine"><legend>Gói của tôi</legend>
+        <button class="nb-chip" type="button" aria-pressed="false" data-p="free">Free</button>
+        <button class="nb-chip" type="button" aria-pressed="true" data-p="pro">Pro</button>
+        <button class="nb-chip" type="button" aria-pressed="false" data-p="max">Max</button>
+        <button class="nb-chip" type="button" aria-pressed="false" data-p="ultra">Ultra</button>
+        <button class="nb-chip" type="button" aria-pressed="false" data-p="team">Team</button>
+        <button class="nb-chip" type="button" aria-pressed="false" data-p="enterprise">Enterprise</button>
+      </fieldset>
+      <ol class="steps" id="steps" aria-live="polite">
+        <li data-plans="team,enterprise"><span class="t">Gắn Claude vào kênh Slack để cả team giao việc (Claude Tag)<small>c09 · ma trận bề mặt, kiểm chứng 06/11/2026</small></span><span class="row"><span class="nb-pill is-pre">Beta</span><span class="nb-pill is-plan">Team · Enterprise</span></span><span class="fit"></span></li>
+        <li data-plans="pro,max,ultra"><span class="t">Cho Claude điều khiển máy tính của bạn (computer use)<small>c07 · ma trận bề mặt, kiểm chứng 06/11/2026</small></span><span class="nb-pill is-plan">Pro · Max · Ultra</span><span class="fit"></span></li>
+        <li data-plans=""><span class="t">Bật Plan mode trước khi giao việc nhiều bước<small>c03 · docs không nêu gói, nên không gắn PlanPill</small></span><span></span><span class="fit"></span></li>
+      </ol>
+      <p class="note">Chọn gói chỉ để <em>đánh dấu</em> bước nào bạn dùng được; không ẩn bước nào (quyết định: gói của người học trộn lẫn). Lựa chọn lưu trong trình duyệt.</p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <span class="nb-micro">AvailabilityBadges</span>
+    <div>
+      <div class="av" role="list" aria-label="Plan mode có trên các bề mặt">
+        <span class="unk" role="listitem"><i class="nb-mk is-info" aria-hidden="true"></i>Cowork<span class="nb-sr">: chưa rõ</span></span>
+        <span class="yes" role="listitem"><i class="nb-mk is-signal" aria-hidden="true"></i>Desktop<span class="nb-sr">: có</span></span>
+        <span class="yes" role="listitem"><i class="nb-mk is-signal" aria-hidden="true"></i>Web<span class="nb-sr">: có</span></span>
+        <span class="yes" role="listitem"><i class="nb-mk is-signal" aria-hidden="true"></i>Mobile<span class="nb-sr">: có</span></span>
+        <span class="yes" role="listitem"><i class="nb-mk is-signal" aria-hidden="true"></i>CLI<span class="nb-sr">: có</span></span>
+      </div>
+      <dl class="legend">
+        <dt><i class="nb-mk is-signal"></i></dt><dd>Có, docs xác nhận.</dd>
+        <dt><i class="nb-mk is-warn"></i></dt><dd>Một phần (thiếu tuỳ chọn, hoặc chỉ một số gói).</dd>
+        <dt><i class="nb-mk is-muted"></i></dt><dd>Chưa có ở bề mặt này.</dd>
+        <dt><i class="nb-mk is-info"></i></dt><dd>Chưa rõ: chưa có nguồn xác nhận, cần kiểm chứng tay (ma trận bề mặt §4).</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+<script>
+(function () {
+  var KEY = 'nb-plan', mine = 'pro';
+  try { mine = localStorage.getItem(KEY) || mine; } catch (e) {}
+  var NAMES = { free: 'Free', pro: 'Pro', max: 'Max', ultra: 'Ultra', team: 'Team', enterprise: 'Enterprise' };
+  function sync() {
+    document.querySelectorAll('.mine .nb-chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.p === mine)); });
+    document.querySelectorAll('#steps li').forEach(function (li) {
+      var plans = li.dataset.plans ? li.dataset.plans.split(',') : [], fit = li.querySelector('.fit');
+      if (!plans.length) { li.className = ''; fit.textContent = ''; return; }
+      var ok = plans.indexOf(mine) >= 0; li.className = ok ? 'yes' : 'no';
+      fit.textContent = ok ? '✓ Có trong gói ' + NAMES[mine] + ' của bạn' : '— Gói ' + NAMES[mine] + ' chưa có; cần ' + plans.map(function (p) { return NAMES[p]; }).join(' hoặc ');
+    });
+  }
+  document.querySelectorAll('.mine .nb-chip').forEach(function (b) {
+    b.addEventListener('click', function () { mine = b.dataset.p; try { localStorage.setItem(KEY, mine); } catch (e) {} sync(); });
+  });
+  sync();
+})();
+</script>
+</body>
+</html>

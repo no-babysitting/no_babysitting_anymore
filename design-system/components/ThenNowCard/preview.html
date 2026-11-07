@@ -20,17 +20,18 @@
   .now{border-left:1px solid var(--control);background:var(--bg-raised)}
   .txt{margin:0;font:600 clamp(17px,2.2vw,21px)/1.35 var(--font-text);color:var(--fg)}
   .strike{position:relative}
-  .line{position:absolute;left:0;right:0;top:52%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left}
+  .line{position:absolute;left:0;right:0;top:52%;height:2px;background:var(--danger);transform:scaleX(0);transform-origin:left}
   .why{margin:0;color:var(--fg-muted);line-height:1.5;font-size:14px}
   .guide{margin:0;font-size:19px;color:var(--fg);font-style:italic}
   .arrow{display:flex;align-items:center;justify-content:center;font:600 14px/1 var(--font-mono);color:var(--accent);letter-spacing:-.02em;white-space:pre}
+  .arrow{color:var(--fg-muted)}
   .foot{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--control);padding:12px 14px}
   @media (max-width:640px){.grid{grid-template-columns:1fr}.arrow{padding:10px 0;border-top:1px solid var(--control);border-bottom:1px solid var(--control)}.then,.now{border:0}}
 </style>
 </head>
 <body>
 <section class="nb nb-frame tn" aria-label="Then → Now: quy tắc văn phong">
-  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>Shift · Rule cứng → Phán đoán</span>
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>SHIFT · Rule cứng → phán đoán</span>
   <span class="nb-corner tr nb-micro">c05 · <b>then → now</b></span>
   <div class="grid">
     <article class="card then" id="then">
@@ -42,10 +43,10 @@
     <div class="arrow" aria-hidden="true"><span id="arw">       </span></div>
     <article class="card now" id="now">
       <span class="nb-ghost ghost" aria-hidden="true">Now</span>
-      <span class="nb-micro c-accent">Bây giờ</span>
+      <span class="nb-micro c-signal">Bây giờ</span>
       <p class="txt">“Viết giống văn phong các báo cáo đã duyệt.”</p>
       <p class="nb-q guide">Rule này chặn một rủi ro thật, hay đang mã hoá cứng một sở thích Claude tự suy ra được?</p>
-      <span><span class="nb-tag is-warn">◐ Phụ thuộc model</span></span>
+      <span><span class="nb-tag is-warn">Phụ thuộc model</span></span>
     </article>
   </div>
   <div class="foot">

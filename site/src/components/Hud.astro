@@ -1,0 +1,49 @@
+---
+/* JourneyHUD (M0 subset): logo, level, position, Library link, and the Motion switch (FR-09, WCAG 2.2.2). */
+import { chapters, indexOf, PARTS } from '../lib/chapters';
+import { url } from '../lib/url';
+const { current } = Astro.props as { current?: string };
+const i = current ? indexOf(current) : -1;
+const c = i >= 0 ? chapters[i] : null;
+---
+<header class="hud">
+  <div class="wrap row">
+    <a href={url()} class="wm" data-logo aria-label="No babysitting, về trang đầu"></a>
+    {c && <span class="nb-micro part">{PARTS[c.id]}{c.level && c.level !== 'Kết' ? ` · ${c.level.toUpperCase()}` : ''}</span>}
+    <nav class="links" aria-label="Trang">
+      <a class="nb-micro" href={url('library/')}>Library</a>
+      {c && <span class="nb-micro pos"><b>{c.id}</b> · {i + 1}/{chapters.length}</span>}
+      <button class="nb-micro mo" type="button" data-motion aria-pressed="true" title="Bật hoặc tắt chuyển động của trang"><span class="nb-mk" aria-hidden="true"></span>chuyển động</button>
+    </nav>
+  </div>
+</header>
+<style>
+  .hud { position: sticky; top: 0; z-index: 10; height: var(--hud-height); border-bottom: 1px solid var(--control); background: var(--bg); }
+  .row { height: 100%; display: flex; align-items: center; gap: 24px; }
+  .wm { width: 208px; flex: none; color: var(--fg); }
+  .links { margin-left: auto; display: flex; gap: 20px; align-items: center; }
+  .links a { color: var(--fg); text-underline-offset: 3px; }
+  .mo { appearance: none; background: transparent; border: 0; padding: 6px 0; color: var(--fg-muted); cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+  .mo:hover { color: var(--fg); }
+  .mo:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+  .mo[aria-pressed='true'] .nb-mk { background: var(--fg-muted); border-color: var(--fg-muted); }
+  .mo:disabled { cursor: default; opacity: .7; }
+  @media (max-width: 520px) { .row > .part, .pos { display: none; } .wm { width: 156px; } .links { gap: 16px; } }
+</style>
+<script>
+  const NB = (window as any).NoBabysitting;
+  document.querySelectorAll<HTMLElement>('[data-logo]').forEach((el) => { el.innerHTML = NB.logoSVG('sm'); el.firstElementChild!.classList.add('is-mono'); });
+  /* the switch stores the choice and reloads, so every scene starts in the chosen mode */
+  document.querySelectorAll<HTMLButtonElement>('[data-motion]').forEach((b) => {
+    let local: string | null = null; try { local = localStorage.getItem('nb-motion'); } catch (e) { /* storage blocked */ }
+    const os = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const on = !os && local !== 'off';
+    b.setAttribute('aria-pressed', String(on));
+    b.lastChild!.textContent = on ? 'chuyển động' : 'chuyển động: tắt';
+    if (os) { b.disabled = true; b.title = 'Đang theo cài đặt giảm chuyển động của hệ thống'; return; }
+    b.addEventListener('click', () => {
+      try { if (on) localStorage.setItem('nb-motion', 'off'); else localStorage.removeItem('nb-motion'); } catch (e) { return; }
+      location.reload();
+    });
+  });
+</script>

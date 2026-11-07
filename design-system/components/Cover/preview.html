@@ -16,8 +16,9 @@
   .sig { fill:var(--signal); }
   .rule { stroke:var(--control); stroke-width:1; }
   .cut { stroke:var(--bg); stroke-width:2; }
-  .meta { position:absolute; top:var(--space-5); right:var(--space-6); font:600 10.5px/1.4 var(--font-mono); letter-spacing:.18em; text-transform:uppercase; color:var(--fg-muted); text-align:right; }
-  .name { position:absolute; left:var(--space-6); top:172px; margin:0; font-family:var(--font-wide); font-stretch:125%; font-weight:800; font-size:64px; line-height:.92; letter-spacing:-.012em; text-transform:uppercase; white-space:nowrap; color:var(--fg); }
+  .meta { position:absolute; top:var(--space-5); right:var(--space-6); font:600 12px/1.4 var(--font-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--fg-muted); text-align:right; }
+  .name { position:absolute; left:var(--space-6); top:176px; margin:0; width:417px; }
+  .name .nb-logo { width:417px; }
   .tag { position:absolute; left:calc(var(--space-6) + 2px); top:244px; margin:0; font-size:14px; line-height:20px; color:var(--fg-muted); white-space:nowrap; }
 </style>
 </head>
@@ -50,8 +51,11 @@
     </svg>
   </div>
   <p class="meta">An unofficial guide<br>to Claude Code best practices</p>
-  <p class="name">No Babysitting</p>
+  <h1 class="name" id="name">No babysitting</h1>
   <p class="tag">Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi.</p>
 </div>
+<script>
+  (function () { var NB = window.NoBabysitting; if (NB && NB.logoSVG) document.getElementById('name').innerHTML = NB.logoSVG('lg'); })();
+</script>
 </body>
 </html>

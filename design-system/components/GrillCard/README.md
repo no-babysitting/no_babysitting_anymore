@@ -13,7 +13,7 @@ GrillCard là câu hỏi nhớ lại ở cuối chương: người học tự tr
 
 - Định dạng lấy từ skill grill-me: một câu hỏi và một đáp án khuyến nghị.
 - Label ô trả lời là nhãn micro `› Câu trả lời của bạn` kèm bộ đếm ký tự; ô nhập mono, caret màu `accent`.
-- Nút `[ Xem đáp án khuyến nghị ]` (`aria-expanded`). Gate, don't trap: ô còn trống thì nhắc một lần, bấm lần nữa vẫn mở. Đáp án mở dưới một nét `accent` 2px ở đầu khối, kèm tự chấm `[ Trúng ] [ Gần đúng ] [ Chưa ]`. Không chấm điểm câu trả lời tự do.
+- Nút `[ Xem đáp án khuyến nghị ]` (`aria-expanded`). Gate, don't trap: ô còn trống thì nhắc một lần, bấm lần nữa vẫn mở. Đáp án mở dưới một nét `fg` 2px ở đầu khối (accent chỉ cho hành động), kèm tự chấm `[ Trúng ] [ Gần đúng ] [ Chưa ]`. Không chấm điểm câu trả lời tự do.
 - Câu trả lời được lưu cục bộ cho phần recap.
 
 ## Không nên

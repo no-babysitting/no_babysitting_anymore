@@ -1,0 +1,22 @@
+# Surface matrix (SAD §7.1 SurfaceEntry). Source of truth for "Cách làm" tabs.
+# Re-verify any entry whose verifiedAt is older than 30 days before writing chapter content.
+plan-mode:
+  title: Plan mode
+  availability: { cowork: unknown, desktop: yes, web: yes, mobile: yes, cli: yes }
+  status: ga
+  tabs:
+    cowork:
+      missing: Docs Cowork chỉ liệt kê các mode Manual, Auto và Skip.
+      fallback: { text: 'Chọn Manual, rồi yêu cầu: "Lập kế hoạch, hỏi tôi chỗ còn mơ hồ, chờ tôi duyệt rồi mới làm."', interpretation: true }
+    codeApp:
+      steps:
+        - "**Desktop:** mở bộ chọn mode dưới ô nhập và chọn `Plan`, chỉ áp dụng cho phiên này. Phím tắt `Cmd/Ctrl+Shift+M`."
+        - "**Web** (claude.ai/code): chọn `Plan` trong dropdown mode."
+        - Duyệt kế hoạch xong mới cho Claude bắt đầu làm.
+    cli:
+      steps:
+        - "Nhấn `Shift+Tab` tới khi thanh trạng thái hiện `⏸ plan mode on`."
+        - "Hoặc thêm `/plan` trước prompt, hoặc khởi động bằng `claude --permission-mode plan`."
+        - "`Ctrl+G` để sửa kế hoạch trong editor trước khi duyệt."
+  docs: [https://code.claude.com/docs/en/permission-modes]
+  verifiedAt: 2026-11-06

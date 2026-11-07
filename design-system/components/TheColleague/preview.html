@@ -29,7 +29,7 @@
 <body>
 <section class="nb nb-frame tc" aria-labelledby="tct">
   <div class="stage nb-dots" id="stage">
-    <span class="nb-corner tl nb-micro" id="tct"><span class="nb-sq"></span>The Colleague · M14</span>
+    <span class="nb-corner tl nb-micro" id="tct"><span class="nb-sq"></span>THE COLLEAGUE · M14</span>
     <span class="nb-corner tr nb-micro">state <b id="sn">idle</b> · <span id="tk">fg-muted</span></span>
     <span class="nb-ghost ghost" aria-hidden="true">Colleague</span>
     <span class="big" id="face" aria-live="polite">[•_•]</span>
@@ -46,7 +46,7 @@
   function pick(s) {
     col.set(s);
     document.getElementById('sn').textContent = s; document.getElementById('tk').textContent = NB.FACES[s][1];
-    NB.decode(document.getElementById('when'), WHEN[s], 0.5);
+    NB.say(document.getElementById('when'), WHEN[s]);
     btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.s === s)); });
   }
   Object.keys(NB.FACES).forEach(function (s) {

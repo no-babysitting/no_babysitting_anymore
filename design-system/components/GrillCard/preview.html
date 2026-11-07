@@ -18,14 +18,14 @@
   textarea:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
   .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
   .nudge{color:var(--warn)}
-  .ans{border-top:2px solid var(--accent);padding-top:14px;display:grid;gap:10px}
+  .ans{border-top:2px solid var(--fg);padding-top:14px;display:grid;gap:10px}
   .ans p{margin:0;line-height:1.55;max-width:64ch}
   .self .nb-btn{padding:8px 11px}
 </style>
 </head>
 <body>
 <section class="nb nb-frame gc" aria-labelledby="gq">
-  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>Grill me · Chương 02</span>
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>GRILL ME · Chương 02</span>
   <span class="nb-corner tr nb-micro">Q <b>1</b> / 3</span>
   <p class="q" id="gq">Khi nào nên mở phiên mới kèm brief, thay vì nén (compact)?</p>
   <div class="lab nb-micro"><label for="ans">› Câu trả lời của bạn</label><span id="cnt" class="nb-tabular">0 ký tự</span></div>
@@ -35,7 +35,7 @@
     <span class="nb-micro nudge" id="nudge" hidden>Viết một dòng trước giúp nhớ lâu hơn · bấm lần nữa để xem luôn</span>
   </div>
   <div class="ans" id="ans-box" hidden>
-    <span class="nb-micro c-accent" id="ah">Đáp án khuyến nghị</span>
+    <span class="nb-micro" id="ah">Đáp án khuyến nghị</span>
     <p>Khi bước tiếp theo quan trọng và bạn cần kiểm soát chính xác những gì được mang theo. Nén là bản tóm tắt có mất mát; phiên mới + brief tốn công hơn nhưng không mang theo rác.</p>
     <div class="row self" role="group" aria-label="Tự chấm">
       <span class="nb-micro">Tự chấm</span>
@@ -55,7 +55,7 @@
   show.addEventListener('click', function () {
     if (!ta.value.trim() && !warned) { warned = true; nudge.hidden = false; return; }
     nudge.hidden = true; box.hidden = false; show.setAttribute('aria-expanded', 'true'); show.disabled = true;
-    NB.decode(document.getElementById('ah'), 'Đáp án khuyến nghị', 0.6);
+    NB.say(document.getElementById('ah'), 'Đáp án khuyến nghị');
     if (window.gsap && !NB.reduce()) gsap.from(box, { y: 10, autoAlpha: 0, duration: 0.45, ease: 'power3.out' });
   });
   box.querySelectorAll('.self .nb-btn').forEach(function (b, _, all) {

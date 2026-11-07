@@ -1,8 +1,32 @@
-# No Babysitting · Gói handoff (cập nhật 07/11/2026)
+```text
+▀█████▄   ▀█▀               ▄▄▄███                  ▄▄███                            ▄███                     ███▄
+ █▀████▄   █                 ▀████                   ████                             ▀▀▀    ▄▄█      ▄▄█     ▀▀▀
+ █ ▀█████  █   ▄▄█▀▀██▄       ████▄████▄  ▄▄▀▀███▄   ████▄████▄ ▀████     ▀ ▄█▀▀▀▀▄ ▄▄▄██  ████████ ████████ ▄▄▄██ ▄▄▄██▄▄████   ▄██▀██████
+ █   █████ █  ▄███  ████      ████  ████ ▀▀▀   ████  ████  ████▄ ▀████   █  ███▄▄▄▀  ████   ████     ████    ▀████  ████▀▀█████ ████ ████
+ █    ▀█████  ████  ████      ████  ████  ▄▄▄▀▀████  ████  ████▀  ▀████ █   ▀██████  ████   ████     ████     ████  ████   ████  ███ ███▀
+ █     ▀████  ████  ████      ████  ████ ████ ▄████  ████  ████    ▀████       ▀▀██▀ ████   ████     ████     ████  ████   ████  ▄█▄
+▄█▄      ███   ▀██▄▄██▀      ▄████▄▄█▀▀  ▀████▀████  ████▄▄██▀       ██     █▄▄▄▄█▀  ████▄  ▀█████▀  ▀█████▀ ▄████  ████▄ ▄████ █████████▄
+                                                                  ▄  ▄▀                                                          ██▀▀▀▀███
+                                                                 ▀███▀                                                          ███▄▄▄▄▄▀▀
+```
 
-*An unofficial guide to Claude Code best practices.* "Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi."
+# No Babysitting
 
-Đây là toàn bộ đầu ra **trước khi phát triển**: PRD, kịch bản sư phạm, design system (tài liệu + token + 17 component có bản xem trước), kế hoạch triển khai (SAD 4+2), ma trận bề mặt đã kiểm chứng, cùng tư liệu nghiên cứu và công cụ kiểm tra. Chưa có dòng code nào của site thật.
+*An unofficial, practical guide to delegating digital work to Claude Code.* "Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi."
+
+**Site (beta):** https://no-babysitting.github.io/no_babysitting_anymore/ · cập nhật tự động mỗi khi merge vào `main`.
+
+No Babysitting là dự án cộng đồng độc lập, không liên kết, không được tài trợ hay xác nhận bởi Anthropic. Claude và Claude Code là thương hiệu của Anthropic.
+
+## Go live và kaizen (07/11/2026): đọc phần này trước
+
+- **Kế hoạch:** `docs/08-kaizen-go-live.md`, gồm 16 quyết định của chủ dự án, quan sát có số đo, các đợt K0–K6, quy tắc phát hành và thước đo. **Kịch bản chuyển động:** `docs/09-motion-script.md`, chia ba tầng chính / phụ / nền và giữ ngữ pháp M1–M14.
+- **Phát hành:** mỗi đợt là một PR. Workflow `Check site` build và chạy `site/scripts/check.cjs` (liên kết, lỗi JS, cuộn ngang, reduced motion, chi phí lúc đứng yên). Merge vào `main` thì workflow `Deploy site` đưa lên GitHub Pages. Riêng nội dung mới phải được chủ dự án duyệt trước khi merge.
+- **Chạy local:** `cd site && npm ci && npm run build && node scripts/check.cjs`. Để build giống production: `NB_BASE=/no_babysitting_anymore/ npm run build`.
+- **Thay đổi:** `CHANGELOG.md`.
+- **Giấy phép:** code MIT (`LICENSE`), nội dung CC BY-NC-SA 4.0 (`LICENSE-CONTENT.md`), ghi công bên thứ ba ở `THIRD_PARTY_NOTICES.md`.
+
+Phần dưới đây là gói handoff trước phát triển (06–07/11/2026), giữ lại làm tư liệu.
 
 ## Cập nhật sau review (06/11/2026): đọc phần này trước
 
@@ -28,7 +52,7 @@ Tài liệu trong `docs/` đã được sửa theo 10 quyết định của ch�
 5. `docs/05-surface-matrix.md`: tính năng nào có trên Cowork / Claude Code app / CLI, kèm ngày kiểm chứng.
 6. `docs/06-sources-and-links.md`: **mọi link nguồn đã dùng + quy tắc bắt buộc về link nguồn + đặc tả nút SourceButton.**
 7. **`docs/07-todo-handoff.md`: danh sách việc còn lại theo mức ưu tiên (P0 chặn việc kế tiếp). Đọc ngay sau README này.**
-8. Mở `previews/index.html` để xem 18 component chạy thật (cần mạng: font Google và GSAP từ jsDelivr).
+8. Mở `previews/index.html` để xem 27 component chạy thật (cần mạng: font Google và GSAP từ jsDelivr). Tra nhanh token, vai chữ, quy tắc và trạng thái từng component ở **`design-system/SOURCE-OF-TRUTH.md`**.
 
 ## Cấu trúc gói
 
@@ -37,6 +61,8 @@ README.md                      ← file này
 docs/                          7 tài liệu chính (07 = todo handoff) (Markdown, tiếng Việt)
 design-system/                 nguồn của design system (giống bản đã publish)
   README.md                    hướng dẫn dùng hệ thiết kế
+  SOURCE-OF-TRUTH.md           trang ngắn: token, vai chữ, quy tắc đã chốt, trạng thái từng component
+  assets/Logo/                 logo Blocks: bitmap gốc (.json), SVG, bản văn bản (.txt); bản lớn và bản nhỏ
   tokens.json                  token nguồn (2 theme dark/light)
   tokens.css                   token đã biên dịch ra CSS custom properties
   design-system.json           metadata của artifact
@@ -50,7 +76,7 @@ screenshots/components/        ảnh chụp cuối của từng component, dark 
 screenshots/references/        ảnh chụp 5 site reference đã khảo sát
 research/knowledge-base/       ghi chú đọc 3 repo nguồn (concepts, tips, workflows, voices, pedagogy, GSAP); đường dẫn `repos/…` trong ghi chú là bản clone của các repo ở mục Nguồn
 research/surface-verification/ dữ liệu nghiên cứu bề mặt + vòng kiểm chứng (JSON) và bản tóm tắt (TXT)
-tools/                         tokens2css.py · check.js (render-test) · shoot-references.js
+tools/                         tokens2css.py · contrast.py (tương phản WCAG) · make-logo.js (dựng logo Blocks) · check.js (render-test, nhiều bề rộng) · build-previews.py · shoot-references.js
 ```
 
 ## Trạng thái
@@ -59,8 +85,8 @@ tools/                         tokens2css.py · check.js (render-test) · shoot-
 |---|---|
 | PRD, kịch bản sư phạm, SAD 4+2, ma trận bề mặt | Xong. Đã tự rà soát (đối chiếu chéo, kiểm tra thuật ngữ); vòng review đa agent chưa chạy lại vì giới hạn quota |
 | Design system: token, 2 theme, chữ, chuyển động | Xong |
-| 18 component (preview + README, gồm SourceButton) | Xong, render-test 2 theme không lỗi, không cuộn ngang (ở 1000px); chưa chạy axe, snapshot nhiều bề rộng |
-| Artifact design system | Đã publish (bản 9): https://claude.ai/artifact/9M5HYXuu1vwQvsonXsPYUs · **đang ở chế độ riêng tư**: người nhận chỉ mở được sau khi chủ sở hữu chia sẻ qua menu Share của trang |
+| 27 component (preview + README) | 8 component mới, Logo Blocks, DurabilityTag/`.nb-tag` làm lại, và đợt sửa chữ nhỏ, accent, M4 ngày 07/11/2026. Render-test 2 theme × 2 bề rộng (1000px, 360px): không lỗi JS, không cuộn ngang. Chưa chạy axe, screen reader thật. Độ phủ danh sách §7: 19/28 |
+| Artifact design system | Bản mới (07/11/2026, 27 component): https://claude.ai/artifact/VmP9E4UDLaN5jpB2rZeRUH · **đang ở chế độ riêng tư**: người nhận chỉ mở được sau khi chủ sở hữu chia sẻ qua menu Share của trang. Bản cũ (9M5HYXuu1vwQvsonXsPYUs) không còn đọc được từ tài khoản này |
 | Code của site (Astro + GSAP) | Chưa bắt đầu; mốc M0 là bước kế tiếp |
 
 ## Quyết định chính (chi tiết ở PRD §11)
@@ -93,12 +119,14 @@ tools/                         tokens2css.py · check.js (render-test) · shoot-
 - **Xem nhanh:** mở `previews/index.html`. Mỗi file preview đã nhúng sẵn token và runtime, chỉ cần mạng để tải font và GSAP.
 - **Sửa rồi kiểm tra lại:**
   ```bash
-  mkdir -p tools/shots
-  python3 tools/tokens2css.py design-system/tokens.json tools/tokens.css
-  node tools/check.js "$PWD/design-system" "$PWD/tools" [Comp1,Comp2]
+  python3 tools/tokens2css.py design-system/tokens.json design-system/tokens.css   # sau khi sửa token
+  python3 tools/contrast.py design-system/tokens.json --fail                         # tương phản WCAG
+  mkdir -p tools/shots && cp design-system/tokens.css tools/tokens.css
+  node tools/check.js "$PWD/design-system" "$PWD/tools" all 1000,360                # hoặc Comp1,Comp2
+  python3 tools/build-previews.py                                                    # sinh lại previews/
   ```
-  `check.js` cần Playwright + Chromium. Nó chụp mỗi component ở cả 2 theme (trước và sau khi bấm mọi nút), báo lỗi JS và cuộn ngang, ghi ảnh vào `tools/shots/`.
-- **Quy ước khi thêm component:** dựng từ `bundle.css` / `bundle.js`; mọi tween phải ứng với một mục M1–M14; có trạng thái tĩnh tương đương cho reduced motion; chữ cần đọc luôn là HTML, canvas ASCII luôn `aria-hidden`.
+  `check.js` cần Playwright + Chromium. Đối số thứ 3 là danh sách component (hoặc `all`), thứ 4 là các bề rộng. Nó chụp mỗi component ở cả 2 theme (trước và sau khi bấm mọi nút đang hiện, nhấn Esc sau mỗi lần bấm), báo lỗi JS và cuộn ngang, ghi ảnh vào `tools/shots/`.
+- **Quy ước khi thêm component:** dựng từ `bundle.css` / `bundle.js`; mọi tween phải ứng với một mục M1–M14; có trạng thái tĩnh tương đương cho reduced motion; chữ cần đọc luôn là HTML, canvas ASCII luôn `aria-hidden`; nhãn mono ≥ 12px, tiếng Việt viết thường; accent chỉ cho hành động và hiện tại (xem `design-system/SOURCE-OF-TRUTH.md`).
 
 ## Hạn chế đã biết
 

@@ -1,4 +1,4 @@
-<!-- @dsCard group="Simulator" height=470 subtitle="S1 · ngân sách context · số condensed khổng lồ + thanh khối ASCII · đồng nghiệp quá tải khi vượt 60%" -->
+<!-- @dsCard group="Simulator" height=560 subtitle="S1 · nhiễu tích tụ · hai chỉ số: độ tập trung và chi phí mỗi lượt · không có vùng đỏ cố định · mốc 1M ở rất xa" -->
 <!doctype html>
 <html lang="vi">
 <head>
@@ -6,88 +6,145 @@
 <title>ContextMeter</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
 <style>
   html,body{margin:0}
   body{background:var(--bg);padding:20px}
-  .cm{padding:46px 18px 16px;display:grid;gap:14px}
-  .hero{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:end}
-  .num{margin:0;font-size:clamp(96px,16vw,150px);color:var(--fg);transition:color .2s}
-  .cm[data-zone="warn"] .num,.cm[data-zone="warn"] .fill{color:var(--warn)}
-  .cm[data-zone="bad"] .num,.cm[data-zone="bad"] .fill{color:var(--danger)}
-  .side{display:grid;gap:10px;padding-bottom:8px}
-  .state{margin:0;font:600 15px/1.4 var(--font-text)}
-  .face{font:600 15px/1 var(--font-mono);letter-spacing:0}
-  .log{list-style:none;margin:0;padding:0;font:400 12.5px/1.5 var(--font-mono);color:var(--fg-subtle);min-height:3em}
+  .cm{padding:48px 18px 16px;display:grid;gap:16px}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--control);border-bottom:1px solid var(--control)}
+  .ix{padding:14px 16px 14px 0;display:grid;gap:8px;min-width:0}
+  [role="meter"]{container-type:inline-size}
+  .ix + .ix{padding-left:16px;border-left:1px solid var(--control)}
+  .num{margin:0;font-size:clamp(76px,12vw,128px);color:var(--fg)}
+  .num small{font-size:.36em;color:var(--fg-subtle);letter-spacing:0}
+  .what{margin:0;font:600 15px/1.35 var(--font-text)}
+  .why{margin:0;font-size:13.5px;line-height:1.45;color:var(--fg-muted);min-height:2.9em}
+  /* 32 cells x 0.6em advance (JetBrains Mono) = the bar spans its column exactly */
+  .meter{font:500 14px/1 var(--font-mono);font-size:calc(100cqw / 19.25);letter-spacing:0;white-space:pre;overflow:hidden}
+  .f-focus{color:var(--fg)} .f-cost{color:var(--chart-1)} .empty{color:var(--control)}
+  .far{position:relative;height:26px;margin-top:4px}
+  .far span{position:absolute;right:0;top:0;border-right:1px dashed var(--control);padding:6px 6px 0 0;font:500 12px/1.2 var(--font-mono);color:var(--fg-subtle);white-space:nowrap}
+  .row{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+  .face{font:600 16px/1 var(--font-mono);letter-spacing:0}
+  .log{list-style:none;margin:0;padding:0;font:400 13px/1.55 var(--font-mono);color:var(--fg-subtle);min-height:4.6em}
   .log li:last-child{color:var(--fg)}
-  .meter{font:500 15px/1 var(--font-mono);letter-spacing:0;white-space:pre;overflow:hidden}
-  .rul{position:relative;height:30px;font:600 10px/1.2 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-muted)}
-  .rul span{position:absolute;top:0;border-left:1px solid var(--fg-muted);padding:10px 0 0 6px;white-space:nowrap}
-  .fill{color:var(--signal)} .empty{color:var(--control)}
-    .btns{display:flex;flex-wrap:wrap;gap:8px}
-  .btns .nb-btn{padding:9px 11px;font-size:11px}
-  .src{margin:0;font-size:12.5px;color:var(--fg-subtle);line-height:1.5;max-width:76ch}
-  @media (max-width:640px){.hero{grid-template-columns:1fr}.rul span{font-size:8.5px}}
+  .btns{display:flex;flex-wrap:wrap;gap:8px}
+  .btns .nb-btn{padding:9px 11px}
+  .foot{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+  .src{margin:0;font-size:13px;color:var(--fg-muted);line-height:1.5;max-width:70ch}
+  @media (max-width:640px){
+    .duo{grid-template-columns:1fr}
+    .ix + .ix{padding-left:0;border-left:0;border-top:1px solid var(--control)}
+    .row{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
-<section class="nb nb-frame cm" id="cm" data-zone="ok" aria-labelledby="cmt">
-  <span class="nb-corner tl nb-micro" id="cmt"><span class="nb-sq"></span>S1 · Context của phiên báo cáo tuần</span>
+<section class="nb nb-frame cm" id="cm" aria-labelledby="cmt">
+  <span class="nb-corner tl nb-micro" id="cmt"><span class="nb-sq"></span>S1 · nhiễu tích tụ trong phiên báo cáo tuần</span>
   <span class="nb-corner tr nb-micro">mô phỏng · <b>c02</b></span>
-  <div class="hero">
-    <p class="nb-cond num nb-tabular" id="num" aria-hidden="true">08%</p>
-    <div class="side">
-      <span class="nb-micro">Đồng nghiệp <span class="face" id="col">[•_•]</span></span>
-      <p class="state" id="state" aria-live="polite">✓ Vùng an toàn</p>
-      <ol class="log" id="log" aria-hidden="true"><li>› Mở phiên · brief 1 trang</li></ol>
+
+  <div class="duo">
+    <div class="ix">
+      <span class="nb-micro">Độ tập trung</span>
+      <p class="nb-cond num nb-tabular" aria-hidden="true"><span id="fNum">96</span><small>/100</small></p>
+      <div role="meter" id="fMeter" aria-label="Độ tập trung của hội thoại (số minh hoạ)" aria-valuemin="0" aria-valuemax="100" aria-valuenow="96" aria-valuetext="96 trên 100, hội thoại tập trung">
+        <div class="meter" aria-hidden="true"><span class="f-focus" id="fFill"></span><span class="empty" id="fEmpty"></span></div>
+      </div>
+      <p class="why" id="fWhy">Chỉ có brief và yêu cầu của tuần này.</p>
+    </div>
+    <div class="ix">
+      <span class="nb-micro">Chi phí mỗi lượt</span>
+      <p class="nb-cond num nb-tabular" aria-hidden="true"><span id="cNum">8</span><small>K token</small></p>
+      <div role="meter" id="cMeter" aria-label="Chi phí mỗi lượt, tính bằng token gửi lại (số minh hoạ)" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="8" aria-valuetext="8 nghìn token mỗi lượt">
+        <div class="meter" aria-hidden="true"><span class="f-cost" id="cFill"></span><span class="empty" id="cEmpty"></span></div>
+        <div class="far" aria-hidden="true"><span>1M · tự nén · hiếm khi chạm tới</span></div>
+      </div>
+      <p class="why" id="cWhy">Mỗi lượt gửi lại toàn bộ hội thoại, nên lịch sử dài thì lượt nào cũng đắt hơn.</p>
     </div>
   </div>
-  <div role="meter" id="meter" aria-label="Mức dùng context" aria-valuemin="0" aria-valuemax="100" aria-valuenow="8" aria-valuetext="8%, vùng an toàn">
-    <div class="meter" aria-hidden="true"><span class="fill" id="fill"></span><span class="empty" id="empty"></span></div>
-    <div class="rul" aria-hidden="true"><span style="left:40%">40 · dumb zone</span><span style="left:60%">60 · nên kết thúc</span></div>
+
+  <div class="row">
+    <span class="nb-micro">Đồng nghiệp <span class="face" id="col">[•_•]</span></span>
+    <ol class="log" id="log" aria-live="polite"><li>› Mở phiên · brief 1 trang</li></ol>
   </div>
-  <div class="btns">
-    <button class="nb-btn" type="button" data-d="18" data-l="Đọc 12 file Excel">+ 12 file Excel</button>
-    <button class="nb-btn" type="button" data-d="11" data-l="Tra 6 trang web">+ 6 trang web</button>
-    <button class="nb-btn" type="button" data-d="9" data-l="Bản nháp hỏng + lời sửa">+ Nháp hỏng</button>
-    <button class="nb-btn" type="button" data-d="-20" data-l="Tua lại trước lần hỏng">⟲ Tua lại</button>
-    <button class="nb-btn is-solid" type="button" data-reset="1" data-l="Phiên mới + brief">Phiên mới + brief</button>
+
+  <div class="btns" aria-label="Thêm vào hội thoại hoặc dọn hội thoại">
+    <button class="nb-btn" type="button" data-a="excel">+ 12 file Excel</button>
+    <button class="nb-btn" type="button" data-a="web">+ 6 trang web</button>
+    <button class="nb-btn" type="button" data-a="bad">+ Bản hỏng &amp; lời sửa</button>
+    <button class="nb-btn" type="button" data-a="rewind">⟲ Tua lại</button>
+    <button class="nb-btn" type="button" data-a="compact">Nén có trọng tâm</button>
+    <button class="nb-btn is-solid" type="button" data-a="fresh">Phiên mới + brief</button>
   </div>
-  <p class="src">Ngưỡng 40% theo Dex (video 24/03/2026); nguồn khác đưa ngưỡng khác, xem "Chưa thống nhất". Số tiêu hao là minh hoạ.</p>
+
+  <div class="foot">
+    <span class="nb-tag is-info">Ngưỡng % · chưa thống nhất</span>
+    <p class="src">Số minh hoạ, không phải đo thật. Docs chính thức: hết context hiếm khi là vấn đề, nhưng hội thoại tập trung cho kết quả tốt hơn và rẻ hơn. Ngưỡng 40% (Dex) hay 100K (Matt) đặt trong ContradictionNote, không vẽ thành vùng đỏ.</p>
+  </div>
 </section>
 <script>
 (function () {
   var NB = window.NoBabysitting; if (!NB) return;
-  var W = 50, v = 8, shown = { v: 8 }, anim = window.gsap && !NB.reduce();
-  var cm = document.getElementById('cm'), num = document.getElementById('num'), fill = document.getElementById('fill'), empty = document.getElementById('empty');
-  var meter = document.getElementById('meter'), state = document.getElementById('state'), log = document.getElementById('log');
-  var col = NB.colleague(document.getElementById('col'), 'idle');
-  var mt = fill.parentNode;
-  function fit() { mt.style.fontSize = '100px'; var w = mt.getBoundingClientRect().width, cw = fill.textContent.length + empty.textContent.length; var probe = mt.scrollWidth / Math.max(1, cw); mt.style.fontSize = Math.max(9, Math.min(30, 100 * w / (probe * W) * 0.995)) + 'px'; }
-  window.addEventListener('resize', fit);
-  function paint(x) {
-    var f = Math.round(x / 100 * W);
-    fill.textContent = new Array(f + 1).join('█'); empty.textContent = new Array(W - f + 1).join('░');
-    num.textContent = (x < 10 ? '0' : '') + Math.round(x) + '%';
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  var W = 32, anim = window.gsap && !NB.reduce();
+  var $ = function (id) { return document.getElementById(id); };
+  var col = NB.colleague($('col'), 'idle');
+  /* the conversation is a list of blocks; both indices are derived from what is in it, not from fixed thresholds */
+  var BASE = [{ k: 'brief', tok: 8, noise: 0 }];
+  var KIND = {
+    excel: { tok: 62, noise: 4, log: 'Đọc 12 file Excel (cần cho báo cáo)' },
+    web: { tok: 38, noise: 12, log: 'Tra 6 trang web (một nửa không dùng tới)' },
+    bad: { tok: 16, noise: 22, log: 'Bản nháp hỏng + "không phải vậy, thử lại"' }
+  };
+  var conv = BASE.slice(), shown = { f: 96, c: 8 };
+  function totals() {
+    var tok = 0, noise = 0, bad = 0;
+    conv.forEach(function (b) { tok += b.tok; noise += b.noise; if (b.k === 'bad') bad++; });
+    return { f: Math.max(8, Math.round(96 - noise)), c: tok, bad: bad };
   }
-  function render(label) {
-    var s, z, face;
-    if (v < 40) { s = '✓ Vùng an toàn'; z = 'ok'; face = 'working'; }
-    else if (v < 60) { s = '◐ Dumb zone: chất lượng bắt đầu giảm'; z = 'warn'; face = 'thinking'; }
-    else { s = '✕ Nên kết thúc: tua lại, nén có gợi ý, hoặc mở phiên mới'; z = 'bad'; face = 'overloaded'; }
-    cm.dataset.zone = z; state.textContent = s; col.set(v <= 8 ? 'idle' : face);
-    meter.setAttribute('aria-valuenow', String(v)); meter.setAttribute('aria-valuetext', v + '%, ' + s.slice(2));
-    if (label) { var li = document.createElement('li'); li.textContent = '› ' + label; log.appendChild(li); while (log.children.length > 3) log.removeChild(log.firstChild); }
-    if (anim) gsap.to(shown, { v: v, duration: 0.5, ease: 'steps(12)', onUpdate: function () { paint(shown.v); } });
-    else paint(v);
+  function bar(fillEl, emptyEl, v, max) {
+    var n = Math.max(0, Math.min(W, Math.round(v / max * W)));
+    fillEl.textContent = new Array(n + 1).join('█'); emptyEl.textContent = new Array(W - n + 1).join('░');
   }
-  document.querySelectorAll('[data-l]').forEach(function (b) {
+  function paint() {
+    $('fNum').textContent = Math.round(shown.f); $('cNum').textContent = Math.round(shown.c);
+    bar($('fFill'), $('fEmpty'), shown.f, 100); bar($('cFill'), $('cEmpty'), shown.c, 1000);
+  }
+  function log(t) {
+    var li = document.createElement('li'); li.textContent = '› ' + t; $('log').appendChild(li);
+    while ($('log').children.length > 3) $('log').removeChild($('log').firstChild);
+  }
+  function render() {
+    var t = totals();
+    var fWhy = t.bad >= 2 ? t.bad + ' bản hỏng và lời sửa vẫn nằm trong hội thoại; lần thử kế tiếp dễ lặp lại chúng.'
+      : t.bad === 1 ? 'Một bản hỏng còn nằm lại. Tua lại sẽ gọn hơn là sửa tiếp.'
+      : t.f < 80 ? 'Nhiều nội dung không liên quan tới việc đang làm.'
+      : 'Chỉ có nội dung cần cho việc đang làm.';
+    $('fWhy').textContent = fWhy;
+    $('cWhy').textContent = t.c > 100 ? 'Lượt nào cũng gửi lại ' + t.c + 'K token lịch sử, kể cả phần không còn dùng.' : 'Mỗi lượt gửi lại toàn bộ hội thoại, nên lịch sử dài thì lượt nào cũng đắt hơn.';
+    $('fMeter').setAttribute('aria-valuenow', String(t.f)); $('fMeter').setAttribute('aria-valuetext', t.f + ' trên 100. ' + fWhy);
+    $('cMeter').setAttribute('aria-valuenow', String(t.c)); $('cMeter').setAttribute('aria-valuetext', t.c + ' nghìn token mỗi lượt');
+    col.set(t.bad >= 2 || t.f < 50 ? 'thinking' : conv.length > 1 ? 'working' : 'idle');
+    if (anim) gsap.to(shown, { f: t.f, c: t.c, duration: 0.5, ease: 'steps(10)', onUpdate: paint, overwrite: true });
+    else { shown.f = t.f; shown.c = t.c; paint(); }
+  }
+  document.querySelectorAll('[data-a]').forEach(function (b) {
     b.addEventListener('click', function () {
-      var d = Number(b.dataset.d || 0);
-      v = b.dataset.reset ? 6 : Math.max(0, Math.min(100, v + d));
-      render((d > 0 ? '+' + d + '% ' : '') + b.dataset.l);
+      var a = b.dataset.a;
+      if (KIND[a]) { conv.push({ k: a, tok: KIND[a].tok, noise: KIND[a].noise }); log(KIND[a].log); }
+      else if (a === 'rewind') {
+        var i = -1; conv.forEach(function (x, j) { if (x.k === 'bad') i = j; });
+        if (i < 0) { log('Không có bản hỏng nào để tua lại'); return; }
+        conv.splice(i, 1); log('Tua lại trước lần hỏng · yêu cầu viết lại rõ hơn');
+      } else if (a === 'compact') {
+        conv = [{ k: 'summary', tok: 14, noise: 2 }].concat(conv.filter(function (x) { return x.k === 'excel'; }).map(function (x) { return { k: 'excel', tok: 20, noise: 2 }; }));
+        log('/compact giữ lại số liệu tuần này, bỏ phần thử hỏng');
+      } else if (a === 'fresh') { conv = BASE.slice(); log('Phiên mới + brief 1 trang'); }
+      render();
     });
   });
-  paint(v); fit();
+  paint();
 })();
 </script>
 </body>

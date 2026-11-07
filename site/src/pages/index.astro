@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Hud from '../components/Hud.astro';
+import Intro from '../components/scenes/Intro.astro';
+import TwoFlips from '../components/scenes/TwoFlips.astro';
+import Journey from '../components/scenes/Journey.astro';
+import Harness from '../components/scenes/Harness.astro';
+import Finale from '../components/scenes/Finale.astro';
+import { chapters } from '../lib/chapters';
+import { LIVE } from '../lib/status';
+---
+<Base>
+  <Hud />
+  <Intro />
+
+  <section class="manifesto-wrap" aria-label="Tuyên ngôn">
+  <canvas class="nb-canvas terrain" id="man-cv" aria-hidden="true"></canvas>
+  <div class="wrap manifesto">
+    <span class="nb-micro" data-reveal="up">Vì sao có trang này</span>
+    <p class="nb-q big" data-reveal="fill">Claude không cần bạn canh từng bước. Nó cần một bản brief rõ, một bộ hướng dẫn gọn, quyền đặt đúng chỗ và một cách tự kiểm chứng. Phần còn lại, nó tự làm.</p>
+    <hr class="nb-rule" data-reveal="rule" />
+    <span class="nb-micro beta" data-reveal="up"><span class="nb-mk is-info" aria-hidden="true"></span>Bản beta · số liệu dưới đây là những gì đã có thật, tăng dần theo từng đợt</span>
+    <div class="facts">
+      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(chapters.length)}</p><span class="nb-micro">phần trong lộ trình</span></div>
+      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(LIVE.chapters.length)}</p><span class="nb-micro">chương đã viết đầy đủ</span></div>
+      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(LIVE.simulators.length)}</p><span class="nb-micro">simulator chạy thật</span></div>
+      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(LIVE.librarySamples)}</p><span class="nb-micro">mục Library mẫu</span></div>
+    </div>
+  </div>
+  </section>
+
+  <div class="wrap"><TwoFlips /></div>
+  <Journey />
+  <div class="wrap"><Harness /></div>
+
+  <Finale />
+</Base>
+
+<style>
+  .manifesto-wrap { position: relative; overflow: hidden; }
+  .terrain { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; opacity: .5; pointer-events: none; }
+  .manifesto { position: relative; display: grid; gap: 28px; padding-block: 120px 96px; }
+  .facts > div { background: color-mix(in srgb, var(--bg) 70%, transparent); }
+  .beta { color: var(--fg-muted); display: inline-flex; gap: 8px; align-items: center; }
+  .big { margin: 0; font-size: clamp(30px, 4.6vw, 64px); line-height: 1.16; max-width: 22ch; }
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .facts > div { display: grid; gap: 6px; }
+  .n { margin: 0; font-size: clamp(64px, 9vw, 128px); line-height: .85; color: var(--fg); font-variant-numeric: tabular-nums; }
+  @media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr; } .manifesto { padding-block: 72px; } }
+</style>
+
+<script>
+  /* manifesto: a low-key ASCII terrain (ChapterOpener's source) rises out of noise as the statement is read */
+  function start(w: any) {
+    const NB = w.NoBabysitting, gsap = w.gsap, reduce = NB.reduce();
+    const A = NB.ascii(document.getElementById('man-cv'), {
+      cell: [9, 16], order: reduce ? 1 : 0, sweep: 0.3, noiseFill: 0.25, pointer: false,
+      ramp: ' .·:/\\+*', tone: 'fg-muted', frontColor: 'fg', source: NB.sources.terrain({ scale: 0.055, threshold: 0.56, slope: 0.45, seed: 7 }),
+    });
+    if (reduce || !gsap) return;
+    gsap.to(A.state, { order: 1, ease: 'none', onUpdate: A.redraw, scrollTrigger: { trigger: '.manifesto-wrap', start: 'top 70%', end: 'bottom 60%', scrub: true } });
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>

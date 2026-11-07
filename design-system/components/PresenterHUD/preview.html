@@ -1,0 +1,159 @@
+<!-- @dsCard group="HUD" height=640 subtitle="PresenterHUD · thanh dưới khi trình chiếu · beat c02:b2 + pha · đồng hồ chương so với dự kiến · thanh Thảo luận ở pha đoán · phím tắt (?)" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>PresenterHUD</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .pr{padding:44px 0 0;display:grid;grid-template-rows:auto auto}
+  .stage{position:relative;min-height:300px;display:grid;align-content:center;gap:14px;padding:28px 36px;border-top:1px solid var(--control)}
+  .stage .ph{color:var(--fg-muted)}
+  .stage .q{margin:0;font-size:clamp(28px,4.4vw,46px);color:var(--fg);max-width:24ch}
+  .stage .ghost{right:-6px;bottom:-10px;font-size:220px}
+  .hud{display:grid;grid-template-columns:auto auto 1fr auto;align-items:stretch;border-top:1px solid var(--fg);background:var(--bg-raised);min-height:56px}
+  .hud > *{display:flex;align-items:center;gap:10px;padding:8px 14px;border-right:1px solid var(--control);min-width:0}
+  .hud > *:last-child{border-right:0}
+  .bid{font:600 15px/1 var(--font-mono);color:var(--fg)}
+  .phase{font:600 12.5px/1 var(--font-mono);color:var(--fg-muted)}
+  .ticks{display:flex;gap:3px}
+  .ticks i{display:block;width:12px;height:12px;border:1px solid var(--control)}
+  .ticks i.past{background:var(--fg-muted);border-color:var(--fg-muted)}
+  .ticks i.cur{background:var(--accent);border-color:var(--accent)}
+  .clock{font:600 22px/1 var(--font-wide);font-stretch:62%;color:var(--fg);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .clock small{font:500 12.5px/1 var(--font-mono);color:var(--fg-subtle);margin-left:6px}
+  .clock.over{color:var(--warn)}
+  .disc{justify-content:flex-start}
+  .disc .bar{font:500 13px/1 var(--font-mono);white-space:pre;color:var(--fg)}
+  .disc .bar .e{color:var(--control)}
+  .disc .t{font:600 13px/1 var(--font-mono);color:var(--fg);font-variant-numeric:tabular-nums}
+  .disc.off{color:var(--fg-subtle)}
+  .disc .nb-btn,.keys .nb-btn{padding:7px 9px;white-space:nowrap}
+  .disc .nb-micro{white-space:nowrap}
+  .keys{gap:6px}
+  .dlg{position:absolute;right:14px;bottom:70px;z-index:10;width:min(420px,calc(100% - 28px));background:var(--bg-raised);border:1px solid var(--fg);box-shadow:var(--shadow-overlay);display:none}
+  .dlg.on{display:block}
+  .dlg header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--control)}
+  .dlg dl{margin:0;padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14px}
+  .dlg dt{justify-self:start}
+  kbd{font:600 12px/1 var(--font-mono);border:1px solid var(--control);padding:3px 6px;color:var(--fg);white-space:nowrap}
+  .toast{position:absolute;left:14px;bottom:70px;z-index:9;background:var(--fg);color:var(--bg);font:600 12.5px/1.3 var(--font-mono);padding:8px 10px;opacity:0;pointer-events:none}
+  @media (max-width:760px){
+    .hud{grid-template-columns:1fr}
+    .hud > *{border-right:0;border-bottom:1px solid var(--control);flex-wrap:wrap}
+    .keys{justify-content:flex-start}
+    .stage{padding:22px 18px}
+  }
+</style>
+</head>
+<body>
+<section class="nb nb-frame pr" id="pr" aria-labelledby="pt">
+  <span class="nb-corner tl nb-micro" id="pt"><span class="nb-sq"></span>PresenterHUD · chế độ trình chiếu</span>
+  <span class="nb-corner tr nb-micro">thanh dưới · phím tắt <b>?</b></span>
+
+  <div class="stage" aria-live="polite">
+    <span class="nb-ghost ghost" aria-hidden="true">02</span>
+    <span class="nb-micro ph" id="ph">Chương 02 · pha hỏi</span>
+    <p class="nb-q q" id="q">Lần thử thứ 3 sẽ tốt hơn hay tệ hơn?</p>
+  </div>
+
+  <footer class="hud" aria-label="Điều khiển trình chiếu">
+    <div><span class="bid" id="bid">c02:b1</span><span class="phase" id="phase">hỏi</span><span class="ticks" id="ticks" aria-hidden="true"></span></div>
+    <div><span class="clock" id="clock" role="timer" aria-label="Thời gian chương">00:00<small>/ 12:00</small></span></div>
+    <div class="disc off" id="disc">
+      <span class="nb-micro">Thảo luận</span>
+      <span class="bar" id="dbar" aria-hidden="true"></span>
+      <span class="t" id="dt">—</span>
+      <button class="nb-btn" type="button" id="dbtn" disabled>Bắt đầu · D</button>
+    </div>
+    <div class="keys">
+      <button class="nb-btn" type="button" id="prev" aria-label="Beat trước">←</button>
+      <button class="nb-btn" type="button" id="next" aria-label="Beat sau">→</button>
+      <button class="nb-btn" type="button" id="notes">Notes · N</button>
+      <button class="nb-btn" type="button" id="help" aria-expanded="false" aria-controls="dlg">?</button>
+    </div>
+  </footer>
+
+  <div class="dlg" id="dlg" role="dialog" aria-modal="false" aria-labelledby="dh" tabindex="-1">
+    <header><span class="nb-micro" id="dh"><span class="nb-sq"></span>Phím tắt</span><button class="nb-btn" type="button" id="dclose">Đóng · Esc</button></header>
+    <dl>
+      <dt><kbd>→</kbd> <kbd>Space</kbd></dt><dd>Beat sau (chạy timeline tới nhãn kế)</dd>
+      <dt><kbd>←</kbd></dt><dd>Beat trước</dd>
+      <dt><kbd>D</kbd></dt><dd>Bắt đầu hoặc dừng thảo luận (chỉ ở pha đoán)</dd>
+      <dt><kbd>N</kbd></dt><dd>Mở cửa sổ speaker notes</dd>
+      <dt><kbd>B</kbd></dt><dd>Màn hình tối (tạm dừng)</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng này; nhấn lần nữa để thoát trình chiếu</dd>
+      <dt><kbd>?</kbd></dt><dd>Mở bảng phím tắt</dd>
+    </dl>
+  </div>
+  <span class="toast" id="toast" role="status"></span>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  var anim = window.gsap && !NB.reduce(), $ = function (id) { return document.getElementById(id); };
+  var BEATS = [
+    ['hỏi', 'Lần thử thứ 3 sẽ tốt hơn hay tệ hơn?'],
+    ['đoán', 'Chốt dự đoán của bạn, rồi thảo luận với người bên cạnh.'],
+    ['thấy', 'Mỗi lượt thêm khối vào hội thoại. Nhìn hai chỉ số.'],
+    ['hiểu', 'Context là bộ nhớ làm việc, xoá ở mỗi phiên.'],
+    ['cách làm', 'Xem, nén, tua lại và mở phiên mới trên bề mặt của bạn.'],
+    ['thấy', 'Sửa tiếp hay tua lại?'],
+    ['làm', 'S2 · Ngã ba sau mỗi lượt.'],
+    ['nhớ', 'Khi nào phiên mới + brief tốt hơn nén?']
+  ];
+  var b = 0, t0 = Date.now(), PLAN = 12 * 60, DISC = 90, dLeft = DISC, dRun = null;
+  BEATS.forEach(function () { $('ticks').appendChild(document.createElement('i')); });
+  function mmss(s) { s = Math.abs(Math.round(s)); return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + s % 60).slice(-2); }
+  function clock() {
+    var el = (Date.now() - t0) / 1000 + 6 * 60 + 42; /* preview starts mid-chapter */
+    var over = el > PLAN; $('clock').classList.toggle('over', over);
+    $('clock').innerHTML = (over ? '◐ +' + mmss(el - PLAN) : mmss(el)) + '<small>/ 12:00</small>';
+  }
+  function disc() {
+    var on = BEATS[b][0] === 'đoán', W = 16, f = Math.round(dLeft / DISC * W);
+    $('disc').classList.toggle('off', !on); $('dbtn').disabled = !on;
+    $('dbar').innerHTML = on ? new Array(f + 1).join('█') + '<span class="e">' + new Array(W - f + 1).join('░') + '</span>' : '';
+    $('dt').textContent = on ? mmss(dLeft) : '—';
+    $('dbtn').textContent = dRun ? 'Dừng · D' : 'Bắt đầu · D';
+  }
+  function stopDisc() { if (dRun) { clearInterval(dRun); dRun = null; } }
+  function toggleDisc() {
+    if (BEATS[b][0] !== 'đoán') return;
+    if (dRun) { stopDisc(); disc(); return; }
+    if (dLeft <= 0) dLeft = DISC;
+    dRun = setInterval(function () { dLeft--; if (dLeft <= 0) { dLeft = 0; stopDisc(); toast('Hết giờ thảo luận'); } disc(); }, 1000); disc();
+  }
+  function go(n) {
+    b = Math.max(0, Math.min(BEATS.length - 1, n)); stopDisc(); dLeft = DISC;
+    $('bid').textContent = 'c02:b' + (b + 1); $('phase').textContent = BEATS[b][0];
+    [].forEach.call($('ticks').children, function (i, k) { i.className = k < b ? 'past' : k === b ? 'cur' : ''; });
+    $('ph').textContent = 'Chương 02 · pha ' + BEATS[b][0]; $('q').textContent = BEATS[b][1];
+    if (anim) gsap.fromTo('#q', { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.48, ease: 'power3.out' });
+    disc();
+  }
+  function toast(t) { $('toast').textContent = t; if (anim) gsap.fromTo('#toast', { autoAlpha: 1 }, { autoAlpha: 0, delay: 1.4, duration: 0.24 }); else { $('toast').style.opacity = 1; setTimeout(function () { $('toast').style.opacity = 0; }, 1600); } }
+  function help(on) { $('dlg').classList.toggle('on', on); $('help').setAttribute('aria-expanded', String(on)); if (on) $('dlg').focus({ preventScroll: true }); else $('help').focus({ preventScroll: true }); }
+  $('prev').addEventListener('click', function () { go(b - 1); });
+  $('next').addEventListener('click', function () { go(b + 1); });
+  $('dbtn').addEventListener('click', toggleDisc);
+  $('notes').addEventListener('click', function () { toast('Site thật mở cửa sổ notes (đồng bộ qua BroadcastChannel)'); });
+  $('help').addEventListener('click', function () { help(!$('dlg').classList.contains('on')); });
+  $('dclose').addEventListener('click', function () { help(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.target.closest && e.target.closest('input, textarea')) return;
+    if (e.key === 'ArrowRight' || (e.key === ' ' && e.target === document.body)) { e.preventDefault(); go(b + 1); }
+    else if (e.key === 'ArrowLeft') go(b - 1);
+    else if (e.key === '?') help(true);
+    else if (e.key === 'Escape') help(false);
+    else if (e.key === 'd' || e.key === 'D') toggleDisc();
+    else if (e.key === 'n' || e.key === 'N') $('notes').click();
+  });
+  go(0); clock(); setInterval(clock, 1000);
+})();
+</script>
+</body>
+</html>

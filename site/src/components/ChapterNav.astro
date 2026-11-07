@@ -1,0 +1,32 @@
+---
+/* ChapterRail as a footer index + prev/next. */
+import { chapters, indexOf, href, PARTS } from '../lib/chapters';
+const { current } = Astro.props as { current: string };
+const i = indexOf(current), prev = chapters[i - 1], next = chapters[i + 1];
+---
+<nav class="cn" aria-label="Mục lục chương">
+  <div class="pn">
+    {prev ? <a class="nb-btn" href={href(prev.id)}>← {prev.no} · {prev.en}</a> : <span />}
+    {next && <a class="nb-btn is-solid" href={href(next.id)}>{next.no} · {next.en} →</a>}
+  </div>
+  <ol class="rail">
+    {chapters.map((c, k) => (
+      <li><a href={href(c.id)} aria-current={k === i ? 'step' : undefined} class={k < i ? 'past' : ''}>
+        <span class="g" aria-hidden="true">{k < i ? '✓' : k === i ? '■' : '·'}</span><span class="no">{c.no}</span><span class="en">{c.en}</span><span class="vi">{c.vi}</span>
+      </a></li>
+    ))}
+  </ol>
+</nav>
+<style>
+  .cn { display: grid; gap: 24px; border-top: 1px solid var(--control); padding-top: 24px; }
+  .pn { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .rail { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); border-top: 1px solid var(--line); }
+  .rail a { display: grid; grid-template-columns: 2ch 4ch 1fr; gap: 2px 10px; padding: 10px 8px; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--fg-subtle); }
+  .rail a:hover { background: var(--bg-raised); }
+  .rail a.past { color: var(--fg-muted); }
+  .rail a[aria-current='step'] { color: var(--fg); background: var(--bg-raised); box-shadow: inset 3px 0 var(--accent); }
+  .rail a[aria-current='step'] .g { color: var(--accent); }
+  .g, .no { font: 600 13px/1.4 var(--font-mono); }
+  .en { font: 600 13px/1.4 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+  .vi { grid-column: 3; font-size: 13.5px; }
+</style>
