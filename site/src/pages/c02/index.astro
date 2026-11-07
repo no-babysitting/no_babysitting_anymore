@@ -3,6 +3,11 @@ import Base from '../../layouts/Base.astro';
 import ContextMeter from '../../components/ContextMeter.astro';
 import Hud from '../../components/Hud.astro';
 import ChapterNav from '../../components/ChapterNav.astro';
+import ChapterOpener from '../../components/ds/ChapterOpener.astro';
+import QuestionReveal from '../../components/QuestionReveal.astro';
+import { chapters } from '../../lib/chapters';
+import { openerProps } from '../../lib/opener';
+const c02 = chapters.find((c) => c.id === 'c02')!;
 /* c02 · The Briefing Budget. Beats b1–b3 and b4 (part) from docs/02-pedagogical-script.md §02.
    Beat text is quoted from the script; sources per beat are listed under each section. */
 ---
@@ -10,18 +15,11 @@ import ChapterNav from '../../components/ChapterNav.astro';
   <Hud current="c02" />
 
   <main class="wrap ch">
-    <section class="opener" aria-labelledby="c02-title">
-      <p class="nb-cond idx" aria-hidden="true">02</p>
-      <div>
-        <span class="nb-micro"><span class="nb-sq"></span>Chương 02 · 10 phút</span>
-        <h1 class="nb-wide name" id="c02-title">The Briefing Budget</h1>
-        <p class="sub">Ngân sách ngữ cảnh: độ tập trung và chi phí, ngã ba sau mỗi lượt.</p>
-      </div>
-    </section>
+    <ChapterOpener {...openerProps(c02)} />
 
     <section class="beat" id="c02-b1" aria-labelledby="b1q">
       <span class="nb-micro">b1 · hỏi</span>
-      <h2 class="nb-q q" id="b1q">Claude vừa viết hỏng phần phân tích 2 lần. Bạn nhắn "không phải vậy, thử lại". Lần thứ 3 sẽ tốt hơn hay tệ hơn?</h2>
+      <h2 class="nb-q q" id="b1q" data-m5>Claude vừa viết hỏng phần phân tích 2 lần. Bạn nhắn "không phải vậy, thử lại". Lần thứ 3 sẽ tốt hơn hay tệ hơn?</h2>
     </section>
 
     <section class="beat" id="c02-b2" aria-labelledby="b2h">
@@ -48,6 +46,7 @@ import ChapterNav from '../../components/ChapterNav.astro';
     </section>
 
     <ChapterNav current="c02" />
+    <QuestionReveal />
   </main>
 </Base>
 

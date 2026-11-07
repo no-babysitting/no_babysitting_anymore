@@ -2,10 +2,12 @@
 import Base from '../layouts/Base.astro';
 import SurfaceTabs from '../components/SurfaceTabs.astro';
 import Hud from '../components/Hud.astro';
+import AsciiHero from '../components/ds/AsciiHero.astro';
 import { chapters, href, PARTS } from '../lib/chapters';
 ---
 <Base>
   <Hud />
+  <div class="wrap herox"><AsciiHero /></div>
   <main class="wrap hero">
     <span class="nb-micro"><span class="nb-sq"></span>Mở đầu · M0 tracer bullet</span>
     <div id="mark"></div>
@@ -39,6 +41,7 @@ import { chapters, href, PARTS } from '../lib/chapters';
   .toc .no { font-size: 56px; line-height: .85; }
   .toc .en { font: 600 13px/1.3 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
   .toc .vi { font-size: 14px; color: var(--fg-muted); }
+  .herox { padding-top: 24px; }
 </style>
 <script>
   const NB = (window as any).NoBabysitting;

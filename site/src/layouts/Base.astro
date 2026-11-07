@@ -22,8 +22,14 @@ const { title = 'No Babysitting' } = Astro.props;
   import { gsap } from 'gsap';
   import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
   import { Flip } from 'gsap/Flip';
-  gsap.registerPlugin(ScrambleTextPlugin, Flip);
-  (window as any).gsap = gsap; (window as any).ScrambleTextPlugin = ScrambleTextPlugin; (window as any).Flip = Flip;
+  import { SplitText } from 'gsap/SplitText';
+  import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
+  import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
+  import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+  import { CustomEase } from 'gsap/CustomEase';
+  const P = { ScrambleTextPlugin, Flip, SplitText, DrawSVGPlugin, MorphSVGPlugin, MotionPathPlugin, CustomEase };
+  gsap.registerPlugin(...Object.values(P));
+  Object.assign(window as any, P, { gsap });
   document.dispatchEvent(new Event('nb:gsap'));
 </script>
 </body>

@@ -3,6 +3,15 @@
 import Base from '../../layouts/Base.astro';
 import Hud from '../../components/Hud.astro';
 import ChapterNav from '../../components/ChapterNav.astro';
+import ChapterOpener from '../../components/ds/ChapterOpener.astro';
+import QuestionReveal from '../../components/QuestionReveal.astro';
+import AgentWindow from '../../components/ds/AgentWindow.astro';
+import FloatingOps from '../../components/ds/FloatingOps.astro';
+import StatusBoard from '../../components/ds/StatusBoard.astro';
+import TheColleague from '../../components/ds/TheColleague.astro';
+import ThenNowCard from '../../components/ds/ThenNowCard.astro';
+import CinematicAscii from '../../components/ds/CinematicAscii.astro';
+import { openerProps } from '../../lib/opener';
 import { chapters, PARTS } from '../../lib/chapters';
 import { inline } from '../../lib/matrix';
 export function getStaticPaths() {
@@ -15,16 +24,9 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
 <Base title={`${c.no} · ${c.en} · No Babysitting`}>
   <Hud current={c.id} />
   <main class="wrap ch">
-    <section class="opener" aria-labelledby="t">
-      <p class="nb-cond idx" aria-hidden="true">{c.no}</p>
-      <div>
-        <span class="nb-micro"><span class="nb-sq"></span>{PARTS[c.id]}{c.level && ` · ${c.level.toUpperCase()}`} · {mins}</span>
-        <h1 class="nb-wide name" id="t">{c.en}</h1>
-        <p class="sub">{c.vi}</p>
-      </div>
-    </section>
+    <ChapterOpener {...openerProps(c)} />
 
-    <section class="beat" aria-labelledby="q"><span class="nb-micro">b1 · hỏi</span><h2 class="nb-q q" id="q">{c.question}</h2></section>
+    <section class="beat" aria-labelledby="q"><span class="nb-micro">b1 · hỏi</span><h2 class="nb-q q" id="q" data-m5>{c.question}</h2></section>
 
     <section class="facts">
       {c.goals && <div><span class="nb-micro">Mục tiêu</span><p set:html={inline(c.goals)} /></div>}
@@ -44,7 +46,19 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
       {c.sources && <p class="src nb-micro">Nguồn trong kịch bản · <span set:html={inline(c.sources)} /></p>}
     </section>
 
+    {c.id === 'c00' && <>
+      <section class="scene"><span class="nb-micro">Lần tung thứ hai · agentic: Claude làm việc trong harness</span><AgentWindow /></section>
+      <section class="scene"><span class="nb-micro">Hệ thống đang vận hành · báo cáo tuần W45</span><FloatingOps /></section>
+      <section class="scene"><span class="nb-micro">Báo cáo tuần · 4 tiêu chí mà 11 chương sẽ mở khoá</span><StatusBoard /></section>
+    </>}
+    {c.id === 'c01' && <section class="scene"><span class="nb-micro">Gặp đồng nghiệp mới</span><TheColleague /></section>}
+    {c.id === 'c10' && <>
+      <section class="scene"><span class="nb-micro">Six shifts · hồi đó → bây giờ</span><ThenNowCard /></section>
+      <section class="scene"><span class="nb-micro">Finale</span><CinematicAscii /></section>
+    </>}
+
     <ChapterNav current={c.id} />
+    <QuestionReveal />
   </main>
 </Base>
 <style>
@@ -54,6 +68,7 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
   .name { margin: 8px 0 10px; font-size: clamp(28px, 5vw, 60px); }
   .sub { margin: 0; color: var(--fg-muted); font-size: 17px; max-width: 44ch; }
   .beat { display: grid; gap: 16px; }
+  .scene { display: grid; gap: 12px; }
   .q { margin: 0; font-size: clamp(28px, 4vw, 52px); max-width: 26ch; }
   .facts { display: grid; grid-template-columns: 1fr 1fr; border-block: 1px solid var(--control); }
   .facts > div { padding: 18px 18px 18px 0; display: grid; gap: 8px; align-content: start; }

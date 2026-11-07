@@ -1,0 +1,18 @@
+---
+/* M5 · câu hỏi bước vào: SplitText words + mask on every .nb-q[data-m5] once it scrolls into view. */
+---
+<script>
+  function start(w: any) {
+    const { gsap, SplitText } = w;
+    if (!gsap || !SplitText || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll<HTMLElement>('[data-m5]').forEach((el) => {
+      const io = new IntersectionObserver((e) => {
+        if (!e[0].isIntersecting) return; io.disconnect();
+        SplitText.create(el, { type: 'words', mask: 'words', aria: 'auto', autoSplit: true, onSplit: (s: any) =>
+          gsap.from(s.words, { yPercent: 110, duration: 0.7, ease: 'power3.out', stagger: 0.04 }) });
+      }, { threshold: 0.4 });
+      io.observe(el);
+    });
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>
