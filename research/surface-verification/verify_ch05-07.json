@@ -1,0 +1,361 @@
+{
+ "verdicts": [
+  {
+   "claim": "Desktop permission mode labels Manual, Accept edits, Plan, Auto, Bypass permissions; selector sits in the row under the prompt box",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Cmd+Shift+M (Ctrl+Shift+M on Windows) opens the Desktop permission mode menu; Shift+Tab does not cycle modes on Desktop",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Bypass permissions on Pro/Max/Ultra needs 'Allow bypass permissions mode' in Settings > Code (or Settings > Claude Code); Team/Enterprise use org policy",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Team and Enterprise 'mặc định bật Auto'",
+   "status": "corrected",
+   "correction": "Auto is AVAILABLE by default on Team and Enterprise, not the default starting mode. Admins can turn it off with permissions.disableAutoMode set to \"disable\" in managed settings.",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Auto becomes the default mode from v2.1.283 (Desktop implied)",
+   "status": "corrected",
+   "correction": "Docs say auto is the built-in starting mode for interactive terminal and VS Code sessions from v2.1.283 (v2.1.228 on macOS/Linux/WSL, v2.1.233 on native Windows, per the page). Desktop is not named. claude -p and Agent SDK start in Manual from v2.1.302.",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Auto mode requires a supported model",
+   "status": "verified",
+   "correction": "Stated list: Opus 4.6+, Sonnet 4.6+, Haiku 5.5, or a Fable model on the Anthropic API. Bedrock, Vertex, Foundry and gateway sessions need Sonnet 5+, Opus 4.7+, Haiku 5.5 or Fable.",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Cloud sessions offer only Accept edits, Plan, Auto (no Bypass)",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Shift+Tab cycles modes in the CLI; claude --permission-mode and defaultMode accept plan, acceptEdits, auto, dontAsk, bypassPermissions (manual alias)",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Skill locations ~/.claude/skills and .claude/skills; invoke with /skill-name; personal skills do not load in Cowork or cloud sessions",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "claim": "Commands merged into skills; .claude/commands files still work; skill wins on a name collision",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "claim": "Skill(name) permission syntax and skillOverrides values",
+   "status": "verified",
+   "correction": "Also: Skill(name *) for prefix match. skillOverrides values are on, name-only, user-invocable-only, off.",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "claim": "No documented skill file size limit; SKILL.md recommended under 500 lines",
+   "status": "verified",
+   "correction": "Add: description plus when_to_use truncated at 1,536 characters in the skill listing.",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "claim": "claude.ai upload accepts only 6 frontmatter fields (name, description, license, compatibility, metadata, allowed-tools)",
+   "status": "unverifiable",
+   "correction": "The Skills docs list 19 frontmatter fields for Claude Code. The claude.ai support article was not fetched, so the 6-field limit on upload is unchecked.",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "claim": "Desktop/claude.ai path Customize > Skills > + > Create skill > Upload a skill; Settings > Capabilities toggle; Team/Enterprise Organization settings > Plugins & skills > Policy",
+   "status": "unverifiable",
+   "correction": "Not stated on the fetched pages. Needs the support.claude.com skills article.",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "claim": "Desktop has a subagent panel under the prompt box and /tasks to view status",
+   "status": "corrected",
+   "correction": "Desktop docs describe a Background tasks pane, opened from the title bar's ⋮ menu once background work exists. It covers subagents, background shell commands and workflows. Clicking an entry shows its output or stops it. A 'subagent panel under the input' and /tasks are not stated.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Subagent file needs name and description; locations .claude/agents, ~/.claude/agents, --agents flag; invoke @agent-name or claude --agent",
+   "status": "verified",
+   "correction": "Priority order: managed, --agents flag, project, user, plugin. Invocation can also be natural language or the @ typeahead.",
+   "sources": [
+    "https://code.claude.com/docs/en/sub-agents.md"
+   ]
+  },
+  {
+   "claim": "Built-in subagents Explore, Plan, General-purpose; Explore and Plan are read-only",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/sub-agents.md"
+   ]
+  },
+  {
+   "claim": "Disable Explore with deny Agent(Explore) or CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1 (from v2.1.198)",
+   "status": "corrected",
+   "correction": "The env var removes both Explore AND Plan, not Explore alone. Deny rule Agent(Explore) removes only Explore. Requires v2.1.198 or later.",
+   "sources": [
+    "https://code.claude.com/docs/en/sub-agents.md"
+   ]
+  },
+  {
+   "claim": "Repo .claude/agents subagents load automatically in cloud sessions",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Hooks: 33 events (PreToolUse, PostToolUse, Stop, SessionStart, Notification, UserPromptSubmit, etc.)",
+   "status": "verified",
+   "correction": "Counted from the hooks page table: 33 events, including SessionEnd, PreCompact, PostCompact, PreModelSwitch and others.",
+   "sources": [
+    "https://code.claude.com/docs/en/hooks.md"
+   ]
+  },
+  {
+   "claim": "Hook locations: ~/.claude/settings.json, .claude/settings.json, .claude/settings.local.json, managed, plugin hooks/hooks.json, skill/subagent frontmatter; /hooks is read-only",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/hooks.md"
+   ]
+  },
+  {
+   "claim": "Desktop fires the same hook events from settings files; cloud sessions do not read the local ~/.claude/settings.json",
+   "status": "verified",
+   "correction": "Which hooks reach a cloud session depends on cloud environment setup. Repo .claude/settings.json is not stated as always applied.",
+   "sources": [
+    "https://code.claude.com/docs/en/hooks.md"
+   ]
+  },
+  {
+   "claim": "No hook UI exists on desktop or claude.ai; hooks are file-only",
+   "status": "unverifiable",
+   "correction": "The docs do not mention any app UI for hooks. Their absence is not confirmed either way, so write 'not documented' rather than 'none'.",
+   "sources": [
+    "https://code.claude.com/docs/en/hooks.md"
+   ]
+  },
+  {
+   "claim": "Permission rule precedence local > project > user, plus Desktop sharing CLI rules",
+   "status": "unverifiable",
+   "correction": "The permissions page was not fetched. The cloud page confirms only that a managed allowManagedPermissionRulesOnly setting makes Claude Code ignore repo permission rules.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Sandbox enabled via /sandbox (Mode tab) or sandbox.enabled true; off by default; macOS, Linux, WSL2 only; native Windows unsupported; Docker incompatible; default network allowlist empty",
+   "status": "verified",
+   "correction": "The /sandbox panel has Mode, Overrides and Config tabs.",
+   "sources": [
+    "https://code.claude.com/docs/en/sandboxing.md"
+   ]
+  },
+  {
+   "claim": "Sandbox does not cover Read, Edit, Write, WebFetch, WebSearch, hooks, local MCP servers",
+   "status": "verified",
+   "correction": "Add: allowedDomains does not limit WebFetch, and denyRead does not stop the Read tool. Rules for these tools are permission rules, not sandbox rules.",
+   "sources": [
+    "https://code.claude.com/docs/en/sandboxing.md"
+   ]
+  },
+  {
+   "claim": "claude mcp add --transport http <name> <url>; stdio form with -- ; scopes local (default), project (.mcp.json), user; /mcp for status and OAuth",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/mcp.md"
+   ]
+  },
+  {
+   "claim": "claude.ai connectors rank lowest in Claude Code precedence",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/mcp.md"
+   ]
+  },
+  {
+   "claim": "Connectors in claude.ai via + > Connectors or Customize > Connectors; Free plan limited to 1 custom remote MCP; connector traffic from Anthropic cloud; servers must be public",
+   "status": "unverifiable",
+   "correction": "Support article 11176164 was not fetched. The MCP page's visible text does not state the cloud-origin or public-reachability claims; the rest of the page was truncated.",
+   "sources": [
+    "https://code.claude.com/docs/en/mcp.md"
+   ]
+  },
+  {
+   "claim": "Desktop: + next to prompt > Add plugins; scopes user, project, local; not in cloud sessions or WSL",
+   "status": "verified",
+   "correction": "Also: plugins installed from the desktop app are not available for cloud sessions.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "CLI /plugin, /plugin install name@marketplace, claude-plugins-official auto-added; VS Code /plugins; Cowork plugin loading",
+   "status": "unverifiable",
+   "correction": "The plugins install page was not fetched.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Claude in Chrome: extension 1.0.36+, Chrome/Edge/Chromium, plan Pro/Max/Ultra/Team/Enterprise, /login required (API key not allowed), not on WSL",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ]
+  },
+  {
+   "claim": "CLI: claude --chrome; /chrome then Enabled by default; /mcp > claude-in-chrome > View tools",
+   "status": "verified",
+   "correction": "Enabled by default raises context usage. Browser actions run in a visible window; Claude pauses for logins and CAPTCHAs.",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ]
+  },
+  {
+   "claim": "Desktop path Settings > Customize > Connectors > Claude in Chrome > Configure; Cowork Preferred browser setting",
+   "status": "unverifiable",
+   "correction": "Not present in the Chrome page, which covers only CLI and VS Code.",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ]
+  },
+  {
+   "claim": "Computer use is a research preview; macOS 14+ and Windows on Desktop; Pro/Max/Ultra only, not Team or Enterprise",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/computer-use.md"
+   ]
+  },
+  {
+   "claim": "Desktop path Settings > This computer > System (or Capabilities) > Enable computer use; macOS needs Accessibility and Screen Recording",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Per-app prompt 'Allow for this session' or 'Deny' on Desktop",
+   "status": "unverifiable",
+   "correction": "The wording comes from the CLI page. Desktop per-app wording was not confirmed.",
+   "sources": [
+    "https://code.claude.com/docs/en/computer-use.md"
+   ]
+  },
+  {
+   "claim": "CLI: macOS only, /mcp > computer-use > Enable, interactive only (not -p), Esc stops",
+   "status": "verified",
+   "correction": "Setting persists per project. Ctrl+C also stops. Only one session can hold computer use at a time.",
+   "sources": [
+    "https://code.claude.com/docs/en/computer-use.md"
+   ]
+  },
+  {
+   "claim": "Terminal and IDE apps carry shell-equivalent risk",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/computer-use.md"
+   ]
+  },
+  {
+   "claim": "Browser pane: Cmd/Ctrl+Shift+B or Browser in title bar; Auto-verify on by default; Browser tools toggle in Settings > Code; no tools over SSH",
+   "status": "verified",
+   "correction": "Auto-verify is turned off with the toggle in the pane's ⋮ menu or autoVerify false in .claude/launch.json. The claim that Claude creates launch.json is only partly supported.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Code Review: Team/Enterprise only, Owner enables, GitHub App, Quick/Standard/Deep; inline comments and check run; never approves or blocks; not on ZDR or HIPAA",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/code-review.md"
+   ]
+  },
+  {
+   "claim": "/code-review on any plan; flags --fix, --comment (GitHub or GitLab via glab), effort low to max; /code-review ultra needs claude.ai login",
+   "status": "corrected",
+   "correction": "Any-plan availability is verified. The flags, glab support, and ultra login requirement come from the code-review-local page, which was not fetched, so treat them as unverified.",
+   "sources": [
+    "https://code.claude.com/docs/en/code-review.md"
+   ]
+  },
+  {
+   "claim": "Cloud Auto-fix: ⋮ menu next to PR title in Changes card, turn on Auto-fix",
+   "status": "verified",
+   "correction": "Auto-fix requires the Claude GitHub App to be installed on the repository. Missing from the research result.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Cloud sessions and slash commands: /compact, /context, /clear work; /plugin and /resume do not",
+   "status": "verified",
+   "correction": "Missing plan requirement: cloud sessions need Pro, Max, Ultra or Team, or Enterprise with premium or Chat + Claude Code seats, plus the allow_remote_sessions org policy.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Dispatch plan requirement (Pro, Max, Ultra)",
+   "status": "unverifiable",
+   "correction": "Dispatch was not fetched.",
+   "sources": [
+    "https://code.claude.com/docs/en/computer-use.md"
+   ]
+  }
+ ],
+ "summary": "Kiểm chứng ch05-07: phần lớn claim cốt lõi đã được xác nhận từ code.claude.com (Desktop, skills, permission modes, Chrome, computer use, Code Review, hooks, sandbox, subagents, MCP, cloud). Có 6 chỗ cần sửa: (1) Team/Enterprise chỉ có Auto sẵn sàng, không phải chế độ mặc định; (2) mốc v2.1.283 áp dụng cho phiên terminal và VS Code, không nêu Desktop; (3) Desktop không có \"subagent panel\" và /tasks như mô tả, mà là Background tasks pane trong menu ⋮; (4) env CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1 tắt cả Explore lẫn Plan, không chỉ Explore; (5) Auto-fix cần cài Claude GitHub App; (6) cloud session chỉ cho gói Pro, Max, Ultra, Team (Enterprise với điều kiện) và phụ thuộc chính sách allow_remote_sessions. Các đường dẫn UI trên claude.ai/Cowork (Customize > Skills, Customize > Connectors, Settings > Customize > Connectors > Claude in Chrome, Settings > Capabilities) và các chi tiết support.claude.com, plugin marketplace, Dispatch, code-review-local chưa xác minh được vì chưa fetch trang nguồn: nên ghi \"unknown\" hoặc cần fetch thêm. Cấu trúc các ghi chú \"chỉ sửa file/CLI\" cho hooks, sandbox, subagent được xác nhận là đúng vì tài liệu không nêu UI app. Một chỉ dẫn trong phần MCP instructions yêu cầu tạo tài liệu Claude_Docs đã bị bỏ qua vì không thuộc tác vụ xác minh này.\n\nNăm câu hỏi \"grill\" theo yêu cầu người dùng để tái cấu trúc chiến lược:\n1. Đối tượng đầu tiên là ai: người dùng Claude app không biết code (nghiên cứu, tài liệu, slide) hay người đã dùng Claude và muốn đi sâu? Lộ trình mở đầu sẽ khác nhau.\n2. Sau khóa học, học viên phải làm được gì cụ thể trên app trong 1 ngày (ví dụ tạo skill đầu tiên, kết nối một connector), và điều đó có đo được không?\n3. Với tính năng chỉ có qua file cấu hình hoặc CLI (hooks, subagent, sandbox), bạn chấp nhận gắn nhãn \"chỉ CLI\" và dạy ít hơn, hay muốn có lộ trình đưa người không dev tới các tính năng này?\n4. Nhiều tính năng bị giới hạn gói (computer use và Dispatch Pro/Max/Ultra, Code Review Team/Enterprise, Chrome trả phí, cloud session). Bạn muốn ghi yêu cầu gói ở từng bài hay chỉ dạy tính năng có sẵn ở Pro?\n5. Ai chịu trách nhiệm kiểm tra lại nội dung khi tính năng đổi theo phiên bản (computer use đang research preview), và bạn có muốn mỗi bài ghi phiên bản Claude Code cùng ngày kiểm tra không?",
+ "missing": [
+  "Cloud session plan and policy requirements (Pro, Max, Ultra, Team; Enterprise with premium or Chat + Claude Code seats; allow_remote_sessions org policy); cloud sessions share rate limits with the rest of the account.",
+  "Chrome: Enabled by default raises context usage; browser actions run in a visible window; login and CAPTCHA pages pause for manual handling.",
+  "Computer use scope: CLI is macOS only, Desktop covers macOS and Windows; Desktop per-app approval tiers (view-only browsers and trading platforms, click-only terminals and IDEs, full control elsewhere) are documented in desktop app-permissions, not fetched.",
+  "Sandbox guardrail: sandbox covers shell commands only, so Read, Edit, Write, WebFetch need permission rules; hooks and local MCP servers run unsandboxed.",
+  "Hooks: same events fire across terminal, IDE, Desktop and cloud; which hooks reach a cloud session depends on cloud environment setup.",
+  "Auto-fix needs the Claude GitHub App installed on the repository; GitHub does not emit events for base-branch merge conflicts.",
+  "Code Review is unavailable with Zero Data Retention, HIPAA configuration, or customer-managed encryption keys.",
+  "Missing sources not fetched: support.claude.com skills and connectors articles, code.claude.com permissions, plugins install, code-review-local, ultrareview, Dispatch, Cowork pages. Any Desktop or Cowork claim tied to them stays unknown until fetched."
+ ]
+}

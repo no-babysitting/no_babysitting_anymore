@@ -1,0 +1,669 @@
+{
+ "verdicts": [
+  {
+   "claim": "Overview: Cowork 'uses the same agentic architecture that powers Claude Code, accessible within Claude Desktop without opening the terminal'",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/cowork/overview.md"
+   ]
+  },
+  {
+   "claim": "Overview: team work in shared channels is Claude Tag; personal work on your own files is Cowork or Claude Code",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Overview: Claude Tag needs Team or Enterprise",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Overview: plan gate 'Cloud sessions and scheduled tasks need Pro, Max, Ultra, Team or Enterprise'",
+   "status": "corrected",
+   "correction": "Cloud sessions are on Pro, Max, Ultra and Team, and on Enterprise only with premium seats or Chat + Claude Code seats. Custom roles may also need the cloud sessions permission. Cloud sessions are not available with Bedrock, Vertex or Foundry, with ZDR or HIPAA organizations, or with CMEK. Scheduled task plan wording is in the scheduled tasks page.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Overview: Remote Control needs Pro, Max, Ultra, Team or Enterprise and does not support API-key auth",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Overview: teleport is one-way cloud-to-terminal and is not phone access; claude --teleport and /teleport pull a cloud session into the terminal",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Overview: agent view and cloud scheduled tasks are research preview; agent teams experimental and off by default; Claude Tag public beta",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-view.md",
+    "https://code.claude.com/docs/en/routines.md",
+    "https://code.claude.com/docs/en/agent-teams.md",
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Overview: plan requirements not stated for agent teams, agent view, /goal, /loop, or Desktop scheduled tasks",
+   "status": "verified",
+   "correction": "Confirmed absent from the fetched pages. Treat as unknown until Anthropic states them.",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-teams.md",
+    "https://code.claude.com/docs/en/agent-view.md",
+    "https://code.claude.com/docs/en/goal.md",
+    "https://code.claude.com/docs/en/scheduled-tasks.md",
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Overview: legacy Claude in Slack bot retired for Claude Tag-connected channels effective October 5, 2026",
+   "status": "corrected",
+   "correction": "The retirement notice applies to channels or workspaces set to the legacy version in a Claude Tag-connected workspace, regardless of the user's plan. The legacy version answers Pro, Max and Ultra accounts only in workspaces no organization has connected. Team and Enterprise customers keep their existing @Claude handle until migrated.",
+   "sources": [
+    "https://code.claude.com/docs/en/slack.md"
+   ]
+  },
+  {
+   "claim": "Item 1 Dynamic workflows: available on all paid plans, Anthropic API, Bedrock, Google Cloud Agent Platform and Microsoft Foundry; on Pro turn on the Dynamic workflows row in /config",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md"
+   ]
+  },
+  {
+   "claim": "Item 1 Desktop: approval card shows workflow name, phase list and token-usage caution with Once, Always and Deny; progress in the Background tasks side pane",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Item 1 CLI: /workflows keys Enter (drill), p (pause), x (stop), s (save to .claude/workflows/ or ~/.claude/workflows/)",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md"
+   ]
+  },
+  {
+   "claim": "Item 1 CLI: 'ultracode' keyword starts a workflow; /effort ultracode and claude --effort ultracode turn on auto orchestration; /effort ultracode off; keyword does not trigger with -p or scheduled prompts; /deep-research runs the bundled workflow",
+   "status": "verified",
+   "correction": "Also: claude --effort ultracode sets the effort level to xhigh. The keyword only works in prompts a person types (terminal prompt, IDE panel, Remote Control client, or SDK input stamped as human).",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md"
+   ]
+  },
+  {
+   "claim": "Item 1 limits: up to 16 concurrent agents by default and 1,000 agents per run",
+   "status": "verified",
+   "correction": "16 is the default concurrency, reduced when the machine has fewer CPUs. It can be raised to 256 with CLAUDE_CODE_WORKFLOW_MAX_CONCURRENT_AGENTS (v2.1.269+).",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md"
+   ]
+  },
+  {
+   "claim": "Item 1 Web: cloud sessions save workflow run results with the conversation",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md"
+   ]
+  },
+  {
+   "claim": "Item 1 Mobile: keyword works in a Remote Control client and progress syncs across devices",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md",
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Item 1 non-coding angle: 'review a set of files for issues and merge them into one ranked summary' is a docs non-code example",
+   "status": "corrected",
+   "correction": "That docs example is a code review of every file changed in a PR. The non-code example in the docs is researching how three competitors handle rate limiting across public docs and changelogs.",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md"
+   ]
+  },
+  {
+   "claim": "Item 1: workflows are not in the research-preview list (no preview label)",
+   "status": "verified",
+   "correction": "The fetched page shows no preview label. There is no research-preview list to cite.",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md"
+   ]
+  },
+  {
+   "claim": "Item 2 Agent teams: set CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 in settings.json under env; experimental and off by default",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-teams.md"
+   ]
+  },
+  {
+   "claim": "Item 2 Cloud: add CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 to the cloud environment variables",
+   "status": "verified",
+   "correction": "Stated as adding it to your environment variables on cloud sessions.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Item 2 example prompt quoted as 'Spawn three teammates: one on UX, one on architecture, one devil's advocate.'",
+   "status": "corrected",
+   "correction": "This is a shortened paraphrase in quotation marks. The docs wording is 'Spawn three teammates to explore this from different angles: one on UX, one on technical architecture, one playing devil's advocate.' (TODO-CLI example.)",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-teams.md"
+   ]
+  },
+  {
+   "claim": "Item 2 In-process keys: arrow keys to select, Enter to open, Shift+Tab for permission mode, x to stop, Ctrl+T for task list; teammateMode and tmux or iTerm2 for split panes",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-teams.md"
+   ]
+  },
+  {
+   "claim": "Item 2 Limits: needs an interactive session (not -p); no session resume for in-process teammates; one team per session; no nested teams; split panes unsupported in VS Code terminal, Windows Terminal and Ghostty; uses significantly more tokens; start with 3-5 teammates",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-teams.md"
+   ]
+  },
+  {
+   "claim": "Item 3 Desktop: + New or Cmd+N / Ctrl+N; Ctrl+Tab and Ctrl+Shift+Tab switch sessions",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Item 3 Desktop: Option/Alt-click a session or right-click Open in > Split view for side by side",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Item 3 Desktop: Worktree toggle in the row under the prompt box (earlier layout: checkbox beside branch name)",
+   "status": "verified",
+   "correction": "Default is off. The toggle appears only in a Git repository.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Item 3: worktrees go to <project-root>/.claude/worktrees/",
+   "status": "corrected",
+   "correction": "Verified for the CLI (claude --worktree). The fetched Desktop text does not state the Desktop worktree path, so scope the claim to the CLI.",
+   "sources": [
+    "https://code.claude.com/docs/en/worktrees.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Item 3 CLI: claude --worktree feature-auth (-w) creates .claude/worktrees/feature-auth/ on branch worktree-feature-auth; resume with claude --worktree <name> --resume; subagent isolation: worktree",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/worktrees.md"
+   ]
+  },
+  {
+   "claim": "Item 3 Web: each cloud session runs in its own VM and appears in the claude.ai/code sidebar; mobile starts and monitors cloud sessions from the Code tab in the Claude app",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Item 3 CLI: claude --cloud '<task>' starts a separate cloud session, so several can run at once",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Item 3 notes: cloud sessions need no local git",
+   "status": "refuted",
+   "correction": "Cloud sessions need a git repository. Anthropic-hosted cloning requires a GitHub remote. A local repo with at least one commit can be uploaded as a bundle with claude --cloud, and it must be under 100 MB and in a supported layout.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Item 3 notes: worktrees need a git repository; Desktop toggle appears only in a repo",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/worktrees.md"
+   ]
+  },
+  {
+   "claim": "Item 4 Agent view: claude agents; claude --bg '<prompt>'; /bg or /background; left arrow on an empty prompt sends the session to the background",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-view.md"
+   ]
+  },
+  {
+   "claim": "Item 4 keys: Space peek and reply, Enter attach, Ctrl+T pin, Ctrl+X twice to stop and delete, ? shortcuts",
+   "status": "verified",
+   "correction": "Ctrl+X stops the session, and a second Ctrl+X within two seconds deletes it from the list.",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-view.md"
+   ]
+  },
+  {
+   "claim": "Item 4 shell: claude attach <id>, claude logs <id>, claude stop <id>, claude agents --json",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-view.md"
+   ]
+  },
+  {
+   "claim": "Item 4: each background session edits files in its own git worktree under .claude/worktrees/",
+   "status": "corrected",
+   "correction": "Claude skips the worktree in some cases, such as a non-git directory with no WorktreeCreate hook. Setting worktree.bgIsolation to none turns this off.",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-view.md"
+   ]
+  },
+  {
+   "claim": "Item 4 availability: agent view cowork = partial, mobile = partial (Dispatch cited)",
+   "status": "corrected",
+   "correction": "Dispatch is a separate Cowork feature. The Dispatch mobile and child-task behavior is verified for Dispatch only. Agent view's Cowork and mobile availability is not stated, so set it to unknown.",
+   "sources": [
+    "https://claude.com/docs/cowork/guide/dispatch.md",
+    "https://code.claude.com/docs/en/agent-view.md"
+   ]
+  },
+  {
+   "claim": "Item 4: a session idle about an hour is stopped and resumes when you reply; agent view desktop and web availability not stated",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-view.md"
+   ]
+  },
+  {
+   "claim": "Item 4: Dispatch needs Pro, Max or Ultra and the latest Claude Desktop on macOS or Windows",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/cowork/guide/dispatch.md"
+   ]
+  },
+  {
+   "claim": "Item 4: Dispatch child task states Running, Awaiting input, Awaiting answer, Completed, Error, Archived",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/cowork/guide/dispatch.md"
+   ]
+  },
+  {
+   "claim": "Item 5 /loop: /loop 5m <prompt> fixed interval; prompt-only interval chosen by Claude between 1 minute and 1 hour; bare /loop uses built-in prompt or .claude/loop.md or ~/.claude/loop.md",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 5: cancel by asking Claude; Esc stops a self-paced loop",
+   "status": "corrected",
+   "correction": "Esc stops only a self-paced loop. Esc and Ctrl+C do not stop a fixed-interval loop, which must be cancelled by asking Claude. Ctrl+C twice on an empty prompt detaches from a background session without stopping a self-paced loop.",
+   "sources": [
+    "https://code.claude.com/docs/en/scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 5: CLAUDE_CODE_DISABLE_CRON=1 turns the scheduler off; runs only while Claude Code is open and idle; 7-day expiry; 50 tasks per session; 1-minute minimum; no catch-up; self-paced loops not restored on --resume",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 5 Cowork availability: no",
+   "status": "unverifiable",
+   "correction": "Not stated in the fetched pages. Set to unknown rather than no.",
+   "sources": [
+    "https://code.claude.com/docs/en/scheduled-tasks.md",
+    "https://claude.com/docs/cowork/changelog.md"
+   ]
+  },
+  {
+   "claim": "Item 5 Web: /loop works in cloud sessions; reopened cloud session needs /loop run again",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Item 6 Desktop: Code tab > Scheduled in the sidebar (or More menu) > New task; choose Local or Cloud; Scheduled page lists both",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md",
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Item 6 Web: create and manage at claude.ai/code/routines; CLI /schedule creates a cloud scheduled task",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Item 6 triggers: schedule, API (HTTP POST with bearer token), GitHub events; a task can combine triggers",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Item 6 plans: Pro, Max, Ultra, Team, Enterprise; research preview; routines renamed to scheduled tasks",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Item 6: cloud minimum interval 1 hour; each run is a fresh clone with no local files; connectors configured per task",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 6: daily run limits; Slack delivery through a configured connector",
+   "status": "unverifiable",
+   "correction": "Neither is stated in the fetched pages. The Slack delivery point is marked as inference in the research and should stay that way.",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Item 6: Desktop app may still show Routines on older builds",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 7 /goal: works in the Desktop app and through Remote Control",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/goal.md"
+   ]
+  },
+  {
+   "claim": "Item 7 CLI: /goal <condition> starts a turn; /goal alone shows status; /goal clear with aliases stop, off, reset, none, cancel; claude -p '/goal ...' with --output-format stream-json --verbose; Ctrl+O shows evaluator reason; auto mode avoids per-tool prompts",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/goal.md"
+   ]
+  },
+  {
+   "claim": "Item 7 notes: one goal per session; evaluator cannot run commands; errors that need a fix clear the goal; 30-minute check-ins; conditions up to 4,000 characters; no plan or preview label",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/goal.md"
+   ]
+  },
+  {
+   "claim": "Item 7 Mobile: works only through Remote Control, not as a native mobile command",
+   "status": "unverifiable",
+   "correction": "The page says it works through Remote Control. The 'not a native mobile command' part is inference.",
+   "sources": [
+    "https://code.claude.com/docs/en/goal.md"
+   ]
+  },
+  {
+   "claim": "Item 8 Desktop: run /remote-control or use the session's Remote Control switch",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Item 8 CLI: claude remote-control asks 'Enable Remote Control? (y/n)' and shows a QR code on spacebar",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Item 8 CLI: claude --remote-control (or --rc); options --name, --permission-mode, -c / --continue",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Item 8 plans and admin: Pro, Max, Ultra, Team, Enterprise; API keys not supported; Team and Enterprise Owner turns on the Remote Control toggle",
+   "status": "verified",
+   "correction": "Also: Remote Control is off by default on Team and Enterprise. Trusted Devices can be required for viewing sessions from claude.ai, the mobile apps or Claude Desktop.",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Item 8: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC or DISABLE_GROWTHBOOK disable Remote Control",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Item 8: --teleport is one-way; /teleport or /tasks then t from inside a session",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Item 8 Cowork availability: no",
+   "status": "unverifiable",
+   "correction": "Remote Control's page does not mention Cowork. Set to unknown rather than no.",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Item 8: web is a client of a session running on your machine; filesystem and MCP servers stay local",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Item 9 admin: claude.ai/admin-settings/claude-tag; send @Claude connect in Slack to pair; set spend limit; add Claude to channels",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Item 9 members: mention @Claude in a channel (not a DM) to set a routine; describe schedule in plain language",
+   "status": "corrected",
+   "correction": "Routines are set up from the channel where they should run, which the docs recommend. A routine set up in a one-to-one DM is allowed but belongs to that person's account and is turned off if they leave the organization.",
+   "sources": [
+    "https://claude.com/docs/claude-tag/users/proactivity.md"
+   ]
+  },
+  {
+   "claim": "Item 9: example 'every Friday at 3pm Eastern, post a digest of this week'; @Claude !scheduled lists routines; reschedule or pause by naming the routine",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/claude-tag/users/proactivity.md"
+   ]
+  },
+  {
+   "claim": "Item 9: Claude Tag sessions appear in claude.ai/code",
+   "status": "unverifiable",
+   "correction": "Not stated in the fetched Claude Tag pages. The legacy Slack page says sessions are visible at claude.ai/code, but that is the earlier version.",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md",
+    "https://code.claude.com/docs/en/slack.md"
+   ]
+  },
+  {
+   "claim": "Item 9 availability: desktop = no, cli = no",
+   "status": "unverifiable",
+   "correction": "Not stated either way. Use not applicable or unknown.",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Item 9: public beta; Team and Enterprise only; channel work bills to the org usage balance under a spend limit",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/claude-tag/users/proactivity.md",
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Item 9: schedules run at most once an hour, in UTC unless you name a timezone; DST shifts local time by an hour; routines keep running if creator leaves the channel",
+   "status": "corrected",
+   "correction": "Schedules run in UTC, but with no timezone in the message Claude uses the timezone on the sender's Slack profile. The once-an-hour limit, DST shift, and routines continuing after creator departure are verified.",
+   "sources": [
+    "https://claude.com/docs/claude-tag/users/proactivity.md"
+   ]
+  },
+  {
+   "claim": "Item 9 recipe: weekly digest with decisions, open items and what is waiting on someone",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/claude-tag/users/proactivity.md"
+   ]
+  },
+  {
+   "claim": "Item 10 GitHub Actions: /install-github-app works on github.com only; needs gh CLI; needs repository admin; installs the app, saves the secret and opens a PR adding the workflow",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/github-actions.md"
+   ]
+  },
+  {
+   "claim": "Item 10: manual setup copies examples/claude.yml; schedule trigger plus prompt input plus claude_args for --model and --allowedTools",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/github-actions.md"
+   ]
+  },
+  {
+   "claim": "Item 10: CLAUDE_CODE_OAUTH_TOKEN works on Pro, Max, Ultra, Team, Enterprise; schedule disabled after 60 days without repository activity; human actor check with allowed_bots; results go to run log by default; posting needs a posting tool",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/github-actions.md"
+   ]
+  },
+  {
+   "claim": "Item 11 Cowork: scheduled tasks run on computer or in cloud; Schedule button",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/cowork/changelog.md"
+   ]
+  },
+  {
+   "claim": "Item 11: typing /schedule used to fill in a request, but was removed from the slash menu in v3.6556.1 (2026-10-22)",
+   "status": "refuted",
+   "correction": "v3.6556.1 removed /schedule from the slash menu, but typing it still fills in a request to schedule the task, like the Schedule button.",
+   "sources": [
+    "https://claude.com/docs/cowork/changelog.md"
+   ]
+  },
+  {
+   "claim": "Item 11: scheduled tasks read memory when not in a project (v4.23118.0, 2026-11-05)",
+   "status": "corrected",
+   "correction": "The changelog entry is labeled 3P (third-party deployments). Scheduled tasks can read memory but do not save new memories.",
+   "sources": [
+    "https://claude.com/docs/cowork/changelog.md"
+   ]
+  },
+  {
+   "claim": "Item 11: scheduled tasks can use connectors and skills",
+   "status": "unverifiable",
+   "correction": "Only indirectly supported by changelog fixes. No explicit statement in the fetched text.",
+   "sources": [
+    "https://claude.com/docs/cowork/changelog.md"
+   ]
+  },
+  {
+   "claim": "Item 11: retry for recurring tasks up to about 3.5 hours (3P); Automatically approve default for Claude-created tasks (v2.19675.0); unanswered permission prompts stall runs",
+   "status": "verified",
+   "correction": "The 3.5-hour retry is labeled 3P (v4.16336.0, 2026-11-03). The stall behavior is from v2.31226.0.",
+   "sources": [
+    "https://claude.com/docs/cowork/changelog.md"
+   ]
+  },
+  {
+   "claim": "Item 11: Cowork overview does not list scheduling; plan and platform support not stated",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/docs/cowork/overview.md",
+    "https://claude.com/docs/cowork/changelog.md"
+   ]
+  },
+  {
+   "claim": "Item 12 Desktop: Code tab > Scheduled > New task; Only on this computer under Advanced settings; choose local folder and schedule (Hourly, Daily, Weekdays, Weekly); Manual and Custom in the Edit form; Worktree in Edit form; Create",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 12: keep computer awake under Settings > Desktop app or Settings > This computer > System; requires Claude Desktop 1.1.5368 or later",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 12: runs only while app is open and computer awake; missed runs caught up once for most recent miss within 7 days; custom cron is once per hour or less frequent",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 12: click Run now and approve prompts to avoid stalls; example guardrail 'If it's after 5pm, skip the review'",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Item 12 CLI counterparts: /loop (session) and /schedule (cloud)",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  }
+ ],
+ "missing": [
+  "Workflows: /deep-research requires the WebSearch tool; the Large workflow warning appears above 25 agents or 1.5M projected tokens; default size guideline is medium (small on Pro with Claude Code v2.1.271+); disable with /config, \"disableWorkflows\": true, or CLAUDE_CODE_DISABLE_WORKFLOWS=1.",
+  "Workflows: the approval prompt depends on permission mode (auto mode: first launch only; bypass: no prompt; -p and SDK: never prompt, so an allow rule for Workflow is needed).",
+  "Dispatch (Cowork): child tasks run as Cowork or Code sessions; an unanswered approval is auto-denied after 10 minutes; a task started from the phone runs on the desktop, which must stay open, awake and online. Dispatch is separate from agent view and should not be merged with it.",
+  "Cowork: connectors, skills and plugins are managed under Customize; Cowork does not read the ~/.claude directory, so a CLI skill must be re-added there. Claude in Chrome pairing is a Cowork capability in the overview.",
+  "Remote Control: Trusted Devices (Team and Enterprise: Owner turns it on; Pro, Max and Ultra: the user turns on Require trusted devices) affects viewing sessions from claude.ai, mobile or Claude Desktop. Relevant to security guidance for non-developers.",
+  "Remote Control: /mobile shows a QR code for the Claude app; phone users can attach photos and files; a stopped claude remote-control server can bring sessions back for about four hours.",
+  "Cloud sessions: not available through Bedrock, Vertex or Foundry; not available to ZDR, HIPAA-configured or CMEK organizations; Team and Enterprise Quick setup; an expired environment loses background shell work, subagents and session-scoped schedules.",
+  "/goal: in Manual mode Claude still asks before tool calls not covered by settings; the evaluator is a small fast model that cannot run commands and only sees what Claude surfaced.",
+  "/loop: loop.md content beyond 25,000 bytes is truncated; recurring fires are delayed up to 30 minutes (jitter).",
+  "Agent teams: teammates do not inherit the lead's conversation history; they start with the lead's permission mode; token cost scales with teammate count.",
+  "Claude Tag: usage balance and spend limit; per-channel usage breakdown on the admin usage page; personal connectors for member requests; routines post into the channel they belong to.",
+  "Desktop scheduled tasks: default runs use the working directory's uncommitted state; per-task Always allowed panel for revoking approvals; MCP tools marked requiresUserInteraction stall every run.",
+  "Plan requirements remain unknown for agent teams, agent view, /goal, /loop and Desktop scheduled tasks; these need Anthropic confirmation before a lesson states them.",
+  "Desktop worktree path is not confirmed; only the CLI path (.claude/worktrees/) is verified."
+ ],
+ "summary": "Adversarial check of the ch08-09 feature map against the fetched primary pages (code.claude.com, claude.com/docs, changelog). Most UI labels, commands, keys, research-preview labels and Claude Tag/Dispatch details check out. Corrections needed before teaching: (1) cloud sessions need a git repo and are not limited to the listed plans for Enterprise (premium or Chat + Claude Code seats only); (2) Cowork /schedule behavior is misstated (it is removed from the slash menu but typing it still fills in a request); (3) Claude Tag schedules default to the sender's Slack profile timezone, not UTC; (4) agent view is wrongly credited with Cowork and mobile availability that belongs to Dispatch; (5) the Cowork memory-for-scheduled-tasks entry is 3P only; (6) the \"non-code\" workflow example is actually a code review; (7) the legacy Slack retirement applies to any plan in a Claude Tag-connected workspace; (8) several \"no\" cells (Cowork for /loop and Remote Control, Claude Tag on desktop and web) are not stated and should read unknown. Unverifiable: Claude Tag sessions appearing at claude.ai/code, daily run limits for cloud tasks, and the Slack-connector delivery for cloud tasks. Grill questions (Vietnamese, up to 5, grounded in these findings): (1) Which non-developer persona comes first (accountant, marketer, researcher, PM), so chapters 08-09 use their examples? (2) Is the app (Code tab, Cowork, Claude Tag, Remote Control) the main path with the CLI as a secondary tab, or are they equal? Should CLI-only items (claude agents, /loop, --worktree, --cloud, remote-control, /install-github-app) sit in an advanced section? (3) Agent view, cloud scheduled tasks (research preview), agent teams (experimental) and Claude Tag (public beta) are not stable: should each lesson carry a beta label, and is there a monthly review? (4) What must a learner be able to do afterward? Candidate outcomes: a recurring report posted to Slack, a cited multi-source research report, or a long task that reports back when finished. (5) Which plan does the learner have (Pro, Max, Team, Enterprise)? Plan requirements for agent teams, agent view, /goal, /loop and Desktop scheduled tasks are not in the docs, so should each lesson say \"plan requirement unverified\"?"
+}

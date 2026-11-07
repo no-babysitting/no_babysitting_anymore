@@ -1,0 +1,329 @@
+{
+ "verdicts": [
+  {
+   "claim": "Desktop Claude Code page says 'Research, document editing, and spreadsheet work stay in Cowork.'",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ],
+   "correction": "Quote is accurate but sits in the 'Sessions from Dispatch' section of the page."
+  },
+  {
+   "claim": "Overview opens with 'an agentic coding tool'; each surface connects to the same Claude Code engine",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/overview.md"
+   ],
+   "correction": "Verbatim: 'Claude Code is an agentic coding tool that reads your codebase, edits files, runs commands...' and 'Each surface connects to the same underlying Claude Code engine'. Overview also lists desktop scheduled tasks, Remote Control, Dispatch and Chrome, which the research omits."
+  },
+  {
+   "claim": "Cowork and chat merge into one Claude, dated 16/09/2026",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/resources/articles/cowork-is-now-claude"
+   ],
+   "correction": "Actual sentence: 'Starting today, Claude Cowork and chat are merging into one Claude.' An October 23 update says the unified experience is GA for Enterprise (not in the research)."
+  },
+  {
+   "claim": "If the input box has no 'Chat' and 'Cowork' options, the user has the new unified experience",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork"
+   ]
+  },
+  {
+   "claim": "Desktop: choose 'Cowork' at the bottom-left of the input box",
+   "status": "corrected",
+   "correction": "Support article only says 'In the message box, select \"Cowork.\"' No position is given; the bottom-left placement is unverified.",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork"
+   ]
+  },
+  {
+   "claim": "claude.ai: open the Home tab and choose 'Cowork'",
+   "status": "unverifiable",
+   "correction": "Not in any fetched page. Remove or re-check against the live claude.ai UI.",
+   "sources": []
+  },
+  {
+   "claim": "Cowork example tasks: research/report, spreadsheets, slides, receipts expense report, Downloads sorting, statistics, charts",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork"
+   ],
+   "correction": "Tasks are confirmed but the research's quoted wording is paraphrase. Actual examples: 'Organize my Downloads folder by type and date'; 'Generate Excel files with working VLOOKUP, conditional formatting, and multiple tabs'; 'Outlier detection, cross-tabulation, and time-series analysis on your data files.'"
+  },
+  {
+   "claim": "Anthropic Inference team: 'an 80% reduction in research time'",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/blog/how-anthropic-teams-use-claude-code"
+   ],
+   "correction": "Verified in the July 24, 2025 blog, not the Cowork guide. The research's cited Cowork guide does not contain it (see Cowork guide item)."
+  },
+  {
+   "claim": "Cowork guide: 'can query the warehouse without SQL'",
+   "status": "corrected",
+   "correction": "Actual wording: a PM or sales manager can ask the warehouse 'without knowing SQL'.",
+   "sources": [
+    "https://claude.com/resources/guides/deploying-claude-across-your-organization/how-anthropic-teams-use-cowork"
+   ]
+  },
+  {
+   "claim": "Cowork guide: 'Summarizing a Slack thread and filing a ticket takes about 30 seconds, versus 3 to 5 minutes manually.'",
+   "status": "corrected",
+   "correction": "Actual wording: 'Thirty seconds versus three to five minutes'. Quote was reworded.",
+   "sources": [
+    "https://claude.com/resources/guides/deploying-claude-across-your-organization/how-anthropic-teams-use-cowork"
+   ]
+  },
+  {
+   "claim": "Cowork guide: 'Biweekly updates are synthesized from intake tickets, Slack threads, and matter status.'",
+   "status": "corrected",
+   "correction": "Not a verbatim quote. Actual: Claude 'does the synthesis across intake tickets, Slack threads, and matter status.'",
+   "sources": [
+    "https://claude.com/resources/guides/deploying-claude-across-your-organization/how-anthropic-teams-use-cowork"
+   ]
+  },
+  {
+   "claim": "Cowork guide teams: Finance, Legal, Sales, Product management; quote 'revenue down 3% driven by a dip in APAC enterprise renewals'",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/resources/guides/deploying-claude-across-your-organization/how-anthropic-teams-use-cowork"
+   ],
+   "correction": "Team is named 'Finance and strategy'. The guide is dated only by '© 2026 Anthropic PBC'."
+  },
+  {
+   "claim": "Cowork support quote: 'Combining web research, articles, and notes into a report or summary.'",
+   "status": "corrected",
+   "correction": "Paraphrase of 'Combine information from web searches, articles, papers, and notes into coherent reports or summaries.' Similar quoted lines for spreadsheets and statistics are also paraphrased.",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork"
+   ]
+  },
+  {
+   "claim": "Cowork plan requirements: desktop on all paid plans (beta); web and mobile on Pro, Max, Ultra, Team (Team beta); Enterprise when an owner enables it",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork",
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile"
+   ]
+  },
+  {
+   "claim": "Dispatch and computer use are only for Pro, Max, Ultra; not Team or Enterprise",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ],
+   "correction": "Desktop page: 'Dispatch requires a Pro, Max, or Ultra plan and is not available on Team or Enterprise plans.' Computer use is a research preview on macOS and Windows."
+  },
+  {
+   "claim": "Support article says Dispatch is in limited beta and not for new users (conflict with desktop page)",
+   "status": "refuted",
+   "correction": "The fetched Cowork support article does not mention Dispatch at all. The conflict is therefore unresolved; cite the desktop page for Dispatch and drop the support attribution.",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork",
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile"
+   ]
+  },
+  {
+   "claim": "Web and mobile Cowork need the Desktop app open for local files and browser use",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile"
+   ],
+   "correction": "Verbatim: local file access, local connectors, browser use and computer use from web and mobile work 'through the Claude Desktop app'; cloud sessions reach local files 'only while the desktop app is open on that computer'."
+  },
+  {
+   "claim": "Desktop: enable 'Browse external sites' in Cowork; sites need separate approval; clean profile without saved logins",
+   "status": "corrected",
+   "correction": "'Browse external sites' does not appear in either fetched page. The desktop page describes a 'Browser' pane (Cmd+Shift+B / Ctrl+Shift+B, or the Browser button in the title bar) with a clean profile and no saved logins. The per-site approval wording is unverified.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork"
+   ]
+  },
+  {
+   "claim": "Claude will not buy, create accounts or solve CAPTCHA without you",
+   "status": "unverifiable",
+   "correction": "Not stated in the fetched Cowork pages. The Claude in Chrome page says that on a login page or CAPTCHA, Claude 'pauses and asks you to handle it manually'. Use that wording with its source.",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ]
+  },
+  {
+   "claim": "Chrome side panel is available on all paid plans; clicking the Claude icon starts a Cowork session",
+   "status": "corrected",
+   "correction": "'All paid plans' is verified. The support article says opening the Chrome side panel 'starts a Cowork session directly'. The icon-click wording is unverified.",
+   "sources": [
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile",
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork"
+   ]
+  },
+  {
+   "claim": "claude --chrome requirements: extension v1.0.36+, /login (not API key), not on WSL, Bedrock, Vertex or Foundry; /chrome checks status",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ],
+   "correction": "Also required: a direct Anthropic plan (Pro, Max, Ultra, Team or Enterprise). Chrome works with Chrome, Edge and other Chromium browsers."
+  },
+  {
+   "claim": "Chrome CLI example: automate form filling from contacts.csv into a CRM; extract data to CSV",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ]
+  },
+  {
+   "claim": "/artifacts creates a dashboard page (data analysis, CLI column)",
+   "status": "refuted",
+   "correction": "/artifacts lists your artifacts and attaches or opens one. Artifacts are created by a natural-language prompt (e.g. 'Build a dashboard artifact of ...'). Artifacts need /login and Pro/Max/Ultra/Team/Enterprise, and do not run on Bedrock, Vertex or Foundry (verified).",
+   "sources": [
+    "https://code.claude.com/docs/en/artifacts.md"
+   ]
+  },
+  {
+   "claim": "Scheduled reporting: 'Schedule a report once and get it daily, weekly, or monthly.'",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/product/cowork"
+   ]
+  },
+  {
+   "claim": "Cowork cloud tasks on Pro, Max, Ultra run in the cloud from 06/10/2026 (cited to claude.com/product/cowork)",
+   "status": "corrected",
+   "correction": "The date is verified as October 6, 2026, but the product page does not contain it. The source is the Cowork support article 15520349: new Cowork tasks on Pro, Max and Ultra run in the cloud; tasks started on a computer before that date stay there.",
+   "sources": [
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile",
+    "https://claude.com/product/cowork"
+   ]
+  },
+  {
+   "claim": "Weekly marketing readout example (Amplitude, Drive spreadsheet, slide deck) quoted from the product page",
+   "status": "corrected",
+   "correction": "Paraphrase, not a quote. The page asks to pull web views and signups from Amplitude, save to Marketing/Weekly in Drive, and make a deck with 'Slide one: company name and the week'.",
+   "sources": [
+    "https://claude.com/product/cowork"
+   ]
+  },
+  {
+   "claim": "Cowork is for non-coding work",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/product/cowork"
+   ],
+   "correction": "Strongest primary source for the positioning: FAQ says 'Cowork is built for non-coding knowledge work — research, analysis, document creation, and other multi-step tasks.' Use this in the site copy."
+  },
+  {
+   "claim": "Desktop scheduled tasks: Code tab > Scheduled > New task; 'Only on this computer'; runs only while app open and computer awake; cloud minimum 1 hour, /loop 1 minute",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md",
+    "https://code.claude.com/docs/en/overview.md"
+   ],
+   "correction": "Verified. The toggle is under Advanced settings > General. Cloud minimum is 1 hour (table), /loop minimum 1 minute. /schedule creates cloud tasks from web, Desktop or CLI (overview)."
+  },
+  {
+   "claim": "Desktop scheduled task examples are mostly dev-oriented (code reviews, dependency audits)",
+   "status": "corrected",
+   "correction": "Partly true, but the same page gives a non-coding example: 'morning briefings that pull from your calendar and inbox'. The research missed this and should use it as the lead non-coding example.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ]
+  },
+  {
+   "claim": "Claude Code Desktop/web/mobile surfaces: Code tab, claude.ai/code, Claude iOS and Android app",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/overview.md"
+   ]
+  },
+  {
+   "claim": "Cowork plugins: launched 30/01/2026; 11 open-source starter plugins incl. Legal, Sales, Finance, Marketing; saved locally; research preview for all paid users",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/blog/cowork-plugins"
+   ],
+   "correction": "Verified, but 'Plugins bundle skills, connectors, slash commands, and sub-agents' is not verbatim. Actual: 'bundle any skills, connectors, slash commands, and sub-agents together'. The last plugin is 'Plugin Create/Customize'. The research's install path and promised org-wide sharing are unverified."
+  },
+  {
+   "claim": "Plugin install in Claude Code via '/plugin install'; Cowork plugins installed from Anthropic's website",
+   "status": "unverifiable",
+   "correction": "Not in the fetched pages. Verify the install path before publishing.",
+   "sources": []
+  },
+  {
+   "claim": "Skills: 'Claude uses skills when relevant, or you can invoke one directly with /skill-name.'; pdf and xlsx always sync from claude.ai",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "claim": "docx and pptx live in anthropics/skills; install via document-skills@anthropic-agent-skills",
+   "status": "unverifiable",
+   "correction": "Skills page mentions only that github.com/anthropics/skills is a packaging source. The docx/pptx and document-skills plugin claims are not in any fetched official doc.",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "claim": "Claude Docs and Claude Slides in beta on paid plans; exports to PowerPoint, PDF, Word; /slides and /design need v2.1.265+; org can disable them and the commands then disappear",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/artifacts.md"
+   ],
+   "correction": "Verified. Templates are on by default on Pro, Max, Ultra and Team; Enterprise owners turn them on. Claude Docs is a claude.ai connector shown as 'claude.ai Claude Docs' in /mcp, not a command."
+  },
+  {
+   "claim": "Marketing: Figma plugin generates up to 100 ad variations (Growth Marketing, 2025)",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/blog/how-anthropic-teams-use-claude-code"
+   ],
+   "correction": "Verified: 'generates up to 100 ad variations by swapping headlines and descriptions'. Dated July 24, 2025."
+  },
+  {
+   "claim": "Data science team builds React visualisations (coding-adjacent example)",
+   "status": "verified",
+   "sources": [
+    "https://claude.com/blog/how-anthropic-teams-use-claude-code"
+   ],
+   "correction": "Verbatim: data scientists 'build entire React applications for visualizing RL model performance'."
+  },
+  {
+   "claim": "Coding is the ONE category Claude Code is built for",
+   "status": "corrected",
+   "correction": "Overstated. Overview says Claude Code is 'an agentic coding tool'. Desktop, Cowork and scheduled docs describe non-coding use, and Cowork is the product built for non-coding work. Claude Code is not 'one category only'.",
+   "sources": [
+    "https://code.claude.com/docs/en/overview.md",
+    "https://claude.com/product/cowork"
+   ]
+  },
+  {
+   "claim": "Claude Tag / Slack usage for non-devs",
+   "status": "unverifiable",
+   "correction": "Not checked. The research used the old code.claude.com/docs/en/slack page, which is superseded by Claude Tag. Fetch https://claude.com/docs/claude-tag/overview before using."
+  },
+  {
+   "claim": "'Claude Code works in any directory' (file organization CLI example)",
+   "status": "unverifiable",
+   "correction": "Quote not fetched from common-workflows; treat as unverified.",
+   "sources": []
+  }
+ ],
+ "summary": "Verification of the 'noncoding' research result (2026-11-06). Most core facts check out: Cowork is positioned for non-coding work; the desktop page says 'Research, document editing, and spreadsheet work stay in Cowork'; the merge into one Claude is dated Sept 16, 2026; the plan tiers, the /login and /chrome requirements, the Chrome and scheduled-task details, and the July 24, 2025 blog facts are confirmed. Main problems: (a) several quoted lines are paraphrases or reworded (the 'without SQL', '30 seconds', 'biweekly' and Cowork support quotes); (b) 'Browse external sites' is not a UI label in the fetched pages (the desktop page says 'Browser' pane, Cmd/Ctrl+Shift+B); (c) '/artifacts' does not create dashboards (it lists and attaches; creation is by prompt); (d) the Dispatch 'limited beta' claim is not in the Cowork support article, so the conflict is unresolved; (e) the 'bottom-left' Cowork position, the claude.ai Home-tab path, the plugin install path, the docx/pptx skill source and the Claude Tag claims are unverified; (f) 'Coding is the one category' is overstated. Missing: the Cowork FAQ quote 'built for non-coding knowledge work' (strongest positioning source); the desktop scheduled-task 'morning briefings' example; the Desktop 'Browser' pane and Cowork browser details; the direct-Anthropic-plan requirement for Claude in Chrome; the 'Claude Docs' connector path; the Cowork cloud-task date (Oct 6, 2026) cited to the wrong page; the Claude Tag docs; and Overview's Dispatch, Remote Control and Channels rows, which show app-first and mobile workflows. Pages were dated where stated; Cowork and Claude Docs pages are subject to fast change.",
+ "missing": [
+  "Cowork FAQ quote: 'Cowork is built for non-coding knowledge work — research, analysis, document creation, and other multi-step tasks.' (https://claude.com/product/cowork). Strongest source for the positioning.",
+  "Desktop scheduled-task non-coding example 'morning briefings that pull from your calendar and inbox' (https://code.claude.com/docs/en/desktop-scheduled-tasks.md).",
+  "Desktop Cowork 'Browser' pane details: Cmd+Shift+B / Ctrl+Shift+B, clean profile (https://code.claude.com/docs/en/desktop.md). Also the Cowork built-in browser announcement dated Aug 26, 2026 on claude.com/product/cowork.",
+  "Claude in Chrome requires a direct Anthropic plan (Pro, Max, Ultra, Team or Enterprise) and pauses for login or CAPTCHA (https://code.claude.com/docs/en/chrome.md).",
+  "Cowork cloud-task date (October 6, 2026) and the Pro/Max/Ultra cloud rule, sourced to https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile, not the product page.",
+  "Claude Docs as a claude.ai connector ('claude.ai Claude Docs' in /mcp) that writes documents (https://code.claude.com/docs/en/artifacts.md). Useful for non-dev document work.",
+  "Claude Tag (Slack) docs at https://claude.com/docs/claude-tag/overview. The research used the superseded code.claude.com Slack page.",
+  "Overview rows for Dispatch, Remote Control and Channels, which show app-first and mobile workflows (https://code.claude.com/docs/en/overview.md). Relevant to the app-first learning path.",
+  "Dated Cowork timeline from claude.com/product/cowork: Feb 24, 2026 plugin marketplace; Apr 9, 2026 enterprise deployment; Aug 26, 2026 built-in browser. Use these to date the content.",
+  "Unified-experience GA for Enterprise on Oct 23 (https://claude.com/resources/articles/cowork-is-now-claude). Needed for plan-by-plan guidance."
+ ]
+}

@@ -1,0 +1,99 @@
+<!-- @dsCard group="Story" height=520 subtitle="Chốt dự đoán trước khi xem · lựa chọn đảo màu · quan sát bằng thanh khối ASCII" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>PredictPrompt</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .pp{padding:52px 22px 20px;display:grid;gap:18px}
+  fieldset{border:0;margin:0;padding:0;display:grid;gap:0;min-width:0}
+  legend{padding:0;margin-bottom:16px;font:600 clamp(18px,2.4vw,22px)/1.35 var(--font-text);color:var(--fg);max-width:44ch}
+  .face{display:inline-block;font:600 13px/1 var(--font-mono);letter-spacing:0;margin-right:10px;vertical-align:2px}
+  .opt{position:relative;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--control);margin-top:-1px;cursor:pointer;font-size:15px;transition:background .12s,color .12s}
+  .opt .k{font:600 12px/1 var(--font-mono);letter-spacing:.12em;color:var(--fg-muted)}
+  .opt .mark{font:600 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase}
+  .opt:hover{background:var(--bg-raised)}
+  .opt:has(input:checked){background:var(--fg);color:var(--bg)}
+  .opt:has(input:checked) .k{color:var(--bg)}
+  .opt:focus-within{outline:2px solid var(--focus-ring);outline-offset:2px;z-index:1}
+  .locked .opt{cursor:default}
+  .locked .opt:not(.is-ok):not(:has(input:checked)){color:var(--fg-subtle)}
+  .locked .opt.is-ok{background:transparent;color:var(--fg);border-color:var(--signal);z-index:1}
+  .locked .opt.is-ok .k,.locked .opt.is-ok .mark{color:var(--signal)}
+  .locked .opt.is-chosen{background:transparent;color:var(--fg);border-style:dashed}
+  .locked .opt.is-chosen .k{color:var(--fg-muted)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .reveal{border-top:1px solid var(--control);padding-top:16px;display:grid;gap:14px}
+  .reveal p{margin:0;max-width:62ch;line-height:1.55;color:var(--fg-muted)} .reveal b{color:var(--fg)}
+  .bars{display:grid;gap:6px;font:500 13px/1.2 var(--font-mono)}
+  .bars div{display:grid;grid-template-columns:7ch 1fr 5ch;gap:12px;align-items:center}
+  .bars .b{letter-spacing:0;white-space:nowrap;overflow:hidden}
+  .bars .t1{color:var(--signal)} .bars .t2{color:var(--warn)} .bars .t3{color:var(--danger)}
+</style>
+</head>
+<body>
+<form class="nb nb-frame pp" id="pp" novalidate>
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>Chương 03 · Đoán</span>
+  <span class="nb-corner tr nb-micro" id="lock">Dự đoán · <b>chưa chốt</b></span>
+  <fieldset id="fs">
+    <legend><span class="face" id="col">[°_°]…</span>Claude vừa viết hỏng phần phân tích 2 lần. Bạn nhắn "thử lại". Lần thứ 3 sẽ thế nào?</legend>
+    <label class="opt"><span class="k">[A]</span><span><input class="nb-sr" type="radio" name="p" value="0">Tốt hơn, vì có thêm thông tin</span><span class="mark"></span></label>
+    <label class="opt"><span class="k">[B]</span><span><input class="nb-sr" type="radio" name="p" value="1">Như cũ</span><span class="mark"></span></label>
+    <label class="opt"><span class="k">[C]</span><span><input class="nb-sr" type="radio" name="p" value="2">Có thể tệ hơn</span><span class="mark"></span></label>
+  </fieldset>
+  <div class="actions">
+    <button class="nb-btn is-solid" id="commit" type="submit" disabled>Chốt dự đoán</button>
+    <button class="nb-btn" id="skip" type="button">Bỏ qua</button>
+  </div>
+  <section class="reveal" id="reveal" aria-live="polite" hidden>
+    <span class="nb-micro"><span class="nb-sq is-signal"></span>Quan sát · chất lượng theo lượt thử</span>
+    <div class="bars" aria-hidden="true">
+      <div><span>Lần 1</span><span class="b t1" data-v="0.78"></span><span class="nb-tabular">78%</span></div>
+      <div><span>Lần 2</span><span class="b t2" data-v="0.56"></span><span class="nb-tabular">56%</span></div>
+      <div><span>Lần 3</span><span class="b t3" data-v="0.41"></span><span class="nb-tabular">41%</span></div>
+    </div>
+    <p><b>Có thể tệ hơn.</b> Hai bản nháp hỏng và hai lời sửa vẫn nằm trong context, kéo chất lượng xuống. Tua lại về trước lần thử hỏng, rồi yêu cầu lại kèm điều đã học. <span class="nb-micro">(số liệu minh hoạ)</span></p>
+  </section>
+</form>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  var CORRECT = 2, W = 32;
+  var form = document.getElementById('pp'), commit = document.getElementById('commit'), reveal = document.getElementById('reveal');
+  var col = NB.colleague(document.getElementById('col'), 'thinking'), anim = !NB.reduce() && window.gsap;
+  if (anim) gsap.from('.opt', { y: 10, autoAlpha: 0, duration: 0.45, ease: 'power3.out', stagger: 0.06 });
+  form.addEventListener('change', function () { commit.disabled = !form.querySelector('input:checked'); });
+  function finish(chosen) {
+    form.classList.add('locked');
+    form.querySelectorAll('input').forEach(function (i) { i.disabled = true; });
+    commit.disabled = true; document.getElementById('skip').disabled = true;
+    var t = new Date().toLocaleTimeString('vi-VN', { hour12: false });
+    NB.decode(document.getElementById('lock'), chosen < 0 ? 'Dự đoán · bỏ qua' : 'Đã chốt · ' + t, 0.6);
+    form.querySelectorAll('.opt').forEach(function (opt, i) {
+      var m = opt.querySelector('.mark');
+      if (i === CORRECT) { opt.classList.add('is-ok'); m.textContent = '[✓] đúng'; }
+      else if (i === chosen) { opt.classList.add('is-chosen'); m.textContent = '→ xem vì sao'; }
+    });
+    col.set(chosen === CORRECT ? 'verified' : 'idle');
+    reveal.hidden = false;
+    var bars = reveal.querySelectorAll('.b');
+    bars.forEach(function (b) { b.textContent = NB.blocks(anim ? 0 : Number(b.dataset.v), W); });
+    if (!anim) return;
+    gsap.from(reveal, { y: 10, autoAlpha: 0, duration: 0.45, ease: 'power3.out' });
+    bars.forEach(function (b, i) {
+      var o = { v: 0 };
+      gsap.to(o, { v: Number(b.dataset.v), duration: 0.8, delay: 0.2 + i * 0.25, ease: 'steps(16)', onUpdate: function () { b.textContent = NB.blocks(o.v, W); } });
+    });
+  }
+  form.addEventListener('submit', function (e) { e.preventDefault(); var c = form.querySelector('input:checked'); if (c) finish(Number(c.value)); });
+  document.getElementById('skip').addEventListener('click', function () { finish(-1); });
+})();
+</script>
+</body>
+</html>

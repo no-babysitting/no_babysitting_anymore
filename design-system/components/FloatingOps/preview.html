@@ -1,0 +1,127 @@
+<!-- @dsCard group="ASCII" height=620 subtitle="Giao diện AI đang vận hành · máy trạng thái báo cáo tuần · panel nhiều lớp + parallax" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>FloatingOps</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .ops{height:560px}
+  .panel{position:absolute;background:var(--bg-raised);border:1px solid var(--control);padding:12px 14px;box-shadow:var(--shadow-overlay);display:grid;gap:8px;will-change:transform}
+  .p-agent{left:4%;top:13%;width:26%}
+  .p-tasks{left:27%;top:30%;width:38%;z-index:2}
+  .p-log{right:3%;top:11%;width:31%}
+  .p-metric{left:6%;bottom:12%;width:24%}
+  .p-note{right:5%;bottom:16%;width:32%;border-color:var(--signal);z-index:3}
+  .ghost{position:absolute;right:-1%;bottom:-8%;font-size:300px;line-height:.8}
+  .face{font-size:30px;font-weight:600;letter-spacing:0}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  ul,ol{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-family:var(--font-mono);font-size:12.5px;line-height:1.35}
+  .mk{display:inline-block;width:3.2ch;color:var(--fg-subtle)}
+  li.run .mk{color:var(--accent)} li.ok .mk{color:var(--signal)} li.ok .tx{color:var(--fg-muted)}
+  .p-log li{color:var(--fg-muted)} .p-log li:last-child{color:var(--fg)}
+  .num{font-size:72px;margin:0;color:var(--fg)}
+  .note{margin:0;font:600 12px/1.4 var(--font-mono);letter-spacing:.06em;color:var(--fg)}
+  .ctl{position:absolute;left:14px;bottom:12px;z-index:4}
+  @media (max-width:640px){.ops{height:auto;padding:44px 12px 60px;display:grid;gap:10px}.panel{position:static;width:auto}}
+</style>
+</head>
+<body>
+<section class="nb nb-frame nb-dots ops" id="ops" aria-label="Agent đang làm báo cáo tuần">
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>FloatingOps · báo cáo tuần W45</span>
+  <span class="nb-corner tr nb-micro">state <b id="st">idle</b></span>
+  <span class="nb-ghost nb-cond ghost" aria-hidden="true">W45</span>
+  <div class="panel p-agent" data-depth="0.6">
+    <div class="row nb-micro"><span>Agent</span><span id="ast">chờ</span></div>
+    <span class="nb-mono face" id="col">[•_•]</span>
+    <span class="nb-micro"><b>Báo cáo thị trường</b> · W45</span>
+  </div>
+  <div class="panel p-tasks" data-depth="1">
+    <div class="row nb-micro"><span>Tasks</span><b id="tc">0 / 5</b></div>
+    <ul id="tasks">
+      <li><span class="mk">[ ]</span><span class="tx">Đọc ban-hang-T10.xlsx</span></li>
+      <li><span class="mk">[ ]</span><span class="tx">Tra giá 5 thị trường (subagent)</span></li>
+      <li><span class="mk">[ ]</span><span class="tx">Viết báo cáo theo report-style</span></li>
+      <li><span class="mk">[ ]</span><span class="tx">Đối chiếu 14 số liệu với nguồn</span></li>
+      <li><span class="mk">[ ]</span><span class="tx">Đăng tóm tắt #thi-truong</span></li>
+    </ul>
+  </div>
+  <div class="panel p-log" data-depth="1.4">
+    <div class="row nb-micro"><span>Activity log</span><span id="clk" class="nb-tabular">--:--:--</span></div>
+    <ol id="log" aria-live="polite"></ol>
+  </div>
+  <div class="panel p-metric" data-depth="0.8">
+    <p class="nb-cond num nb-tabular" id="num">00</p>
+    <span class="nb-micro">Số liệu đã đối chiếu <b>/ 14</b></span>
+  </div>
+  <div class="panel p-note" data-depth="1.8" id="note">
+    <span class="nb-micro"><span class="nb-sq is-signal"></span>Notification</span>
+    <p class="note">Đã đăng tóm tắt lên #thi-truong · 5 slide · 0 lỗi</p>
+  </div>
+  <div class="ctl"><button class="nb-btn" type="button" id="replay">Chạy lại</button></div>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  NB.clock(document.getElementById('clk'));
+  var col = NB.colleague(document.getElementById('col'), 'idle');
+  var tasks = document.querySelectorAll('#tasks li'), log = document.getElementById('log');
+  var st = document.getElementById('st'), ast = document.getElementById('ast'), tc = document.getElementById('tc'), num = document.getElementById('num');
+  var reduce = NB.reduce() || !window.gsap;
+  function state(s, label, face) { st.textContent = s; ast.textContent = label; col.set(face); }
+  function task(i, mode) {
+    var li = tasks[i]; li.className = mode; li.querySelector('.mk').textContent = mode === 'ok' ? '[✓]' : mode === 'run' ? '[~]' : '[ ]';
+    tc.textContent = document.querySelectorAll('#tasks li.ok').length + ' / 5';
+  }
+  function line(text) {
+    var li = document.createElement('li'); li.textContent = '› ' + text; log.appendChild(li);
+    while (log.children.length > 6) log.removeChild(log.firstChild);
+    if (!reduce) NB.decode(li, '› ' + text, 0.5);
+  }
+  function reset() {
+    log.innerHTML = ''; num.textContent = '00';
+    for (var i = 0; i < 5; i++) task(i, ''); state('idle', 'chờ', 'idle');
+  }
+  function finalState() {
+    for (var i = 0; i < 5; i++) task(i, 'ok');
+    ['Nhận yêu cầu W45', 'Đọc 3 file nguồn', '5 subagent trả kết luận', 'Viết báo cáo + 5 slide', 'Đối chiếu 14/14 số liệu', 'Đăng #thi-truong'].forEach(function (t) { var li = document.createElement('li'); li.textContent = '› ' + t; log.appendChild(li); });
+    num.textContent = '14'; state('done', 'xong', 'verified');
+  }
+  if (reduce) { finalState(); return; }
+  var cnt = { v: 0 }, tl;
+  function run() {
+    if (tl) tl.kill();
+    reset(); cnt.v = 0; gsap.set('.panel', { clearProps: 'opacity,visibility' });
+    tl = gsap.timeline();
+    tl.from('.panel', { y: 28, autoAlpha: 0, duration: 0.6, ease: 'power3.out', stagger: 0.08 })
+      .set('#note', { autoAlpha: 0, x: 40 })
+      .call(function () { state('pending', 'đọc yêu cầu', 'thinking'); line('Nhận yêu cầu: báo cáo W45'); }, null, '+=0.2')
+      .call(function () { state('processing', 'đang làm', 'working'); task(0, 'run'); line('Đọc ban-hang-T10.xlsx'); }, null, '+=0.8')
+      .call(function () { task(0, 'ok'); task(1, 'run'); line('Tạo 5 subagent tra giá'); }, null, '+=0.7')
+      .call(function () { task(1, 'ok'); task(2, 'run'); line('5/5 kết luận đã về'); }, null, '+=0.9')
+      .call(function () { task(2, 'ok'); task(3, 'run'); state('verifying', 'kiểm chứng', 'working'); line('Đối chiếu số liệu với nguồn'); }, null, '+=0.8')
+      .to(cnt, { v: 14, duration: 1.6, ease: 'none', snap: { v: 1 }, onUpdate: function () { num.textContent = (cnt.v < 10 ? '0' : '') + cnt.v; } })
+      .call(function () { task(3, 'ok'); task(4, 'run'); line('Đăng tóm tắt lên Slack'); }, null, '+=0.2')
+      .to('#note', { autoAlpha: 1, x: 0, duration: 0.5, ease: 'power3.out' }, '+=0.5')
+      .call(function () { task(4, 'ok'); state('done', 'xong', 'verified'); line('Hoàn tất · 0 lỗi'); });
+  }
+  run();
+  document.getElementById('replay').addEventListener('click', run);
+  var ops = document.getElementById('ops');
+  var movers = Array.prototype.map.call(document.querySelectorAll('.panel'), function (p) {
+    var d = Number(p.dataset.depth) || 1;
+    return { d: d, x: gsap.quickTo(p, 'x', { duration: 0.6, ease: 'power3.out' }), y: gsap.quickTo(p, 'y', { duration: 0.6, ease: 'power3.out' }) };
+  });
+  ops.addEventListener('pointermove', function (e) {
+    var r = ops.getBoundingClientRect(), nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+    movers.forEach(function (m) { m.x(-nx * 16 * m.d); m.y(-ny * 12 * m.d); });
+  });
+})();
+</script>
+</body>
+</html>

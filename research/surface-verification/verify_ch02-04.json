@@ -1,0 +1,502 @@
+{
+ "verdicts": [
+  {
+   "claim": "Desktop Code tab: typing /context prints a per-category breakdown in chat; Context card in session details panel; earlier layout used usage ring next to model picker",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/context-window.md"
+   ]
+  },
+  {
+   "claim": "CLI /context shows live breakdown incl. CLAUDE.md and auto memory files; /context all lists Memory files section",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/context-window.md",
+    "https://code.claude.com/docs/en/memory.md"
+   ]
+  },
+  {
+   "claim": "claude.ai/code (cloud sessions) supports /context, /compact and /clear",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "claude.ai/code /compact accepts focus text, e.g. /compact keep the test output",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Desktop: type /compact in the prompt box to compact",
+   "status": "unverifiable",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ],
+   "correction": "The fetched Desktop pages (first 200k chars read in two calls) do not mention typing /compact in Desktop. Only generic automatic compaction is documented. Treat as unknown."
+  },
+  {
+   "claim": "CLI /compact [instructions], /autocompact 500k, env vars CLAUDE_AUTOCOMPACT_PCT_OVERRIDE and CLAUDE_CODE_AUTO_COMPACT_WINDOW",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/context-window.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "After compaction, CLAUDE.md, auto memory, up to five recently modified files and the approved plan are re-injected; path-scoped rules reload on demand",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/context-window.md"
+   ]
+  },
+  {
+   "claim": "CLI /clear [name] starts empty context; name labels previous conversation in /resume picker; aliases /reset and /new",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/commands.md",
+    "https://code.claude.com/docs/en/sessions.md"
+   ]
+  },
+  {
+   "claim": "/clear is not documented for Desktop (write unknown)",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Each Desktop session has its own chat history",
+   "status": "unverifiable",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "claude.ai/code/new starts a new Code session (also reachable on phone)",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/mobile.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Rewind: press Esc twice with empty prompt, or /rewind; aliases /checkpoint and /undo",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/checkpointing.md",
+    "https://code.claude.com/docs/en/commands.md"
+   ]
+  },
+  {
+   "claim": "Rewind menu actions: Restore code and conversation, Restore conversation, Restore code, Summarize from here, Summarize up to here, Never mind",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/checkpointing.md"
+   ]
+  },
+  {
+   "claim": "100 most recent checkpoints, about 30-day retention controlled by cleanupPeriodDays; not tracked: Bash-only changes, external edits, symlinked and hard-linked files; not a replacement for version control",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/checkpointing.md"
+   ]
+  },
+  {
+   "claim": "Desktop rewind is unknown",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/checkpointing.md"
+   ],
+   "correction": "Correct to leave as unknown. Checkpointing page is CLI-oriented and does not name Desktop."
+  },
+  {
+   "claim": "Web rewind: Rewind to here fails only on non-newest messages with self-hosted runners before v2.1.246",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "CLI resume entry points: claude --continue, claude --resume, claude --resume <name>, /resume; /rename <name>; /branch [name]; claude --continue --fork-session; picker Ctrl+R rename and Ctrl+B filter to current git branch",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/sessions.md"
+   ]
+  },
+  {
+   "claim": "Branch copies conversation up to that point; original stays on disk",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/sessions.md"
+   ]
+  },
+  {
+   "claim": "Web: /resume is not available in cloud sessions; Archive and Delete in the session's menu",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ],
+   "correction": "Menu is the sidebar ⋯ menu; Archived tab is at claude.ai/code/sessions. Labels Archive, Unarchive and Delete are verified."
+  },
+  {
+   "claim": "Desktop: sidebar, View all / Archived tab, Unarchive, rename by clicking title bar title, Option-click (Alt-click) split view",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Desktop: Cmd-click (Ctrl-click) opens a new window",
+   "status": "unverifiable",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "A session resumed from Desktop continues the same session rather than a copy",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ],
+   "correction": "Add the entry points: run /desktop in the terminal (macOS and x64 Windows, claude.ai subscription sign-in only), claude --desktop --resume <session-id> (ID only, not name), or /resume inside Desktop for CLI sessions (not SSH, WSL or cloud)."
+  },
+  {
+   "claim": "Mobile: open sessions from the Code tab in the Claude app",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "claim": "CLI plan mode: Shift+Tab cycles modes; status bar shows ⏸ plan mode on; claude --permission-mode plan",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md",
+    "https://code.claude.com/docs/en/common-workflows.md"
+   ]
+  },
+  {
+   "claim": "CLI: /plan [description]",
+   "status": "corrected",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ],
+   "correction": "The source says to prefix a single prompt with /plan. It does not document a [description] argument form."
+  },
+  {
+   "claim": "Plan approval options: Yes, and use auto mode / Yes, auto-accept edits (if auto unavailable) / Yes, manually approve edits / No, keep planning; Ctrl+G edits plan in text editor",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md"
+   ]
+  },
+  {
+   "claim": "Desktop Plan: pick in mode selector under prompt box, session only; Cmd+Shift+M opens mode menu; Shift+Tab does not cycle in Desktop",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Web: choose Plan from mode dropdown at task creation or during session",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Mobile: tap +, then Permission, then Plan",
+   "status": "unverifiable",
+   "sources": [
+    "https://code.claude.com/docs/en/mobile.md"
+   ],
+   "correction": "The mobile page only lists modes per surface: cloud sessions offer Accept edits, Plan and Auto; Remote Control sessions offer Manual, Accept edits, Plan and Auto. The + > Permission > Plan path is not stated."
+  },
+  {
+   "claim": "Cowork has no Plan mode",
+   "status": "corrected",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ],
+   "correction": "The Cowork help page lists Manual, Auto and Skip and does not mention plan mode. Write not documented, not confirmed absent."
+  },
+  {
+   "claim": "Plan mode plan-tier requirement",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ],
+   "correction": "No tier requirement is stated for plan mode. Auto mode, which the 'use auto mode' approval depends on, is available on all plans subject to organization settings."
+  },
+  {
+   "claim": "AskUserQuestion CLI: answer by option or via Other row or notes field; askUserQuestionTimeout 60s/5m/10m; Question auto-continue timeout row in /config; timer does not start in background sessions, screen reader mode or Remote Control",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/tools-reference.md"
+   ]
+  },
+  {
+   "claim": "Desktop: questions wait for an answer while Desktop is disconnected",
+   "status": "corrected",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ],
+   "correction": "The documented disconnect wait is for SSH sessions: Claude waits on the remote machine with no time limit of its own. Do not generalize it to all Desktop sessions. The UI is not named AskUserQuestion in the Desktop docs."
+  },
+  {
+   "claim": "Web and mobile: open the session and answer Claude's questions; idle sessions wait",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "claim": "CLAUDE.md is read by both CLI and Desktop",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "/init creates CLAUDE.md, suggests improvements if one exists; CLAUDE_CODE_NEW_INIT=1 interactive flow; CLAUDE.local.md; ~/.claude/CLAUDE.md for all projects; @path imports",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md",
+    "https://code.claude.com/docs/en/commands.md"
+   ]
+  },
+  {
+   "claim": "No creation or editing UI for CLAUDE.md is documented in Desktop",
+   "status": "unverifiable",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Keep CLAUDE.md under about 200 lines; CLAUDE.md is context not enforced; use PreToolUse hook to enforce",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md"
+   ]
+  },
+  {
+   "claim": ".claude/rules: .md files, recursive subfolders, paths: frontmatter, ~/.claude/rules/, symlinked shared rules need one-time approval per project; to keep a rule across compaction drop paths: or move to root CLAUDE.md",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md",
+    "https://code.claude.com/docs/en/context-window.md"
+   ]
+  },
+  {
+   "claim": "Rules support on Desktop or claude.ai/code is unknown",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ],
+   "correction": "Correct as unknown. The fetched Desktop and cloud pages do not mention .claude/rules."
+  },
+  {
+   "claim": "Auto memory files at ~/.claude/projects/<project>/memory/ with MEMORY.md; first 200 lines or 25KB load each session; CLAUDE_CODE_DISABLE_AUTO_MEMORY=1; /memory toggle saves autoMemoryEnabled to ~/.claude/settings.json; asking Claude to remember saves to auto memory",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md"
+   ]
+  },
+  {
+   "claim": "Auto memory is on by default in local CLI sessions",
+   "status": "unverifiable",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md"
+   ],
+   "correction": "The fetched text does not state the default. Only the toggle and disable variable are confirmed."
+  },
+  {
+   "claim": "Auto memory in cloud sessions is not documented",
+   "status": "corrected",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md"
+   ],
+   "correction": "Auto memory is machine-local and its files are not shared across machines or cloud environments. Desktop auto memory remains undocumented."
+  },
+  {
+   "claim": "Cowork has project memory, not auto memory",
+   "status": "unverifiable",
+   "sources": [
+    "https://support.claude.com/en/articles/14116274-organize-your-tasks-with-claude-cowork"
+   ],
+   "correction": "The Cowork pages describe project memory but do not mention auto memory either way."
+  },
+  {
+   "claim": "Cowork: turn off Use account memory under project Memory section; + menu Memory toggle before first message, cannot change after task starts",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/14116274-organize-your-tasks-with-claude-cowork",
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ],
+   "correction": "The + menu toggle is in the getting-started article, not the organize article cited in the research."
+  },
+  {
+   "claim": "/memory lists CLAUDE.md, CLAUDE.local.md and other memory files; selecting opens in editor (creates if missing); toggles auto memory; opens auto memory folder",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md",
+    "https://code.claude.com/docs/en/commands.md"
+   ]
+  },
+  {
+   "claim": "Cowork equivalent Memory section on project page",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/14116274-organize-your-tasks-with-claude-cowork"
+   ]
+  },
+  {
+   "claim": "CLI @path includes file up to 25,000 tokens by default; @dir shows listing; @server:resource fetches MCP resource",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/common-workflows.md"
+   ]
+  },
+  {
+   "claim": "CLI paste image with Ctrl+V (Alt+V on Windows/WSL); Cmd-click or Ctrl-click [Image #1] opens viewer",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/common-workflows.md"
+   ]
+  },
+  {
+   "claim": "Desktop attach: + button, Add files or photos, drag into prompt, @ and filename, right-click Attach as context",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Web: @ lists files only after first message",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Cowork reads and writes local files on desktop and can take a local folder as context",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ],
+   "correction": "Claude can only read and write in folders you connect."
+  },
+  {
+   "claim": "Mobile: photos and files attached in the app reach a Remote Control session",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "claim": "Artifacts plan availability: all plans that include Claude Code",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them"
+   ],
+   "correction": "Source says Free, Pro, Max, Ultra, Team and Enterprise, and that artifacts are available in Claude Code on every plan that includes Claude Code."
+  },
+  {
+   "claim": "HTML artifacts; ask for one in Claude Code via Output menu or Artifacts tab",
+   "status": "corrected",
+   "sources": [
+    "https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them"
+   ],
+   "correction": "The Output menu and Artifacts tab are documented for claude.ai chats. Use in Claude Code is not documented. The source says Claude can make things like single-page websites, not specifically HTML."
+  },
+  {
+   "claim": "Export: Docs to Word, PDF, Markdown, Google Docs; Designs to standalone HTML",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them"
+   ]
+  },
+  {
+   "claim": "Cowork live artifacts created before 2026-08-19 work only in the desktop app",
+   "status": "unverifiable",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ]
+  },
+  {
+   "claim": "Cowork permission modes: Manual, Auto, Skip",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ],
+   "correction": "Add the defaults: Auto is the default on Pro, Max, Ultra and Team; Manual is the default on Enterprise."
+  },
+  {
+   "claim": "Cowork requires a paid plan; Linux is beta",
+   "status": "verified",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ]
+  },
+  {
+   "claim": "Cowork for Team on web and mobile is beta",
+   "status": "corrected",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ],
+   "correction": "Source says Pro, Max, Ultra and Team plans, in beta on Team. It does not say web and mobile specifically."
+  },
+  {
+   "claim": "Cloud sessions need Pro, Max, Ultra, Team or Enterprise with premium seats",
+   "status": "corrected",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ],
+   "correction": "Enterprise also qualifies with Chat + Claude Code seats. Custom roles need the cloud sessions permission. Not available through Bedrock, Vertex or Foundry."
+  },
+  {
+   "claim": "Claude Code runs in any directory, including notes vault or document folders",
+   "status": "verified",
+   "sources": [
+    "https://code.claude.com/docs/en/common-workflows.md"
+   ]
+  },
+  {
+   "claim": "Desktop Code tab, claude.ai/code, mobile and CLI availability for context/plan/memory commands as stated in the research matrix",
+   "status": "corrected",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/mobile.md"
+   ],
+   "correction": "Verified for CLI and cloud. Desktop /compact, /clear, /memory, rewind and Cowork /compact, /clear, /context, rewind and /memory are not documented in the fetched pages and should stay unknown."
+  }
+ ],
+ "missing": [
+  "Cowork default permission mode by plan (Auto on Pro, Max, Ultra, Team; Manual on Enterprise) and the Skip mode risk. Source: https://support.claude.com/en/articles/13345190-getting-started-with-cowork",
+  "Dispatch: message a task to the Desktop app from the phone; requires Pro, Max or Ultra, not Team or Enterprise. Sources: https://code.claude.com/docs/en/mobile.md, https://code.claude.com/docs/en/desktop.md",
+  "Desktop-CLI handoff: /desktop, claude --desktop --resume <session-id>, and /resume inside Desktop. Source: https://code.claude.com/docs/en/desktop.md",
+  "/btw for side questions that do not enter history, useful for context-hygiene. Source: https://code.claude.com/docs/en/commands.md",
+  "/fork copies the conversation into a new background session; /background detaches. Source: https://code.claude.com/docs/en/commands.md",
+  "/powerup for interactive feature lessons with animated demos, a good discovery entry point for non-developers. Source: https://code.claude.com/docs/en/common-workflows.md",
+  "/clear keeps project memory (CLAUDE.md and auto memory) while starting a fresh conversation. Source: https://code.claude.com/docs/en/commands.md",
+  "Rewind's Summarize from here and Summarize up to here as targeted compaction alternatives. Source: https://code.claude.com/docs/en/checkpointing.md",
+  "Subagents keep large file reads out of the main context. Source: https://code.claude.com/docs/en/context-window.md and https://code.claude.com/docs/en/common-workflows.md",
+  "Plan-mode tier: no plan requirement is stated; auto mode availability depends on plan and org settings. Source: https://code.claude.com/docs/en/permission-modes.md",
+  "Remote Control entry points: claude remote-control, /remote-control, and /mobile QR code for the app. Source: https://code.claude.com/docs/en/mobile.md",
+  "Extended 1M context window on some models, with availability by plan. Source: https://code.claude.com/docs/en/context-window.md",
+  "Cowork /schedule slash command for scheduled tasks. Source: https://support.claude.com/en/articles/13345190-getting-started-with-cowork",
+  "Cowork Instructions creation labels (Start from scratch, Use an existing folder, Import from project) are not confirmed in any fetched page. Treat as unverifiable.",
+  "Claude Projects in cloud sessions (claude-projects.md, linked from the cloud page) was not fetched and remains unverified."
+ ],
+ "summary": "Verified 60 claims against 14 primary pages (code.claude.com docs, support.claude.com Cowork and Artifacts articles), fetched 2026-11-06. CLI and cloud claims are largely accurate. Corrections: Cowork has no documented plan mode, /compact, /clear, /context, rewind or /memory, but the help page does not say they are absent. Cowork Team web/mobile beta wording is overstated. The Desktop disconnect wait applies to SSH sessions. Auto memory is documented as not shared with cloud environments. Artifacts Output menu is documented for claude.ai chats only. Cloud plan requirements add Enterprise with Chat + Claude Code seats. Still unknown or unverifiable: Desktop /compact, /clear, /memory and rewind; Cowork slash commands and rewind; mobile plan-mode menu path; Cowork Instructions labels; Cowork live-artifact date cutoff; Desktop Cmd-click new window. Missing for the topic: Cowork Auto/Manual/Skip defaults by plan, Dispatch (Pro/Max/Ultra), the Desktop-CLI handoff commands, /btw, /fork, /powerup, and subagents for context hygiene."
+}

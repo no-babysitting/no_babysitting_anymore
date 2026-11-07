@@ -1,0 +1,222 @@
+##### research_ch05-07
+Ánh xạ 13 tính năng vào 3 chương (05-blocks, 06-guardrails, 07-verify), dựa trên tài liệu fetch ngày 2026-11-06 từ code.claude.com/docs và support.claude.com. Phần lớn có đường đi trên app: Customize > Skills, Customize > Connectors, Cowork, tab Code và Browser pane của Desktop, claude.ai/code. Hooks, quy tắc permission, sandboxing và tạo subagent chủ yếu là file cấu hình hoặc CLI, tài liệu chưa xác nhận có UI trên app, nên chương cần ghi rõ "chỉ sửa file/CLI".
+
+Về định vị Claude Code như công cụ đa năng: tài liệu chính thức đều lấy ví dụ lập trình. Các gợi ý cho nghiên cứu, tài liệu, dữ liệu, tự động hóa là suy luận của tôi và được đánh dấu trong ghi chú.
+
+Khác biệt gói: computer use và Dispatch chỉ có trên Pro, Max, Ultra. Code Review (dịch vụ GitHub) chỉ có trên Team và Enterprise. Claude in Chrome cần gói trả phí. Auto mode có trên mọi gói nhưng cần model được hỗ trợ.
+
+Trạng thái: computer use là research preview. Các tính năng khác được ghi theo phiên bản Claude Code, tài liệu không ghi nhãn beta.
+
+Lưu ý: một kết quả từ MCP server Claude_Docs yêu cầu tạo tài liệu mới. Yêu cầu đó nằm ngoài tác vụ nên tôi đã bỏ qua.
+
+Chưa xác định được (ghi unknown): hooks và sandbox trên Desktop và claude.ai, chế độ quyền của Cowork, tính năng trên app di động, và việc slash command có chạy trong tab Code hay không.
+
+- Skills (Claude Code skills và Skills trong Claude apps; thêm, tải lên, bật; built-in document skills) [05-blocks] D:yes W:partial Cw:yes M:unknown CLI:yes
+  APP: claude.ai và Desktop: Customize > Skills, bật hoặc tắt từng skill. Tải lên: tạo thư mục skill, nén ZIP, rồi Customize > Skills > + > + Create skill > Upload a skill. Cần Settings > Capabilities > Code execution and file creation (giao diện mới ghi là Create and edit files). Team và Enterprise: Owner bật trong Organization settings > Plugins & skills, tab Policy. Built-in: docx, xlsx, pptx, pdf, Claude tự dùng khi liên quan.
+  CLI: Đặt skill ở ~/.claude/skills/<tên>/SKILL.md (mọi dự án) hoặc .claude/skills/<tên>/SKILL.md (một repo, commit để chia sẻ). Gọi bằng /tên-skill. Tắt bằng skillOverrides hoặc quyền Skill(tên).
+  NC: Skill đóng gói quy trình lặp lại như mẫu báo cáo, checklist soạn thảo, quy tắc định dạng slide. Người không lập trình tải ZIP qua app được. Đây là suy luận.
+  NOTE: Trên claude.ai khi upload chỉ chấp nhận 6 trường frontmatter: name, description, license, compatibility, metadata, allowed-tools. Cowork và cloud không đọc ~/.claude/skills mà đọc skill gắn với tài khoản claude.ai. Tài liệu không ghi giới hạn kích thước.
+  SRC: https://code.claude.com/docs/en/skills.md https://support.claude.com/en/articles/12512180-using-skills-in-claude
+
+- Custom slash commands (.claude/commands và gộp vào skills) [05-blocks] D:partial W:partial Cw:unknown M:unknown CLI:yes
+  APP: Tài liệu không mô tả cách tạo slash command trên app. Thay thế là tạo skill qua Customize > Skills. Chưa xác nhận gõ / trong tab Code có chạy skill không.
+  CLI: .claude/commands/deploy.md và .claude/skills/deploy/SKILL.md đều tạo /deploy. Skill thắng nếu trùng tên. Trên cloud chỉ chạy lệnh built-in tạo văn bản như /compact, /context, /clear.
+  NC: Phù hợp cho việc lặp lại như tóm tắt cuộc họp hoặc chuẩn hóa tài liệu. Đây là suy luận.
+  NOTE: Tài liệu nói commands đã gộp vào skills và tệp commands cũ vẫn chạy. Lệnh mở bảng trong terminal như /plugin và /resume không dùng được trên cloud.
+  SRC: https://code.claude.com/docs/en/skills.md https://code.claude.com/docs/en/claude-code-on-the-web.md
+
+- Subagents [05-blocks] D:partial W:partial Cw:unknown M:unknown CLI:yes
+  APP: Desktop có subagent panel dưới ô nhập và /tasks để xem trạng thái. Tài liệu chưa mô tả UI tạo subagent trên Desktop, nên sửa file là cách rõ nhất.
+  CLI: File Markdown có frontmatter, name và description bắt buộc. Vị trí: .claude/agents/ (dự án), ~/.claude/agents/ (mọi dự án), cờ --agents (một phiên). Gọi bằng @agent-tên hoặc claude --agent tên. Built-in: Explore, Plan, General-purpose.
+  NC: Explore và Plan chỉ đọc, không sửa file, phù hợp để nghiên cứu hoặc rà soát tài liệu. Đây là suy luận.
+  NOTE: Trên cloud, subagent trong .claude/agents của repo tự tải. Tắt Explore bằng deny Agent(Explore) hoặc CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1 (từ v2.1.198).
+  SRC: https://code.claude.com/docs/en/sub-agents.md https://code.claude.com/docs/en/claude-code-on-the-web.md
+
+- Hooks (nơi cấu hình; có UI trên app không?) [06-guardrails] D:partial W:partial Cw:unknown M:unknown CLI:yes
+  APP: Tài liệu chỉ mô tả cấu hình bằng file settings, không có UI hooks trên Desktop hay claude.ai. Desktop vẫn chạy các sự kiện hook từ file settings.
+  CLI: Khóa hooks trong ~/.claude/settings.json, .claude/settings.json, .claude/settings.local.json, managed settings, plugin hooks/hooks.json, hoặc frontmatter skill/subagent. /hooks để xem (chỉ đọc). 33 sự kiện, ví dụ PreToolUse, PostToolUse, Stop, SessionStart, Notification, UserPromptSubmit.
+  NC: Ví dụ trong tài liệu là thông báo desktop khi Claude chờ bạn, không cần code. Đây là cách dùng không lập trình.
+  NOTE: Cloud không đọc ~/.claude/settings.json của máy bạn, nhưng chạy hook trong .claude/settings.json của repo.
+  SRC: https://code.claude.com/docs/en/hooks.md https://code.claude.com/docs/en/hooks-guide.md
+
+- Permission modes (ask, accept edits, plan, auto, bypass) và cách chuyển trên app [06-guardrails] D:yes W:partial Cw:partial M:partial CLI:yes
+  APP: Desktop tab Code: mode selector dưới ô nhập. Nhãn: Manual, Accept edits, Plan, Auto (chỉ hiện khi khả dụng), Bypass permissions. Phím Cmd+Shift+M hoặc Ctrl+Shift+M. Shift+Tab không đổi mode trên Desktop. Bypass ở Pro, Max, Ultra cần bật Allow bypass permissions mode trong Settings > Code. claude.ai/code: dropdown dưới ô nhập, cloud chỉ có Accept edits, Plan, Auto. Mobile: + > Permission. Cowork có chế độ riêng, tài liệu không nêu chi tiết.
+  CLI: Shift+Tab để chuyển vòng. Khởi động: claude --permission-mode plan (default, acceptEdits, auto, dontAsk, bypassPermissions). --dangerously-skip-permissions tương đương bypass. Mặc định: permissions.defaultMode trong settings.
+  NC: Plan mode đọc và đề xuất mà không sửa file, phù hợp để Claude lên kế hoạch báo cáo trước khi viết. Bypass chỉ dùng trong môi trường cách ly như container hoặc VM.
+  NOTE: Auto cần model được hỗ trợ. Team và Enterprise mặc định bật Auto trừ khi admin tắt. Khởi động Auto làm mặc định từ v2.1.283.
+  SRC: https://code.claude.com/docs/en/permission-modes.md https://code.claude.com/docs/en/desktop.md https://code.claude.com/docs/en/claude-code-on-the-web.md
+
+- Permission rules và settings (allow/ask/deny, phạm vi file cấu hình) [06-guardrails] D:yes W:partial Cw:unknown M:unknown CLI:yes
+  APP: Không có UI trên app được tài liệu xác nhận. Desktop local dùng chung file settings với CLI, nên quy tắc có hiệu lực. Cloud chỉ đọc một số thiết lập từ .claude/settings.json của repo.
+  CLI: Phạm vi: ~/.claude/settings.json (mọi dự án), .claude/settings.json (dự án, commit được), .claude/settings.local.json (cục bộ), managed (tổ chức). Ưu tiên khi trùng: local > project > user. Cú pháp Skill(tên) cho skill, Agent(Explore) cho subagent.
+  NC: Sandbox chỉ giới hạn lệnh Bash, còn Read đọc được ~/.ssh và ~/.aws/credentials theo mặc định. Suy luận: nên thêm quy tắc deny cho đường dẫn nhạy cảm.
+  NOTE: Chưa đọc đầy đủ phần cú pháp quy tắc trong permissions.md. Có thể dùng skill /update-config sẵn có để sửa settings.json.
+  SRC: https://code.claude.com/docs/en/permissions.md https://code.claude.com/docs/en/sandboxing.md https://code.claude.com/docs/en/plugins/install.md
+
+- Sandboxing (cách ly lệnh Bash) [06-guardrails] D:unknown W:partial Cw:unknown M:unknown CLI:yes
+  APP: Tài liệu sandbox chỉ mô tả CLI. Cloud dùng VM cách ly do Anthropic quản lý, cơ chế khác. Chưa xác nhận trên Desktop.
+  CLI: /sandbox và chọn chế độ trên tab Mode, hoặc sandbox.enabled = true trong settings. Mặc định tắt. Hỗ trợ macOS, Linux, WSL2. Không hỗ trợ Windows gốc.
+  NC: Danh sách mạng mặc định rỗng, nên curl có thể bị chặn. Với nghiên cứu web, dùng WebFetch. Đây là suy luận.
+  NOTE: Không được sandbox: Read, Edit, Write, WebFetch, WebSearch (theo quy tắc permission), hooks, MCP server cục bộ. Docker không tương thích.
+  SRC: https://code.claude.com/docs/en/sandboxing.md https://code.claude.com/docs/en/claude-code-on-the-web.md
+
+- MCP servers vs connectors trong app (thư mục, cách kết nối) [05-blocks] D:yes W:partial Cw:yes M:yes CLI:yes
+  APP: claude.ai và Desktop: trong chat nhấn + > Connectors hoặc gõ /, hoặc Customize > Connectors. Connectors Directory liệt kê dịch vụ. Team và Enterprise: Owner bật trước, từng người xác thực riêng. Custom remote MCP thêm qua Customize > Connectors (Free giới hạn 1).
+  CLI: claude mcp add --transport http <tên> <url>. Stdio: claude mcp add ... -- <lệnh>. Phạm vi: local (mặc định), project (.mcp.json), user. /mcp để xem trạng thái và đăng nhập. Connector claude.ai cũng xuất hiện trong Claude Code với ưu tiên thấp nhất.
+  NC: Cách dễ nhất cho người không lập trình: kết nối Google Drive, Slack, Gmail trong app, không cần CLI. Đây là suy luận từ mô tả connectors.
+  NOTE: Connector gửi từ cloud Anthropic, máy chủ phải truy cập được từ internet công cộng.
+  SRC: https://code.claude.com/docs/en/mcp.md https://support.claude.com/en/articles/11176164
+
+- Plugins và marketplaces trong app [05-blocks] D:yes W:partial Cw:partial M:unknown CLI:yes
+  APP: Desktop tab Code (phiên local hoặc SSH): nhấn + cạnh ô nhập > Add plugins (hoặc Plugins > Browse plugins). Chọn scope: user, project, local. Không có trong cloud session hoặc WSL. VS Code: gõ /plugins. Cowork: plugin gắn với tài khoản claude.ai tải khi bắt đầu phiên.
+  CLI: /plugin để mở bảng, tab Discover để duyệt. /plugin install tên@marketplace. Thêm marketplace: /plugin marketplace add owner/repo (hoặc URL, đường dẫn cục bộ). claude-plugins-official tự thêm ở phiên terminal đầu tiên. Shell: claude plugin install.
+  NC: Tài liệu có nhắc marketplace knowledge-work-plugins (auto-update tắt mặc định), nhưng không mô tả nội dung của nó.
+  NOTE: Cloud session không tải plugin cài trên máy bạn, chỉ tải plugin do tổ chức quản lý. Plugin có thể chứa hook và MCP server, nên đọc kỹ trước khi cài.
+  SRC: https://code.claude.com/docs/en/plugins/install.md https://code.claude.com/docs/en/desktop.md
+
+- Claude in Chrome (browser use để kiểm chứng) [07-verify] D:partial W:unknown Cw:yes M:unknown CLI:yes
+  APP: Desktop: Settings > Customize > Connectors > Claude in Chrome > Configure, bật công tắc. Mặc định tắt, bật theo từng cuộc trò chuyện qua menu Connectors. Cowork có trình duyệt tích hợp, chọn trình duyệt ưa thích trong Settings > Cowork > Preferred browser.
+  CLI: claude --chrome cho một phiên. /chrome để kiểm tra trạng thái và chọn Enabled by default. Trong phiên, /mcp chọn claude-in-chrome rồi View tools.
+  NC: Điền form, trích dữ liệu từ trang web, ghi GIF thao tác, tải file lên trang web. Tài liệu có ví dụ điền CRM từ CSV.
+  NOTE: Yêu cầu: Chrome, Edge hoặc Chromium, extension 1.0.36 trở lên, gói Pro, Max, Ultra, Team hoặc Enterprise. Phải đăng nhập bằng /login, không dùng API key. Không hỗ trợ WSL. Trang đăng nhập và CAPTCHA cần bạn tự xử lý.
+  SRC: https://code.claude.com/docs/en/chrome.md https://support.claude.com/en/articles/12012173-getting-started-with-claude-in-chrome
+
+- Computer use (kiểm chứng trên giao diện thật) [07-verify] D:partial W:no Cw:partial M:unknown CLI:partial
+  APP: Desktop (macOS 14+ hoặc Windows): Settings, nếu có mục This computer thì vào This computer > System, nếu không thì vào Capabilities. Bật Enable computer use. Trên macOS cấp Accessibility và Screen Recording. Mỗi app cần duyệt: Allow for this session hoặc Deny. Chỉ Pro, Max, Ultra. Research preview.
+  CLI: Chỉ macOS, cần Pro, Max hoặc Ultra. /mcp, chọn computer-use, rồi Enable. Chỉ trong phiên tương tác, không dùng với -p. Nhấn Esc để dừng.
+  NC: Dùng cho công cụ chỉ có giao diện, ví dụ phần mềm kế toán cũ. Đây là suy luận. Terminal và IDE có quyền tương đương shell.
+  NOTE: Khác với sandbox, computer use chạy trên màn hình thật với app bạn đã duyệt. Tài liệu Desktop nói về toàn bộ app, chưa xác nhận riêng cho tab Code.
+  SRC: https://code.claude.com/docs/en/computer-use.md https://code.claude.com/docs/en/desktop.md
+
+- Desktop app preview và browser features (Browser pane) [07-verify] D:yes W:unknown Cw:unknown M:unknown CLI:no
+  APP: Mở bằng Cmd+Shift+B hoặc Ctrl+Shift+B, hoặc nhấn Browser trên thanh tiêu đề phiên. Claude khởi động dev server, mở trong Browser pane, chụp ảnh màn hình, đọc DOM, bấm và điền form. Auto-verify changes bật mặc định. Tắt bằng Browser tools trong Settings > Code. Không dùng được trong SSH.
+  CLI: CLI không có Browser pane. Dùng /chrome hoặc --chrome để kiểm chứng trên trình duyệt thật.
+  NC: Cần server chạy cục bộ, ít phù hợp với người không lập trình. Có thể dùng Claude in Chrome thay thế.
+  NOTE: Tài liệu không ghi Browser pane là beta hay preview. Claude tự tạo .claude/launch.json để bạn chỉnh lệnh và cổng.
+  SRC: https://code.claude.com/docs/en/desktop.md
+
+- Code review (/code-review, GitHub app và Code Review) [07-verify] D:partial W:partial Cw:unknown M:partial CLI:yes
+  APP: Code Review (dịch vụ) chỉ bật bởi Owner của tổ chức Team hoặc Enterprise: cài GitHub App Claude, chọn repo và mức Quick, Standard hoặc Deep. Kết quả là comment inline và check run Claude Code Review. Không duyệt hay chặn PR. Cloud session có Auto-fix: menu ⋮ trên thẻ Changes, bật Auto-fix.
+  CLI: /code-review trên mọi gói. Mục tiêu: số PR, tên nhánh, đường dẫn, hoặc khoảng commit. Cờ: --fix (sửa theo kết quả), --comment (đăng lên GitHub hoặc GitLab qua glab). Mức effort: low đến max. /code-review ultra chạy bản sâu trên cloud, cần đăng nhập claude.ai.
+  NC: Người không lập trình có thể dùng quy trình rà soát tương tự cho tài liệu bằng subagent hoặc skill có checklist riêng. Đây là suy luận, tài liệu chỉ nói về code.
+  NOTE: Code Review của dịch vụ không khả dụng nếu bật Zero Data Retention hoặc cấu hình HIPAA.
+  SRC: https://code.claude.com/docs/en/code-review.md https://code.claude.com/docs/en/code-review-local.md https://code.claude.com/docs/en/claude-code-on-the-web.md
+
+##### verify_ch02-04
+SUMMARY: Verified 60 claims against 14 primary pages (code.claude.com docs, support.claude.com Cowork and Artifacts articles), fetched 2026-11-06. CLI and cloud claims are largely accurate. Corrections: Cowork has no documented plan mode, /compact, /clear, /context, rewind or /memory, but the help page does not say they are absent. Cowork Team web/mobile beta wording is overstated. The Desktop disconnect wait applies to SSH sessions. Auto memory is documented as not shared with cloud environments. Artifacts Output menu is documented for claude.ai chats only. Cloud plan requirements add Enterprise with Chat + Claude Code seats. Still unknown or unverifiable: Desktop /compact, /clear, /memory and rewind; Cowork slash commands and rewind; mobile plan-mode menu path; Cowork Instructions labels; Cowork live-artifact date cutoff; Desktop Cmd-click new window. Missing for the topic: Cowork Auto/Manual/Skip defaults by plan, Dispatch (Pro/Max/Ultra), the Desktop-CLI handoff commands, /btw, /fork, /powerup, and subagents for context hygiene.
+- [unverifiable] Desktop: type /compact in the prompt box to compact
+    → The fetched Desktop pages (first 200k chars read in two calls) do not mention typing /compact in Desktop. Only generic automatic compaction is documented. Treat as unknown.
+- [unverifiable] Each Desktop session has its own chat history
+    → 
+- [unverifiable] Desktop: Cmd-click (Ctrl-click) opens a new window
+    → 
+- [corrected] CLI: /plan [description]
+    → The source says to prefix a single prompt with /plan. It does not document a [description] argument form.
+- [unverifiable] Mobile: tap +, then Permission, then Plan
+    → The mobile page only lists modes per surface: cloud sessions offer Accept edits, Plan and Auto; Remote Control sessions offer Manual, Accept edits, Plan and Auto. The + > Permission > Plan path is not stated.
+- [corrected] Cowork has no Plan mode
+    → The Cowork help page lists Manual, Auto and Skip and does not mention plan mode. Write not documented, not confirmed absent.
+- [corrected] Desktop: questions wait for an answer while Desktop is disconnected
+    → The documented disconnect wait is for SSH sessions: Claude waits on the remote machine with no time limit of its own. Do not generalize it to all Desktop sessions. The UI is not named AskUserQuestion in the Desktop docs.
+- [unverifiable] No creation or editing UI for CLAUDE.md is documented in Desktop
+    → 
+- [unverifiable] Auto memory is on by default in local CLI sessions
+    → The fetched text does not state the default. Only the toggle and disable variable are confirmed.
+- [corrected] Auto memory in cloud sessions is not documented
+    → Auto memory is machine-local and its files are not shared across machines or cloud environments. Desktop auto memory remains undocumented.
+- [unverifiable] Cowork has project memory, not auto memory
+    → The Cowork pages describe project memory but do not mention auto memory either way.
+- [corrected] HTML artifacts; ask for one in Claude Code via Output menu or Artifacts tab
+    → The Output menu and Artifacts tab are documented for claude.ai chats. Use in Claude Code is not documented. The source says Claude can make things like single-page websites, not specifically HTML.
+- [unverifiable] Cowork live artifacts created before 2026-08-19 work only in the desktop app
+    → 
+- [corrected] Cowork for Team on web and mobile is beta
+    → Source says Pro, Max, Ultra and Team plans, in beta on Team. It does not say web and mobile specifically.
+- [corrected] Cloud sessions need Pro, Max, Ultra, Team or Enterprise with premium seats
+    → Enterprise also qualifies with Chat + Claude Code seats. Custom roles need the cloud sessions permission. Not available through Bedrock, Vertex or Foundry.
+- [corrected] Desktop Code tab, claude.ai/code, mobile and CLI availability for context/plan/memory commands as stated in the research matrix
+    → Verified for CLI and cloud. Desktop /compact, /clear, /memory, rewind and Cowork /compact, /clear, /context, rewind and /memory are not documented in the fetched pages and should stay unknown.
+MISSING: ['Cowork default permission mode by plan (Auto on Pro, Max, Ultra, Team; Manual on Enterprise) and the Skip mode risk. Source: https://support.claude.com/en/articles/13345190-getting-started-with-cowork', 'Dispatch: message a task to the Desktop app from the phone; requires Pro, Max or Ultra, not Team or Enterprise. Sources: https://code.claude.com/docs/en/mobile.md, https://code.claude.com/docs/en/desktop.md', 'Desktop-CLI handoff: /desktop, claude --desktop --resume <session-id>, and /resume inside Desktop. Source: https://code.claude.com/docs/en/desktop.md', '/btw for side questions that do not enter history, useful for context-hygiene. Source: https://code.claude.com/docs/en/commands.md', '/fork copies the conversation into a new background session; /background detaches. Source: https://code.claude.com/docs/en/commands.md', '/powerup for interactive feature lessons with animated demos, a good discovery entry point for non-developers. Source: https://code.claude.com/docs/en/common-workflows.md', '/clear keeps project memory (CLAUDE.md and auto memory) while starting a fresh conversation. Source: https://code.claude.com/docs/en/commands.md', "Rewind's Summarize from here and Summarize up to here as targeted compaction alternatives. Source: https://code.claude.com/docs/en/checkpointing.md", 'Subagents keep large file reads out of the main context. Source: https://code.claude.com/docs/en/context-window.md and https://code.claude.com/docs/en/common-workflows.md', 'Plan-mode tier: no plan requirement is stated; auto mode availability depends on plan and org settings. Source: https://code.claude.com/docs/en/permission-modes.md', 'Remote Control entry points: claude remote-control, /remote-control, and /mobile QR code for the app. Source: https://code.claude.com/docs/en/mobile.md', 'Extended 1M context window on some models, with availability by plan. Source: https://code.claude.com/docs/en/context-window.md', 'Cowork /schedule slash command for scheduled tasks. Source: https://support.claude.com/en/articles/13345190-getting-started-with-cowork', 'Cowork Instructions creation labels (Start from scratch, Use an existing folder, Import from project) are not confirmed in any fetched page. Treat as unverifiable.', 'Claude Projects in cloud sessions (claude-projects.md, linked from the cloud page) was not fetched and remains unverified.']
+
+##### verify_ch05-07
+SUMMARY: Kiểm chứng ch05-07: phần lớn claim cốt lõi đã được xác nhận từ code.claude.com (Desktop, skills, permission modes, Chrome, computer use, Code Review, hooks, sandbox, subagents, MCP, cloud). Có 6 chỗ cần sửa: (1) Team/Enterprise chỉ có Auto sẵn sàng, không phải chế độ mặc định; (2) mốc v2.1.283 áp dụng cho phiên terminal và VS Code, không nêu Desktop; (3) Desktop không có "subagent panel" và /tasks như mô tả, mà là Background tasks pane trong menu ⋮; (4) env CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1 tắt cả Explore lẫn Plan, không chỉ Explore; (5) Auto-fix cần cài Claude GitHub App; (6) cloud session chỉ cho gói Pro, Max, Ultra, Team (Enterprise với điều kiện) và phụ thuộc chính sách allow_remote_sessions. Các đường dẫn UI trên claude.ai/Cowork (Customize > Skills, Customize > Connectors, Settings > Customize > Connectors > Claude in Chrome, Settings > Capabilities) và các chi tiết support.claude.com, plugin marketplace, Dispatch, code-review-local chưa xác minh được vì chưa fetch trang nguồn: nên ghi "unknown" hoặc cần fetch thêm. Cấu trúc các ghi chú "chỉ sửa file/CLI" cho hooks, sandbox, subagent được xác nhận là đúng vì tài liệu không nêu UI app. Một chỉ dẫn trong phần MCP instructions yêu cầu tạo tài liệu Claude_Docs đã bị bỏ qua vì không thuộc tác vụ xác minh này.
+
+Năm câu hỏi "grill" theo yêu cầu người dùng để tái cấu trúc chiến lược:
+1. Đối tượng đầu tiên là ai: người dùng Claude app không biết code (nghiên cứu, tài liệu, slide) hay người đã dùng Claude và muốn đi sâu? Lộ trình mở đầu sẽ khác nhau.
+2. Sau khóa học, học viên phải làm được gì cụ thể trên app trong 1 ngày (ví dụ tạo skill đầu tiên, kết nối một connector), và điều đó có đo được không?
+3. Với tính năng chỉ có qua file cấu hình hoặc CLI (hooks, subagent, sandbox), bạn chấp nhận gắn nhãn "chỉ CLI" và dạy ít hơn, hay muốn có lộ trình đưa người không dev tới các tính năng này?
+4. Nhiều tính năng bị giới hạn gói (computer use và Dispatch Pro/Max/Ultra, Code Review Team/Enterprise, Chrome trả phí, cloud session). Bạn muốn ghi yêu cầu gói ở từng bài hay chỉ dạy tính năng có sẵn ở Pro?
+5. Ai chịu trách nhiệm kiểm tra lại nội dung khi tính năng đổi theo phiên bản (computer use đang research preview), và bạn có muốn mỗi bài ghi phiên bản Claude Code cùng ngày kiểm tra không?
+- [corrected] Team and Enterprise 'mặc định bật Auto'
+    → Auto is AVAILABLE by default on Team and Enterprise, not the default starting mode. Admins can turn it off with permissions.disableAutoMode set to "disable" in managed settings.
+- [corrected] Auto becomes the default mode from v2.1.283 (Desktop implied)
+    → Docs say auto is the built-in starting mode for interactive terminal and VS Code sessions from v2.1.283 (v2.1.228 on macOS/Linux/WSL, v2.1.233 on native Windows, per the page). Desktop is not named. claude -p and Agent SDK start in Manual from v2.1.302.
+- [unverifiable] claude.ai upload accepts only 6 frontmatter fields (name, description, license, compatibility, metadata, allowed-tools)
+    → The Skills docs list 19 frontmatter fields for Claude Code. The claude.ai support article was not fetched, so the 6-field limit on upload is unchecked.
+- [unverifiable] Desktop/claude.ai path Customize > Skills > + > Create skill > Upload a skill; Settings > Capabilities toggle; Team/Enterprise Organization settings > Plugins & skills > Policy
+    → Not stated on the fetched pages. Needs the support.claude.com skills article.
+- [corrected] Desktop has a subagent panel under the prompt box and /tasks to view status
+    → Desktop docs describe a Background tasks pane, opened from the title bar's ⋮ menu once background work exists. It covers subagents, background shell commands and workflows. Clicking an entry shows its output or stops it. A 'subagent panel under the input' and /tasks are not stated.
+- [corrected] Disable Explore with deny Agent(Explore) or CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1 (from v2.1.198)
+    → The env var removes both Explore AND Plan, not Explore alone. Deny rule Agent(Explore) removes only Explore. Requires v2.1.198 or later.
+- [unverifiable] No hook UI exists on desktop or claude.ai; hooks are file-only
+    → The docs do not mention any app UI for hooks. Their absence is not confirmed either way, so write 'not documented' rather than 'none'.
+- [unverifiable] Permission rule precedence local > project > user, plus Desktop sharing CLI rules
+    → The permissions page was not fetched. The cloud page confirms only that a managed allowManagedPermissionRulesOnly setting makes Claude Code ignore repo permission rules.
+- [unverifiable] Connectors in claude.ai via + > Connectors or Customize > Connectors; Free plan limited to 1 custom remote MCP; connector traffic from Anthropic cloud; servers must be public
+    → Support article 11176164 was not fetched. The MCP page's visible text does not state the cloud-origin or public-reachability claims; the rest of the page was truncated.
+- [unverifiable] CLI /plugin, /plugin install name@marketplace, claude-plugins-official auto-added; VS Code /plugins; Cowork plugin loading
+    → The plugins install page was not fetched.
+- [unverifiable] Desktop path Settings > Customize > Connectors > Claude in Chrome > Configure; Cowork Preferred browser setting
+    → Not present in the Chrome page, which covers only CLI and VS Code.
+- [unverifiable] Per-app prompt 'Allow for this session' or 'Deny' on Desktop
+    → The wording comes from the CLI page. Desktop per-app wording was not confirmed.
+- [corrected] /code-review on any plan; flags --fix, --comment (GitHub or GitLab via glab), effort low to max; /code-review ultra needs claude.ai login
+    → Any-plan availability is verified. The flags, glab support, and ultra login requirement come from the code-review-local page, which was not fetched, so treat them as unverified.
+- [unverifiable] Dispatch plan requirement (Pro, Max, Ultra)
+    → Dispatch was not fetched.
+MISSING: ['Cloud session plan and policy requirements (Pro, Max, Ultra, Team; Enterprise with premium or Chat + Claude Code seats; allow_remote_sessions org policy); cloud sessions share rate limits with the rest of the account.', 'Chrome: Enabled by default raises context usage; browser actions run in a visible window; login and CAPTCHA pages pause for manual handling.', 'Computer use scope: CLI is macOS only, Desktop covers macOS and Windows; Desktop per-app approval tiers (view-only browsers and trading platforms, click-only terminals and IDEs, full control elsewhere) are documented in desktop app-permissions, not fetched.', 'Sandbox guardrail: sandbox covers shell commands only, so Read, Edit, Write, WebFetch need permission rules; hooks and local MCP servers run unsandboxed.', 'Hooks: same events fire across terminal, IDE, Desktop and cloud; which hooks reach a cloud session depends on cloud environment setup.', 'Auto-fix needs the Claude GitHub App installed on the repository; GitHub does not emit events for base-branch merge conflicts.', 'Code Review is unavailable with Zero Data Retention, HIPAA configuration, or customer-managed encryption keys.', 'Missing sources not fetched: support.claude.com skills and connectors articles, code.claude.com permissions, plugins install, code-review-local, ultrareview, Dispatch, Cowork pages. Any Desktop or Cowork claim tied to them stays unknown until fetched.']
+
+##### verify_ch08-09
+SUMMARY: Adversarial check of the ch08-09 feature map against the fetched primary pages (code.claude.com, claude.com/docs, changelog). Most UI labels, commands, keys, research-preview labels and Claude Tag/Dispatch details check out. Corrections needed before teaching: (1) cloud sessions need a git repo and are not limited to the listed plans for Enterprise (premium or Chat + Claude Code seats only); (2) Cowork /schedule behavior is misstated (it is removed from the slash menu but typing it still fills in a request); (3) Claude Tag schedules default to the sender's Slack profile timezone, not UTC; (4) agent view is wrongly credited with Cowork and mobile availability that belongs to Dispatch; (5) the Cowork memory-for-scheduled-tasks entry is 3P only; (6) the "non-code" workflow example is actually a code review; (7) the legacy Slack retirement applies to any plan in a Claude Tag-connected workspace; (8) several "no" cells (Cowork for /loop and Remote Control, Claude Tag on desktop and web) are not stated and should read unknown. Unverifiable: Claude Tag sessions appearing at claude.ai/code, daily run limits for cloud tasks, and the Slack-connector delivery for cloud tasks. Grill questions (Vietnamese, up to 5, grounded in these findings): (1) Which non-developer persona comes first (accountant, marketer, researcher, PM), so chapters 08-09 use their examples? (2) Is the app (Code tab, Cowork, Claude Tag, Remote Control) the main path with the CLI as a secondary tab, or are they equal? Should CLI-only items (claude agents, /loop, --worktree, --cloud, remote-control, /install-github-app) sit in an advanced section? (3) Agent view, cloud scheduled tasks (research preview), agent teams (experimental) and Claude Tag (public beta) are not stable: should each lesson carry a beta label, and is there a monthly review? (4) What must a learner be able to do afterward? Candidate outcomes: a recurring report posted to Slack, a cited multi-source research report, or a long task that reports back when finished. (5) Which plan does the learner have (Pro, Max, Team, Enterprise)? Plan requirements for agent teams, agent view, /goal, /loop and Desktop scheduled tasks are not in the docs, so should each lesson say "plan requirement unverified"?
+- [corrected] Overview: plan gate 'Cloud sessions and scheduled tasks need Pro, Max, Ultra, Team or Enterprise'
+    → Cloud sessions are on Pro, Max, Ultra and Team, and on Enterprise only with premium seats or Chat + Claude Code seats. Custom roles may also need the cloud sessions permission. Cloud sessions are not available with Bedrock, Vertex or Foundry, with ZDR or HIPAA organizations, or with CMEK. Scheduled task plan wording is in the scheduled tasks page.
+- [corrected] Overview: legacy Claude in Slack bot retired for Claude Tag-connected channels effective October 5, 2026
+    → The retirement notice applies to channels or workspaces set to the legacy version in a Claude Tag-connected workspace, regardless of the user's plan. The legacy version answers Pro, Max and Ultra accounts only in workspaces no organization has connected. Team and Enterprise customers keep their existing @Claude handle until migrated.
+- [corrected] Item 1 non-coding angle: 'review a set of files for issues and merge them into one ranked summary' is a docs non-code example
+    → That docs example is a code review of every file changed in a PR. The non-code example in the docs is researching how three competitors handle rate limiting across public docs and changelogs.
+- [corrected] Item 2 example prompt quoted as 'Spawn three teammates: one on UX, one on architecture, one devil's advocate.'
+    → This is a shortened paraphrase in quotation marks. The docs wording is 'Spawn three teammates to explore this from different angles: one on UX, one on technical architecture, one playing devil's advocate.' (TODO-CLI example.)
+- [corrected] Item 3: worktrees go to <project-root>/.claude/worktrees/
+    → Verified for the CLI (claude --worktree). The fetched Desktop text does not state the Desktop worktree path, so scope the claim to the CLI.
+- [refuted] Item 3 notes: cloud sessions need no local git
+    → Cloud sessions need a git repository. Anthropic-hosted cloning requires a GitHub remote. A local repo with at least one commit can be uploaded as a bundle with claude --cloud, and it must be under 100 MB and in a supported layout.
+- [corrected] Item 4: each background session edits files in its own git worktree under .claude/worktrees/
+    → Claude skips the worktree in some cases, such as a non-git directory with no WorktreeCreate hook. Setting worktree.bgIsolation to none turns this off.
+- [corrected] Item 4 availability: agent view cowork = partial, mobile = partial (Dispatch cited)
+    → Dispatch is a separate Cowork feature. The Dispatch mobile and child-task behavior is verified for Dispatch only. Agent view's Cowork and mobile availability is not stated, so set it to unknown.
+- [corrected] Item 5: cancel by asking Claude; Esc stops a self-paced loop
+    → Esc stops only a self-paced loop. Esc and Ctrl+C do not stop a fixed-interval loop, which must be cancelled by asking Claude. Ctrl+C twice on an empty prompt detaches from a background session without stopping a self-paced loop.
+- [unverifiable] Item 5 Cowork availability: no
+    → Not stated in the fetched pages. Set to unknown rather than no.
+- [unverifiable] Item 6: daily run limits; Slack delivery through a configured connector
+    → Neither is stated in the fetched pages. The Slack delivery point is marked as inference in the research and should stay that way.
+- [unverifiable] Item 7 Mobile: works only through Remote Control, not as a native mobile command
+    → The page says it works through Remote Control. The 'not a native mobile command' part is inference.
+- [unverifiable] Item 8 Cowork availability: no
+    → Remote Control's page does not mention Cowork. Set to unknown rather than no.
+- [corrected] Item 9 members: mention @Claude in a channel (not a DM) to set a routine; describe schedule in plain language
+    → Routines are set up from the channel where they should run, which the docs recommend. A routine set up in a one-to-one DM is allowed but belongs to that person's account and is turned off if they leave the organization.
+- [unverifiable] Item 9: Claude Tag sessions appear in claude.ai/code
+    → Not stated in the fetched Claude Tag pages. The legacy Slack page says sessions are visible at claude.ai/code, but that is the earlier version.
+- [unverifiable] Item 9 availability: desktop = no, cli = no
+    → Not stated either way. Use not applicable or unknown.
+- [corrected] Item 9: schedules run at most once an hour, in UTC unless you name a timezone; DST shifts local time by an hour; routines keep running if creator leaves the channel
+    → Schedules run in UTC, but with no timezone in the message Claude uses the timezone on the sender's Slack profile. The once-an-hour limit, DST shift, and routines continuing after creator departure are verified.
+- [refuted] Item 11: typing /schedule used to fill in a request, but was removed from the slash menu in v3.6556.1 (2026-10-22)
+    → v3.6556.1 removed /schedule from the slash menu, but typing it still fills in a request to schedule the task, like the Schedule button.
+- [corrected] Item 11: scheduled tasks read memory when not in a project (v4.23118.0, 2026-11-05)
+    → The changelog entry is labeled 3P (third-party deployments). Scheduled tasks can read memory but do not save new memories.
+- [unverifiable] Item 11: scheduled tasks can use connectors and skills
+    → Only indirectly supported by changelog fixes. No explicit statement in the fetched text.
+MISSING: ['Workflows: /deep-research requires the WebSearch tool; the Large workflow warning appears above 25 agents or 1.5M projected tokens; default size guideline is medium (small on Pro with Claude Code v2.1.271+); disable with /config, "disableWorkflows": true, or CLAUDE_CODE_DISABLE_WORKFLOWS=1.', 'Workflows: the approval prompt depends on permission mode (auto mode: first launch only; bypass: no prompt; -p and SDK: never prompt, so an allow rule for Workflow is needed).', 'Dispatch (Cowork): child tasks run as Cowork or Code sessions; an unanswered approval is auto-denied after 10 minutes; a task started from the phone runs on the desktop, which must stay open, awake and online. Dispatch is separate from agent view and should not be merged with it.', 'Cowork: connectors, skills and plugins are managed under Customize; Cowork does not read the ~/.claude directory, so a CLI skill must be re-added there. Claude in Chrome pairing is a Cowork capability in the overview.', 'Remote Control: Trusted Devices (Team and Enterprise: Owner turns it on; Pro, Max and Ultra: the user turns on Require trusted devices) affects viewing sessions from claude.ai, mobile or Claude Desktop. Relevant to security guidance for non-developers.', 'Remote Control: /mobile shows a QR code for the Claude app; phone users can attach photos and files; a stopped claude remote-control server can bring sessions back for about four hours.', 'Cloud sessions: not available through Bedrock, Vertex or Foundry; not available to ZDR, HIPAA-configured or CMEK organizations; Team and Enterprise Quick setup; an expired environment loses background shell work, subagents and session-scoped schedules.', '/goal: in Manual mode Claude still asks before tool calls not covered by settings; the evaluator is a small fast model that cannot run commands and only sees what Claude surfaced.', '/loop: loop.md content beyond 25,000 bytes is truncated; recurring fires are delayed up to 30 minutes (jitter).', "Agent teams: teammates do not inherit the lead's conversation history; they start with the lead's permission mode; token cost scales with teammate count.", 'Claude Tag: usage balance and spend limit; per-channel usage breakdown on the admin usage page; personal connectors for member requests; routines post into the channel they belong to.', "Desktop scheduled tasks: default runs use the working directory's uncommitted state; per-task Always allowed panel for revoking approvals; MCP tools marked requiresUserInteraction stall every run.", 'Plan requirements remain unknown for agent teams, agent view, /goal, /loop and Desktop scheduled tasks; these need Anthropic confirmation before a lesson states them.', 'Desktop worktree path is not confirmed; only the CLI path (.claude/worktrees/) is verified.']

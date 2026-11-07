@@ -1,0 +1,146 @@
+<!-- @dsCard group="Chuyển động" height=980 subtitle="M1–M10 · một chuyển động, một nghĩa · GSAP 3.15.0" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>MotionGrammar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Newsreader:opsz,wght@6..72,400&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/DrawSVGPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/MotionPathPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/MorphSVGPlugin.min.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--fg);font-family:var(--font-text);padding:var(--space-5)}
+  .mg{padding:44px 0 0;max-width:1000px}
+  .rows{display:grid;border-top:1px solid var(--control)}
+  .row{display:grid;grid-template-columns:230px 1fr auto;gap:var(--space-4);align-items:center;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--control);min-height:84px}
+  .row:hover{background:var(--bg-raised)}
+  .meta{grid-template-columns:auto 1fr;column-gap:14px;align-items:center}
+  .meta .id{grid-row:span 2}
+  .meta{display:grid;gap:2px}
+  .id{font-family:var(--font-wide);font-stretch:62%;font-weight:800;font-size:44px;line-height:.8;color:var(--accent);min-width:1.6ch}
+  .mean{font-weight:600;font-size:15px}
+  .tech{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted)}
+  .stage{min-width:0;display:flex;align-items:center;gap:var(--space-3);overflow:hidden}
+  button.run{padding:8px 11px;font-size:11px}
+  :focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+  svg path.ink{fill:none;stroke:var(--fg-muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .track{flex:1;height:14px;background:var(--bg-sunken);border:1px solid var(--control);overflow:hidden;max-width:420px}
+  .fill{height:100%;background:var(--accent);transform-origin:left center;transform:scaleX(.62)}
+  .chips{display:flex;gap:6px}
+  .chips.v{display:grid;grid-template-columns:repeat(2,auto)}
+  .chip{padding:3px 10px;border:1px solid var(--control);font-family:var(--font-mono);font-size:12px;color:var(--fg-muted)}
+  .mono{font-family:var(--font-mono);font-size:15px}
+  .q{font-family:var(--font-display);font-size:26px;line-height:1.15;margin:0}
+  .q [class$="-mask"]{padding-block:.12em;margin-block:-.12em}
+  .strike{position:relative;display:inline-block}
+  .strike i{position:absolute;left:0;right:0;top:55%;height:2px;background:var(--danger);transform-origin:left;transform:scaleX(1)}
+  .caret{font-family:var(--font-mono);color:var(--accent);font-size:22px}
+  .more{padding:var(--space-3) var(--space-4);color:var(--fg-muted);font-size:13px;line-height:1.55}
+  .more b{color:var(--fg)}
+  .ok{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border:1px solid var(--signal);color:var(--signal);font-family:var(--font-mono);font-size:12px;position:relative}
+  .ok .f{position:absolute;inset:-1px;background:var(--signal);opacity:0}
+  .loop circle.path{fill:none;stroke:var(--line);stroke-width:1.5}
+  .loop text{font-family:var(--font-mono);font-size:10px;fill:var(--fg-muted)}
+  .loop .dot{fill:var(--accent)}
+  .rein{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .check{fill:none;stroke:var(--signal);stroke-width:1.5;opacity:0;visibility:hidden}
+  .checkmark{fill:var(--signal);font-family:var(--font-mono);font-size:11px;text-anchor:middle;opacity:0;visibility:hidden}
+  .static{font-size:12px;color:var(--fg-subtle)}
+  @media (max-width:640px){.row{grid-template-columns:1fr}.stage{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<section class="nb nb-frame mg" aria-label="Ngữ pháp chuyển động">
+<span class="nb-corner tl nb-micro"><span class="nb-sq"></span>Motion grammar · một chuyển động, một nghĩa</span>
+<span class="nb-corner tr nb-micro">GSAP <b>3.15.0</b></span>
+<div class="rows">
+  <section class="row"><div class="meta"><span class="id">M1</span><span class="mean">Dẫn tới / chuyển thành</span><span class="tech">DrawSVG</span></div>
+    <div class="stage"><span class="mono">Hồi đó</span><svg width="120" height="24" viewBox="0 0 120 24" aria-hidden="true"><path class="ink" id="m1s" d="M4 12 H112"/><path class="ink" id="m1h" d="M105 5 L113 12 L105 19"/></svg><span class="mono">Bây giờ</span></div>
+    <button class="run nb-btn" data-m="1" aria-label="Chạy M1">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M2</span><span class="mean">Tiêu hao</span><span class="tech">scaleX · --fill</span></div>
+    <div class="stage"><div class="track"><div class="fill" id="m2"></div></div><span class="mono" id="m2v">62%</span></div>
+    <button class="run nb-btn" data-m="2" aria-label="Chạy M2">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M3</span><span class="mean">Tái cấu trúc</span><span class="tech">Flip</span></div>
+    <div class="stage"><div class="chips" id="m3"><span class="chip">Thu thập</span><span class="chip">Phân tích</span><span class="chip">Viết</span><span class="chip">Slide</span></div></div>
+    <button class="run nb-btn" data-m="3" aria-label="Chạy M3">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M4</span><span class="mean">Agent đang xử lý</span><span class="tech">ScrambleText · chỉ chữ mono</span></div>
+    <div class="stage"><span class="mono" id="m4">Đọc  ban-hang-T10.xlsx</span></div>
+    <button class="run nb-btn" data-m="4" aria-label="Chạy M4">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M5</span><span class="mean">Câu hỏi bước vào</span><span class="tech">SplitText words + mask</span></div>
+    <div class="stage"><p class="q" id="m5">Vì sao Claude quên quy ước của bạn?</p></div>
+    <button class="run nb-btn" data-m="5" aria-label="Chạy M5">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M6</span><span class="mean">Lỗi thời</span><span class="tech">gạch scaleX + autoAlpha .45</span></div>
+    <div class="stage"><span class="strike" id="m6">“Không bao giờ viết đoạn quá 3 câu.”<i id="m6l"></i></span></div>
+    <button class="run nb-btn" data-m="6" aria-label="Chạy M6">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M7</span><span class="mean">Tới lượt bạn</span><span class="tech">repeat 5 · yoyo · steps(1)</span></div>
+    <div class="stage"><span class="caret" id="m7" aria-hidden="true">▍</span><span>Chốt dự đoán của bạn</span></div>
+    <button class="run nb-btn" data-m="7" aria-label="Chạy M7">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M8</span><span class="mean">Đi qua một vòng</span><span class="tech">MotionPath</span></div>
+    <div class="stage"><svg class="loop" width="260" height="72" viewBox="0 0 260 72" aria-hidden="true">
+      <circle class="path" cx="36" cy="36" r="26"/><path id="m8p" d="M36,10 A26,26 0 1,1 35.99,10" fill="none" stroke="none"/>
+      <circle class="dot" id="m8" r="5" cx="36" cy="10"/>
+      <text x="76" y="22">1 Thu thập</text><text x="76" y="40">2 Làm</text><text x="76" y="58">3 Kiểm</text></svg></div>
+    <button class="run nb-btn" data-m="8" aria-label="Chạy M8">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M9</span><span class="mean">Đã kiểm chứng</span><span class="tech">nháy signal · dur-quick</span></div>
+    <div class="stage"><span class="ok" id="m9"><span class="f" id="m9f"></span><span aria-hidden="true">✓</span><span>14 số liệu đã đối chiếu</span></span></div>
+    <button class="run nb-btn" data-m="9" aria-label="Chạy M9">Chạy</button></section>
+
+  <section class="row"><div class="meta"><span class="id">M10</span><span class="mean">Bớt can thiệp</span><span class="tech">MorphSVG · chỉ chương 10</span></div>
+    <div class="stage"><svg width="240" height="72" viewBox="0 0 240 72" aria-hidden="true">
+      <path class="rein" id="m10" d="M10 36 L30 14 L50 58 L70 14 L90 58 L110 14 L130 58 L150 14 L170 58 L190 14 L210 36"/>
+      <path id="m10b" d="M10 36 L30 36 L50 36 L70 36 L90 36 L110 36 L130 36 L150 36 L170 36 L190 36 L210 36" fill="none" stroke="none"/>
+      <circle class="check" id="m10c" cx="222" cy="36" r="9"/><text class="checkmark" id="m10k" x="222" y="40">✓</text></svg>
+      <span class="static" id="m10t">can thiệp liên tục</span></div>
+    <button class="run nb-btn" data-m="10" aria-label="Chạy M10">Chạy</button></section>
+</div>
+<p class="more"><b>M11–M14</b> thuộc lớp ASCII: M11 nhiễu → trật tự (AsciiHero, CinematicAscii) · M12 lens soi cấu trúc (AsciiHero, ChapterOpener) · M13 glitch ≤ 1 lần mỗi chương · M14 đổi mặt The Colleague.</p>
+</section>
+<script>
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!window.gsap) return;
+    gsap.registerPlugin(DrawSVGPlugin, Flip, ScrambleTextPlugin, SplitText, MotionPathPlugin, MorphSVGPlugin);
+    gsap.defaults({ duration: 0.48, ease: 'power3.out' });
+    var split5, slack = false, vertical = false;
+    var run = {
+      1: function () { return gsap.timeline().from('#m1s', { drawSVG: '0%', duration: 0.4, ease: 'none' }).from('#m1h', { drawSVG: '0%', duration: 0.16, ease: 'none' }); },
+      2: function () { document.getElementById('m2v').textContent = '62%'; return gsap.fromTo('#m2', { scaleX: 0 }, { scaleX: 0.62 }); },
+      3: function () { var el = document.getElementById('m3'); var st = Flip.getState('#m3 .chip'); vertical = !vertical; el.classList.toggle('v', vertical); return Flip.from(st, { duration: 0.6, ease: 'power2.inOut', stagger: 0.04 }); },
+      4: function () { return gsap.to('#m4', { duration: 0.8, scrambleText: { text: 'Đọc  ban-hang-T10.xlsx', chars: 'lowerCase', speed: 0.6 } }); },
+      5: function () { if (!split5) split5 = SplitText.create('#m5', { type: 'words', mask: 'words' }); return gsap.from(split5.words, { yPercent: 110, autoAlpha: 0, stagger: 0.04 }); },
+      6: function () { return gsap.timeline().set('#m6', { autoAlpha: 1 }).fromTo('#m6l', { scaleX: 0 }, { scaleX: 1, duration: 0.32 }).to('#m6', { autoAlpha: 0.45, duration: 0.24 }); },
+      7: function () { return gsap.fromTo('#m7', { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.5, ease: 'steps(1)', repeat: 5, yoyo: true }); },
+      8: function () { return gsap.to('#m8', { duration: 1.4, ease: 'power1.inOut', motionPath: { path: '#m8p', align: '#m8p', alignOrigin: [0.5, 0.5] } }); },
+      9: function () { return gsap.fromTo('#m9f', { opacity: 0.3 }, { opacity: 0, duration: 0.6, ease: 'power2.out' }); },
+      10: function () {
+        slack = !slack;
+        document.getElementById('m10t').textContent = slack ? 'giao xong, rà soát một lần' : 'can thiệp liên tục';
+        return gsap.timeline()
+          .to('#m10', { morphSVG: slack ? '#m10b' : 'M10 36 L30 14 L50 58 L70 14 L90 58 L110 14 L130 58 L150 14 L170 58 L190 14 L210 36', duration: 0.9, ease: 'sine.inOut' })
+          .to(['#m10c', '#m10k'], { autoAlpha: slack ? 1 : 0, duration: 0.24 }, slack ? '>-0.1' : 0);
+      }
+    };
+    document.querySelectorAll('button.run').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var anim = run[b.dataset.m]();
+        if (reduce && anim) anim.progress(1);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

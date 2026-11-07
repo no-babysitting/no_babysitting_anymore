@@ -1,0 +1,59 @@
+<!-- @dsCard group="Story" height=560 subtitle="Mở chương · số condensed tràn khung · tên expanded · địa hình ASCII · metadata 4 góc · ghost text" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>ChapterOpener</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .op{height:500px}
+  .cv{position:absolute;inset:0 0 40% 0;height:60%}
+  .gh{right:-20px;top:40px;font-size:260px}
+  .idx{position:absolute;left:-10px;bottom:-62px;margin:0;font-size:clamp(200px,34vw,330px);color:var(--fg)}
+  .ttl{position:absolute;right:28px;bottom:58px;width:min(560px,58%);display:grid;gap:14px;z-index:3}
+  .ttl h2{margin:0;font-size:clamp(30px,5vw,54px)}
+  .sub{margin:0;font-size:17px;line-height:1.55;color:var(--fg-muted);max-width:44ch}
+  .line{height:1px;background:var(--control);transform-origin:left center}
+  @media (max-width:640px){.ttl{left:14px;right:14px;width:auto;bottom:120px}.idx{font-size:200px}}
+</style>
+</head>
+<body>
+<section class="nb nb-frame op" id="op" aria-labelledby="t">
+  <canvas class="nb-canvas cv" id="cv" aria-hidden="true"></canvas>
+  <span class="nb-ghost gh" aria-hidden="true">Budget</span>
+  <span class="nb-corner tl nb-micro" id="m1"><span class="nb-sq"></span>Phần I · Low</span>
+  <span class="nb-corner tr nb-micro">c02 &nbsp;·&nbsp; <b id="clk" class="nb-tabular">--:--:--</b></span>
+  <span class="nb-corner br nb-micro"><b>02</b> / 10 &nbsp;·&nbsp; 8 beat · 10′</span>
+  <p class="nb-cond idx" id="idx" aria-hidden="true">02</p>
+  <div class="ttl">
+    <p class="nb-micro"><span class="nb-sq"></span>Chương 02</p>
+    <h2 class="nb-wide" id="t">The Briefing Budget</h2>
+    <div class="line" id="line"></div>
+    <p class="sub">Ngân sách ngữ cảnh: vì sao Claude "ngốc dần" về cuối buổi, và làm gì sau mỗi lượt.</p>
+  </div>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  NB.clock(document.getElementById('clk'));
+  var A = NB.ascii(document.getElementById('cv'), {
+    host: document.getElementById('op'), cell: [9, 16], order: 0.992, noiseFill: 0.3, ambient: true, flicker: 0.006,
+    ramp: ' .·:/\\+*=#', tone: 'fg-muted', frontColor: 'fg-subtle', lensColor: 'accent', lensPx: 90,
+    source: NB.sources.terrain({ scale: 0.075, threshold: 0.5, slope: -0.7, seed: 5 })
+  });
+  if (NB.reduce() || !window.gsap) return;
+  var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  tl.from('#idx', { yPercent: 35, autoAlpha: 0, duration: 1.0 })
+    .from('#t', { y: 30, autoAlpha: 0, duration: 0.7 }, 0.25)
+    .from('#line', { scaleX: 0, duration: 0.6, ease: 'power2.inOut' }, 0.45)
+    .from('.sub', { y: 12, autoAlpha: 0, duration: 0.5 }, 0.6);
+  NB.decode(document.getElementById('m1'), 'Phần I · Low', 0.9);
+})();
+</script>
+</body>
+</html>

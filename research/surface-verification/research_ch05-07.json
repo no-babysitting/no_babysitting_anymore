@@ -1,0 +1,261 @@
+{
+ "overview": "Ánh xạ 13 tính năng vào 3 chương (05-blocks, 06-guardrails, 07-verify), dựa trên tài liệu fetch ngày 2026-11-06 từ code.claude.com/docs và support.claude.com. Phần lớn có đường đi trên app: Customize > Skills, Customize > Connectors, Cowork, tab Code và Browser pane của Desktop, claude.ai/code. Hooks, quy tắc permission, sandboxing và tạo subagent chủ yếu là file cấu hình hoặc CLI, tài liệu chưa xác nhận có UI trên app, nên chương cần ghi rõ \"chỉ sửa file/CLI\".\n\nVề định vị Claude Code như công cụ đa năng: tài liệu chính thức đều lấy ví dụ lập trình. Các gợi ý cho nghiên cứu, tài liệu, dữ liệu, tự động hóa là suy luận của tôi và được đánh dấu trong ghi chú.\n\nKhác biệt gói: computer use và Dispatch chỉ có trên Pro, Max, Ultra. Code Review (dịch vụ GitHub) chỉ có trên Team và Enterprise. Claude in Chrome cần gói trả phí. Auto mode có trên mọi gói nhưng cần model được hỗ trợ.\n\nTrạng thái: computer use là research preview. Các tính năng khác được ghi theo phiên bản Claude Code, tài liệu không ghi nhãn beta.\n\nLưu ý: một kết quả từ MCP server Claude_Docs yêu cầu tạo tài liệu mới. Yêu cầu đó nằm ngoài tác vụ nên tôi đã bỏ qua.\n\nChưa xác định được (ghi unknown): hooks và sandbox trên Desktop và claude.ai, chế độ quyền của Cowork, tính năng trên app di động, và việc slash command có chạy trong tab Code hay không.",
+ "items": [
+  {
+   "feature": "Skills (Claude Code skills và Skills trong Claude apps; thêm, tải lên, bật; built-in document skills)",
+   "chapter": "05-blocks",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "yes",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "claude.ai và Desktop: Customize > Skills, bật hoặc tắt từng skill. Tải lên: tạo thư mục skill, nén ZIP, rồi Customize > Skills > + > + Create skill > Upload a skill. Cần Settings > Capabilities > Code execution and file creation (giao diện mới ghi là Create and edit files). Team và Enterprise: Owner bật trong Organization settings > Plugins & skills, tab Policy. Built-in: docx, xlsx, pptx, pdf, Claude tự dùng khi liên quan.",
+   "cli_how": "Đặt skill ở ~/.claude/skills/<tên>/SKILL.md (mọi dự án) hoặc .claude/skills/<tên>/SKILL.md (một repo, commit để chia sẻ). Gọi bằng /tên-skill. Tắt bằng skillOverrides hoặc quyền Skill(tên).",
+   "non_coding_angle": "Skill đóng gói quy trình lặp lại như mẫu báo cáo, checklist soạn thảo, quy tắc định dạng slide. Người không lập trình tải ZIP qua app được. Đây là suy luận.",
+   "notes": "Trên claude.ai khi upload chỉ chấp nhận 6 trường frontmatter: name, description, license, compatibility, metadata, allowed-tools. Cowork và cloud không đọc ~/.claude/skills mà đọc skill gắn với tài khoản claude.ai. Tài liệu không ghi giới hạn kích thước.",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md",
+    "https://support.claude.com/en/articles/12512180-using-skills-in-claude"
+   ]
+  },
+  {
+   "feature": "Custom slash commands (.claude/commands và gộp vào skills)",
+   "chapter": "05-blocks",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Tài liệu không mô tả cách tạo slash command trên app. Thay thế là tạo skill qua Customize > Skills. Chưa xác nhận gõ / trong tab Code có chạy skill không.",
+   "cli_how": ".claude/commands/deploy.md và .claude/skills/deploy/SKILL.md đều tạo /deploy. Skill thắng nếu trùng tên. Trên cloud chỉ chạy lệnh built-in tạo văn bản như /compact, /context, /clear.",
+   "non_coding_angle": "Phù hợp cho việc lặp lại như tóm tắt cuộc họp hoặc chuẩn hóa tài liệu. Đây là suy luận.",
+   "notes": "Tài liệu nói commands đã gộp vào skills và tệp commands cũ vẫn chạy. Lệnh mở bảng trong terminal như /plugin và /resume không dùng được trên cloud.",
+   "sources": [
+    "https://code.claude.com/docs/en/skills.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "feature": "Subagents",
+   "chapter": "05-blocks",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop có subagent panel dưới ô nhập và /tasks để xem trạng thái. Tài liệu chưa mô tả UI tạo subagent trên Desktop, nên sửa file là cách rõ nhất.",
+   "cli_how": "File Markdown có frontmatter, name và description bắt buộc. Vị trí: .claude/agents/ (dự án), ~/.claude/agents/ (mọi dự án), cờ --agents (một phiên). Gọi bằng @agent-tên hoặc claude --agent tên. Built-in: Explore, Plan, General-purpose.",
+   "non_coding_angle": "Explore và Plan chỉ đọc, không sửa file, phù hợp để nghiên cứu hoặc rà soát tài liệu. Đây là suy luận.",
+   "notes": "Trên cloud, subagent trong .claude/agents của repo tự tải. Tắt Explore bằng deny Agent(Explore) hoặc CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1 (từ v2.1.198).",
+   "sources": [
+    "https://code.claude.com/docs/en/sub-agents.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "feature": "Hooks (nơi cấu hình; có UI trên app không?)",
+   "chapter": "06-guardrails",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Tài liệu chỉ mô tả cấu hình bằng file settings, không có UI hooks trên Desktop hay claude.ai. Desktop vẫn chạy các sự kiện hook từ file settings.",
+   "cli_how": "Khóa hooks trong ~/.claude/settings.json, .claude/settings.json, .claude/settings.local.json, managed settings, plugin hooks/hooks.json, hoặc frontmatter skill/subagent. /hooks để xem (chỉ đọc). 33 sự kiện, ví dụ PreToolUse, PostToolUse, Stop, SessionStart, Notification, UserPromptSubmit.",
+   "non_coding_angle": "Ví dụ trong tài liệu là thông báo desktop khi Claude chờ bạn, không cần code. Đây là cách dùng không lập trình.",
+   "notes": "Cloud không đọc ~/.claude/settings.json của máy bạn, nhưng chạy hook trong .claude/settings.json của repo.",
+   "sources": [
+    "https://code.claude.com/docs/en/hooks.md",
+    "https://code.claude.com/docs/en/hooks-guide.md"
+   ]
+  },
+  {
+   "feature": "Permission modes (ask, accept edits, plan, auto, bypass) và cách chuyển trên app",
+   "chapter": "06-guardrails",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "partial",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Desktop tab Code: mode selector dưới ô nhập. Nhãn: Manual, Accept edits, Plan, Auto (chỉ hiện khi khả dụng), Bypass permissions. Phím Cmd+Shift+M hoặc Ctrl+Shift+M. Shift+Tab không đổi mode trên Desktop. Bypass ở Pro, Max, Ultra cần bật Allow bypass permissions mode trong Settings > Code. claude.ai/code: dropdown dưới ô nhập, cloud chỉ có Accept edits, Plan, Auto. Mobile: + > Permission. Cowork có chế độ riêng, tài liệu không nêu chi tiết.",
+   "cli_how": "Shift+Tab để chuyển vòng. Khởi động: claude --permission-mode plan (default, acceptEdits, auto, dontAsk, bypassPermissions). --dangerously-skip-permissions tương đương bypass. Mặc định: permissions.defaultMode trong settings.",
+   "non_coding_angle": "Plan mode đọc và đề xuất mà không sửa file, phù hợp để Claude lên kế hoạch báo cáo trước khi viết. Bypass chỉ dùng trong môi trường cách ly như container hoặc VM.",
+   "notes": "Auto cần model được hỗ trợ. Team và Enterprise mặc định bật Auto trừ khi admin tắt. Khởi động Auto làm mặc định từ v2.1.283.",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "feature": "Permission rules và settings (allow/ask/deny, phạm vi file cấu hình)",
+   "chapter": "06-guardrails",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Không có UI trên app được tài liệu xác nhận. Desktop local dùng chung file settings với CLI, nên quy tắc có hiệu lực. Cloud chỉ đọc một số thiết lập từ .claude/settings.json của repo.",
+   "cli_how": "Phạm vi: ~/.claude/settings.json (mọi dự án), .claude/settings.json (dự án, commit được), .claude/settings.local.json (cục bộ), managed (tổ chức). Ưu tiên khi trùng: local > project > user. Cú pháp Skill(tên) cho skill, Agent(Explore) cho subagent.",
+   "non_coding_angle": "Sandbox chỉ giới hạn lệnh Bash, còn Read đọc được ~/.ssh và ~/.aws/credentials theo mặc định. Suy luận: nên thêm quy tắc deny cho đường dẫn nhạy cảm.",
+   "notes": "Chưa đọc đầy đủ phần cú pháp quy tắc trong permissions.md. Có thể dùng skill /update-config sẵn có để sửa settings.json.",
+   "sources": [
+    "https://code.claude.com/docs/en/permissions.md",
+    "https://code.claude.com/docs/en/sandboxing.md",
+    "https://code.claude.com/docs/en/plugins/install.md"
+   ]
+  },
+  {
+   "feature": "Sandboxing (cách ly lệnh Bash)",
+   "chapter": "06-guardrails",
+   "availability": {
+    "desktop_code": "unknown",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Tài liệu sandbox chỉ mô tả CLI. Cloud dùng VM cách ly do Anthropic quản lý, cơ chế khác. Chưa xác nhận trên Desktop.",
+   "cli_how": "/sandbox và chọn chế độ trên tab Mode, hoặc sandbox.enabled = true trong settings. Mặc định tắt. Hỗ trợ macOS, Linux, WSL2. Không hỗ trợ Windows gốc.",
+   "non_coding_angle": "Danh sách mạng mặc định rỗng, nên curl có thể bị chặn. Với nghiên cứu web, dùng WebFetch. Đây là suy luận.",
+   "notes": "Không được sandbox: Read, Edit, Write, WebFetch, WebSearch (theo quy tắc permission), hooks, MCP server cục bộ. Docker không tương thích.",
+   "sources": [
+    "https://code.claude.com/docs/en/sandboxing.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "feature": "MCP servers vs connectors trong app (thư mục, cách kết nối)",
+   "chapter": "05-blocks",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "yes",
+    "mobile": "yes",
+    "cli": "yes"
+   },
+   "app_how": "claude.ai và Desktop: trong chat nhấn + > Connectors hoặc gõ /, hoặc Customize > Connectors. Connectors Directory liệt kê dịch vụ. Team và Enterprise: Owner bật trước, từng người xác thực riêng. Custom remote MCP thêm qua Customize > Connectors (Free giới hạn 1).",
+   "cli_how": "claude mcp add --transport http <tên> <url>. Stdio: claude mcp add ... -- <lệnh>. Phạm vi: local (mặc định), project (.mcp.json), user. /mcp để xem trạng thái và đăng nhập. Connector claude.ai cũng xuất hiện trong Claude Code với ưu tiên thấp nhất.",
+   "non_coding_angle": "Cách dễ nhất cho người không lập trình: kết nối Google Drive, Slack, Gmail trong app, không cần CLI. Đây là suy luận từ mô tả connectors.",
+   "notes": "Connector gửi từ cloud Anthropic, máy chủ phải truy cập được từ internet công cộng.",
+   "sources": [
+    "https://code.claude.com/docs/en/mcp.md",
+    "https://support.claude.com/en/articles/11176164"
+   ]
+  },
+  {
+   "feature": "Plugins và marketplaces trong app",
+   "chapter": "05-blocks",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "partial",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop tab Code (phiên local hoặc SSH): nhấn + cạnh ô nhập > Add plugins (hoặc Plugins > Browse plugins). Chọn scope: user, project, local. Không có trong cloud session hoặc WSL. VS Code: gõ /plugins. Cowork: plugin gắn với tài khoản claude.ai tải khi bắt đầu phiên.",
+   "cli_how": "/plugin để mở bảng, tab Discover để duyệt. /plugin install tên@marketplace. Thêm marketplace: /plugin marketplace add owner/repo (hoặc URL, đường dẫn cục bộ). claude-plugins-official tự thêm ở phiên terminal đầu tiên. Shell: claude plugin install.",
+   "non_coding_angle": "Tài liệu có nhắc marketplace knowledge-work-plugins (auto-update tắt mặc định), nhưng không mô tả nội dung của nó.",
+   "notes": "Cloud session không tải plugin cài trên máy bạn, chỉ tải plugin do tổ chức quản lý. Plugin có thể chứa hook và MCP server, nên đọc kỹ trước khi cài.",
+   "sources": [
+    "https://code.claude.com/docs/en/plugins/install.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "feature": "Claude in Chrome (browser use để kiểm chứng)",
+   "chapter": "07-verify",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "unknown",
+    "cowork": "yes",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: Settings > Customize > Connectors > Claude in Chrome > Configure, bật công tắc. Mặc định tắt, bật theo từng cuộc trò chuyện qua menu Connectors. Cowork có trình duyệt tích hợp, chọn trình duyệt ưa thích trong Settings > Cowork > Preferred browser.",
+   "cli_how": "claude --chrome cho một phiên. /chrome để kiểm tra trạng thái và chọn Enabled by default. Trong phiên, /mcp chọn claude-in-chrome rồi View tools.",
+   "non_coding_angle": "Điền form, trích dữ liệu từ trang web, ghi GIF thao tác, tải file lên trang web. Tài liệu có ví dụ điền CRM từ CSV.",
+   "notes": "Yêu cầu: Chrome, Edge hoặc Chromium, extension 1.0.36 trở lên, gói Pro, Max, Ultra, Team hoặc Enterprise. Phải đăng nhập bằng /login, không dùng API key. Không hỗ trợ WSL. Trang đăng nhập và CAPTCHA cần bạn tự xử lý.",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md",
+    "https://support.claude.com/en/articles/12012173-getting-started-with-claude-in-chrome"
+   ]
+  },
+  {
+   "feature": "Computer use (kiểm chứng trên giao diện thật)",
+   "chapter": "07-verify",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "no",
+    "cowork": "partial",
+    "mobile": "unknown",
+    "cli": "partial"
+   },
+   "app_how": "Desktop (macOS 14+ hoặc Windows): Settings, nếu có mục This computer thì vào This computer > System, nếu không thì vào Capabilities. Bật Enable computer use. Trên macOS cấp Accessibility và Screen Recording. Mỗi app cần duyệt: Allow for this session hoặc Deny. Chỉ Pro, Max, Ultra. Research preview.",
+   "cli_how": "Chỉ macOS, cần Pro, Max hoặc Ultra. /mcp, chọn computer-use, rồi Enable. Chỉ trong phiên tương tác, không dùng với -p. Nhấn Esc để dừng.",
+   "non_coding_angle": "Dùng cho công cụ chỉ có giao diện, ví dụ phần mềm kế toán cũ. Đây là suy luận. Terminal và IDE có quyền tương đương shell.",
+   "notes": "Khác với sandbox, computer use chạy trên màn hình thật với app bạn đã duyệt. Tài liệu Desktop nói về toàn bộ app, chưa xác nhận riêng cho tab Code.",
+   "sources": [
+    "https://code.claude.com/docs/en/computer-use.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "feature": "Desktop app preview và browser features (Browser pane)",
+   "chapter": "07-verify",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "unknown",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "no"
+   },
+   "app_how": "Mở bằng Cmd+Shift+B hoặc Ctrl+Shift+B, hoặc nhấn Browser trên thanh tiêu đề phiên. Claude khởi động dev server, mở trong Browser pane, chụp ảnh màn hình, đọc DOM, bấm và điền form. Auto-verify changes bật mặc định. Tắt bằng Browser tools trong Settings > Code. Không dùng được trong SSH.",
+   "cli_how": "CLI không có Browser pane. Dùng /chrome hoặc --chrome để kiểm chứng trên trình duyệt thật.",
+   "non_coding_angle": "Cần server chạy cục bộ, ít phù hợp với người không lập trình. Có thể dùng Claude in Chrome thay thế.",
+   "notes": "Tài liệu không ghi Browser pane là beta hay preview. Claude tự tạo .claude/launch.json để bạn chỉnh lệnh và cổng.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "feature": "Code review (/code-review, GitHub app và Code Review)",
+   "chapter": "07-verify",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Code Review (dịch vụ) chỉ bật bởi Owner của tổ chức Team hoặc Enterprise: cài GitHub App Claude, chọn repo và mức Quick, Standard hoặc Deep. Kết quả là comment inline và check run Claude Code Review. Không duyệt hay chặn PR. Cloud session có Auto-fix: menu ⋮ trên thẻ Changes, bật Auto-fix.",
+   "cli_how": "/code-review trên mọi gói. Mục tiêu: số PR, tên nhánh, đường dẫn, hoặc khoảng commit. Cờ: --fix (sửa theo kết quả), --comment (đăng lên GitHub hoặc GitLab qua glab). Mức effort: low đến max. /code-review ultra chạy bản sâu trên cloud, cần đăng nhập claude.ai.",
+   "non_coding_angle": "Người không lập trình có thể dùng quy trình rà soát tương tự cho tài liệu bằng subagent hoặc skill có checklist riêng. Đây là suy luận, tài liệu chỉ nói về code.",
+   "notes": "Code Review của dịch vụ không khả dụng nếu bật Zero Data Retention hoặc cấu hình HIPAA.",
+   "sources": [
+    "https://code.claude.com/docs/en/code-review.md",
+    "https://code.claude.com/docs/en/code-review-local.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  }
+ ],
+ "open_questions": [
+  "Bạn muốn nhắm tới ai trước: người dùng Claude app không lập trình (nghiên cứu, tài liệu, slide) hay nhóm đã dùng Claude Code và muốn đi sâu? Câu trả lời quyết định lộ trình mở đầu bằng skills và connectors hay bằng subagents và hooks.",
+  "Bạn có chấp nhận việc hooks, quy tắc permission, sandbox và tạo subagent chỉ hướng dẫn bằng sửa file settings hoặc CLI, và đánh dấu rõ là chưa có trong app? Hay bạn muốn chờ đến khi có UI trên app?",
+  "Gói dịch vụ của học viên là gì? Computer use và Dispatch chỉ có Pro, Max, Ultra. Code Review chỉ Team và Enterprise. Claude in Chrome cần gói trả phí. Bạn muốn ghi yêu cầu gói ở từng bài, hay chỉ dạy tính năng có sẵn trên Free và Pro?",
+  "Ví dụ của chương nên thiên về nghiên cứu, tài liệu, dữ liệu, tự động hóa, hay vẫn giữ ví dụ lập trình làm chính? Tài liệu chính thức hiện chỉ có ví dụ lập trình cho Code Review và /code-review.",
+  "Bạn duy trì nội dung được bao lâu một lần? Computer use đang research preview, và nhiều tính năng đổi theo phiên bản. Bạn có muốn mỗi bài ghi phiên bản Claude Code và ngày đã kiểm tra không?"
+ ]
+}

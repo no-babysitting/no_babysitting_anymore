@@ -1,0 +1,207 @@
+{
+ "overview": "Product surfaces overview as of 2026-11-06, from fetched Anthropic docs. Key framing for the Vietnamese site: several surfaces need no terminal and are the default for non-developers. The Desktop app's Code tab says \"without using a terminal\" and needs no Node.js or CLI install. Cowork is described as \"accessible within Claude Desktop without opening the terminal\". The CLI is the most complete surface, but it is one of ten. Status labels are inconsistent across pages. Where a page states no label or start date, the field says \"unknown\" rather than guessing. Plan requirements shown are the ones the cited pages state. Some Cowork plan and date entries come from the support.claude.com release-notes page, which was read through a summarizing fetch, so verify before publishing. Sources in each item are primary Anthropic docs unless marked otherwise.",
+ "items": [
+  {
+   "feature": "Claude Desktop app - Code tab",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "no",
+    "mobile": "partial",
+    "cli": "partial"
+   },
+   "app_how": "Install the Claude desktop app for macOS or Windows (Linux is beta). Sign in, click the Code tab at the top of the sidebar, click + New (or Cmd+N / Ctrl+N). Pick Local in the environment selector, choose the folder with Open folder..., type a task and press Enter. Permission modes are chosen from the mode selector: Manual, Accept edits, Plan, Auto, Bypass permissions. Cloud, SSH and WSL environments are also selectable.",
+   "cli_how": "No separate command. The app bundles Claude Code and needs no CLI install. Desktop maps CLI flags, for example Bypass permissions maps to --dangerously-skip-permissions. Desktop does not cycle modes with Shift+Tab. Use the mode selector.",
+   "non_coding_angle": "A visual, no-terminal entry point: diff view for reviewing changes, a Browser pane, connectors added through the + button and Add connectors, and Dispatch for background tasks. Good for users who want to review the output of an agent rather than read code. Computer use is a research preview, on Pro, Max and Ultra only.",
+   "notes": "Plans: Pro, Max, Ultra, Team or Enterprise (quickstart). Platforms: macOS and Windows; Linux is beta. Computer use is a research preview on macOS and Windows. The Code tab page gives no overall GA or beta label or start date (unknown). Bypass permissions needs Pro, Max or Ultra. Team and Enterprise are controlled by org policy.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/desktop-quickstart.md"
+   ]
+  },
+  {
+   "feature": "Cowork (Claude Desktop)",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "no",
+    "web_code": "no",
+    "cowork": "yes",
+    "mobile": "partial",
+    "cli": "no"
+   },
+   "app_how": "Open the Claude desktop app and choose Cowork (the Cowork sidebar). Use Projects in the left navigation, then + to create one: Start from scratch, Import a project, or Use an existing folder. Manage connectors, skills and plugins under Customize in the sidebar. Dispatch appears as Dispatch in the left sidebar.",
+   "cli_how": "No CLI equivalent. The overview says Cowork uses the same agentic architecture as Claude Code, but it is not driven from the terminal. Cowork does not read the CLI's ~/.claude directory. Add skills or plugins that exist only there through Customize.",
+   "non_coding_angle": "Built for knowledge work on your own files: research, documents, organizing folders, spreadsheets with formulas, PowerPoint decks. Claude reads and writes local files without manual uploads. Projects hold folders, standing instructions, links and a project memory. Pairs with Claude in Chrome for website tasks.",
+   "notes": "Plans per release notes (secondary summary): Pro and Max (merged into one experience on 2026-09-16); Team and Enterprise (plugin marketplace on 2026-02-24; role-based access on 2026-04-09). Ultra is not stated. Launch: research preview 2026-01-12 (Max, macOS only); general availability 2026-04-09 on macOS and Windows. Web and mobile Cowork was in beta from 2026-07-07. Dispatch needs Pro, Max or Ultra and the latest Desktop app on macOS or Windows. Some plan and date details are secondary summaries; confirm them against support.claude.com.",
+   "sources": [
+    "https://claude.com/docs/cowork/overview.md",
+    "https://claude.com/docs/cowork/guide/projects.md",
+    "https://claude.com/docs/cowork/guide/dispatch.md",
+    "https://support.claude.com/en/articles/12138966-release-notes"
+   ]
+  },
+  {
+   "feature": "Claude Code on the web (claude.ai/code)",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "yes",
+    "cowork": "unknown",
+    "mobile": "yes",
+    "cli": "partial"
+   },
+   "app_how": "Open claude.ai/code in a browser and sign in. Connect GitHub during web onboarding (GitHub App, or /web-setup in the terminal). Start a cloud session with the environment and branch chosen, type the task, and submit. Sessions show a Changes card with the diff, and Auto-fix can watch a PR.",
+   "cli_how": "claude --cloud \"task\" starts a cloud session from the current repo. claude -p \"msg\" --cloud <session-id> sends a follow-up. claude --teleport pulls a cloud session into the terminal. /teleport works inside a CLI session.",
+   "non_coding_angle": "Runs in Anthropic-managed VMs and keeps going when the laptop is closed. Sessions can be shared (Private or Team on Team and Enterprise; Private or Public on individual plans). Auto-fix watches PR CI and review comments. It is aimed at long-running tasks that need little steering.",
+   "notes": "Plans: Pro, Max, Ultra, Team and Enterprise (Enterprise needs premium seats or Chat + Claude Code seats). Cloud sessions are not available through Bedrock, Vertex or Foundry. Not available to organizations with Zero Data Retention, HIPAA, or CMEK. The page gives no GA or beta label or start date (unknown). Repos must be on GitHub, or uploaded as a bundle.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/web-quickstart.md"
+   ]
+  },
+  {
+   "feature": "Claude mobile app - Code tab (iOS and Android)",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "yes",
+    "cowork": "partial",
+    "mobile": "yes",
+    "cli": "no"
+   },
+   "app_how": "Install the Claude app for iOS or Android (on iPad, the iOS app). Sign in with the same claude.ai account. Tap Code in the navigation to see cloud sessions, projects and Remote Control sessions. Dispatch is a task you message in the app. /mobile in a Claude Code session shows a QR code for claude.ai/mobile.",
+   "cli_how": "Run /mobile, /ios or /android in a Claude Code session to show a QR code for the matching app store. Run claude remote-control or /remote-control on the computer, then open the session from the Code tab or scan the QR code.",
+   "non_coding_angle": "A thin client for starting and monitoring tasks away from the desk. Ask Claude for push notifications when a task finishes. Attach photos or files, which Remote Control passes to the local session. Dispatch lets you assign a task that runs on your Desktop.",
+   "notes": "There is no separate mobile Claude Code app; the Code tab in the Claude app is the surface. Dispatch needs Pro, Max or Ultra, and is not available on Team or Enterprise. Permission modes in the app: cloud sessions offer Accept edits, Plan and Auto; Bypass permissions is not available. Commands that only run in the terminal, such as /plugin and /resume, do not work in the app. Date: unknown.",
+   "sources": [
+    "https://code.claude.com/docs/en/mobile.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "feature": "Claude in Slack (Claude Tag, plus the earlier Claude Code in Slack)",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "no",
+    "web_code": "partial",
+    "cowork": "no",
+    "mobile": "unknown",
+    "cli": "no"
+   },
+   "app_how": "Two products. (1) Claude Tag: an org Owner pairs the Slack workspace by sending @Claude connect in Slack, then enters the code at claude.ai/admin-settings/claude-tag and launches. Anyone in a channel Claude has been added to can then mention @Claude. (2) The earlier Claude Code in Slack: a workspace admin installs the Claude app from the Slack App Marketplace, the user links their account in the App Home, and Claude is added to a channel with /invite @Claude. Routing Mode can be Code only or Code + Chat.",
+   "cli_how": "No CLI command. Earlier-version Slack sessions appear in claude.ai/code and can be pulled into a terminal with claude --teleport.",
+   "non_coding_angle": "Team-shared work in channels: bug reports to draft PRs, triage requests, digests, decision threads turned into docs, watch-and-alert monitoring. Claude Tag replies in-thread with a checklist as it works. Admins control access per channel, and connectors can be configured for all of Slack, one workspace, or one channel.",
+   "notes": "Claude Tag: Public Beta (label on the overview page); available on Team and Enterprise plans, on Anthropic's first-party service only. Not available on Free, Pro, Max or Ultra. Channel work bills to the org usage balance under a spend limit. The earlier Claude Code in Slack needs Pro, Max or Ultra, and only in workspaces not connected to Claude Tag. The legacy bot retirement notice says it is retired effective 2026-10-05 for connected workspaces. Start date for Claude Tag: unknown.",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md",
+    "https://code.claude.com/docs/en/slack.md"
+   ]
+  },
+  {
+   "feature": "Claude in Chrome (browser extension, with Claude Code and Cowork)",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "no",
+    "cowork": "yes",
+    "mobile": "no",
+    "cli": "yes"
+   },
+   "app_how": "Install the Claude in Chrome extension (v1.0.36 or later) from the Chrome Web Store, and sign in to the same claude.ai account and organization. In Cowork, pair Claude in Chrome to automate tasks on any site. In the Desktop app, the Browser pane uses a clean profile with none of your logins. For sites where Claude should act as you, use the extension instead.",
+   "cli_how": "claude --chrome starts a session with browser tools. Run /chrome to see status, reconnect, or Enabled by default. The VS Code extension shares the same setting, and @browser starts a connection there.",
+   "non_coding_angle": "Uses your logged-in sessions (Gmail, Google Docs, Notion, CRMs) to fill forms, extract data to CSV, record demo GIFs and take screenshots. Browser actions run in a visible window. Claude pauses for logins and CAPTCHAs.",
+   "notes": "Plans: Pro, Max, Ultra, Team and Enterprise. Not available through Bedrock, Vertex or Foundry. Requires /login, not an API key. Not supported in WSL. Release notes say beta for all paid plans from 2025-12-18 (secondary summary of support.claude.com). The Chrome page itself gives no beta label. Enabling it by default adds context usage.",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md",
+    "https://claude.com/docs/cowork/overview.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://support.claude.com/en/articles/12138966-release-notes"
+   ]
+  },
+  {
+   "feature": "Routines / scheduled tasks (formerly routines)",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "yes",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Go to claude.ai/code/routines and create a scheduled task: a prompt, one or more repos, and connectors, with a Schedule, API or GitHub trigger. Team and Enterprise Owners can turn it off under Organization settings > Capabilities > Remote sessions. Desktop has its own scheduled tasks page (the Desktop docs cover them; not fetched in detail here).",
+   "cli_how": "/schedule in a Claude Code CLI session creates and manages tasks, and can add a GitHub trigger (requires v2.1.225 or later). /schedule why did my nightly review do nothing... reads run history. /loop in the CLI runs a local recurring prompt (a separate local feature).",
+   "non_coding_angle": "Runs on a recurring cadence (hourly, nightly, weekly, once) without a laptop. Use cases in the docs include backlog grooming, posting summaries to Slack and PR review with a team checklist. Tasks run as you, so connector actions appear under your account.",
+   "notes": "Status: research preview (behavior and API may change). Plans: Pro, Max, Ultra, Team and Enterprise. Runs count against your account's usage limits; usage credits can cover overage. Scheduled tasks belong to one account and are not shared. Start date: unknown.",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md",
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md",
+    "https://code.claude.com/docs/en/scheduled-tasks.md"
+   ]
+  },
+  {
+   "feature": "Remote Control",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "yes",
+    "cowork": "unknown",
+    "mobile": "yes",
+    "cli": "yes"
+   },
+   "app_how": "Open the session in claude.ai/code or the Claude app (iOS or Android), tap Code, and pick the session from the list. Remote Control drives a session that is running on your own computer, so the files, MCP servers and tools stay local. Trusted Devices (beta), if an Owner turns it on, requires a verified device before a session can be viewed or steered.",
+   "cli_how": "claude remote-control starts a server in the terminal (flags include --capacity, --continue, --session-id, --debug). /remote-control starts it inside an open session. Scan the QR code the terminal shows, or pick the session from the Code tab.",
+   "non_coding_angle": "Lets someone keep steering a task from a phone or browser while the computer does the work, for example to answer a question or send a photo. Attachments are saved to ~/.claude/uploads/ and passed as @ references. Push notifications can be requested in the prompt, such as notify me when the tests finish.",
+   "notes": "Plans: Pro, Max, Ultra, Team and Enterprise. API keys are not supported. On Team and Enterprise, an Owner turns on the Remote Control toggle at claude.ai/admin-settings/claude-code. The Remote Control page gives no GA or research preview label. Trusted Devices is in beta; it was added 2026-06-25 per release notes (secondary summary). Desktop support requires Claude Code v2.1.304 or later when using the Desktop app. Start date: unknown.",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md",
+    "https://code.claude.com/docs/en/mobile.md",
+    "https://code.claude.com/docs/en/platforms.md"
+   ]
+  },
+  {
+   "feature": "Claude Code CLI (terminal)",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "no",
+    "mobile": "no",
+    "cli": "yes"
+   },
+   "app_how": "No app. Install in a terminal: macOS, Linux or WSL: curl -fsSL https://claude.ai/install.sh | bash. Windows PowerShell: irm https://claude.ai/install.ps1 | iex. Or brew install --cask claude-code, or winget install Anthropic.ClaudeCode. Open a terminal in a project folder, run claude, and sign in on first use. The terminal guide covers beginners.",
+   "cli_how": "claude starts the interactive session; claude \"task\" starts with a prompt; claude -p \"query\" runs once; claude -c continues the last conversation; claude -r resumes one. Inside a session, /help, /clear, /exit, /resume, Shift+Tab to change permission mode.",
+   "non_coding_angle": "Most complete surface, and the one that scripts and the Agent SDK depend on. Also works for documents, data analysis and file automation in a folder, not only code. Less suited to non-developers as the first contact.",
+   "notes": "Plans: Pro, Max, Ultra, Team or Enterprise, or a Claude Console account. Third-party providers (Bedrock, Vertex, Foundry) are supported. Homebrew's claude-code cask does not auto-update. Status label: none stated; the quickstart is the current entry point (date unknown).",
+   "sources": [
+    "https://code.claude.com/docs/en/quickstart.md",
+    "https://code.claude.com/docs/en/platforms.md"
+   ]
+  },
+  {
+   "feature": "IDE extensions (VS Code and JetBrains)",
+   "chapter": "surfaces",
+   "availability": {
+    "desktop_code": "no",
+    "web_code": "no",
+    "cowork": "no",
+    "mobile": "no",
+    "cli": "partial"
+   },
+   "app_how": "VS Code: install anthropic.claude-code (VS Code 1.94.0 or later). Open with the Spark icon in the top-right of the editor (when a file is open), the Spark icon in the Activity Bar, Cmd+Shift+P / Ctrl+Shift+P and Claude Code: Open in New Tab, or the status bar item ✻ Claude Code. JetBrains: install the Claude Code plugin from the JetBrains Marketplace and restart; press Cmd+Esc / Ctrl+Esc.",
+   "cli_how": "VS Code bundles its own CLI for the chat panel but does not add claude to PATH; install the standalone CLI for the integrated terminal. The Use Terminal setting shows the CLI-style UI. JetBrains runs the installed claude command in the IDE terminal and needs the CLI on PATH. From an external terminal, run claude then /ide. Both share history: claude --resume.",
+   "non_coding_angle": "Built for people who already work in an editor: inline diffs, @-mentions with line ranges, plan review, and file context. Less relevant for non-developers, who will do better in the Desktop app.",
+   "notes": "Plans: any paid plan (Pro, Max, Ultra, Team or Enterprise) or a Claude Console account; no API key required. Third-party providers are supported in VS Code. The JetBrains plugin's settings entry is labeled Claude Code [Beta]. The VS Code page gives no release-status label. Start dates: unknown.",
+   "sources": [
+    "https://code.claude.com/docs/en/vs-code.md",
+    "https://code.claude.com/docs/en/jetbrains.md"
+   ]
+  }
+ ],
+ "open_questions": [
+  "Mục tiêu chính của trang web là ai: người dùng không biết lập trình làm việc hàng ngày (nghiên cứu, tài liệu, slide, dữ liệu), hay người dev muốn chuyển sang dùng app thay vì terminal? Điều này quyết định bạn có nên đặt Cowork và Desktop Code tab lên đầu thay vì CLI.",
+  "Bạn có muốn trang tập trung vào các tính năng đang GA, hay cũng bao gồm các tính năng research preview và beta như Routines/scheduled tasks, Claude Tag (Public Beta) và Remote Control Trusted Devices? Nếu có, bạn sẽ đánh dấu chúng rõ ràng ra sao để người học không bị lỗi thời?",
+  "Gói tài khoản mục tiêu của người học là gì: Pro/Max (cá nhân) hay Team/Enterprise (doanh nghiệp)? Nhiều tính năng (Claude Tag chỉ dành cho Team/Enterprise; Dispatch, computer use chỉ Pro/Max/Ultra) khác nhau rất nhiều theo gói, nên cách bạn chia nội dung theo gói sẽ thay đổi cấu trúc.",
+  "Bạn có muốn thêm một chương chỉ về ví dụ không liên quan đến lập trình (ví dụ: phân tích dữ liệu, báo cáo, nghiên cứu, tự động hóa file) cho từng bề mặt không? Hiện tại tài liệu chính thức về Cowork và Claude in Chrome đưa ra ví dụ không lập trình khá rõ, nhưng các trang Claude Code thiên về dev hơn."
+ ]
+}

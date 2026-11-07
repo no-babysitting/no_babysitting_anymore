@@ -1,0 +1,65 @@
+<!-- @dsCard group="ASCII" height=470 subtitle="Nhân vật ASCII · 7 trạng thái · mặt lớn như chân dung ký tự · màu theo token ngữ nghĩa · M14" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>TheColleague</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .tc{display:grid;grid-template-rows:auto auto}
+  .stage{position:relative;overflow:hidden;height:250px;display:grid;place-items:center;border-bottom:1px solid var(--control)}
+  .big{font:600 clamp(64px,12vw,112px)/1 var(--font-mono);letter-spacing:-.02em;white-space:pre}
+  .when{position:absolute;left:14px;bottom:12px;max-width:40ch}
+  .ghost{right:-1%;bottom:-10%;font-size:200px}
+  .grid{display:grid;grid-template-columns:repeat(7,1fr)}
+  .cell{appearance:none;background:transparent;border:0;border-right:1px solid var(--control);border-radius:0;color:var(--fg);padding:14px 8px 12px;display:grid;gap:8px;justify-items:center;cursor:pointer;font:inherit}
+  .cell:last-child{border-right:0}
+  .cell .f{font:600 15px/1 var(--font-mono);letter-spacing:0;white-space:pre}
+  .cell:hover{background:var(--bg-raised)}
+  .cell[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+  .cell[aria-pressed="true"] .nb-micro,.cell[aria-pressed="true"] .f{color:var(--bg)!important}
+  .cell:focus-visible{outline:2px solid var(--focus-ring);outline-offset:-4px}
+  @media (max-width:640px){.grid{grid-template-columns:repeat(4,1fr)}.cell{border-bottom:1px solid var(--control)}}
+</style>
+</head>
+<body>
+<section class="nb nb-frame tc" aria-labelledby="tct">
+  <div class="stage nb-dots" id="stage">
+    <span class="nb-corner tl nb-micro" id="tct"><span class="nb-sq"></span>The Colleague · M14</span>
+    <span class="nb-corner tr nb-micro">state <b id="sn">idle</b> · <span id="tk">fg-muted</span></span>
+    <span class="nb-ghost ghost" aria-hidden="true">Colleague</span>
+    <span class="big" id="face" aria-live="polite">[•_•]</span>
+    <span class="nb-micro when" id="when">Chờ việc · đưa con trỏ lại gần</span>
+  </div>
+  <div class="grid" role="group" aria-label="Trạng thái" id="grid"></div>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  var WHEN = { idle: 'Chờ việc · đưa con trỏ lại gần', tracking: 'Con trỏ đến gần: mắt nhìn theo', thinking: 'Đang đọc hoặc lập kế hoạch', working: 'Nhật ký hành động đang chạy', asking: 'Xin quyền hoặc hỏi lại', overloaded: 'Context vượt ngưỡng', verified: 'Kiểm chứng xong' };
+  var col = NB.colleague(document.getElementById('face'), 'idle'), grid = document.getElementById('grid'), btns = [];
+  function pick(s) {
+    col.set(s);
+    document.getElementById('sn').textContent = s; document.getElementById('tk').textContent = NB.FACES[s][1];
+    NB.decode(document.getElementById('when'), WHEN[s], 0.5);
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.s === s)); });
+  }
+  Object.keys(NB.FACES).forEach(function (s) {
+    var f = NB.FACES[s], b = document.createElement('button');
+    b.type = 'button'; b.className = 'cell'; b.dataset.s = s; b.setAttribute('aria-pressed', String(s === 'idle'));
+    b.innerHTML = '<span class="f" style="color:var(--' + f[1] + ')">' + f[0] + '</span><span class="nb-micro">' + s + '</span>';
+    b.addEventListener('click', function () { pick(s); });
+    grid.appendChild(b); btns.push(b);
+  });
+  var stage = document.getElementById('stage');
+  stage.addEventListener('pointerenter', function () { if (col.get() === 'idle') pick('tracking'); });
+  stage.addEventListener('pointerleave', function () { if (col.get() === 'tracking') pick('idle'); });
+})();
+</script>
+</body>
+</html>

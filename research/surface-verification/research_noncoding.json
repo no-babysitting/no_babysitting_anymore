@@ -1,0 +1,214 @@
+{
+ "overview": "Có bằng chứng chính thức cho thấy Cowork và Claude Code được dùng cho công việc không phải lập trình. Trang Desktop của Claude Code ghi: 'Research, document editing, and spreadsheet work stay in Cowork.' (https://code.claude.com/docs/en/desktop.md). Ba điểm cần lưu ý khi viết nội dung:\n1. Cowork đang được gộp vào Claude. Ngày 16/09/2026 Anthropic thông báo 'Cowork and chat are merging into one Claude' (https://claude.com/resources/articles/cowork-is-now-claude). Trang hỗ trợ ghi: nếu ô nhập không có lựa chọn 'Chat' và 'Cowork' thì người dùng đang ở trải nghiệm thống nhất mới (https://support.claude.com/en/articles/13345190-get-started-with-cowork). Nên hướng dẫn theo mục đích công việc hơn là theo nhãn UI, và ghi rõ ngày kiểm tra.\n2. Tài liệu Claude Code vẫn coding-first. Trang overview mở đầu bằng 'an agentic coding tool' (https://code.claude.com/docs/en/overview.md). Các bằng chứng non-coding chính thức nằm ở Cowork, Artifacts, Chrome và scheduled tasks.\n3. Bằng chứng từ đội nội bộ Anthropic: bài 'How Anthropic teams use Claude Code' (24/07/2025) có Legal, Growth Marketing, Product Design, Inference, Data Infrastructure (https://claude.com/blog/how-anthropic-teams-use-claude-code). Guide 'how Anthropic teams use Cowork' (không ghi ngày, © 2026) có Finance, Legal, Sales, Product management (https://claude.com/resources/guides/deploying-claude-across-your-organization/how-anthropic-teams-use-cowork).\nChưa xác minh: ngày ra mắt Cowork 12/01/2026 và chi tiết rollout Pro chỉ có nguồn thứ cấp. Bài 'Cowork: Claude Code for the rest of your work' không tải được trực tiếp. Ví dụ Finance trong bài 2025 chưa được xác nhận vì trang chính thức không nhắc finance. PDF nội bộ trên cdn.anthropic.com không đọc được. Nội dung Claude Tag (Slack) chưa kiểm tra vì trang Slack trên code.claude.com là phiên bản cũ.\nGói và nền tảng: Cowork trên desktop dùng được với mọi gói trả phí (Pro, Max, Ultra, Team, Enterprise) và đang beta. Web và mobile cần Pro, Max, Ultra hoặc Team (Team đang beta); Enterprise cần owner bật. Dispatch và computer use chỉ có cho Pro, Max, Ultra theo trang Desktop; trang hỗ trợ Cowork nói Dispatch đang limited beta và không dành cho người dùng mới, nên mâu thuẫn này cần kiểm tra lại.",
+ "items": [
+  {
+   "feature": "Research and synthesis (web research, notes, reports)",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "yes",
+    "mobile": "partial",
+    "cli": "partial"
+   },
+   "app_how": "Claude Desktop: chọn 'Cowork' ở góc dưới bên trái ô nhập, cấp quyền cho thư mục, mô tả việc cần làm. Claude web: mở tab Home ở claude.ai và chọn 'Cowork'. Theo trang Desktop, 'Research, document editing, and spreadsheet work stay in Cowork.'",
+   "cli_how": "Không phải đường khuyến nghị cho người không dev. Chạy 'claude' trong thư mục ghi chú được hỗ trợ ('Work in notes and non-code folders').",
+   "non_coding_angle": "Cowork support: 'Combining web research, articles, and notes into a report or summary.' Anthropic Inference team: 'an 80% reduction in research time'.",
+   "notes": "Bằng chứng non-coding mạnh nhất. Mobile và web Cowork chỉ dùng được đầy đủ khi Desktop đang mở, với truy cập file và trình duyệt cục bộ.",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork",
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile",
+    "https://code.claude.com/docs/en/common-workflows.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://claude.com/blog/how-anthropic-teams-use-claude-code"
+   ]
+  },
+  {
+   "feature": "Data analysis (statistics, charts, dashboards, warehouse questions)",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "yes",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Cowork: mô tả bộ dữ liệu và câu hỏi; thêm connector trong 'Customize > Connectors' để hỏi dữ liệu trực tiếp. Nhóm Finance của Anthropic kết nối data warehouse qua MCP; nhân viên không chuyên 'can query the warehouse without SQL'.",
+   "cli_how": "'claude' trong thư mục dữ liệu, hoặc /artifacts để tạo trang dashboard. Artifacts yêu cầu /login, gói Pro, Max, Ultra, Team hoặc Enterprise, và không chạy trên Bedrock, Vertex hay Foundry.",
+   "non_coding_angle": "Cowork support: 'Running statistical analysis, creating charts, and cleaning datasets.' Guide Anthropic Finance: 'revenue down 3% driven by a dip in APAC enterprise renewals.'",
+   "notes": "Bài Claude Code 2025 có mục 'data science' làm React visualization. Đây là ví dụ sát code nên đánh dấu là ranh giới, không dùng làm ví dụ non-coding chính.",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork",
+    "https://claude.com/resources/guides/deploying-claude-across-your-organization/how-anthropic-teams-use-cowork",
+    "https://claude.com/blog/cowork-plugins",
+    "https://code.claude.com/docs/en/artifacts.md"
+   ]
+  },
+  {
+   "feature": "Documents, slides and spreadsheets",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "yes",
+    "mobile": "partial",
+    "cli": "partial"
+   },
+   "app_how": "Cowork: mô tả nội dung, Claude tạo file. Trang hỗ trợ: 'Producing spreadsheets with working formulas, plus slide decks and polished documents from rough notes.' Claude Docs và Claude Slides đang beta trên gói trả phí; xuất được sang PowerPoint, PDF hoặc Word.",
+   "cli_how": "/slides <brief> tạo deck; /design <brief> tạo canvas; cả hai cần Claude Code v2.1.265 trở lên. Claude Docs đi qua connector 'claude.ai Claude Docs' (xem /mcp). Org có thể tắt template, khi đó lệnh không hiện.",
+   "non_coding_angle": "Trang Cowork support: 'Turning a folder of receipts into a formatted expense report.'",
+   "notes": "Skills: pdf và xlsx được đồng bộ sang Claude Code từ claude.ai ('always sync'). docx và pptx nằm trong repo anthropics/skills (source-available, không phải open source). Cài bằng '/plugin install document-skills@anthropic-agent-skills' theo trang repo. Trang docs chính thức chỉ nêu pdf và xlsx.",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork",
+    "https://code.claude.com/docs/en/artifacts.md",
+    "https://code.claude.com/docs/en/skills.md",
+    "https://github.com/anthropics/skills"
+   ]
+  },
+  {
+   "feature": "File organization (sort, rename, folder cleanup)",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "no",
+    "cowork": "yes",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Cowork trên Desktop: cấp quyền thư mục (ví dụ Downloads), mô tả quy tắc sắp xếp. Web và mobile không đọc được file cục bộ nếu Desktop không mở.",
+   "cli_how": "'cd' vào thư mục rồi chạy 'claude'. Trang docs: 'Claude Code works in any directory.' Có thể dùng để tìm, sửa và sắp xếp ghi chú Markdown.",
+   "non_coding_angle": "Trang Cowork support: 'Organizing files, such as sorting a Downloads folder by type and date.' Ví dụ khác: đổi tên hàng loạt theo mẫu ngày.",
+   "notes": "Đây là use case dễ demo nhất cho người không dev. Luôn kiểm tra quyền trước khi cho Claude ghi hoặc xóa file.",
+   "sources": [
+    "https://support.claude.com/en/articles/13345190-get-started-with-cowork",
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile",
+    "https://code.claude.com/docs/en/common-workflows.md"
+   ]
+  },
+  {
+   "feature": "Browser tasks (form filling, data extraction, web research)",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "unknown",
+    "cowork": "yes",
+    "mobile": "partial",
+    "cli": "partial"
+   },
+   "app_how": "Desktop: trong Cowork bật 'Browse external sites'. Mỗi site cần duyệt riêng, dùng hồ sơ trình duyệt sạch và không có đăng nhập đã lưu. Claude không mua hàng, tạo tài khoản hay vượt CAPTCHA nếu chưa có bạn. Hoặc mở Claude in Chrome side panel; nhấp biểu tượng Claude trên thanh Chrome để bắt đầu phiên Cowork. Chrome side panel có cho mọi gói trả phí.",
+   "cli_how": "'claude --chrome' cần extension Claude in Chrome v1.0.36 trở lên, đăng nhập bằng /login (không dùng API key) và không chạy trên WSL, Bedrock, Vertex hay Foundry. Kiểm tra bằng /chrome.",
+   "non_coding_angle": "Trang Chrome: 'Automate form filling' với ví dụ nhập danh bạ khách hàng từ contacts.csv vào CRM; và 'Extract data from web pages' ra CSV.",
+   "notes": "Trang Chrome của Claude Code có ví dụ không phải dev, nhưng vẫn gắn với lệnh CLI. Ưu tiên giới thiệu bản Chrome side panel cho người dùng app.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/chrome.md",
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile"
+   ]
+  },
+  {
+   "feature": "Scheduled reporting and automation",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "partial",
+    "cowork": "partial",
+    "mobile": "unknown",
+    "cli": "partial"
+   },
+   "app_how": "Cowork (sản phẩm): 'Schedule a report once and get it daily, weekly, or monthly.' Cloud sessions của Cowork chạy trên đám mây cho Pro, Max, Ultra từ 06/10/2026. Cách đặt lịch riêng trong Cowork chưa xác minh được từ tài liệu đã đọc. Desktop: tab Code > Scheduled > New task; bật 'Only on this computer' để chạy trên máy (chỉ chạy khi app mở và máy thức).",
+   "cli_how": "/schedule tạo cloud scheduled task (từ web, Desktop hoặc CLI). /loop chỉ chạy trong phiên đang mở, khoảng tối thiểu 1 phút. Cloud task tối thiểu 1 giờ.",
+   "non_coding_angle": "Trang sản phẩm Cowork có ví dụ 'a weekly marketing readout that pulls metrics from Amplitude and a Drive spreadsheet... and saves a slide deck.'",
+   "notes": "Các ví dụ trong tài liệu Desktop scheduled task thiên về dev ('daily code reviews', 'dependency audits'). Ví dụ non-coding nên lấy từ trang Cowork. Gói yêu cầu cho cloud routine chưa xác minh.",
+   "sources": [
+    "https://claude.com/product/cowork",
+    "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile",
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md",
+    "https://code.claude.com/docs/en/overview.md"
+   ]
+  },
+  {
+   "feature": "Communication drafting and team workflows (sales, legal, ops)",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "unknown",
+    "cowork": "yes",
+    "mobile": "partial",
+    "cli": "partial"
+   },
+   "app_how": "Cowork với connector (Salesforce, Slack, Drive, Jira và các connector khác trong Customize > Connectors). Ví dụ Sales: chuẩn bị cuộc gọi và soạn email follow-up. Ví dụ Legal: cập nhật định kỳ tổng hợp từ ticket intake, thread Slack và trạng thái vụ việc.",
+   "cli_how": "'claude' với MCP connector (/mcp). Trang Slack của Claude Code là bản cũ và được thay bằng Claude Tag; chưa kiểm tra Claude Tag nên chưa khẳng định cách dùng.",
+   "non_coding_angle": "Guide Anthropic Sales: 'Summarizing a Slack thread and filing a ticket takes about 30 seconds, versus 3 to 5 minutes manually.' Legal: 'Biweekly updates are synthesized from intake tickets, Slack threads, and matter status.'",
+   "notes": "Nguồn từ guide nội bộ không ghi ngày. Không có số liệu gói cho từng connector.",
+   "sources": [
+    "https://claude.com/resources/guides/deploying-claude-across-your-organization/how-anthropic-teams-use-cowork",
+    "https://code.claude.com/docs/en/slack.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "feature": "Marketing content and campaign work",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "unknown",
+    "cowork": "yes",
+    "mobile": "unknown",
+    "cli": "partial"
+   },
+   "app_how": "Cowork: đưa bảng CSV hoặc file quảng cáo, nhờ Claude tìm mẫu kém hiệu quả và viết bản thay thế trong giới hạn ký tự. Trang Cowork có ví dụ báo cáo marketing hàng tuần lưu thành slide deck.",
+   "cli_how": "'claude' trong thư mục chứa CSV để phân tích và sinh biến thể. Bài Anthropic 2025 có plugin Figma tự sinh tới 100 biến thể quảng cáo; trang không nêu môi trường cài.",
+   "non_coding_angle": "Bài Anthropic (24/07/2025), Growth Marketing: 'Created a Figma plugin that generates up to 100 ad variations.'",
+   "notes": "Ví dụ marketing đầy đủ chỉ có trong bài 2025 và trang sản phẩm Cowork. Chưa có ví dụ marketing trong guide Cowork nội bộ.",
+   "sources": [
+    "https://claude.com/blog/how-anthropic-teams-use-claude-code",
+    "https://claude.com/product/cowork"
+   ]
+  },
+  {
+   "feature": "Role packs (Cowork plugins and skills for Legal, Finance, Sales, Marketing)",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "unknown",
+    "cowork": "yes",
+    "mobile": "unknown",
+    "cli": "partial"
+   },
+   "app_how": "Cowork: cài plugin trực tiếp trong Cowork hoặc từ bộ plugin trên website Anthropic. Bộ khởi đầu có 11 plugin mã nguồn mở, gồm Productivity, Enterprise search, Sales, Finance, Data, Legal, Marketing, Customer support, Product management, Biology research và plugin tạo/chỉnh plugin.",
+   "cli_how": "Dùng plugin và skill trong Claude Code qua '/plugin install'. Trang skills: 'Claude uses skills when relevant, or you can invoke one directly with /skill-name.'",
+   "non_coding_angle": "Trang plugin Cowork (30/01/2026): 'Plugins bundle skills, connectors, slash commands, and sub-agents.' Ví dụ Sales: liên kết CRM và mô tả quy trình bán hàng.",
+   "notes": "Plugin là research preview cho mọi người dùng trả phí. Theo trang: 'Plugins are currently saved locally to your machine.' Tính năng chia sẻ cho cả tổ chức được hứa, chưa xác minh.",
+   "sources": [
+    "https://claude.com/blog/cowork-plugins",
+    "https://code.claude.com/docs/en/skills.md"
+   ]
+  },
+  {
+   "feature": "Coding (the one category Claude Code is built for, as contrast)",
+   "chapter": "usecases",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "yes",
+    "cowork": "partial",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Desktop app: nhấn tab 'Code' và bắt đầu phiên. Web: claude.ai/code. Mobile: app Claude cho iOS và Android. Overview ghi: 'Each surface connects to the same underlying Claude Code engine.'",
+   "cli_how": "Chạy 'claude' trong thư mục dự án. Đây là bề mặt chính của Claude Code nhưng không phải điểm bắt đầu cho người không dev.",
+   "non_coding_angle": "Trang overview: 'Claude Code is an agentic coding tool that reads your codebase, edits files, runs commands.' Đây là ranh giới cần nêu rõ để không biến Claude Code thành sản phẩm chỉ dành cho dev.",
+   "notes": "Cowork là bề mặt chính cho việc không phải code và không có tài liệu nói Cowork loại trừ code. Trạng thái 'partial' là đánh giá dựa trên định vị tài liệu, không phải nguồn trực tiếp.",
+   "sources": [
+    "https://code.claude.com/docs/en/overview.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  }
+ ],
+ "open_questions": [
+  "Grill 1: Người học mục tiêu có chấp nhận học các khái niệm như CLAUDE.md, skills, MCP và connector, hay chỉ muốn làm việc trên app? Điều này quyết định site có một lộ trình 'app-first' hoàn toàn hay phải có tầng khái niệm riêng.",
+  "Grill 2: Gói mục tiêu là gì: Pro, Max hay Team? Dispatch và computer use chỉ có cho Pro, Max, Ultra theo trang Desktop, còn Team và Enterprise cần owner bật. Chọn gói chuẩn sẽ quyết định nội dung nào được đưa vào và nội dung nào phải gắn nhãn giới hạn.",
+  "Grill 3: Cowork đang gộp vào Claude từ 16/09/2026. Site nên bám theo tên và nhãn UI hiện tại (tab 'Cowork'), hay theo 'Claude' thống nhất? Chấp nhận tần suất cập nhật bao nhiêu để không lỗi thời?",
+  "Grill 4: Ưu tiên theo ngành (Legal, Finance, Sales, Marketing) hay theo kỹ năng chung (nghiên cứu, dữ liệu, tài liệu, lịch tự động)? Coding nên chiếm bao nhiêu phần nội dung, hay chỉ là một chương đối chứng?",
+  "Grill 5: Site sẽ đánh dấu beta và research preview theo từng tính năng, hay chỉ trình bày tính năng đã GA? Ai chịu trách nhiệm kiểm tra lại nguồn chính thức mỗi tháng?"
+ ]
+}

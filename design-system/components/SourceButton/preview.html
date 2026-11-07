@@ -1,0 +1,159 @@
+<!-- @dsCard group="Nhãn" height=820 subtitle="Nút Nguồn · mở bảng nguồn để người học tự đối chiếu · loại, người, ngày, verifiedAt, trích nguyên văn, mở bản gốc, sao chép link" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>SourceButton</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .nb-frame.sb{padding:48px 0 0;min-height:760px;overflow:visible}
+  .blk{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:end;padding:8px 18px 18px;border-bottom:1px solid var(--control)}
+  .blk:last-of-type{border-bottom:0}
+  .big{margin:0;font-size:clamp(72px,11vw,104px);color:var(--fg)}
+  .big .c-accent{color:var(--accent)}
+  .claim{margin:0 0 12px;font:600 16px/1.45 var(--font-text);max-width:40ch}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .src{padding:8px 11px;font-size:11px;gap:.6em}
+  .src .n{color:var(--accent)}
+  .src:hover .n,.src[aria-expanded="true"] .n{color:var(--bg)}
+  .src .dot{display:none;width:7px;height:7px;background:var(--warn)}
+  .src.has-conflict .dot{display:inline-block}
+  .src.is-stale{border-color:var(--warn)}
+  .hint{color:var(--fg-subtle)}
+  .panel{position:absolute;z-index:20;left:18px;right:18px;top:auto;background:var(--bg-raised);border:1px solid var(--fg);box-shadow:var(--shadow-overlay);padding:0;display:none}
+  .panel.on{display:block}
+  .ph{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--control)}
+  .item{padding:12px 14px;border-bottom:1px solid var(--control);display:grid;gap:7px}
+  .item:last-of-type{border-bottom:0}
+  .t{margin:0;font:600 14.5px/1.4 var(--font-text);color:var(--fg)}
+  .meta{font:500 11.5px/1.5 var(--font-mono);color:var(--fg-muted);letter-spacing:.02em}
+  .meta b{color:var(--fg);font-weight:600}
+  .q{margin:0;padding-top:6px;border-top:1px dashed var(--control);font:400 13px/1.5 var(--font-text);color:var(--fg-muted);max-width:64ch}
+  .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+  .acts .nb-btn{padding:7px 10px;font-size:10.5px;text-decoration:none}
+  .live{min-height:1em}
+  @media (max-width:640px){
+    .blk{grid-template-columns:1fr}
+    .panel{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:70vh;overflow:auto;border-width:2px 0 0}
+  }
+</style>
+</head>
+<body>
+<section class="nb nb-frame sb" id="sb" aria-label="SourceButton">
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>SourceButton</span>
+  <span class="nb-corner tr nb-micro">luôn nhìn thấy · bấm để đối chiếu</span>
+
+  <div class="blk">
+    <p class="nb-cond big nb-tabular" aria-hidden="true"><span class="c-accent">−</span>80%</p>
+    <div>
+      <p class="claim">Anthropic đã cắt hơn 80% system prompt của Claude Code mà không giảm điểm eval.</p>
+      <div class="row">
+        <button class="nb-btn src" type="button" data-set="a" aria-expanded="false" aria-controls="panel">Nguồn · <span class="n">2</span> ↗</button>
+        <span class="nb-micro hint">đã kiểm chứng 06/11/2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <p class="nb-cond big nb-tabular" aria-hidden="true">40<span class="c-accent">%</span></p>
+    <div>
+      <p class="claim">Ngưỡng "dumb zone" của context: các nguồn nói khác nhau.</p>
+      <div class="row">
+        <button class="nb-btn src has-conflict" type="button" data-set="b" aria-expanded="false" aria-controls="panel"><span class="dot" aria-hidden="true"></span>Nguồn · <span class="n">3</span> ↗</button>
+        <span class="nb-tag is-info">⇄ Chưa thống nhất</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <p class="nb-cond big nb-tabular" aria-hidden="true">7<span class="c-accent">d</span></p>
+    <div>
+      <p class="claim">Task lặp bằng <code>/loop</code> hết hạn sau 7 ngày.</p>
+      <div class="row">
+        <button class="nb-btn src is-stale" type="button" data-set="c" aria-expanded="false" aria-controls="panel">Nguồn · <span class="n">1</span> ↗</button>
+        <span class="nb-tag is-warn">◐ Cần kiểm chứng lại · quá 30 ngày</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel" role="dialog" aria-modal="false" aria-labelledby="ptitle" tabindex="-1">
+    <div class="ph"><span class="nb-micro" id="ptitle"><span class="nb-sq"></span>Bảng nguồn</span><button class="nb-btn" type="button" id="close" aria-label="Đóng bảng nguồn">Đóng · Esc</button></div>
+    <div id="items"></div>
+  </div>
+  <p class="nb-sr live" id="live" aria-live="polite"></p>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  var DATA = {
+    a: [
+      { k: 'Blog', t: 'The new rules of context engineering for Claude 5 generation models', who: 'Thariq Shihipar · Anthropic', d: '24/07/2026', v: '06/11/2026', q: '“Across your system prompt, skills, and CLAUDE.md files, you may need to simplify just like we did.”', u: 'https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models' },
+      { k: 'Docs', t: 'Best practices · What you can stop doing', who: 'Claude Code docs', d: '', v: '07/11/2026', q: '“Every one of these was good advice when it was written.”', u: 'https://code.claude.com/docs/en/best-practices' }
+    ],
+    b: [
+      { k: 'Video', t: 'Dex · ngưỡng khoảng 40%', who: 'theo lời Dex', d: '24/03/2026', v: '06/11/2026', q: '', u: 'https://github.com/shanraisshan/claude-code-best-practice' },
+      { k: 'Video', t: 'Matt Pocock · khoảng 100K token', who: 'theo lời Matt', d: '', v: '06/11/2026', q: '', u: 'https://github.com/shanraisshan/claude-code-best-practice' },
+      { k: 'Docs', t: 'Best practices · không nêu ngưỡng phần trăm', who: 'Claude Code docs', d: '', v: '07/11/2026', q: '“…you’ll rarely run out of context.”', u: 'https://code.claude.com/docs/en/best-practices' }
+    ],
+    c: [
+      { k: 'Docs', t: 'Scheduled tasks · /loop', who: 'Claude Code docs', d: '', v: '06/10/2026', q: '', u: 'https://code.claude.com/docs/en/scheduled-tasks' }
+    ]
+  };
+  var sb = document.getElementById('sb'), panel = document.getElementById('panel'), items = document.getElementById('items'), live = document.getElementById('live');
+  var opener = null, anim = window.gsap && !NB.reduce();
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function build(set) {
+    items.textContent = '';
+    DATA[set].forEach(function (s) {
+      var it = el('div', 'item');
+      var tags = el('div', 'row');
+      var kind = el('span', 'nb-tag ' + (s.k === 'Docs' ? 'is-signal' : s.k === 'Blog' ? 'is-info' : 'is-muted'), s.k);
+      tags.appendChild(kind);
+      it.appendChild(tags);
+      it.appendChild(el('p', 't', s.t));
+      var m = el('div', 'meta'); m.innerHTML = '<b></b> ' + (s.d ? '· ' : '') + '<span class="d"></span> · verifiedAt <b class="v"></b>';
+      m.querySelector('b').textContent = s.who; m.querySelector('.d').textContent = s.d; m.querySelector('.v').textContent = s.v;
+      it.appendChild(m);
+      if (s.q) it.appendChild(el('p', 'q', s.q));
+      var a = el('div', 'acts');
+      var open = el('a', 'nb-btn', 'Mở bản gốc ↗'); open.href = s.u; open.target = '_blank'; open.rel = 'noopener'; open.setAttribute('aria-label', 'Mở bản gốc: ' + s.t + ' (mở tab mới)');
+      var cp = el('button', 'nb-btn', 'Sao chép link'); cp.type = 'button';
+      cp.addEventListener('click', function () {
+        try { navigator.clipboard.writeText(s.u); } catch (e) {}
+        cp.textContent = 'Đã sao chép ✓'; live.textContent = 'Đã sao chép link'; setTimeout(function () { cp.textContent = 'Sao chép link'; }, 1600);
+      });
+      a.appendChild(open); a.appendChild(cp); it.appendChild(a); items.appendChild(it);
+    });
+  }
+  function place(btn) {
+    if (window.matchMedia('(max-width:640px)').matches) { panel.style.top = ''; return; }
+    var r = btn.getBoundingClientRect(), h = sb.getBoundingClientRect();
+    panel.style.top = Math.min(r.bottom - h.top + 8, h.height - 40) + 'px';
+  }
+  function openPanel(btn) {
+    if (opener && opener !== btn) opener.setAttribute('aria-expanded', 'false');
+    opener = btn; build(btn.dataset.set); place(btn);
+    panel.classList.add('on'); btn.setAttribute('aria-expanded', 'true');
+    NB.decode(document.getElementById('ptitle'), 'Bảng nguồn · ' + DATA[btn.dataset.set].length + ' nguồn', 0.4);
+    if (anim) gsap.from(panel, { autoAlpha: 0, y: 6, duration: 0.24, ease: 'power3.out' });
+    panel.focus({ preventScroll: true });
+  }
+  function closePanel() {
+    if (!opener) return;
+    panel.classList.remove('on'); opener.setAttribute('aria-expanded', 'false'); opener.focus(); opener = null;
+  }
+  document.querySelectorAll('.src').forEach(function (b) {
+    b.addEventListener('click', function () { (opener === b) ? closePanel() : openPanel(b); });
+  });
+  document.getElementById('close').addEventListener('click', closePanel);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
+  document.addEventListener('pointerdown', function (e) { if (opener && !panel.contains(e.target) && !e.target.closest('.src')) { panel.classList.remove('on'); opener.setAttribute('aria-expanded', 'false'); opener = null; } });
+})();
+</script>
+</body>
+</html>

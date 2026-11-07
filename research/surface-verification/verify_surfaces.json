@@ -1,0 +1,434 @@
+{
+ "verdicts": [
+  {
+   "claim": "Desktop Code tab is usable 'without using a terminal' and needs no Node.js or CLI install",
+   "status": "verified",
+   "correction": "Wording is on the quickstart page, not desktop.md: 'review the changes yourself, without using a terminal' and 'The desktop app includes Claude Code, so you don't need to install Node.js or the CLI to use the Code tab.' Cite desktop-quickstart.md.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-quickstart.md"
+   ]
+  },
+  {
+   "claim": "Code tab: click Code at top of sidebar; choose Local in environment selector; project folder control then 'Open folder...'; type task and press Enter",
+   "status": "verified",
+   "correction": "Quickstart: 'click the first control, the environment selector, and select the top entry in the Local group... click the project folder control beside the environment selector, select Open folder…'. desktop.md says 'press Enter to start'. Cite desktop-quickstart.md for the Open folder step.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-quickstart.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "+ New in sidebar, or Cmd+N (macOS) / Ctrl+N (Windows)",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Permission modes: Manual, Accept edits, Plan, Auto, Bypass permissions; Shift+Tab does not cycle modes in Desktop; Bypass equals --dangerously-skip-permissions",
+   "status": "verified",
+   "correction": "Auto has conditions on the desktop.md table: available on the Anthropic API and requires models such as Claude Opus 4.6 or later. Add that caveat.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Bypass permissions needs Pro, Max or Ultra",
+   "status": "corrected",
+   "correction": "On Pro, Max and Ultra, enable 'Allow bypass permissions mode' in Settings > Code. On Team and Enterprise there is no Settings toggle; organization policy controls it. Bypass is not restricted to individual plans.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Platforms: macOS and Windows; Linux is beta",
+   "status": "verified",
+   "correction": "Quickstart labels 'Get Claude for Linux (beta)'. Windows ARM64 installer also exists.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-quickstart.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Computer use is a research preview on Pro, Max, Ultra only",
+   "status": "verified",
+   "correction": "Page states: research preview on macOS and Windows, requires Pro, Max or Ultra, not available on Team or Enterprise.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Dispatch runs from the Code tab, Pro/Max/Ultra only; not on Team/Enterprise",
+   "status": "corrected",
+   "correction": "Dispatch 'lives in Cowork', not the Code tab; code sessions can be spawned from it. Plan limit is confirmed: Pro, Max or Ultra, not Team or Enterprise.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "claim": "Plans for Claude Code (desktop): Pro, Max, Ultra, Team or Enterprise",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-quickstart.md"
+   ]
+  },
+  {
+   "claim": "Cowork is accessible in Claude Desktop 'without opening the terminal' and uses the same agentic architecture as Claude Code",
+   "status": "verified",
+   "correction": "Verbatim: 'Cowork uses the same agentic architecture that powers Claude Code, accessible within Claude Desktop without opening the terminal.'",
+   "sources": [
+    "https://claude.com/docs/cowork/overview.md"
+   ]
+  },
+  {
+   "claim": "Cowork does not read the ~/.claude directory; use Customize for skills/plugins that exist only there",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://claude.com/docs/cowork/overview.md"
+   ]
+  },
+  {
+   "claim": "Cowork Projects (+ to create: Start from scratch, Import a project, Use an existing folder); Dispatch in left sidebar",
+   "status": "unverifiable",
+   "correction": "Projects guide and Dispatch guide were cited but not fetched or confirmed. Only the overview was checked.",
+   "sources": [
+    "https://claude.com/docs/cowork/guide/projects.md",
+    "https://claude.com/docs/cowork/guide/dispatch.md"
+   ]
+  },
+  {
+   "claim": "Cowork plans (Pro/Max merged 2026-09-16; Team/Enterprise dates; launch 2026-01-12; GA 2026-04-09; web/mobile beta 2026-07-07)",
+   "status": "unverifiable",
+   "correction": "The Cowork overview names no plans or dates. The release-notes page was not re-fetched. Do not publish these dates until checked against support.claude.com release notes.",
+   "sources": [
+    "https://support.claude.com/en/articles/12138966-release-notes"
+   ]
+  },
+  {
+   "claim": "Cowork non-coding examples: spreadsheets with formulas, PowerPoint decks, documents, research, file organization; pairs with Claude in Chrome",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://claude.com/docs/cowork/overview.md"
+   ]
+  },
+  {
+   "claim": "claude.ai/code cloud sessions available on Pro, Max, Ultra, Team; Enterprise needs premium seats or Chat + Claude Code seats",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Start at claude.ai/code; GitHub connected via GitHub App or /web-setup; Changes card shows diff; Auto-fix watches a PR",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "claude --cloud \"task\"; claude -p \"msg\" --cloud <session-id>; claude --teleport; /teleport",
+   "status": "verified",
+   "correction": "Also: /teleport and /tp in a CLI session; /tasks then t to teleport. --cloud needs an Anthropic (claude.ai) account, not a third-party provider.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Sharing: Private or Team on Team/Enterprise; Private or Public on individual plans",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Cloud sessions not available via Bedrock, Vertex or Foundry; not for ZDR, HIPAA or CMEK orgs",
+   "status": "verified",
+   "correction": "Page names Bedrock, Google Cloud's Agent Platform and 'another third-party provider'. Foundry is not named on this page, so state 'third-party providers'. ZDR, HIPAA and CMEK restriction is confirmed.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Cloud session GA/beta status and start date",
+   "status": "unverifiable",
+   "correction": "Page gives no status label. Keep as unknown.",
+   "sources": [
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Mobile: Claude app iOS/Android (iPad uses iOS app); tap Code; /mobile, /ios, /android show QR code; Dispatch is a task messaged in the app",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "claim": "Mobile permission modes: cloud sessions offer Accept edits, Plan, Auto; Bypass not selectable; /plugin and /resume do not work from the app",
+   "status": "verified",
+   "correction": "Remote Control sessions also offer Manual. Both points are on the mobile page and its linked Remote Control limitations.",
+   "sources": [
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "claim": "Claude Tag: @Claude connect in Slack, code entered at claude.ai/admin-settings/claude-tag; Owner required; Public Beta; Team and Enterprise only, first-party only",
+   "status": "verified",
+   "correction": "Setup has three steps: pair the workspace, set a monthly spend limit, add Claude to channels, then launch. Owner role is required. The page shows a 'Public Beta' label.",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Claude Tag channel work bills to org usage balance under a spend limit; checklist posted in-thread; use cases (bug to draft PR, decision thread to doc, triage, monitoring, digests)",
+   "status": "verified",
+   "correction": "Per-seat charge is not added. One-to-one DMs from members with a connected Claude account bill to that person's seat, not the org balance.",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Claude Tag connector scope: all of Slack, one workspace, or one channel",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md"
+   ]
+  },
+  {
+   "claim": "Earlier Claude Code in Slack: install from Slack App Marketplace by admin; Connect Claude account in App Home; /invite @Claude; Routing Mode Code only or Code + Chat",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/slack.md"
+   ]
+  },
+  {
+   "claim": "Earlier Claude Code in Slack needs Pro/Max/Ultra and only in workspaces not connected to Claude Tag",
+   "status": "verified",
+   "correction": "Missing: Team and Enterprise customers should use Claude Tag, not this earlier version. Migration guide is linked. Add that.",
+   "sources": [
+    "https://code.claude.com/docs/en/slack.md"
+   ]
+  },
+  {
+   "claim": "Earlier Slack sessions can be pulled into a terminal with claude --teleport",
+   "status": "unverifiable",
+   "correction": "slack.md does not say this. General cloud-session teleport is confirmed on claude-code-on-the-web.md; the Slack-specific claim is not confirmed.",
+   "sources": [
+    "https://code.claude.com/docs/en/slack.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ]
+  },
+  {
+   "claim": "Legacy bot retirement effective 2026-10-05 for connected workspaces",
+   "status": "verified",
+   "correction": "Page text: 'retired effective October 5, 2026'. Today is 2026-11-06, so this is already in effect. Say 'retired (effective 2026-10-05)'.",
+   "sources": [
+    "https://code.claude.com/docs/en/slack.md"
+   ]
+  },
+  {
+   "claim": "Claude in Chrome: extension v1.0.36 or later from Chrome Web Store; claude --chrome; /chrome status, reconnect, Enabled by default; @browser in VS Code",
+   "status": "verified",
+   "correction": "Also: /chrome has Select browser… when several browsers are connected.",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ]
+  },
+  {
+   "claim": "Chrome plans: Pro, Max, Ultra, Team, Enterprise; not via Bedrock/Vertex/Foundry; requires /login (not API key); not WSL",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ]
+  },
+  {
+   "claim": "Chrome: browser actions visible; pauses for logins and CAPTCHAs; uses your logged-in sessions (Gmail, Google Docs, Notion, CRMs); CSV extraction; GIF recording",
+   "status": "verified",
+   "correction": "CRM is shown as form-filling. Google Sheets is named. Each example is in the Chrome doc.",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md"
+   ]
+  },
+  {
+   "claim": "Desktop Browser pane uses a clean profile with none of your logins",
+   "status": "unverifiable",
+   "correction": "Not confirmed on chrome.md or the desktop page. The Desktop page confirmed the Browser pane and Cmd+Shift+B / Ctrl+Shift+B only.",
+   "sources": [
+    "https://code.claude.com/docs/en/chrome.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "claim": "Chrome beta status for all paid plans from 2025-12-18",
+   "status": "unverifiable",
+   "correction": "Chrome page gives no beta label. Release-notes date was not re-fetched.",
+   "sources": [
+    "https://support.claude.com/en/articles/12138966-release-notes"
+   ]
+  },
+  {
+   "claim": "Scheduled tasks (formerly routines): claude.ai/code/routines; Schedule, API and GitHub triggers; research preview",
+   "status": "verified",
+   "correction": "Page: 'Scheduled tasks are in research preview. Behavior, limits, and the API surface may change.' Schedule, API and GitHub triggers are confirmed.",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Team/Enterprise Owners turn off scheduled tasks under Organization settings > Capabilities > Remote sessions",
+   "status": "corrected",
+   "correction": "The toggle is labelled 'Scheduled tasks (Was Routines)' or 'Routines'. Link: claude.ai/admin-settings/capabilities.",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "/schedule in CLI; GitHub trigger from CLI requires v2.1.225; /schedule why did my nightly review do nothing reads run history",
+   "status": "verified",
+   "correction": "Run-history query requires v2.1.227 or later. Also /schedule list, /schedule update, /schedule run. /loop is local.",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Scheduled tasks plans: Pro, Max, Ultra, Team, Enterprise; tasks belong to one account and are not shared; runs count against usage limits; usage credits can cover overage",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Scheduled tasks use cases: backlog grooming, Slack summaries, PR review checklists",
+   "status": "unverifiable",
+   "correction": "Not confirmed in the fetched routines page text.",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md"
+   ]
+  },
+  {
+   "claim": "Remote Control: claude remote-control with --capacity, --continue, --session-id; /remote-control in a session; QR code; picked from Code tab",
+   "status": "verified",
+   "correction": "--capacity default is 32; --continue and --session-id require v2.1.200 or later. The --debug flag was not confirmed.",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Remote Control plans: Pro, Max, Ultra, Team, Enterprise; API keys not supported; Team/Enterprise Owner toggle at claude.ai/admin-settings/claude-code",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Remote Control Desktop support requires Claude Code v2.1.304 or later",
+   "status": "corrected",
+   "correction": "v2.1.304 is required only when DISABLE_TELEMETRY or DO_NOT_TRACK is set and Remote Control is used in the Desktop app. The CLI requirement with those variables is v2.1.283. The claim is an over-generalization.",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Trusted Devices (beta), Owner-enabled, verified device required; added 2026-06-25",
+   "status": "unverifiable",
+   "correction": "The feature is mentioned on the Remote Control page, but the beta label, device-verification detail and the 2026-06-25 date were not confirmed in fetched text.",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md"
+   ]
+  },
+  {
+   "claim": "Remote Control attachments saved to ~/.claude/uploads/ and passed as @ references; push notifications on request",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "claim": "Terminal install: curl install.sh; irm install.ps1 | iex; brew install --cask claude-code; winget install Anthropic.ClaudeCode",
+   "status": "verified",
+   "correction": "Homebrew offers two casks: claude-code (stable) and claude-code@latest. Homebrew and WinGet installs do not auto-update. Native installs do.",
+   "sources": [
+    "https://code.claude.com/docs/en/quickstart.md"
+   ]
+  },
+  {
+   "claim": "CLI commands: claude, claude \"task\", claude -p, claude -c, claude -r; /help, /clear, /exit, /resume; Shift+Tab permission mode",
+   "status": "verified",
+   "correction": "Quickstart confirms /help, /clear and /exit in the session table. /resume and Shift+Tab are confirmed in the text. Ctrl+D twice also exits.",
+   "sources": [
+    "https://code.claude.com/docs/en/quickstart.md"
+   ]
+  },
+  {
+   "claim": "CLI plans: Pro, Max, Ultra, Team or Enterprise, or a Claude Console account; third-party providers supported",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/quickstart.md"
+   ]
+  },
+  {
+   "claim": "VS Code 1.94.0+; extension anthropic.claude-code; Spark icon in editor top-right when file open; Activity Bar Spark; status bar item ✻ Claude Code; Command Palette 'Claude Code' then 'Open in New Tab'",
+   "status": "verified",
+   "correction": "Command Palette wording on the page is 'type Claude Code, select Open in New Tab'. Shortcut Cmd+Shift+Esc for Open in New Tab is also on the page.",
+   "sources": [
+    "https://code.claude.com/docs/en/vs-code.md"
+   ]
+  },
+  {
+   "claim": "VS Code plans: any paid plan or Claude Console account; no API key required; third-party providers supported",
+   "status": "verified",
+   "correction": "The earlier concern is resolved: the page says 'any paid Claude subscription (Pro, Max, Ultra, Team, or Enterprise) or a Claude Console account works'.",
+   "sources": [
+    "https://code.claude.com/docs/en/vs-code.md"
+   ]
+  },
+  {
+   "claim": "VS Code: Use Terminal setting; bundled CLI not on PATH; @browser; claude --resume shares history; /ide from external terminal",
+   "status": "verified",
+   "correction": "",
+   "sources": [
+    "https://code.claude.com/docs/en/vs-code.md"
+   ]
+  },
+  {
+   "claim": "JetBrains: install Claude Code plugin, restart, Cmd+Esc / Ctrl+Esc; settings labelled 'Claude Code [Beta]'; needs CLI on PATH",
+   "status": "unverifiable",
+   "correction": "jetbrains.md was not fetched. Cmd+Esc / Ctrl+Esc is the VS Code 'Focus Input' shortcut on vs-code.md, not confirmed for JetBrains.",
+   "sources": [
+    "https://code.claude.com/docs/en/jetbrains.md",
+    "https://code.claude.com/docs/en/vs-code.md"
+   ]
+  }
+ ],
+ "summary": "Adversarial re-check of the 'surfaces' research as of 2026-11-06. About 60% of concrete claims verify against fetched primary pages. Corrections: (1) Bypass permissions is not limited to Pro/Max/Ultra; Team and Enterprise are governed by org policy. (2) Dispatch lives in Cowork, not the Code tab. (3) The Remote Control v2.1.304 requirement applies only to Desktop with DISABLE_TELEMETRY or DO_NOT_TRACK set. (4) The Team/Enterprise scheduled-task toggle has the label 'Scheduled tasks (Was Routines)' at claude.ai/admin-settings/capabilities. (5) The Slack legacy retirement (2026-10-05) is already in effect today, and Team/Enterprise should use Claude Tag, which the Slack item omits. (6) Cmd+Esc is the VS Code shortcut, not confirmed for JetBrains. Unverifiable: Cowork plan tiers and all release-note dates (support.claude.com was not re-fetched), Cowork Projects and Dispatch flow, Desktop Browser pane clean-profile claim, Trusted Devices beta details, JetBrains specifics, and the claim that Slack sessions can be teleported. Missing for a non-developer site: a plan-by-feature matrix (feature-availability.md, referenced by the mobile and quickstart pages but not fetched); Projects in Claude Code cloud (claude-projects.md) and Cowork; Dispatch details (desktop page, dispatch.md); Claude in Chrome and Channels (Telegram, Discord, iMessage, channels.md) as mobile-to-machine options; Computer use (computer-use.md); Code Review and Ultrareview; the platforms.md 'work away from terminal' comparison; and the terminal-guide page for absolute beginners. Key missing caveat: the Desktop Auto mode availability conditions (API only, specific model versions).",
+ "missing": [
+  "Plan-by-feature availability matrix (code.claude.com/docs/en/feature-availability.md, referenced by mobile and quickstart pages, not fetched)",
+  "Cowork Projects and Dispatch guides (claude.com/docs/cowork/guide/projects.md, dispatch.md) to confirm UI labels and flow",
+  "Cowork and Chrome release-note dates and plan changes (support.claude.com/en/articles/12138966-release-notes), needed before publishing any date",
+  "Claude Projects in Claude Code (code.claude.com/docs/en/claude-projects.md): multi-thread coordination of cloud sessions, a major non-dev-relevant surface",
+  "Channels (code.claude.com/docs/en/channels.md): Telegram, Discord and iMessage ways to message a local session",
+  "Computer use (code.claude.com/docs/en/computer-use.md) and Desktop computer-use availability",
+  "Code Review and Ultrareview (code.claude.com/docs/en/code-review.md, ultrareview.md)",
+  "Desktop Auto permission-mode conditions (API-only and model version requirements) and Desktop Dispatch plan limits, both on desktop.md",
+  "Platforms comparison (code.claude.com/docs/en/platforms.md, 'work when you are away from your terminal')",
+  "Terminal guide for absolute beginners (code.claude.com/docs/en/terminal-guide), relevant to a non-developer-first site",
+  "JetBrains plugin page (code.claude.com/docs/en/jetbrains.md) for install steps, shortcut and Beta label",
+  "Trusted Devices beta details in remote-control.md (verification flow and beta label)"
+ ]
+}

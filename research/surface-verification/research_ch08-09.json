@@ -1,0 +1,238 @@
+{
+ "overview": "Feature map for chapters 08-orchestration and 09-scale, researched 2026-11-06 from code.claude.com/docs, claude.com/docs and the Cowork changelog. Cells marked \"unknown\" are not stated in the pages I fetched; I did not guess them.\n\nKey findings for the app-first positioning:\n- The docs back the non-dev framing. The Cowork overview says Cowork \"uses the same agentic architecture that powers Claude Code, accessible within Claude Desktop without opening the terminal\" (https://claude.com/docs/cowork/overview.md). The Claude Tag overview says team work in shared channels is Claude Tag, and personal work on your own files is Cowork or Claude Code (https://claude.com/docs/claude-tag/overview.md).\n- Items that work well from the app side: dynamic workflows (CLI, Desktop and IDE per the docs), Desktop parallel sessions with the Worktree toggle, Desktop scheduled tasks (Code tab > Scheduled), /goal in the Desktop app, Remote Control to phone (Claude app and claude.ai/code), Cowork scheduled tasks, and Claude Tag routines in Slack (Team and Enterprise).\n- CLI-only items: claude agents / --bg, /loop, claude --worktree, claude remote-control, /install-github-app, and claude --cloud.\n- Naming clarifications: \"teleport\" is not phone access. claude --teleport and /teleport pull a cloud session into the terminal, one way. Phone access is Remote Control. Routines were renamed to \"scheduled tasks\" (cloud), and the Desktop app may still show \"Routines\" on older builds. The legacy \"Claude in Slack\" bot was retired for Claude Tag-connected channels effective October 5, 2026.\n- Status: agent view is in research preview. Cloud scheduled tasks are in research preview. Agent teams are experimental and off by default. Claude Tag is public beta. Workflows show no preview label in the docs.\n- Plan gates: workflows need a paid plan (Pro needs the Dynamic workflows toggle in /config). Cloud sessions and scheduled tasks need Pro, Max, Ultra, Team or Enterprise. Remote Control needs the same plans, with no API-key auth. Claude Tag needs Team or Enterprise. Dispatch needs Pro, Max or Ultra. The docs do not state plan requirements for agent teams, agent view, /goal, /loop, or Desktop scheduled tasks.",
+ "items": [
+  {
+   "feature": "(1) Dynamic workflows: /workflows, ultracode keyword, /effort ultracode, bundled /deep-research",
+   "chapter": "08-orchestration",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Desktop app: an approval card shows the workflow name, phase list and a token-usage caution, with Once, Always and Deny buttons. Progress appears in the Background tasks side pane. The docs do not name a Desktop path for the ultracode keyword or the /effort toggle. Web: cloud sessions save workflow run results with the conversation (cloud doc says this), but the docs do not list web as a launch surface. Mobile: the keyword works in a Remote Control client, and progress syncs across devices.",
+   "cli_how": "/deep-research <question> runs the bundled workflow. /workflows opens the progress view (Enter to drill, p pauses, x stops, s saves the script to .claude/workflows/ or ~/.claude/workflows/). Start one by adding the keyword 'ultracode' to a prompt you type, or by asking 'use a workflow'. Turn on auto orchestration with /effort ultracode, or launch with claude --effort ultracode. Turn it off with /effort ultracode off. Keyword does not trigger with -p or scheduled prompts.",
+   "sources": [
+    "https://code.claude.com/docs/en/workflows.md",
+    "https://code.claude.com/docs/en/remote-control.md"
+   ],
+   "notes": "Docs: available on all paid plans, the Anthropic API, Bedrock, Google Cloud's Agent Platform and Microsoft Foundry. Pro needs the Dynamic workflows row in /config. Up to 16 concurrent agents by default, 1,000 agents per run. Ultracode uses more tokens on every task. Workflows are not in the research-preview list. Fetched 2026-11-06.",
+   "non_coding_angle": "Cross-checked research with cited sources (/deep-research), or three independent drafts compared before committing. The docs' own non-code examples: research how competitors handle a topic across public docs, and review a set of files for issues and merge them into one ranked summary."
+  },
+  {
+   "feature": "(2) Agent teams",
+   "chapter": "08-orchestration",
+   "availability": {
+    "desktop_code": "unknown",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Not documented for the Desktop app in the sections I fetched. Cloud sessions: add CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 to the cloud environment's environment variables.",
+   "cli_how": "Set CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 in ~/.claude/settings.json under env. Then describe the team in plain language, e.g. 'Spawn three teammates: one on UX, one on architecture, one devil's advocate.' In-process mode: use the arrow keys in the agent panel, Enter to open a teammate, Shift+Tab for permission mode, x to stop a teammate, Ctrl+T for the task list. Split panes need tmux or iTerm2 and are set with teammateMode. Only works in an interactive session, not with -p.",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-teams.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ],
+   "notes": "Experimental and off by default. Known limits: no session resume for in-process teammates, one team per session, no nested teams, and split panes unsupported in VS Code's terminal, Windows Terminal and Ghostty. Uses significantly more tokens. The docs say to start with 3-5 teammates. Plan requirements are not stated.",
+   "non_coding_angle": "Multi-perspective review of a plan, a proposal or a policy: a teammate for the reader, one for risk, one as devil's advocate. The docs' own debate-style investigation example suggests this shape."
+  },
+  {
+   "feature": "(3) Parallel sessions and git worktrees (Desktop Code tab, claude.ai/code cloud sessions, CLI --worktree)",
+   "chapter": "08-orchestration",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "yes",
+    "cowork": "unknown",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Desktop Code tab: click + New in the sidebar or press Cmd+N / Ctrl+N. Switch with Ctrl+Tab / Ctrl+Shift+Tab. For side by side, hold Option/Alt and click a session, or right-click and choose Open in > Split view. For isolation in a git repo, turn on the Worktree toggle in the row under the prompt box (earlier layout: the worktree checkbox beside the branch name). Worktrees go to <project-root>/.claude/worktrees/. Web: each cloud session runs in its own VM, and sessions appear in the claude.ai/code sidebar. Mobile: start and monitor cloud sessions from the Code tab in the Claude app.",
+   "cli_how": "claude --worktree feature-auth (or -w) creates .claude/worktrees/feature-auth/ on branch worktree-feature-auth. Run it again with another name for a second session. claude --cloud '<task>' starts a separate cloud session, so several can run at once. Resume a worktree with claude --worktree <name> --resume. Subagents can use isolation: worktree.",
+   "sources": [
+    "https://code.claude.com/docs/en/worktrees.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ],
+   "notes": "Worktrees need a git repository (the Desktop toggle only appears in a repo). Cloud sessions need no local git but share your plan's rate limits. Cloud sessions are available on Pro, Max, Ultra and Team, and on Enterprise with premium or Chat + Claude Code seats. Cowork's own parallel handling is not documented here.",
+   "non_coding_angle": "Run separate sessions for separate deliverables (for example, one for a proposal, one for slides), each in its own folder or cloud session, and compare outputs in Split view. Worktrees are git-specific, so for non-coding work the Desktop session per folder is the closer fit. This pairing is my inference, not a documented pattern."
+  },
+  {
+   "feature": "(4) Background agents / agent view (research preview)",
+   "chapter": "08-orchestration",
+   "availability": {
+    "desktop_code": "unknown",
+    "web_code": "unknown",
+    "cowork": "partial",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Desktop and web agent view: not stated in the fetched pages. Cowork Dispatch (a related but separate background feature) lists child tasks in the Dispatch sidebar group with states Running, Awaiting input, Awaiting answer, Completed, Error and Archived. Mobile: you can assign a Dispatch task from the Claude mobile app, and it runs on your desktop.",
+   "cli_how": "claude agents opens agent view. On an empty prompt, press the left arrow (or type /bg or /background) to send the session to the background. Start one with claude --bg '<prompt>'. In agent view: Space peeks and replies, Enter attaches, Ctrl+T pins, Ctrl+X twice stops and deletes, ? lists shortcuts. Shell: claude attach <id>, claude logs <id>, claude stop <id>, claude agents --json.",
+   "sources": [
+    "https://code.claude.com/docs/en/agent-view.md",
+    "https://claude.com/docs/cowork/guide/dispatch.md"
+   ],
+   "notes": "Research preview, so keys and UI may change. Each background session edits files in its own git worktree under .claude/worktrees/. Sessions idle about an hour may be stopped and resume when you reply. Dispatch requires Pro, Max or Ultra and the latest Claude Desktop on macOS or Windows. The docs do not state agent view's plan requirements.",
+   "non_coding_angle": "Start a long research or drafting job, close the terminal, and check back later. For knowledge work, Cowork Dispatch covers the same idea without a terminal."
+  },
+  {
+   "feature": "(5) /loop scheduled tasks (session-scoped, local)",
+   "chapter": "09-scale",
+   "availability": {
+    "desktop_code": "unknown",
+    "web_code": "partial",
+    "cowork": "no",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Not documented for the Desktop app. The Desktop app's counterpart for timed local work is Desktop scheduled tasks (item 12). Web: the cloud docs mention running /loop again inside a reopened cloud session, so it appears to work there, but no web-specific steps are given.",
+   "cli_how": "/loop 5m check if the deployment finished (fixed interval). /loop check whether CI passed (Claude picks 1 min to 1 hour each round). /loop alone runs the built-in maintenance prompt, or .claude/loop.md (project) or ~/.claude/loop.md (user) if present. Natural language also works: 'remind me at 3pm to push the release branch'. Ask 'what scheduled tasks do I have?' to list. Cancel by asking Claude. Esc stops a self-paced loop. CLAUDE_CODE_DISABLE_CRON=1 turns the scheduler off.",
+   "sources": [
+    "https://code.claude.com/docs/en/scheduled-tasks.md"
+   ],
+   "notes": "Runs only while Claude Code is open and idle. Recurring tasks expire after 7 days. Up to 50 tasks per session. Minimum interval 1 minute. Missed fires are not caught up. Self-paced loops are not restored on --resume. Plan requirements are not stated.",
+   "non_coding_angle": "Poll a status while you work (for example, check whether a shared report or a deploy is finished) and get a one-line update. Good for a session you keep open. Not for an unattended weekly run."
+  },
+  {
+   "feature": "(6) /schedule and Routines (cloud scheduled tasks, research preview)",
+   "chapter": "09-scale",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "yes",
+    "cowork": "no",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop app: Code tab > Scheduled in the sidebar (or the More menu) > New task. Choose Cloud (the Local/Cloud menu, or the environment selector) to make a cloud task. The Scheduled page lists both local and cloud tasks. Web: create and manage at claude.ai/code/routines.",
+   "cli_how": "/schedule in the CLI creates a cloud scheduled task. Three trigger types: schedule (hourly, nightly, weekly, or once at a set time), API (HTTP POST to the task's endpoint with a bearer token), and GitHub events such as pull requests or releases. A task can combine triggers.",
+   "sources": [
+    "https://code.claude.com/docs/en/routines.md",
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ],
+   "notes": "Page is now titled 'Automate work with scheduled tasks'; routines is the earlier name. Research preview. Plans: Pro, Max, Ultra, Team and Enterprise. Runs on Anthropic-managed cloud infrastructure (or a self-hosted environment) and works with the computer off. Each run is a fresh clone with no local files. Minimum interval for cloud is 1 hour. Connectors are configured per task. Daily run limits are not in the pages I fetched.",
+   "non_coding_angle": "A recurring weekly summary built from repository activity, delivered through a connector. Posting the result to Slack depends on a Slack connector being configured for the task. I did not confirm that in the docs, so it is my inference."
+  },
+  {
+   "feature": "(7) /goal (keep working until a condition holds)",
+   "chapter": "08-orchestration",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "unknown",
+    "cowork": "unknown",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "The goal doc says /goal works in the desktop app and through Remote Control. Type /goal <condition> in a session. The Desktop UI labels are not stated. Mobile: works through Remote Control, not as a native mobile command.",
+   "cli_how": "/goal <condition> sets the goal and starts a turn right away. /goal alone shows status (condition, time, turns, tokens, last reason). /goal clear removes it (aliases: stop, off, reset, none, cancel). Non-interactive: claude -p '/goal CHANGELOG.md has an entry for every PR merged this week', plus --output-format stream-json --verbose to see progress. Ctrl+O shows the evaluator's reason. Run it in auto mode to avoid per-tool prompts.",
+   "sources": [
+    "https://code.claude.com/docs/en/goal.md"
+   ],
+   "notes": "One goal per session. A small fast model judges the condition after each turn, and the evaluator cannot run commands itself. Errors that need a fix clear the goal. Includes check-ins after 30 minutes of background work. Conditions can be up to 4,000 characters. The docs do not state plan requirements or a research-preview label.",
+   "non_coding_angle": "The docs' own example is non-code: 'CHANGELOG.md has an entry for every PR merged this week'. Others: work through a backlog until the queue is empty, or split a long document until each part is under a size limit. Include the stop condition, for example 'or stop after 20 turns'."
+  },
+  {
+   "feature": "(8) Remote Control and phone access (teleport is separate)",
+   "chapter": "08-orchestration",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "no",
+    "mobile": "yes",
+    "cli": "yes"
+   },
+   "app_how": "Desktop app: run /remote-control (the docs say Desktop and VS Code use this command). Phone: open the Claude app (iOS or Android) or claude.ai/code and pick the session. Web is a client here, not a host: it connects to a session running on your machine. Teleport is not part of this flow.",
+   "cli_how": "claude remote-control starts server mode. It asks 'Enable Remote Control? (y/n)' once, prints a URL, and you can press spacebar for a QR code. claude --remote-control (or --rc) starts an interactive session with Remote Control on. Options: --name 'My Project', --permission-mode, -c / --continue. For cloud sessions, use the separate commands: claude --teleport pulls a cloud session into your terminal (one way), and /teleport or /tasks then t does the same from inside a session.",
+   "sources": [
+    "https://code.claude.com/docs/en/remote-control.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md"
+   ],
+   "notes": "Plans: Pro, Max, Ultra, Team and Enterprise. API keys are not supported. On Team and Enterprise an Owner must turn on the Remote Control toggle in Claude Code admin settings. Disabled by CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC or DISABLE_GROWTHBOOK. Your filesystem and MCP servers stay local. Teleport requires claude.ai subscription sign-in and a clean git state, and it is one-way (cloud to terminal).",
+   "non_coding_angle": "Start a long analysis or document task at your desk, then review progress and send corrections from your phone. Attach photos or files from the phone."
+  },
+  {
+   "feature": "(9) Claude in Slack / Claude Tag (routines: scheduled jobs, channel watching, PR subscriptions)",
+   "chapter": "09-scale",
+   "availability": {
+    "desktop_code": "no",
+    "web_code": "partial",
+    "cowork": "no",
+    "mobile": "unknown",
+    "cli": "no"
+   },
+   "app_how": "Admin (Owner): claude.ai/admin-settings/claude-tag, pair Slack by sending @Claude connect in Slack, then set a spend limit and add Claude to channels. Members: mention @Claude in a channel (not a DM, for routines) and describe the schedule in plain language, e.g. 'every Friday at 3pm Eastern, post a digest of this week'. Manage: @Claude !scheduled lists the channel's routines. Reschedule or pause by asking Claude in the thread. Claude Tag sessions appear in claude.ai/code.",
+   "cli_how": "Not applicable. Claude Tag is managed inside Slack.",
+   "sources": [
+    "https://claude.com/docs/claude-tag/overview.md",
+    "https://claude.com/docs/claude-tag/users/proactivity.md",
+    "https://code.claude.com/docs/en/slack.md"
+   ],
+   "notes": "Claude Tag is public beta. Team and Enterprise plans only, not individual plans. Channel work bills to the organization's usage balance under a spend limit. Schedules run at most once an hour, in UTC unless you name a timezone. Daylight-saving changes shift the local time by an hour. Routines keep running if their creator leaves the channel. The legacy Claude Code in Slack (Pro, Max, Ultra) is retired for Claude Tag-connected channels effective October 5, 2026.",
+   "non_coding_angle": "This is the closest match to a Monday report posted to Slack: a recipe in the docs runs a weekly digest with decisions, open items and what is waiting on someone. Also: watch named channels for a topic and post when something matches, or keep a standing status digest for a project."
+  },
+  {
+   "feature": "(10) GitHub Actions and @claude (claude-code-action)",
+   "chapter": "09-scale",
+   "availability": {
+    "desktop_code": "no",
+    "web_code": "no",
+    "cowork": "no",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "No app surface. You mention @claude in an issue or PR comment on github.com. The docs do not describe mobile GitHub behavior.",
+   "cli_how": "Run /install-github-app from claude in a repo on github.com (requires the GitHub CLI, gh, authenticated). It installs the Claude GitHub App, saves ANTHROPIC_API_KEY or CLAUDE_CODE_OAUTH_TOKEN as a repository secret, and opens a PR that adds the workflow file. Manual setup: copy examples/claude.yml into .github/workflows/. For a scheduled run, add a schedule: cron trigger and a prompt input, plus claude_args for --model and --allowedTools.",
+   "sources": [
+    "https://code.claude.com/docs/en/github-actions.md"
+   ],
+   "notes": "Needs admin access to the repository and a GitHub Actions budget. The subscription token (CLAUDE_CODE_OAUTH_TOKEN) works on Pro, Max, Ultra, Team and Enterprise. Scheduled runs go to the workflow run log by default. To post to an issue, the prompt must direct Claude to a posting tool. GitHub disables a schedule after 60 days of no repository activity. Scheduled runs need a human actor that is not a bot unless listed in allowed_bots.",
+   "non_coding_angle": "A daily or weekly summary of repository activity (the docs' example: yesterday's commits and open issues) delivered to the run log or to an issue. This needs a GitHub repository, so it fits teams that already work on GitHub."
+  },
+  {
+   "feature": "(11) Cowork scheduled or recurring tasks",
+   "chapter": "09-scale",
+   "availability": {
+    "desktop_code": "no",
+    "web_code": "no",
+    "cowork": "yes",
+    "mobile": "unknown",
+    "cli": "no"
+   },
+   "app_how": "In Cowork, scheduled tasks can run on your computer or in the cloud (changelog entries mention both). The changelog refers to a Schedule button. Typing /schedule used to fill in a request, but it was removed from the slash menu in v3.6556.1 (2026-10-22). The exact sidebar label and creation steps are not in the pages I fetched. Scheduled tasks can use connectors and skills, and they can read memory when they are not in a project (v4.23118.0, 2026-11-05). Permission prompts that go unanswered can stall a run.",
+   "cli_how": "Not applicable. Cowork is Desktop-only.",
+   "sources": [
+    "https://claude.com/docs/cowork/changelog.md",
+    "https://claude.com/docs/cowork/overview.md"
+   ],
+   "notes": "Plan requirements, platform support (macOS vs Windows) and research-preview status for scheduled tasks are unknown from the pages fetched. Recent changelog fixes include a Scheduled task failed notification, retry for recurring tasks for up to about 3.5 hours when a provider is unreachable (3P), and 'Automatically approve' as the default for tasks Claude creates where the organization allows it (v2.19675.0). The Cowork overview page does not list scheduling.",
+   "non_coding_angle": "Cowork is the non-dev surface, and this is its recurring-work feature: a Monday report or a morning brief built from files and connectors, run without a terminal. Check the changelog for the current behavior before teaching it."
+  },
+  {
+   "feature": "(12) Desktop scheduled tasks (local, Desktop Code tab)",
+   "chapter": "09-scale",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "no",
+    "cowork": "no",
+    "mobile": "unknown",
+    "cli": "no"
+   },
+   "app_how": "Code tab > Scheduled in the sidebar (or the More menu) > New task. Turn on Only on this computer under Advanced settings, pick a Local folder, choose a schedule (Hourly, Daily, Weekdays, Weekly; Manual and Custom in the Edit form), set the permission mode and model in the instructions box, then click Create. Turn on Worktree in the Edit form for isolated runs. Keep computer awake: Settings > Desktop app or Settings > This computer > System. Needs Claude Desktop 1.1.5368 or later.",
+   "cli_how": "Not applicable. The CLI counterparts are /loop (session-scoped) and /schedule (cloud).",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop-scheduled-tasks.md"
+   ],
+   "notes": "Runs only while the app is open and the computer is awake. Missed runs are caught up once, for the most recent missed time, within 7 days. Runs can stall on permission prompts, so click Run now after creating the task and approve. Custom cron accepts once-per-hour or less frequent entries. Plan requirements are not stated.",
+   "non_coding_angle": "The docs' own examples: morning briefings that pull from your calendar and inbox, and daily reviews. Add guardrails to the prompt for timing, for example: 'If it's after 5pm, skip the review.'"
+  }
+ ],
+ "open_questions": [
+  "Grill Q1 (persona): Bạn đang nhắm tới ai cụ thể trong nhóm không phải dev: kế toán, marketing, nghiên cứu viên, quản lý dự án, hay người đã dùng Claude chat và muốn làm việc tự động hơn? Chương 08 và 09 nên có ví dụ gốc cho đúng persona đó, không phải ví dụ code.",
+  "Grill Q2 (đường đi chính): Người học nên bắt đầu từ app (Desktop Code tab, Cowork, Claude Tag trong Slack, Remote Control trên điện thoại) và chỉ mở CLI khi cần, hay hai tab app và CLI đứng ngang nhau? Các tính năng chỉ có CLI như claude agents, /loop, claude --worktree, claude remote-control, /install-github-app nên là phần 'nâng cao' hay có bài riêng?",
+  "Grill Q3 (độ tin cậy): Agent view và scheduled tasks trên cloud đang research preview, agent teams đang experimental, Claude Tag đang public beta. Website nên dạy chúng như best practice, hay đánh dấu 'beta' rõ ràng và chỉ dạy các bước đã ổn định? Bạn có lịch rà soát hằng tháng không, vì tài liệu thay đổi nhanh?",
+  "Grill Q4 (kết quả cuối): Sau khi học xong, người dùng phải làm được việc gì cụ thể? Ví dụ: (a) một báo cáo tự chạy mỗi thứ Hai và đăng lên Slack, (b) nghiên cứu nhiều nguồn có trích dẫn, (c) theo dõi một công việc dài và nhận kết quả khi xong. Chọn 3 kết quả này làm trục cho chương 08 và 09, và bỏ phần còn lại vào phụ lục.",
+  "Grill Q5 (gói và kiểm chứng): Gói mặc định của người học là gì (Pro, Max, Team hay Enterprise)? Nhiều tính năng bị khóa theo gói: Claude Tag chỉ có ở Team và Enterprise, workflows Pro cần bật trong /config, Dispatch chỉ có ở Pro/Max/Ultra, còn plan requirements của agent teams, agent view, /goal, /loop và Desktop scheduled tasks chưa được tài liệu nêu rõ. Bạn có muốn mỗi bài ghi rõ 'cần gói X' và đánh dấu 'chưa xác minh' khi tài liệu không nói rõ không?"
+ ]
+}

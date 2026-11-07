@@ -1,0 +1,57 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>No Babysitting</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,800&family=Be+Vietnam+Pro:wght@400&family=JetBrains+Mono:wght@600&display=swap">
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); font-family:var(--font-text); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .band { position:absolute; left:0; top:0; width:960px; height:152px; }
+  .band svg { display:block; width:960px; height:152px; }
+  .brand { fill:var(--accent); }
+  .lv1 { fill:var(--level-1); } .lv2 { fill:var(--level-2); } .lv3 { fill:var(--level-3); } .lv4 { fill:var(--level-4); }
+  .sig { fill:var(--signal); }
+  .rule { stroke:var(--control); stroke-width:1; }
+  .cut { stroke:var(--bg); stroke-width:2; }
+  .meta { position:absolute; top:var(--space-5); right:var(--space-6); font:600 10.5px/1.4 var(--font-mono); letter-spacing:.18em; text-transform:uppercase; color:var(--fg-muted); text-align:right; }
+  .name { position:absolute; left:var(--space-6); top:172px; margin:0; font-family:var(--font-wide); font-stretch:125%; font-weight:800; font-size:64px; line-height:.92; letter-spacing:-.012em; text-transform:uppercase; white-space:nowrap; color:var(--fg); }
+  .tag { position:absolute; left:calc(var(--space-6) + 2px); top:244px; margin:0; font-size:14px; line-height:20px; color:var(--fg-muted); white-space:nowrap; }
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="band" aria-hidden="true">
+    <svg viewBox="0 0 960 152" width="960" height="152">
+      <!--
+        blocks      accent 96×152 bled off the top (the action colour, the identity hue) · level-1…level-4 columns 32 wide, 32/56/80/104 tall (the vibe → agentic journey, rising) · signal 24×24 once (the verified state, kept small: the step after the ramp)
+        arrangement one accent slab at the left margin; the journey ramp steps up to its right on the same base line (y 136), tallest last; the signal square floats one step above and beyond the tallest column (journey → verified), its top 24 above that column's
+        pattern     the ASCII block meter (█ cells) → hairline cuts in the ground colour every 8px across the ramp, so the columns read as stacked character cells; one control rule at y 152 closes the band
+        scales      widths and gaps in space-2 (8px) multiples: slab 96, columns 32, gaps 8, gutter 16; heights step by 24; cut pitch 8 = one cell
+      -->
+      <rect class="brand" x="32" y="-16" width="96" height="152"/>
+      <rect class="lv1" x="144" y="104" width="32" height="32"/>
+      <rect class="lv2" x="184" y="80" width="32" height="56"/>
+      <rect class="lv3" x="224" y="56" width="32" height="80"/>
+      <rect class="lv4" x="264" y="32" width="32" height="104"/>
+      <rect class="sig" x="312" y="8" width="24" height="24"/>
+      <line class="cut" x1="140" y1="128" x2="300" y2="128"/>
+      <line class="cut" x1="140" y1="120" x2="300" y2="120"/>
+      <line class="cut" x1="140" y1="112" x2="300" y2="112"/>
+      <line class="cut" x1="180" y1="96" x2="300" y2="96"/>
+      <line class="cut" x1="180" y1="88" x2="300" y2="88"/>
+      <line class="cut" x1="220" y1="72" x2="300" y2="72"/>
+      <line class="cut" x1="220" y1="64" x2="300" y2="64"/>
+      <line class="cut" x1="260" y1="48" x2="300" y2="48"/>
+      <line class="cut" x1="260" y1="40" x2="300" y2="40"/>
+      <line class="rule" x1="0" y1="151.5" x2="960" y2="151.5"/>
+    </svg>
+  </div>
+  <p class="meta">An unofficial guide<br>to Claude Code best practices</p>
+  <p class="name">No Babysitting</p>
+  <p class="tag">Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi.</p>
+</div>
+</body>
+</html>

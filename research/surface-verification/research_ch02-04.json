@@ -1,0 +1,265 @@
+{
+ "overview": "Ánh xạ tính năng cho 3 chương 02-context, 03-plan, 04-memory, ưu tiên các surface app. Tất cả nguồn đã được tải trực tiếp ngày 2026-11-06.\n\nKết luận chính:\n1. Claude Code không chỉ là công cụ lập trình. Trang common-workflows (https://code.claude.com/docs/en/common-workflows.md) nêu rõ nó chạy trong bất kỳ thư mục nào, kể cả notes vault hay thư mục tài liệu không phải code.\n2. Desktop Code tab và claude.ai/code đã đủ cho phần lớn tính năng ngữ cảnh và lập kế hoạch: /context, /compact, Plan, resume, @-mention, đính kèm file.\n3. Khoảng trống lớn nhất cho người không phải dev là Cowork. Theo trang hỗ trợ (https://support.claude.com/en/articles/13345190-getting-started-with-cowork), Cowork có chế độ Manual, Auto, Skip chứ không có Plan mode. Tài liệu đã đọc không ghi /compact, /clear, rewind hay /memory cho Cowork. Thay thế có sẵn là Instructions và Memory theo từng project.\n4. Rewind, /clear và /memory được tài liệu đầy đủ cho CLI. Desktop chưa có tài liệu rõ, nên ghi \"unknown\" thay vì suy đoán.\n5. Gói dịch vụ: cloud sessions cần Pro, Max, Ultra, Team hoặc Enterprise có premium seats. Cowork cần gói trả phí.\n6. Một số tính năng còn beta: Cowork trên Linux (beta), Cowork cho Team trên web và mobile (beta).",
+ "items": [
+  {
+   "feature": "Seeing context usage (/context)",
+   "chapter": "02-context",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "yes",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop Code tab: type /context in the prompt box to print a per-category breakdown in the chat, or open the Context card in the session details panel (earlier layout: click the usage ring next to the model picker). claude.ai/code: type /context.",
+   "cli_how": "/context shows a live breakdown by category with optimization suggestions, including which CLAUDE.md and auto memory files loaded. /context all lists the Memory files section.",
+   "non_coding_angle": "Before loading a long PDF and several CSVs into a weekly market report, check how full the window is.",
+   "notes": "Desktop page describes the Context card and typed /context. Cowork coverage not documented.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/context-window.md",
+    "https://code.claude.com/docs/en/memory.md"
+   ]
+  },
+  {
+   "feature": "/compact with instructions and auto-compact",
+   "chapter": "02-context",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "yes",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: type /compact in the prompt box; Claude also compacts automatically as context fills. Focus text on desktop is not documented. claude.ai/code: type /compact, optionally with focus text, e.g. /compact keep the test output.",
+   "cli_how": "/compact [instructions], e.g. /compact focus on the auth bug fix. /autocompact 500k sets how full the window gets before the automatic pass. Env vars include CLAUDE_AUTOCOMPACT_PCT_OVERRIDE and CLAUDE_CODE_AUTO_COMPACT_WINDOW.",
+   "non_coding_angle": "/compact focus on the three client decisions and the source list before drafting the slide deck.",
+   "notes": "After compaction, project-root CLAUDE.md and auto memory are re-injected from disk. Up to five recently modified files are re-read. Path-scoped rules reload only on demand.",
+   "sources": [
+    "https://code.claude.com/docs/en/context-window.md",
+    "https://code.claude.com/docs/en/commands.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "feature": "/clear and starting a new session",
+   "chapter": "02-context",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "yes",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: start a new session in the Code tab. Set the environment, project folder, permission mode and model in the row under the prompt box, then type and press Enter. /clear is not documented for Desktop. claude.ai/code: type /clear to start a fresh conversation in the same cloud session, or open claude.ai/code/new to start a new session.",
+   "cli_how": "/clear [name] starts with empty context. A name labels the previous conversation in the /resume picker. Aliases: /reset, /new. Previous conversation can be resumed with /resume or from the rewind menu's previous-session entry.",
+   "non_coding_angle": "Run /clear between unrelated client reports so one client's notes do not carry into another's draft.",
+   "notes": "Clearing does not delete the saved conversation. Each Desktop session has its own chat history.",
+   "sources": [
+    "https://code.claude.com/docs/en/commands.md",
+    "https://code.claude.com/docs/en/sessions.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "feature": "Checkpoints and rewind (Esc Esc, /rewind)",
+   "chapter": "02-context",
+   "availability": {
+    "desktop_code": "unknown",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: not covered on the Code tab page. Web: the troubleshooting page mentions a Rewind to here action on messages in cloud sessions, with an error on non-newest messages only for self-hosted runners before v2.1.246. Further detail not verified.",
+   "cli_how": "Press Esc twice with an empty prompt, or run /rewind (aliases /checkpoint, /undo). Menu actions: Restore code and conversation, Restore conversation, Restore code, Summarize from here, Summarize up to here, Never mind.",
+   "non_coding_angle": "Rewind a report draft after Claude rewrote the wrong section of a file in the project folder. Changes made only by Bash commands are not tracked, so use a backup or version control for those.",
+   "notes": "Snapshots cover the 100 most recent checkpoints. Retention is about 30 days by default, controlled by cleanupPeriodDays. Not tracked: Bash-only changes, external edits, symlinked and hard-linked files. Not a replacement for version control.",
+   "sources": [
+    "https://code.claude.com/docs/en/checkpointing.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/desktop.md"
+   ]
+  },
+  {
+   "feature": "Resume, continue, branch and fork sessions",
+   "chapter": "02-context",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "unknown",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: sessions are listed in the sidebar. Use View all or the Archived tab, then Unarchive. Rename by clicking the session title in the title bar. Option-click (Alt-click) opens split view; Cmd-click (Ctrl-click) opens a new window. Branch as a labeled action is not documented. claude.ai/code: sessions in the sidebar, with Archive and Delete in the session's ⋯ menu. /resume is not available in cloud sessions. Mobile: open sessions from the Code tab in the Claude app.",
+   "cli_how": "claude --continue resumes the latest session in the current directory. claude --resume opens the picker, and claude --resume <name> resumes directly. /resume switches sessions inside a session. /rename <name> names one. /branch [name], or claude --continue --fork-session, branches the conversation. In the picker, Ctrl+R renames and Ctrl+B filters to the current git branch.",
+   "non_coding_angle": "Before writing a report's conclusion, /branch so you can compare two framings of the same market data without losing the first draft.",
+   "notes": "/branch copies the conversation up to that point; the original stays on disk. A session resumed from Desktop continues the same session rather than a copy.",
+   "sources": [
+    "https://code.claude.com/docs/en/sessions.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/mobile.md",
+    "https://code.claude.com/docs/en/checkpointing.md"
+   ]
+  },
+  {
+   "feature": "Plan mode",
+   "chapter": "03-plan",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "yes",
+    "cowork": "no",
+    "mobile": "yes",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: open the mode selector under the prompt box and choose Plan. It applies to this session only. Cmd+Shift+M (Ctrl+Shift+M on Windows) opens the mode menu. Shift+Tab does not cycle modes in Desktop. claude.ai/code: choose Plan from the mode dropdown when creating a task or during a session. Mobile: tap +, then Permission, then Plan. Cowork offers Manual, Auto and Skip instead, per the Cowork help page.",
+   "cli_how": "Press Shift+Tab until the status bar shows \"⏸ plan mode on\", or prefix a prompt with /plan [description]. Start with claude --permission-mode plan. When the plan is ready, options include \"Yes, and use auto mode\" (or \"Yes, auto-accept edits\" if auto is unavailable), \"Yes, manually approve edits\" and \"No, keep planning\". Ctrl+G edits the plan in your text editor first.",
+   "non_coding_angle": "Start a weekly market report in Plan mode. Claude lists the sources and outline and writes nothing until you approve.",
+   "notes": "Plan mode blocks edits until approval. The approved plan is re-injected from disk after compaction. Cowork has no documented plan mode.",
+   "sources": [
+    "https://code.claude.com/docs/en/permission-modes.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/mobile.md",
+    "https://code.claude.com/docs/en/context-window.md",
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ]
+  },
+  {
+   "feature": "Claude asking clarifying questions (AskUserQuestion)",
+   "chapter": "03-plan",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "yes",
+    "cowork": "unknown",
+    "mobile": "yes",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: Claude can ask questions during a Code session, and the docs say such questions wait for an answer while Desktop is disconnected. The UI is not labeled AskUserQuestion in the docs. claude.ai/code and mobile: open the session and answer Claude's questions. Idle sessions wait for you.",
+   "cli_how": "Claude calls AskUserQuestion on its own. Pick an option, or type your own answer through the Other row or the notes field. The askUserQuestionTimeout setting (60s, 5m or 10m) in settings.json, or the Question auto-continue timeout row in /config, lets Claude continue after you stop responding. The timer never starts in background sessions, screen reader mode, or while connected to Remote Control.",
+   "non_coding_angle": "Tell Claude to ask multiple-choice questions about audience, length and sources before drafting a report.",
+   "notes": "Questions stay open by default. Permission prompts, including plan approval, never auto-resolve on idle.",
+   "sources": [
+    "https://code.claude.com/docs/en/tools-reference.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/mobile.md"
+   ]
+  },
+  {
+   "feature": "CLAUDE.md project memory and /init",
+   "chapter": "04-memory",
+   "availability": {
+    "desktop_code": "partial",
+    "web_code": "unknown",
+    "cowork": "partial",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: CLAUDE.md files in the project are read by both the CLI and Desktop. No creation or editing UI is documented. Cowork: add Instructions when creating a project (Start from scratch, Use an existing folder, or Import from project). Global instructions are in Settings > Cowork. This is a Cowork mechanism, not CLAUDE.md.",
+   "cli_how": "/init creates a CLAUDE.md. If one exists, it suggests improvements. CLAUDE_CODE_NEW_INIT=1 gives an interactive flow that also covers personal memory. CLAUDE.local.md holds private project preferences. ~/.claude/CLAUDE.md applies to all projects. Import files with @path/to/import.",
+   "non_coding_angle": "A CLAUDE.md in a research folder can set house style, source rules (primary sources first, every figure dated) and output language.",
+   "notes": "Keep it short. Files over 200 lines may reduce adherence. CLAUDE.md is context, not enforced configuration; a PreToolUse hook is the enforcement mechanism.",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md",
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/commands.md",
+    "https://support.claude.com/en/articles/14116274-organize-your-tasks-with-claude-cowork"
+   ]
+  },
+  {
+   "feature": ".claude/rules",
+   "chapter": "04-memory",
+   "availability": {
+    "desktop_code": "unknown",
+    "web_code": "unknown",
+    "cowork": "unknown",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Not documented for any app surface in the pages read. Rules are files in the project's .claude/rules/ folder.",
+   "cli_how": "Put .md files in .claude/rules/. Subfolders are discovered recursively. Add frontmatter paths: to load a rule only when Claude works with matching files. User-level rules live in ~/.claude/rules/. Symlinked shared rules need one-time approval per project.",
+   "non_coding_angle": "A rule with paths: [\"reports/**/*.md\"] loads the house style only when Claude edits report files.",
+   "notes": "Path-scoped rules reload on demand after compaction. To keep a rule across compaction, remove paths: or move it into the root CLAUDE.md.",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md",
+    "https://code.claude.com/docs/en/context-window.md"
+   ]
+  },
+  {
+   "feature": "Auto memory",
+   "chapter": "04-memory",
+   "availability": {
+    "desktop_code": "unknown",
+    "web_code": "unknown",
+    "cowork": "partial",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "Cowork has project memory, not auto memory. Turn it off for a project in the project's Memory section with the Use account memory toggle. The Memory toggle in the + menu, before the first message, disables memory for one task, and it cannot be changed after the task starts. Auto memory in Desktop and cloud sessions is not documented. Auto memory is machine-local and is not shared with cloud environments.",
+   "cli_how": "On by default in local sessions. Toggle it in /memory, which saves autoMemoryEnabled to ~/.claude/settings.json. Disable with CLAUDE_CODE_DISABLE_AUTO_MEMORY=1. Files live in ~/.claude/projects/<project>/memory/ with a MEMORY.md index; the first 200 lines or 25KB load every session. Asking Claude to remember something saves it to auto memory.",
+   "non_coding_angle": "Claude remembers a client's preferred report format across weekly runs. Check MEMORY.md to correct it.",
+   "notes": "Cowork memory and Claude Code auto memory are separate systems. Do not conflate them.",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md",
+    "https://support.claude.com/en/articles/14116274-organize-your-tasks-with-claude-cowork",
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork"
+   ]
+  },
+  {
+   "feature": "/memory command",
+   "chapter": "04-memory",
+   "availability": {
+    "desktop_code": "unknown",
+    "web_code": "unknown",
+    "cowork": "partial",
+    "mobile": "unknown",
+    "cli": "yes"
+   },
+   "app_how": "/memory is not documented for Desktop or claude.ai/code. Cowork has the equivalent Memory section on each project's page, with a Use account memory toggle.",
+   "cli_how": "/memory lists CLAUDE.md, CLAUDE.local.md and other memory files across user and project scopes. Select one to open it in your editor; a missing file is created first. It also toggles auto memory and opens the auto memory folder.",
+   "non_coding_angle": "Open /memory to delete a stale client name that auto memory saved.",
+   "notes": "Run /context all to confirm which memory files loaded at launch.",
+   "sources": [
+    "https://code.claude.com/docs/en/memory.md",
+    "https://code.claude.com/docs/en/commands.md",
+    "https://support.claude.com/en/articles/14116274-organize-your-tasks-with-claude-cowork"
+   ]
+  },
+  {
+   "feature": "Referencing files and rich references (@-mentions, attachments, images, artifacts)",
+   "chapter": "02-context",
+   "availability": {
+    "desktop_code": "yes",
+    "web_code": "partial",
+    "cowork": "partial",
+    "mobile": "partial",
+    "cli": "yes"
+   },
+   "app_how": "Desktop: click + next to the prompt box and choose Add files or photos; drag files into the prompt; type @ and a filename; or right-click a file path and choose Attach as context. claude.ai/code: @ lists files only after your first message. Attaching files on web is not verified. Cowork reads and writes local files directly on desktop and can take a local folder as context. Mobile: photos and files attached in the Claude app reach a Remote Control session; cloud attachments are not verified.",
+   "cli_how": "@path/to/file includes the file content up to 25,000 tokens by default. @dir shows a listing. @server:resource fetches an MCP resource. Drag an image into the window, paste with Ctrl+V (Alt+V on Windows and WSL), or give a file path. Cmd-click (Ctrl-click) opens [Image #1] in your viewer.",
+   "non_coding_angle": "Drop last quarter's PDF report and a CSV into the Desktop prompt and ask for a comparison table.",
+   "notes": "HTML artifacts are a claude.ai feature. Ask for one in any chat, including Claude Code, via the Output menu or the Artifacts tab. Export options include Docs to Word, PDF, Markdown or Google Docs, and Designs to standalone HTML. Cowork live artifacts created before 2026-08-19 work only in the desktop app. Artifacts are available on all plans that include Claude Code.",
+   "sources": [
+    "https://code.claude.com/docs/en/desktop.md",
+    "https://code.claude.com/docs/en/common-workflows.md",
+    "https://code.claude.com/docs/en/claude-code-on-the-web.md",
+    "https://code.claude.com/docs/en/mobile.md",
+    "https://support.claude.com/en/articles/13345190-getting-started-with-cowork",
+    "https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them"
+   ]
+  }
+ ],
+ "open_questions": [
+  "Grill 1: Người học mục tiêu là ai? Nếu chủ yếu dùng Cowork thì chương Plan gần như không áp dụng, vì Cowork không có Plan mode. Bạn chấp nhận dạy kế hoạch bằng cách khác (ví dụ yêu cầu Claude hỏi trước, chọn Manual) không?",
+  "Grill 2: Trình độ intermediate-to-advanced đo bằng gì? Đã dùng Projects, Cowork hay Skills chưa, hay chỉ dùng chat? Cần gói trả phí nào (cloud sessions cần Pro, Max, Ultra, Team hoặc Enterprise có premium seats; Cowork cần gói trả phí)?",
+  "Grill 3: Cấu trúc bài theo tác vụ (ví dụ làm báo cáo thị trường hàng tuần) hay theo tính năng (ví dụ /compact là gì)? Câu trả lời quyết định cách sắp các chương 02, 03, 04.",
+  "Grill 4: Với những ô ghi unknown (rewind trên Desktop, /clear và /memory trên Desktop và web, Cowork /compact và rewind), bạn muốn ghi rõ là chưa xác minh, hay muốn tự thử trên app rồi mới viết?",
+  "Grill 5: Tính năng thay đổi nhanh và nhiều thứ đang beta (Cowork Linux, Cowork Team trên web và mobile). Bạn muốn mỗi bài có ngày xác minh và lịch rà soát hàng tháng, hay chấp nhận bản cố định theo thời điểm?"
+ ]
+}

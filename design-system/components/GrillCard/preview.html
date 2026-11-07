@@ -1,0 +1,67 @@
+<!-- @dsCard group="Story" height=470 subtitle="Nhớ lại · tự viết rồi mới mở đáp án · tự chấm 3 mức · gate, don't trap" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>GrillCard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .gc{padding:52px 22px 20px;display:grid;gap:16px}
+  .q{margin:0;font:600 clamp(19px,2.6vw,24px)/1.35 var(--font-text);max-width:40ch}
+  .lab{display:flex;justify-content:space-between;gap:12px}
+  textarea{width:100%;min-height:92px;resize:vertical;background:var(--bg-sunken);color:var(--fg);border:1px solid var(--control);border-radius:0;padding:12px 14px;font:400 14px/1.55 var(--font-mono);caret-color:var(--accent)}
+  textarea::placeholder{color:var(--fg-subtle)}
+  textarea:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .nudge{color:var(--warn)}
+  .ans{border-top:2px solid var(--accent);padding-top:14px;display:grid;gap:10px}
+  .ans p{margin:0;line-height:1.55;max-width:64ch}
+  .self .nb-btn{padding:8px 11px}
+</style>
+</head>
+<body>
+<section class="nb nb-frame gc" aria-labelledby="gq">
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>Grill me · Chương 02</span>
+  <span class="nb-corner tr nb-micro">Q <b>1</b> / 3</span>
+  <p class="q" id="gq">Khi nào nên mở phiên mới kèm brief, thay vì nén (compact)?</p>
+  <div class="lab nb-micro"><label for="ans">› Câu trả lời của bạn</label><span id="cnt" class="nb-tabular">0 ký tự</span></div>
+  <textarea id="ans" placeholder="Viết vài dòng trước khi xem đáp án…"></textarea>
+  <div class="row">
+    <button class="nb-btn" id="show" type="button" aria-expanded="false" aria-controls="ans-box">Xem đáp án khuyến nghị</button>
+    <span class="nb-micro nudge" id="nudge" hidden>Viết một dòng trước giúp nhớ lâu hơn · bấm lần nữa để xem luôn</span>
+  </div>
+  <div class="ans" id="ans-box" hidden>
+    <span class="nb-micro c-accent" id="ah">Đáp án khuyến nghị</span>
+    <p>Khi bước tiếp theo quan trọng và bạn cần kiểm soát chính xác những gì được mang theo. Nén là bản tóm tắt có mất mát; phiên mới + brief tốn công hơn nhưng không mang theo rác.</p>
+    <div class="row self" role="group" aria-label="Tự chấm">
+      <span class="nb-micro">Tự chấm</span>
+      <button class="nb-btn" type="button" aria-pressed="false">Trúng</button>
+      <button class="nb-btn" type="button" aria-pressed="false">Gần đúng</button>
+      <button class="nb-btn" type="button" aria-pressed="false">Chưa</button>
+    </div>
+  </div>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  var ta = document.getElementById('ans'), cnt = document.getElementById('cnt'), show = document.getElementById('show');
+  var box = document.getElementById('ans-box'), nudge = document.getElementById('nudge'), warned = false;
+  ta.addEventListener('input', function () { cnt.textContent = ta.value.trim().length + ' ký tự'; });
+  show.addEventListener('click', function () {
+    if (!ta.value.trim() && !warned) { warned = true; nudge.hidden = false; return; }
+    nudge.hidden = true; box.hidden = false; show.setAttribute('aria-expanded', 'true'); show.disabled = true;
+    NB.decode(document.getElementById('ah'), 'Đáp án khuyến nghị', 0.6);
+    if (window.gsap && !NB.reduce()) gsap.from(box, { y: 10, autoAlpha: 0, duration: 0.45, ease: 'power3.out' });
+  });
+  box.querySelectorAll('.self .nb-btn').forEach(function (b, _, all) {
+    b.addEventListener('click', function () { all.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!-- @dsCard group="ASCII" height=640 subtitle="Hero chữ ký · noise → điêu khắc ký tự · nav nhúng trong ASCII · lens + nhãn theo con trỏ" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>AsciiHero</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .hero{height:540px;cursor:crosshair}
+  .cv{position:absolute;inset:0}
+  .wm{position:absolute;z-index:3;left:14px;bottom:34px;margin:0;font-size:clamp(30px,6.2vw,64px)}
+  .face{font-size:13px;letter-spacing:0}
+  .bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 0 0}
+  .bar input{flex:1;min-width:180px;accent-color:var(--accent)}
+</style>
+</head>
+<body>
+<section class="nb nb-frame hero" id="hero" aria-labelledby="wm">
+  <canvas class="nb-canvas cv" id="cv" aria-hidden="true"></canvas>
+  <span class="nb-corner tl nb-micro"><b>No Babysitting</b> &nbsp;·&nbsp; an unofficial guide</span>
+  <span class="nb-corner tr nb-micro">The Colleague &nbsp;<span class="nb-mono face" id="col">[•_•]</span></span>
+  <h1 class="nb-wide wm" id="wm">No Babysitting</h1>
+  <span class="nb-corner bl nb-micro"><span class="nb-sq"></span>Từ vibe đến agentic</span>
+  <span class="nb-corner br nb-micro">order <b id="pct" class="nb-tabular">0%</b></span>
+  <p class="nb-sr">Ký tự hỗn loạn hội tụ thành một khối điêu khắc ký tự có nhúng bốn từ: Brief, Onboard, Verify, Handoff.</p>
+</section>
+<div class="nb bar">
+  <button class="nb-btn" type="button" id="vibe">Vibe</button>
+  <input type="range" id="rng" min="0" max="1000" value="0" aria-label="Tiến trình từ vibe đến agentic (thay cho cuộn trang)">
+  <button class="nb-btn is-solid" type="button" id="agentic">Agentic</button>
+</div>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  var hero = document.getElementById('hero');
+  var A = NB.ascii(document.getElementById('cv'), {
+    host: hero, cell: [9, 16], order: 0, sweep: 0.25, noiseFill: 0.55, lensPx: 110,
+    extra: 'BRIEFONADVYH',
+    source: NB.sources.sculpture({ lobes: 2, amp: 0.31, phase: 0.02, vspan: [0.07, 0.76], wobble: 0.07, seed: 5, words: [
+      { at: 0.2, text: ' BRIEF ' }, { at: 0.36, text: ' ONBOARD ' }, { at: 0.64, text: ' VERIFY ' }, { at: 0.8, text: ' HANDOFF ' }
+    ] })
+  });
+  var col = NB.colleague(document.getElementById('col'), 'idle');
+  var pct = document.getElementById('pct'), rng = document.getElementById('rng');
+  function sync() {
+    var p = A.state.order;
+    pct.textContent = Math.round(p * 100) + '%'; rng.value = Math.round(p * 1000);
+    col.set(p >= 0.999 ? 'verified' : p > 0.02 ? 'working' : A.state.lens > 0.5 ? 'tracking' : 'idle');
+    A.redraw();
+  }
+  A.ready.then(function () {
+    if (NB.reduce() || !window.gsap) { A.state.order = 1; sync(); return; }
+    NB.cursorLabel(hero, '[ soi lớp trật tự ]');
+    hero.addEventListener('pointerenter', sync); hero.addEventListener('pointerleave', function () { setTimeout(sync, 320); });
+    rng.addEventListener('input', function () { gsap.killTweensOf(A.state, 'order'); A.state.order = rng.value / 1000; sync(); });
+    document.getElementById('agentic').addEventListener('click', function () { gsap.to(A.state, { order: 1, duration: 2.6, ease: 'power2.inOut', onUpdate: sync }); });
+    document.getElementById('vibe').addEventListener('click', function () { gsap.to(A.state, { order: 0, duration: 1.2, ease: 'power2.inOut', onUpdate: sync }); });
+    gsap.from('#wm', { yPercent: 40, autoAlpha: 0, duration: 0.9, ease: 'power3.out', delay: 0.2 });
+    gsap.to(A.state, { order: 1, duration: 3.2, ease: 'power2.inOut', delay: 0.7, onUpdate: sync });
+  });
+})();
+</script>
+</body>
+</html>

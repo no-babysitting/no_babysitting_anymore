@@ -1,0 +1,98 @@
+<!-- @dsCard group="Sân khấu" height=540 subtitle="Bàn làm việc của agent · khung app / cli · máy trạng thái chạy → chờ quyền → xong · M4" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>AgentWindow</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .tools .sp{flex:1}
+  .win{padding:44px 0 0;display:grid;grid-template-rows:auto 1fr auto}
+  .face{font:600 13px/1 var(--font-mono);letter-spacing:0;margin-left:8px}
+  .you{margin:0;padding:14px 18px;border-bottom:1px solid var(--control);display:grid;grid-template-columns:7ch 1fr;gap:12px;font-size:15px;line-height:1.5}
+  .you .nb-micro{padding-top:3px}
+  ol{list-style:none;margin:0;padding:8px 0;font:400 13.5px/1.45 var(--font-mono)}
+  ol li{display:grid;grid-template-columns:3ch 2ch 11ch 1fr;gap:10px;padding:6px 18px;align-items:baseline}
+  .n{color:var(--fg-subtle)} .ic{color:var(--fg-muted)}
+  .verb{font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:11.5px;color:var(--fg-muted)}
+  .obj{color:var(--fg);min-width:0;overflow-wrap:anywhere}
+  li.ask{background:var(--bg-raised);border-top:1px dashed var(--warn);border-bottom:1px dashed var(--warn)}
+  li.ask .ic,li.ask .verb{color:var(--warn)}
+  li.check .ic,li.check .verb{color:var(--signal)}
+  .stamp{color:var(--warn);font-weight:600;letter-spacing:.08em}
+  .res{margin:0 18px 12px;padding:10px 12px;border:1px solid var(--signal);font:500 13px/1.45 var(--font-mono);color:var(--fg)}
+  .res b{color:var(--signal);font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-size:11.5px;margin-right:8px}
+  .input{display:flex;align-items:center;gap:12px;border-top:1px solid var(--control);padding:12px 18px;font:400 13.5px/1 var(--font-mono);color:var(--fg-subtle)}
+  .input .p{flex:1}
+  .blk{display:inline-block;width:.6em;height:1.1em;background:var(--accent);vertical-align:-2px}
+  .cli-only{display:none}
+  .win.cli .cli-only{display:inline}
+  .win.cli .app-only{display:none}
+  .win.cli ol li{grid-template-columns:3ch 2ch 11ch 1fr}
+  .win.cli .you{grid-template-columns:2ch 1fr}
+  @media (max-width:640px){ol li{grid-template-columns:2ch 10ch 1fr}.n{display:none}}
+</style>
+</head>
+<body>
+<div class="tools" role="group" aria-label="Khung bề mặt">
+  <button class="nb-btn" type="button" aria-pressed="true" data-chrome="app">App</button>
+  <button class="nb-btn" type="button" aria-pressed="false" data-chrome="cli">CLI</button>
+  <span class="sp"></span>
+  <button class="nb-btn" type="button" id="replay">Phát lại</button>
+</div>
+<section class="nb nb-frame win" id="win" aria-label="Nhật ký agent">
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span><span class="app-only">bao-cao-tuan · Claude Code app</span><span class="cli-only">~/bao-cao-tuan $ claude</span></span>
+  <span class="nb-corner tr nb-micro" aria-live="polite">state <b id="st">đang chạy</b><span class="face" id="col">[>_<]≡</span></span>
+  <p class="you"><span class="nb-micro"><span class="app-only">Bạn</span><span class="cli-only c-accent">&gt;</span></span><span>Làm báo cáo thị trường tuần 45 theo đúng mẫu tuần trước.</span></p>
+  <ol id="log">
+    <li><span class="n">01</span><span class="ic">◇</span><span class="verb">Đọc</span><span class="obj">bao-cao-W44.html</span></li>
+    <li><span class="n">02</span><span class="ic">◇</span><span class="verb">Đọc</span><span class="obj">ban-hang-T10.xlsx</span></li>
+    <li><span class="n">03</span><span class="ic">◇</span><span class="verb">Tra web</span><span class="obj">giá cà phê robusta tuần này</span></li>
+    <li class="ask"><span class="n">04</span><span class="ic">?</span><span class="verb">Xin quyền</span><span class="obj">sửa bao-cao-W45.md · <span class="stamp" id="stamp">[ chờ ]</span></span></li>
+    <li class="check"><span class="n">05</span><span class="ic">✓</span><span class="verb">Kiểm</span><span class="obj">đối chiếu 14 số liệu với nguồn</span></li>
+  </ol>
+  <p class="res" id="res"><b>Kết quả</b>bao-cao-W45.md · 5 slide · tóm tắt chờ đăng Slack</p>
+  <div class="input" aria-hidden="true"><span class="cli-only c-accent">&gt;</span><span class="p"><span class="app-only">Trả lời Claude…</span><span class="cli-only"><span class="blk"></span></span></span><span class="nb-micro app-only">[ gửi ]</span><span class="nb-micro cli-only">⏸ plan mode off · shift+tab</span></div>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
+  var win = document.getElementById('win'), st = document.getElementById('st'), stamp = document.getElementById('stamp');
+  var col = NB.colleague(document.getElementById('col'), 'working');
+  document.querySelectorAll('[data-chrome]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('[data-chrome]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      win.classList.toggle('cli', b.dataset.chrome === 'cli');
+    });
+  });
+  function state(s, face) { st.textContent = s; col.set(face); }
+  function done() { state('xong', 'verified'); stamp.textContent = '[ đã cho phép ]'; }
+  if (!window.gsap || NB.reduce()) { done(); return; }
+  var verbs = Array.prototype.map.call(document.querySelectorAll('.verb'), function (v) { return v.textContent; });
+  var tl;
+  function play() {
+    if (tl) tl.kill();
+    state('đang chạy', 'working'); stamp.textContent = '[ chờ ]';
+    tl = gsap.timeline({ onComplete: done });
+    tl.from('.you', { autoAlpha: 0, y: 6, duration: 0.3, ease: 'power3.out' });
+    document.querySelectorAll('#log > li').forEach(function (li, i) {
+      var at = 0.3 + i * 0.32 + (i > 3 ? 0.9 : 0);
+      tl.from(li, { autoAlpha: 0, y: 6, duration: 0.3, ease: 'power3.out' }, at)
+        .to(li.querySelector('.verb'), { duration: 0.45, scrambleText: { text: verbs[i], chars: 'ĐỌCKIỂMTRAWEB', speed: 0.6 } }, at);
+      if (i === 3) tl.call(function () { state('chờ quyền', 'asking'); }, null, at + 0.2)
+        .call(function () { NB.decode(stamp, '[ đã cho phép ]', 0.4); state('đang chạy', 'working'); }, null, at + 1.0);
+    });
+    tl.from('#res', { autoAlpha: 0, y: 6, duration: 0.35, ease: 'power3.out' }, '+=0.15');
+  }
+  play();
+  document.getElementById('replay').addEventListener('click', play);
+})();
+</script>
+</body>
+</html>

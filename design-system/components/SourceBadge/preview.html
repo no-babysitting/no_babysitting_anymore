@@ -1,0 +1,43 @@
+<!-- @dsCard group="Nhãn" height=300 subtitle="Nguồn trung tính cạnh mọi con số · người · ngày · link · mono hoa, gạch chân mảnh" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>SourceBadge</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .sbg{padding:44px 18px 18px;display:grid;gap:18px}
+  .fact{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:end}
+  .big{margin:0;font-size:clamp(84px,13vw,128px);color:var(--fg)}
+  .big .c-accent{color:var(--accent)}
+  .claim{margin:0 0 10px;font:600 17px/1.45 var(--font-text);max-width:36ch}
+  .src{display:inline-flex;align-items:center;gap:8px;font:600 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);text-decoration:none;padding:5px 0;border-bottom:1px solid var(--control)}
+  .src::before{content:"src";color:var(--fg-subtle);font-weight:500}
+  .src::after{content:"↗";color:var(--accent)}
+  .src:hover{color:var(--fg);border-bottom-color:var(--fg)}
+  .src:focus-visible{outline:2px solid var(--focus-ring);outline-offset:3px}
+  .row{display:flex;flex-wrap:wrap;gap:10px 22px;border-top:1px solid var(--control);padding-top:14px}
+  @media (max-width:640px){.fact{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<section class="nb nb-frame sbg" aria-label="SourceBadge">
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>SourceBadge</span>
+  <span class="nb-corner tr nb-micro">người · ngày · link</span>
+  <div class="fact">
+    <p class="nb-cond big nb-tabular"><span class="c-accent">−</span>80%</p>
+    <div>
+      <p class="claim">Anthropic đã cắt hơn 80% system prompt của Claude Code mà không giảm điểm eval.</p>
+      <a class="src" href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener" aria-label="Nguồn: Thariq, 24/07/2026">Thariq · 24/07/2026</a>
+    </div>
+  </div>
+  <div class="row" aria-label="Các biến thể">
+    <a class="src" href="#" aria-label="Nguồn: theo lời Boris, 19/02/2026">theo lời Boris · 19/02/2026</a>
+    <a class="src" href="#" aria-label="Nguồn: Dex, 24/03/2026">Dex · 24/03/2026</a>
+    <a class="src" href="https://code.claude.com/docs/en/permission-modes" target="_blank" rel="noopener" aria-label="Nguồn: Docs, kiểm chứng 06/11/2026">Docs · 06/11/2026</a>
+  </div>
+</section>
+</body>
+</html>
