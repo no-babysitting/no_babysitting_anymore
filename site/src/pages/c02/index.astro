@@ -61,7 +61,7 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
           document.getElementById('c02-hint')!.textContent = 'Đã chốt. Cuộn xuống để xem chuyện gì xảy ra.'; };
         document.querySelectorAll('#c02-predict input').forEach((i) => i.addEventListener('change', unlock));
         document.getElementById('c02-skip')!.addEventListener('click', unlock);
-        if (!gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (!gsap || w.NoBabysitting.reduce()) return;
         const STEPS = ['excel', 'web', 'bad', 'bad'];
         const btn = (a: string) => lock.querySelector<HTMLButtonElement>(`[data-a="${a}"]`)!;
         let shown = 0;

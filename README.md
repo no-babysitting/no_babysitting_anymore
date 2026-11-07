@@ -10,11 +10,23 @@
                                                                  ▀███▀                                                          ███▄▄▄▄▄▀▀
 ```
 
-# No Babysitting · Gói handoff (cập nhật 07/11/2026)
+# No Babysitting
 
-*An unofficial guide to Claude Code best practices.* "Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi."
+*An unofficial, practical guide to delegating digital work to Claude Code.* "Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi."
 
-Đây là toàn bộ đầu ra **trước khi phát triển**: PRD, kịch bản sư phạm, design system (tài liệu + token + 17 component có bản xem trước), kế hoạch triển khai (SAD 4+2), ma trận bề mặt đã kiểm chứng, cùng tư liệu nghiên cứu và công cụ kiểm tra. Chưa có dòng code nào của site thật.
+**Site (beta):** https://no-babysitting.github.io/no_babysitting_anymore/ · cập nhật tự động mỗi khi merge vào `main`.
+
+No Babysitting là dự án cộng đồng độc lập, không liên kết, không được tài trợ hay xác nhận bởi Anthropic. Claude và Claude Code là thương hiệu của Anthropic.
+
+## Go live và kaizen (07/11/2026): đọc phần này trước
+
+- **Kế hoạch:** `docs/08-kaizen-go-live.md`, gồm 16 quyết định của chủ dự án, quan sát có số đo, các đợt K0–K6, quy tắc phát hành và thước đo. **Kịch bản chuyển động:** `docs/09-motion-script.md`, chia ba tầng chính / phụ / nền và giữ ngữ pháp M1–M14.
+- **Phát hành:** mỗi đợt là một PR. Workflow `Check site` build và chạy `site/scripts/check.cjs` (liên kết, lỗi JS, cuộn ngang, reduced motion, chi phí lúc đứng yên). Merge vào `main` thì workflow `Deploy site` đưa lên GitHub Pages. Riêng nội dung mới phải được chủ dự án duyệt trước khi merge.
+- **Chạy local:** `cd site && npm ci && npm run build && node scripts/check.cjs`. Để build giống production: `NB_BASE=/no_babysitting_anymore/ npm run build`.
+- **Thay đổi:** `CHANGELOG.md`.
+- **Giấy phép:** code MIT (`LICENSE`), nội dung CC BY-NC-SA 4.0 (`LICENSE-CONTENT.md`), ghi công bên thứ ba ở `THIRD_PARTY_NOTICES.md`.
+
+Phần dưới đây là gói handoff trước phát triển (06–07/11/2026), giữ lại làm tư liệu.
 
 ## Cập nhật sau review (06/11/2026): đọc phần này trước
 

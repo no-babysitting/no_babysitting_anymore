@@ -8,8 +8,8 @@
     <canvas class="nb-canvas cv" id="intro-cv" aria-hidden="true"></canvas>
     <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>NO BABYSITTING · AN UNOFFICIAL GUIDE</span>
     <span class="nb-corner tr nb-micro"><b id="intro-clk" class="nb-tabular">--:--:--</b></span>
-    <span class="nb-corner bl nb-micro">12 phần · khoảng 118 phút</span>
-    <span class="nb-corner br nb-micro" id="intro-cue">cuộn để biên dịch ↓</span>
+    <span class="nb-corner bl nb-micro"><span class="long">Dự án cộng đồng độc lập · không phải trang chính thức của Anthropic</span><span class="short">Dự án độc lập · không chính thức</span></span>
+    <span class="nb-corner br nb-micro" id="intro-cue"><span class="long">cuộn để biên dịch ↓</span><span class="short">cuộn ↓</span></span>
     <div class="code" id="intro-code" aria-hidden="true"><span class="t" id="intro-t"></span><span class="caret">▍</span></div>
     <div class="mark" id="intro-mark" data-logo-lg></div>
     <div class="tag">
@@ -33,13 +33,14 @@
   .l2 { margin: 0 auto; font-size: clamp(15px, 1.4vw, 18px); line-height: 1.5; color: var(--fg-muted); max-width: 52ch; }
   .nb-corner { z-index: 4; }
   .stage .nb-corner { background: transparent; }
-  @media (max-width: 520px) { .stage .nb-corner.bl { display: none; } .stage .nb-corner.br { display: block; } }
+  .short { display: none; }
+  @media (max-width: 520px) { .stage .nb-corner.bl, .stage .nb-corner.br { display: block; } .long { display: none; } .short { display: inline; } }
 </style>
 
 <script>
   function start(w: any) {
     const NB = w.NoBabysitting, gsap = w.gsap, ST = w.ScrollTrigger;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduce = NB.reduce();
     const $ = (id: string) => document.getElementById(id)!;
     const caret = document.querySelector<HTMLElement>('#intro-code .caret')!;
     const stage = $('intro-stage'), cv = $('intro-cv') as HTMLCanvasElement, code = $('intro-code'), t = $('intro-t'), mark = $('intro-mark');
@@ -51,8 +52,9 @@
     const A = NB.ascii(cv, {
       /* phones: cells close to one logo pixel, otherwise the letters break into noise */
       host: stage, cell: small ? [6, 10] : [9, 16], font: small ? '600 9px "JetBrains Mono", monospace' : undefined,
-      ramp: ' .:-=+*#%@', noise: '/\\|<>{}[]~^!?;:.', order: reduce ? 1 : 0, sweep: 0.62, noiseFill: 0.5,
-      ambient: true, flicker: 0.012, tone: 'accent', frontColor: 'fg', lensColor: 'fg', lensPx: 110,
+      ramp: ' .:-=+*#%@', noise: '/\\|<>{}[]~^!?;:.', order: reduce ? 1 : 0, sweep: 0.62, noiseFill: 0.4, noiseAlpha: 0.5,
+      /* quiet field: no noise on the words, a faint ring around them, slow breathing at rest (docs/09 §1–2) */
+      breathe: 0.03, calm: () => stage.querySelectorAll('.nb-corner, #intro-code, .tag'), tone: 'accent', frontColor: 'fg', lensColor: 'fg', lensPx: 110,
       source: NB.sources.bitmap(L, { fill: FILL, vfill: VFILL, cy: CY }),
     });
     /* geometry shared by the ASCII logo, the crisp mark and the code line */

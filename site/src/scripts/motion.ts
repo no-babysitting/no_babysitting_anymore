@@ -26,7 +26,8 @@ gsap.defaults({ duration: 0.48, ease: 'power3.out' });
 CustomEase.create('nb-settle', '0.22,1,0.36,1');
 Object.assign(window as any, P, { gsap });
 
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* one decision for the whole page: OS setting or the in-page Motion switch (bundle.js NB.reduce) */
+const reduce = (window as any).NoBabysitting ? (window as any).NoBabysitting.reduce() : matchMedia('(prefers-reduced-motion: reduce)').matches;
 const root = document.documentElement;
 
 if (!reduce) {

@@ -4,7 +4,7 @@
 <script>
   function start(w: any) {
     const { gsap, SplitText } = w;
-    if (!gsap || !SplitText || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!gsap || !SplitText || (window as any).NoBabysitting.reduce()) return;
     document.querySelectorAll<HTMLElement>('[data-m5]').forEach((el) => {
       const io = new IntersectionObserver((e) => {
         if (!e[0].isIntersecting) return; io.disconnect();

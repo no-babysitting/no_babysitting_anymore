@@ -64,7 +64,7 @@ const runs = {
     .ch .nb-micro { display: none; }
     .ch h3 { font-size: 24px; }
     .run { padding: 8px 9px; gap: 5px; }
-    .run ul { display: block; font-size: 12.5px; line-height: 1.4; }
+    .run ul { display: block; font-size: 14px; line-height: 1.4; }
     .run li { display: inline; } .run li + li::before, .agentic .run li + li::before { content: ' · '; color: var(--fg-subtle); }
     .run li:first-child::before { content: none; } .agentic .run .nb-micro::after { content: ' ✓'; color: var(--signal); }
     .face { width: 34px; height: 34px; font-size: 17px; }
@@ -75,10 +75,11 @@ const runs = {
 <script>
   function start(w: any) {
     const gsap = w.gsap;
-    if (!gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!gsap || w.NoBabysitting.reduce()) return;
     const req = document.getElementById('flips-req')!, TEXT = req.textContent!, o = { n: 0 };
     const q = (s: string) => gsap.utils.toArray(`#flips ${s}`);
-    gsap.set(q('.col .ch, .run, .verdict'), { autoAlpha: 0, y: 26 });
+    /* the two columns are named from the first frame, so the scene never opens on empty boxes */
+    gsap.set(q('.run, .verdict'), { autoAlpha: 0, y: 26 });
     gsap.set(q('.coin'), { autoAlpha: 0 });
     gsap.set('#flips-moral', { autoAlpha: 0, y: 20 });
     req.textContent = '';
@@ -87,8 +88,7 @@ const runs = {
       scrollTrigger: { trigger: '#flips', start: 'top top+=48', end: '+=230%', pin: '#flips-pin', scrub: 0.7 },
     });
     tl.to(o, { n: TEXT.length, duration: 0.7, ease: `steps(${TEXT.length})`, onUpdate: () => { req.textContent = TEXT.slice(0, o.n); } })
-      .to(q('.col .ch'), { autoAlpha: 1, y: 0, stagger: 0.1 }, 0.2)
-      .to(q('.r1'), { autoAlpha: 1, y: 0, stagger: 0.15 })
+      .to(q('.r1'), { autoAlpha: 1, y: 0, stagger: 0.15 }, 0.35)
       .to(q('.coin'), { autoAlpha: 1 })
       .fromTo(q('.vibe .face'), { rotationY: 0 }, { rotationY: 1080, duration: 1.4, ease: 'power3.inOut' }, '<')
       .fromTo(q('.agentic .face'), { rotationY: 0 }, { rotationY: 720, duration: 1.4, ease: 'power3.inOut' }, '<')

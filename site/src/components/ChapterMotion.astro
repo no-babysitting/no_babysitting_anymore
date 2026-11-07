@@ -7,13 +7,14 @@
 <script>
   function start(w: any) {
     const gsap = w.gsap, ST = w.ScrollTrigger;
-    if (!gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!gsap || w.NoBabysitting.reduce()) return;
     const op = document.querySelector<HTMLElement>('[data-ch-opener] section');
     if (op) {
       const idx = op.querySelector('.idx'), ttl = op.querySelector('.ttl'), gh = op.querySelector('.gh'), cv = op.querySelector('canvas');
-      /* exit, not pin: the number zooms past the camera while the frame leaves, so the question follows with no dead frame */
+      /* exit, not pin: the number sinks below the frame edge and fades while the title lifts away;
+         it never grows over the title (docs/09 §4, D6) */
       gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: op, start: 'top top+=48', end: 'bottom top+=48', scrub: 0.5 } })
-        .to(idx, { scale: 3.4, xPercent: 18, yPercent: -12, autoAlpha: 0, transformOrigin: '30% 70%' }, 0)
+        .to(idx, { yPercent: 40, autoAlpha: 0 }, 0)
         .to(ttl, { y: -80, autoAlpha: 0 }, 0.15)
         .to(gh, { xPercent: -30 }, 0)
         .to(cv, { opacity: 0.25 }, 0);

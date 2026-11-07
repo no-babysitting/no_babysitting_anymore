@@ -10,6 +10,7 @@ const PARTS = [
   ['05', 'Rào chắn', 'c06', 'Quyền, connector, hook'],
   ['06', 'Kiểm chứng', 'c07', 'Đối chiếu, reviewer độc lập'],
 ];
+import { url } from '../../lib/url';
 const CRIT = ['Hiểu đúng yêu cầu', 'Đúng chuẩn trình bày của team', 'Số liệu được kiểm chứng', 'Lặp lại được và tự chạy'];
 ---
 <section class="hn" id="harness" aria-labelledby="harness-h">
@@ -19,12 +20,12 @@ const CRIT = ['Hiểu đúng yêu cầu', 'Đúng chuẩn trình bày của team
       <h2 class="nb-wide" id="harness-h">Bàn làm việc tự dựng lên</h2>
     </header>
     <div class="desk">
-      <div class="parts l">{PARTS.slice(0, 3).map((p) => <a class="part" href={`/${p[2]}/`}><span class="i">{p[0]}</span><b>{p[1]}</b><span class="d">{p[3]}</span><span class="c nb-micro">{p[2]}</span></a>)}</div>
+      <div class="parts l">{PARTS.slice(0, 3).map((p) => <a class="part" href={url(`${p[2]}/`)}><span class="i">{p[0]}</span><b>{p[1]}</b><span class="d">{p[3]}</span><span class="c nb-micro">{p[2]}</span></a>)}</div>
       <div class="core">
         <span class="face" id="harness-face" aria-live="polite">[•_•]</span>
         <span class="nb-micro state" id="harness-state">đang chờ việc</span>
       </div>
-      <div class="parts r">{PARTS.slice(3).map((p) => <a class="part" href={`/${p[2]}/`}><span class="i">{p[0]}</span><b>{p[1]}</b><span class="d">{p[3]}</span><span class="c nb-micro">{p[2]}</span></a>)}</div>
+      <div class="parts r">{PARTS.slice(3).map((p) => <a class="part" href={url(`${p[2]}/`)}><span class="i">{p[0]}</span><b>{p[1]}</b><span class="d">{p[3]}</span><span class="c nb-micro">{p[2]}</span></a>)}</div>
     </div>
     <footer class="report">
       <span class="nb-micro">Báo cáo tuần</span>
@@ -72,11 +73,16 @@ const CRIT = ['Hiểu đúng yêu cầu', 'Đúng chuẩn trình bày của team
 
 <script>
   function start(w: any) {
-    const gsap = w.gsap;
-    if (!gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const NB = w.NoBabysitting, face = document.getElementById('harness-face')!, st = document.getElementById('harness-state')!;
+    const gsap = w.gsap, NB = w.NoBabysitting;
+    const face = document.getElementById('harness-face')!, st = document.getElementById('harness-state')!;
     const col = NB.colleague(face, 'idle'), cnt = document.getElementById('harness-cnt')!;
-    const parts = gsap.utils.toArray<HTMLElement>('#harness .part'), crit = gsap.utils.toArray<HTMLElement>('#harness .report li');
+    const parts = [...document.querySelectorAll<HTMLElement>('#harness .part')], crit = [...document.querySelectorAll<HTMLElement>('#harness .report li')];
+    /* without motion the scene shows its end state: every part in place, the colleague verified, 4/4 */
+    if (!gsap || NB.reduce()) {
+      col.set('verified', true); st.textContent = 'đã kiểm chứng xong'; cnt.textContent = '4';
+      crit.forEach((li) => { li.classList.add('ok'); li.querySelector('.mk')!.textContent = '[✓]'; });
+      return;
+    }
     const STATES: [number, string, string][] = [[0, 'idle', 'đang chờ việc'], [2, 'thinking', 'đang đọc, lập kế hoạch'], [4, 'working', 'đang làm việc'], [6, 'verified', 'đã kiểm chứng xong']];
     let lastP = -1, lastC = -1;
     function sync(p: number) {

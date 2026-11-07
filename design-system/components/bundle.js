@@ -10,10 +10,14 @@
   NB.RAMP = ' ·:-=+/<>!?1ITN3S5YG8BA#@';
   NB.NOISE = '/\\|<>{}[]~^!?;:';
   NB.STRUCT = '─│┌┐└┘├┤';
-  NB.COLORS = ['fg-subtle', 'fg-muted', 'fg', 'accent', 'signal', 'warn', 'danger', 'info', 'control', 'level-1', 'level-2', 'level-3', 'level-4', 'chart-1'];
+  NB.COLORS = ['fg-subtle', 'fg-muted', 'fg', 'accent', 'signal', 'warn', 'danger', 'info', 'control', 'level-1', 'level-2', 'level-3', 'level-4', 'chart-1', 'faint'];
   var CI = {}; NB.COLORS.forEach(function (c, i) { CI[c] = i; }); NB.CI = CI;
 
-  NB.reduce = function () { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); };
+  /* reduced motion = the OS setting or the in-page Motion switch (localStorage 'nb-motion' = 'off') */
+  NB.reduce = function () {
+    var off = false; try { off = window.localStorage.getItem('nb-motion') === 'off'; } catch (e) { /* storage blocked */ }
+    return off || !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
   NB.tok = function (name) { var v = getComputedStyle(document.documentElement).getPropertyValue('--' + name).trim(); return v || '#888888'; };
 
   /* ---------- offscreen sampler: paint(g, W, H) in square pixel space, sample one point per cell ---------- */
@@ -167,7 +171,13 @@
     }
   };
 
-  /* ---------- the renderer ---------- */
+  /* ---------- the renderer ----------
+     Quiet by default (docs/09-motion-script.md): the canvas is repainted only when its state changes
+     (scrub, pointer, theme, resize). Two opt-ins add life while the visitor is still:
+       breathe   fraction of cells per second that drift (noise glyph swaps, or a source glyph moving one
+                 step along the ramp), painted cell by cell, its rate rising and falling on a slow sine
+       calm      elements whose boxes stay free of noise (+1 cell), with a faint, sparse ring around them,
+                 so text never sits on dense characters and detail grows towards the edges */
   NB.ascii = function (canvas, opt) {
     opt = opt || {};
     var CW = (opt.cell || [9, 16])[0], CH = (opt.cell || [9, 16])[1];
@@ -176,8 +186,9 @@
     (' ' + ramp + noise + NB.STRUCT + (opt.extra || '')).split('').forEach(function (g) { if (!(g in gi)) { gi[g] = glyphs.length; glyphs.push(g); } });
     var ctx = canvas.getContext('2d'), DPR = Math.min(2, window.devicePixelRatio || 1);
     var font = opt.font || '500 13px "JetBrains Mono", ui-monospace, monospace';
-    var atlas, cols = 0, rows = 0, n = 0, src = { cov: new Float32Array(0) }, noiseG, thr, glyphOf, rgbStr = null;
-    var dirty = true, visible = true, last = 0, reduce = NB.reduce();
+    var atlas, cols = 0, rows = 0, n = 0, src = { cov: new Float32Array(0) }, noiseG, thr, glyphOf, zone, rgbStr = null;
+    var dirty = true, visible = true, last = 0, lastB = 0, reduce = NB.reduce();
+    var FRONT = CI[opt.frontColor || 'accent'];
     var S = { order: opt.order != null ? opt.order : 1, px: -1e4, py: -1e4, lens: 0, lensPx: opt.lensPx || 96, noiseFill: opt.noiseFill != null ? opt.noiseFill : 1 };
 
     function buildAtlas() {
@@ -185,12 +196,31 @@
       atlas.width = glyphs.length * CW * DPR; atlas.height = NB.COLORS.length * CH * DPR;
       var a = atlas.getContext('2d'); a.scale(DPR, DPR); a.font = font; a.textAlign = 'center'; a.textBaseline = 'middle';
       NB.COLORS.forEach(function (c, ci) {
-        a.globalAlpha = c === 'fg-subtle' ? (opt.noiseAlpha || 0.6) : 1; a.fillStyle = NB.tok(c);
+        a.globalAlpha = c === 'faint' ? (opt.faintAlpha || 0.3) : c === 'fg-subtle' ? (opt.noiseAlpha || 0.6) : 1;
+        a.fillStyle = NB.tok(c === 'faint' ? 'fg-subtle' : c);
         glyphs.forEach(function (g, i) { a.fillText(g, i * CW + CW / 2, ci * CH + CH / 2 + 1); });
       });
       dirty = true;
     }
     function rampIdx(c) { return gi[ramp[Math.min(ramp.length - 1, Math.max(0, Math.round(c * (ramp.length - 1))))]]; }
+    /* 2 = full noise, 1 = faint and sparse, 0 = no noise at all */
+    function zones() {
+      zone = new Uint8Array(n); zone.fill(2);
+      var calm = typeof opt.calm === 'function' ? opt.calm() : opt.calm;
+      if (!calm || !calm.length || !n) return;
+      var cr = canvas.getBoundingClientRect(), ring = opt.calmRing == null ? 4 : opt.calmRing;
+      [].forEach.call(calm, function (el) {
+        var r = el && el.getBoundingClientRect(); if (!r || !r.width || !r.height) return;
+        var x0 = Math.floor((r.left - cr.left) / CW) - 1, x1 = Math.ceil((r.right - cr.left) / CW);
+        var y0 = Math.floor((r.top - cr.top) / CH) - 1, y1 = Math.ceil((r.bottom - cr.top) / CH);
+        for (var y = Math.max(0, y0 - ring); y <= Math.min(rows - 1, y1 + ring); y++) {
+          for (var x = Math.max(0, x0 - ring); x <= Math.min(cols - 1, x1 + ring); x++) {
+            var i = y * cols + x, v = x >= x0 && x <= x1 && y >= y0 && y <= y1 ? 0 : 1;
+            if (v < zone[i]) zone[i] = v;
+          }
+        }
+      });
+    }
     function layout() {
       var w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
       canvas.width = Math.round(w * DPR); canvas.height = Math.round(h * DPR); ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -209,50 +239,90 @@
         rgbStr = new Array(n);
         for (var j = 0; j < n; j++) rgbStr[j] = 'rgb(' + src.rgb[j * 3] + ',' + src.rgb[j * 3 + 1] + ',' + src.rgb[j * 3 + 2] + ')';
       }
+      zones();
       dirty = true;
     }
+    /* what cell i shows now: L.g glyph (-1 = nothing), L.c colour row, L.f css colour for full-colour cells */
+    var L = { g: -1, c: 0, f: null };
+    function look(i, lr2) {
+      var x = i % cols, y = (i / cols) | 0, p = S.order, t = thr[i], cov = src.cov[i], forced = src.chars && src.chars[i];
+      L.g = -1; L.f = null;
+      if (lr2 > 0 && opt.lens !== false) {
+        var dx = (x + 0.5) * CW - S.px, dy = (y + 0.5) * CH - S.py;
+        if (dx * dx + dy * dy < lr2) {
+          L.g = glyphOf[i]; if (glyphs[L.g] === ' ') L.g = gi['·'];
+          L.c = forced ? CI.fg : CI[opt.lensColor || 'signal']; return L;
+        }
+      }
+      if (p >= t) {
+        if (cov <= 0.02 && !forced) return L;
+        L.g = glyphOf[i];
+        if (p < 1 && p - t < 0.045) L.c = FRONT;
+        else if (src.color && src.color[i] >= 0) L.c = src.color[i];
+        else if (opt.tone) L.c = CI[opt.tone];
+        else L.c = cov > 0.72 ? CI.fg : cov > 0.48 ? CI['level-4'] : cov > 0.26 ? CI['level-3'] : CI['level-2'];
+        if (rgbStr && L.c !== FRONT) L.f = rgbStr[i];
+      } else {
+        var z = zone[i];
+        if (!z || ((t * 9973) % 1) > S.noiseFill * (z === 1 ? 0.45 : 1)) return L;
+        L.g = noiseG[i]; L.c = t - p < 0.045 ? FRONT : z === 1 ? CI.faint : CI['fg-subtle'];
+      }
+      if (glyphs[L.g] === ' ') L.g = -1;
+      return L;
+    }
+    function paint(i) {
+      var x = (i % cols) * CW, y = ((i / cols) | 0) * CH;
+      if (L.g < 0) return;
+      if (L.f) { ctx.fillStyle = L.f; ctx.fillText(glyphs[L.g], x + CW / 2, y + CH / 2 + 1); }
+      else ctx.drawImage(atlas, L.g * CW * DPR, L.c * CH * DPR, CW * DPR, CH * DPR, x, y, CW, CH);
+    }
+    function fontSetup() { if (rgbStr) { ctx.font = font; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; } }
     function draw() {
       ctx.clearRect(0, 0, cols * CW + CW, rows * CH + CH);
-      var p = S.order, lr = S.lens * S.lensPx, lr2 = lr * lr, fc = !!rgbStr;
-      if (fc) { ctx.font = font; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; }
-      for (var i = 0; i < n; i++) {
-        var x = i % cols, y = (i / cols) | 0, cov = src.cov[i], t = thr[i], g, c;
-        var dx = (x + 0.5) * CW - S.px, dy = (y + 0.5) * CH - S.py;
-        var inLens = lr > 0 && dx * dx + dy * dy < lr2;
-        var forced = src.chars && src.chars[i];
-        if (inLens && opt.lens !== false) {
-          g = glyphOf[i]; if (glyphs[g] === ' ') g = gi['·'];
-          c = forced ? CI.fg : CI[opt.lensColor || 'signal'];
-        } else if (p >= t) {
-          if (cov <= 0.02 && !forced) continue;
-          g = glyphOf[i];
-          if (p < 1 && p - t < 0.045) c = CI[opt.frontColor || 'accent'];
-          else if (src.color && src.color[i] >= 0) c = src.color[i];
-          else if (opt.tone) c = CI[opt.tone];
-          else c = cov > 0.72 ? CI.fg : cov > 0.48 ? CI['level-4'] : cov > 0.26 ? CI['level-3'] : CI['level-2'];
-          if (fc && c !== CI[opt.frontColor || 'accent']) { ctx.fillStyle = rgbStr[i]; ctx.fillText(glyphs[g], x * CW + CW / 2, y * CH + CH / 2 + 1); continue; }
-        } else {
-          if (((t * 9973) % 1) > S.noiseFill) continue;
-          g = noiseG[i]; c = t - p < 0.045 ? CI[opt.frontColor || 'accent'] : CI['fg-subtle'];
-        }
-        if (glyphs[g] === ' ') continue;
-        ctx.drawImage(atlas, g * CW * DPR, c * CH * DPR, CW * DPR, CH * DPR, x * CW, y * CH, CW, CH);
+      var lr = S.lens * S.lensPx, lr2 = lr * lr;
+      fontSetup();
+      for (var i = 0; i < n; i++) { look(i, lr2); paint(i); }
+    }
+    /* repaint one cell; cells under the lens wait for the next full draw */
+    function drawCell(i) {
+      if (S.lens > 0) {
+        var dx = ((i % cols) + 0.5) * CW - S.px, dy = (((i / cols) | 0) + 0.5) * CH - S.py, lr = S.lens * S.lensPx;
+        if (dx * dx + dy * dy < lr * lr) return;
+      }
+      ctx.clearRect((i % cols) * CW, ((i / cols) | 0) * CH, CW, CH);
+      look(i, 0); paint(i);
+    }
+    /* m random cells change: noise swaps glyph, a settled cell moves one step along the ramp around its own density */
+    function shimmer(m, cellwise) {
+      if (rgbStr && cellwise) fontSetup();
+      for (var k = 0; k < m; k++) {
+        var j = (Math.random() * n) | 0;
+        if (S.order >= thr[j]) {
+          if (src.chars && src.chars[j]) continue;
+          var cv = src.cov[j]; if (cv <= 0.02) continue;
+          glyphOf[j] = rampIdx(Math.max(0.03, Math.min(1, cv + (Math.random() - 0.5) * 0.18)));
+        } else noiseG[j] = gi[noise[(Math.random() * noise.length) | 0]];
+        if (cellwise) drawCell(j);
       }
     }
     function tick(time) {
-      if (!visible) return;
+      if (!visible || document.hidden || !n) return;
       if (time - last < 1 / (opt.fps || 30)) return;
       last = time;
-      if (!reduce && (S.order < 0.999 || opt.ambient)) {
-        var m = Math.max(6, (n * (opt.flicker || 0.012)) | 0);
-        for (var k = 0; k < m; k++) { var j = (Math.random() * n) | 0; noiseG[j] = gi[noise[(Math.random() * noise.length) | 0]]; }
-        dirty = true;
-      }
       if (opt.onTick) opt.onTick(S, time, api);
-      if (dirty) { draw(); dirty = false; }
+      if (dirty) {
+        /* while the state is moving (scrub), a few noise glyphs swap so the field reads as alive */
+        if (!reduce && S.order < 0.999) shimmer(Math.max(4, (n * 0.01) | 0), false);
+        draw(); dirty = false; return;
+      }
+      if (reduce || !opt.breathe || time - lastB < 1 / 12) return;
+      lastB = time;
+      var k = 0.35 + 0.65 * (0.5 - 0.5 * Math.cos(2 * Math.PI * time / (opt.breathePeriod || 8)));
+      shimmer(Math.max(1, Math.round(n * opt.breathe / 12 * k)), true);
     }
     var api = {
       state: S, redraw: function () { dirty = true; }, relayout: layout,
+      recalm: function () { zones(); dirty = true; },
       cols: function () { return cols; }, rows: function () { return rows; }, cell: [CW, CH],
       setSource: function (fn) { opt.source = fn; layout(); }
     };
@@ -262,7 +332,8 @@
       if (window.gsap) window.gsap.ticker.add(tick);
       else (function loop(t) { tick(t / 1000); requestAnimationFrame(loop); })(0);
       if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; dirty = true; }).observe(canvas);
-      new MutationObserver(buildAtlas).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) dirty = true; });
+      new MutationObserver(buildAtlas).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
       var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(layout, 150); });
       if (opt.pointer !== false) {
         var host = opt.host || canvas, G = window.gsap;

@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 /* Scene · Finale. The only full-colour moment on the home page (design system §12: full colour only at the
    opening and the finale): CinematicAscii's dusk city (NB.sources.scene, own artwork) converges out of noise as you
    scroll (M11, pinned), the counter reaches 12 / 12, The Colleague turns to verified, and the call to start rises. */
@@ -12,7 +13,7 @@
     <div class="ct" id="finale-ct">
       <span class="nb-micro">Bắt đầu</span>
       <h2 class="nb-q" id="finale-h">Hôm nay ta biến đồng xu thành một quy trình.</h2>
-      <p class="go"><a class="nb-btn is-solid" href="/c00/">Bắt đầu · Mở đầu</a><a class="nb-btn" href="/library/">Library</a></p>
+      <p class="go"><a class="nb-btn is-solid" href={url('c02/')}>Đọc chương 02 · bản đầy đủ</a><a class="nb-btn" href={url('c00/')}>Mở đầu</a><a class="nb-btn" href={url('library/')}>Library</a></p>
     </div>
   </div>
 </section>
@@ -23,6 +24,8 @@
   .cv { position: absolute; inset: 0; }
   .stage .nb-corner { background: color-mix(in srgb, var(--bg) 80%, transparent); }
   .ct { position: absolute; left: max(16px, 4vw); right: max(16px, 4vw); bottom: 9%; display: grid; gap: 16px; z-index: 4; }
+  /* the words sit on a plate of background, never straight on dense glyphs (docs/09 §2) */
+  .ct::before { content: ''; position: absolute; z-index: -1; left: calc(-1 * max(16px, 4vw)); right: calc(-1 * max(16px, 4vw)); top: -18vh; bottom: -12vh; background: linear-gradient(to top, var(--bg) 58%, color-mix(in srgb, var(--bg) 70%, transparent) 78%, transparent); pointer-events: none; }
   .ct h2 { margin: 0; font-size: clamp(30px, 5vw, 68px); max-width: 18ch; color: var(--fg); text-shadow: 0 2px 24px var(--bg); }
   .go { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
   .go .nb-btn:not(.is-solid) { background: var(--bg); }
@@ -31,10 +34,10 @@
 <script>
   function start(w: any) {
     const NB = w.NoBabysitting, gsap = w.gsap;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, small = innerWidth < 640;
+    const reduce = NB.reduce(), small = innerWidth < 640;
     const col = NB.colleague(document.getElementById('finale-col'), 'working'), n = document.getElementById('finale-n')!;
     const A = NB.ascii(document.getElementById('finale-cv'), {
-      host: document.getElementById('finale-stage'), cell: small ? [6, 11] : [8, 14], mode: 'color', order: reduce ? 1 : 0, sweep: 0.4, noiseFill: 0.4,
+      host: document.getElementById('finale-stage'), cell: small ? [6, 11] : [8, 14], mode: 'color', order: reduce ? 1 : 0, sweep: 0.4, noiseFill: 0.4, breathe: 0.02,
       font: small ? '500 9.5px "JetBrains Mono", monospace' : '500 12px "JetBrains Mono", ui-monospace, monospace', lensColor: 'fg', lensPx: 120,
       source: NB.sources.scene({ sunX: small ? 0.6 : 0.68 }),
     });

@@ -6,6 +6,7 @@
    Inside each panel the giant number drifts slower than the track (containerAnimation parallax);
    the level meter (Low → Pro) lights up as the track passes each part; the counter follows. */
 import { chapters, href, PARTS } from '../../lib/chapters';
+import { isLive } from '../../lib/status';
 const LV = ['LOW', 'MEDIUM', 'HIGH', 'PRO'];
 const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
 ---
@@ -24,14 +25,13 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
         {chapters.map((c) => (
           <li class="panel" data-lv={c.id === 'c00' ? 0 : c.id === 'c10' ? 3 : lvOf(c.level)} data-no={c.no}>
             <a href={href(c.id)}>
-              <span class="nb-ghost gh" aria-hidden="true">{c.en.split(/\s+/).pop()}</span>
               <canvas class="pcv" aria-hidden="true"></canvas>
               <span class="no nb-cond" aria-hidden="true">{c.no}</span>
-              <span class="meta nb-micro">{PARTS[c.id]}{c.level && c.level !== 'Kết' ? ` · ${c.level.toUpperCase()}` : ''} · {c.minutes.split('/')[0].replace("'", ' phút')}</span>
+              <span class="meta nb-micro">{PARTS[c.id]}{c.level && c.level !== 'Kết' ? ` · ${c.level.toUpperCase()}` : ''} · {c.minutes.split('/')[0].replace("'", ' phút')}{!isLive(c.id) && ' · đang viết'}</span>
               <span class="en nb-wide">{c.en}</span>
               <span class="vi">{c.vi}</span>
               <span class="q nb-q">{c.question}</span>
-              <span class="go nb-micro">Vào chương →</span>
+              <span class="go nb-micro">{isLive(c.id) ? 'Vào chương →' : 'Xem khung chương →'}</span>
             </a>
           </li>
         ))}
@@ -55,17 +55,16 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
   .track { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
   .panel a { position: relative; display: grid; align-content: center; gap: 10px; padding: 26px 26px 30px; height: 100%; box-sizing: border-box; color: var(--fg); text-decoration: none; border-right: 1px solid var(--control); border-top: 1px solid var(--control); overflow: hidden; }
   .panel a:hover .go { color: var(--fg); }
-  .gh { right: -10px; bottom: -14px; font-size: 180px; }
   .no { font-size: clamp(120px, 20vh, 240px); line-height: .8; color: var(--fg); }
   .pcv { display: none; }
-  :global(html.motion) .pcv { display: block; width: 100%; height: clamp(170px, 32vh, 300px); margin: 0 0 6px; }
+  :global(html.motion) .pcv { display: block; width: 100%; height: clamp(130px, 24vh, 230px); margin: 0 0 6px; transition: opacity .45s; }
+  :global(html.motion) .panel:not(.is-active) .pcv { opacity: .4; }
   :global(html.motion) .no { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  :global(html.motion) .panel a > :not(.pcv):not(.gh) { transition: opacity .45s, color .45s; }
-  :global(html.motion) .panel:not(.is-active) a > :not(.pcv):not(.gh) { opacity: .32; }
+  :global(html.motion) .panel a > :not(.pcv) { transition: opacity .45s, color .45s; }
+  :global(html.motion) .panel:not(.is-active) a > :not(.pcv) { opacity: .32; }
   :global(html.motion) .panel a::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.22,1,.36,1); }
   :global(html.motion) .panel.is-active a::before { transform: scaleX(1); }
-  :global(html.motion) .panel.is-active .gh { color: var(--accent); opacity: .09; }
-  .en { font-size: clamp(20px, 2.2vw, 30px); }
+  .en { font-size: clamp(22px, 2.6vw, 36px); }
   .vi { color: var(--fg-muted); font-size: 15px; }
   .q { font-size: clamp(18px, 1.7vw, 23px); line-height: 1.3; color: var(--fg); max-width: 26ch; margin-top: 8px; }
   .go { margin-top: auto; padding-top: 10px; color: var(--fg-muted); }
@@ -78,14 +77,13 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
     .meter .lv i { width: 30px; }
     .lv b { display: none; }
     .jhead { gap: 10px; }
-    .gh { font-size: 120px; }
   }
 </style>
 
 <script>
   function start(w: any) {
     const gsap = w.gsap;
-    if (!gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!gsap || w.NoBabysitting.reduce()) return;
     const track = document.getElementById('journey-track')!, n = document.getElementById('journey-n')!;
     const panels = gsap.utils.toArray<HTMLElement>('#journey .panel'), lvs = gsap.utils.toArray<HTMLElement>('#journey .lv');
     const small = innerWidth < 720;
@@ -99,7 +97,7 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
     panels.forEach((p) => {
       const A = NB.ascii(p.querySelector('canvas'), {
         cell: small ? [6, 10] : [8, 14], font: small ? '600 9px "JetBrains Mono", monospace' : '600 12px "JetBrains Mono", monospace',
-        ramp: ' .:-=+*#%@', order: 0, sweep: 0.45, noiseFill: 0.4, ambient: true, flicker: 0.006, pointer: false,
+        ramp: ' .:-=+*#%@', order: 0, sweep: 0.45, noiseFill: 0.25, pointer: false,
         tone: 'accent', frontColor: 'fg', fontLoad: '900 100px Archivo',
         source: NB.sources.text([p.dataset.no!], { family: '"Archivo", "Arial Black", sans-serif', weight: 900, stretch: 'ultra-condensed', fill: 0.62, vfill: 0.92, cy: 0.52 }),
       });
@@ -107,9 +105,7 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
       gsap.timeline({ scrollTrigger: { trigger: p, containerAnimation: move, start: 'left 95%', end: 'right 5%', scrub: true } })
         .fromTo(S, { order: 0, noiseFill: 0.45 }, { order: 1, noiseFill: 0.06, duration: 0.45, ease: 'none', onUpdate: A.redraw })
         .to(S, { duration: 0.15 })
-        .to(S, { order: 0.35, noiseFill: 0.3, duration: 0.4, ease: 'none', onUpdate: A.redraw });
-      gsap.fromTo(p.querySelector('.gh'), { xPercent: -20 }, { xPercent: 20, ease: 'none',
-        scrollTrigger: { trigger: p, containerAnimation: move, start: 'left right', end: 'right left', scrub: true } });
+        .to(S, { order: 0.6, noiseFill: 0.18, duration: 0.4, ease: 'none', onUpdate: A.redraw });
       gsap.from(p.querySelectorAll('.meta, .en, .vi, .q, .go'), { y: 24, stagger: 0.06, duration: 0.6,
         scrollTrigger: { trigger: p, containerAnimation: move, start: 'left 75%', toggleActions: 'play none none reverse' } });
       w.ScrollTrigger.create({ trigger: p, containerAnimation: move, start: 'left center', end: 'right center',

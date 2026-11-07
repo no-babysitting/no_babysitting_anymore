@@ -74,7 +74,7 @@ const [y, m, d] = f.verifiedAt.split('-');
 <script>
   const KEY = 'nb-surface';
   const roots = Array.from(document.querySelectorAll<HTMLElement>('[data-surface-tabs]'));
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = (window as any).NoBabysitting.reduce();
   function selectAll(k: string, focusIn?: HTMLElement) {
     roots.forEach((root) => {
       const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));

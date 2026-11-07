@@ -6,6 +6,8 @@ import TwoFlips from '../components/scenes/TwoFlips.astro';
 import Journey from '../components/scenes/Journey.astro';
 import Harness from '../components/scenes/Harness.astro';
 import Finale from '../components/scenes/Finale.astro';
+import { chapters } from '../lib/chapters';
+import { LIVE } from '../lib/status';
 ---
 <Base>
   <Hud />
@@ -17,11 +19,12 @@ import Finale from '../components/scenes/Finale.astro';
     <span class="nb-micro" data-reveal="up">Vì sao có trang này</span>
     <p class="nb-q big" data-reveal="fill">Claude không cần bạn canh từng bước. Nó cần một bản brief rõ, một bộ hướng dẫn gọn, quyền đặt đúng chỗ và một cách tự kiểm chứng. Phần còn lại, nó tự làm.</p>
     <hr class="nb-rule" data-reveal="rule" />
+    <span class="nb-micro beta" data-reveal="up"><span class="nb-mk is-info" aria-hidden="true"></span>Bản beta · số liệu dưới đây là những gì đã có thật, tăng dần theo từng đợt</span>
     <div class="facts">
-      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">12</p><span class="nb-micro">phần, từ Mở đầu tới Kết</span></div>
-      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">11</p><span class="nb-micro">simulator để tự tay thử</span></div>
-      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">118</p><span class="nb-micro">phút tự học, khoảng</span></div>
-      <div data-reveal="up"><p class="nb-cond n"><span data-reveal="count">350</span>+</p><span class="nb-micro">mục Library, có nguồn</span></div>
+      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(chapters.length)}</p><span class="nb-micro">phần trong lộ trình</span></div>
+      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(LIVE.chapters.length)}</p><span class="nb-micro">chương đã viết đầy đủ</span></div>
+      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(LIVE.simulators.length)}</p><span class="nb-micro">simulator chạy thật</span></div>
+      <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(LIVE.librarySamples)}</p><span class="nb-micro">mục Library mẫu</span></div>
     </div>
   </div>
   </section>
@@ -31,7 +34,6 @@ import Finale from '../components/scenes/Finale.astro';
   <div class="wrap"><Harness /></div>
 
   <Finale />
-  <p class="wrap fine nb-micro">No Babysitting là dự án độc lập, không phải trang chính thức của Anthropic.</p>
 </Base>
 
 <style>
@@ -39,7 +41,7 @@ import Finale from '../components/scenes/Finale.astro';
   .terrain { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; opacity: .5; pointer-events: none; }
   .manifesto { position: relative; display: grid; gap: 28px; padding-block: 120px 96px; }
   .facts > div { background: color-mix(in srgb, var(--bg) 70%, transparent); }
-  .fine { color: var(--fg-subtle); padding-block: 20px 40px; margin: 0; }
+  .beta { color: var(--fg-muted); display: inline-flex; gap: 8px; align-items: center; }
   .big { margin: 0; font-size: clamp(30px, 4.6vw, 64px); line-height: 1.16; max-width: 22ch; }
   .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .facts > div { display: grid; gap: 6px; }
@@ -50,9 +52,9 @@ import Finale from '../components/scenes/Finale.astro';
 <script>
   /* manifesto: a low-key ASCII terrain (ChapterOpener's source) rises out of noise as the statement is read */
   function start(w: any) {
-    const NB = w.NoBabysitting, gsap = w.gsap, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const NB = w.NoBabysitting, gsap = w.gsap, reduce = NB.reduce();
     const A = NB.ascii(document.getElementById('man-cv'), {
-      cell: [9, 16], order: reduce ? 1 : 0, sweep: 0.3, noiseFill: 0.25, ambient: true, flicker: 0.006, pointer: false,
+      cell: [9, 16], order: reduce ? 1 : 0, sweep: 0.3, noiseFill: 0.25, pointer: false,
       ramp: ' .·:/\\+*', tone: 'fg-muted', frontColor: 'fg', source: NB.sources.terrain({ scale: 0.055, threshold: 0.56, slope: 0.45, seed: 7 }),
     });
     if (reduce || !gsap) return;
