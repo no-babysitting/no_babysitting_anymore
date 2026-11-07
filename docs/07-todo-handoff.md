@@ -10,7 +10,7 @@ Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 
 
 | # | Việc | Vì sao | Nơi |
 |---|---|---|---|
-| 1 | **Mở trang Best practices chính thức và đọc nguyên văn bảng *What you can stop doing* (7 dòng, cả cột giải thích).** Hiện mới đọc qua bản tóm tắt của công cụ (trang bị cắt ở khoảng 40.000/52.500 ký tự) | Dòng "manage the context window aggressively" đã khiến viết lại c02/S1; các dòng khác (subagent, ALL CAPS, "keep going", CLAUDE.md) ảnh hưởng c04, c05, c06, c08, c09, c10 | Script c02, §0.11; `06-sources-and-links.md` |
+| 1 | ✅ *Đã đọc nguyên văn ngày 07/11/2026 (`10-script-v3-proposal.md` §1–§2).* ~~**Mở trang Best practices chính thức và đọc nguyên văn bảng *What you can stop doing* (7 dòng, cả cột giải thích).**~~ Hiện mới đọc qua bản tóm tắt của công cụ (trang bị cắt ở khoảng 40.000/52.500 ký tự) | Dòng "manage the context window aggressively" đã khiến viết lại c02/S1; các dòng khác (subagent, ALL CAPS, "keep going", CLAUDE.md) ảnh hưởng c04, c05, c06, c08, c09, c10 | Script c02, §0.11; `06-sources-and-links.md` |
 | 2 | **Tìm URL chuẩn và đọc 4 bài blog tháng 10/2026**: code review (15/10), agent automations (08/10), cloud sessions (06/10), mods (01/10). Hiện chỉ biết tiêu đề và ngày | Là nguồn bổ sung cho c07, c09, c06 (quyết định 06/11) | `06-sources-and-links.md` §4 |
 | 3 | **Kiểm tra URL chuẩn của bài six shifts**: trang đã tải ghi "claude.dev Blog", tài liệu đang dẫn `claude.com/blog/...` | Nguồn của sợi chỉ xuyên suốt | `06-sources-and-links.md` §3 |
 | 4 | **Kiểm chứng tay các ô "?" của ma trận bề mặt**: 22/36 tính năng trên Cowork chưa có tài liệu; `/compact`, `/memory`, rewind trên Desktop; đường dẫn upload skill; Add plugins; bật Chrome; menu Plan trên Mobile; **Artifacts ở từng bề mặt**; **bộ chọn model/effort trên Desktop và Cowork** | "Không mô tả UI chưa được nguồn xác nhận" (PRD §7); tab mặc định đã chốt là Claude Code app, nhưng Cowork là nơi docs đặt việc văn phòng | `05-surface-matrix.md` §4 |
@@ -41,7 +41,7 @@ Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 
 - [ ] `05-surface-matrix.md` vẫn dùng **tên chương cũ** ở các tiêu đề c02–c09; đồng bộ với Script (The Briefing Budget, The Brief, …).
 - [x] ~~The Colleague `working` màu accent so với lệnh cấm "khối pixel màu cam"~~ → **chốt 07/11/2026: cấm *hình*, không cấm *màu*.** Wordmark và tên chương thống nhất theo §2.1 (Archivo expanded; serif chỉ cho câu hỏi Socratic), đã sửa §0.0.
 - [x] ~~"10 trụ harness" chưa định nghĩa~~ → JourneyHUD dùng **6 phần harness theo PRD G1** (đã sửa §7 và preview).
-- [ ] **Nguyên lý P1–P12**: `Overlay.principles` (SAD §7.1) có trường này nhưng **không tài liệu nào định nghĩa 12 nguyên lý** (đã kiểm 07/11/2026). Định nghĩa danh sách, hoặc bỏ trường và chip lọc "nguyên lý" của FR-06.
+- [x] ~~**Nguyên lý P1–P12**~~ → thay bằng 5 trụ (Hiểu agent · Dựng harness · Thiết kế quy trình · Áp vào công việc · Tin cậy và mở rộng), chốt 07/11/2026 (`10-script-v3-proposal.md` §3).
 - [ ] Mốc M0 ghi số tính năng của c02 khác ma trận (xem SAD §9); đối chiếu lại.
 - [x] ~~Ngưỡng 40%/60% của `overloaded` và ContextMeter~~ → đã bỏ (07/11/2026).
 

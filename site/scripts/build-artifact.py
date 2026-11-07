@@ -13,6 +13,8 @@ def read(p):
 
 def convert(rel):
     html = read(rel)
+    # analytics never runs inside an artifact (its CSP blocks the script, and framed pages are not counted)
+    html = re.sub(r'<script[^>]*data-goatcounter[^>]*></script>', '', html)
     html = re.sub(r'<link rel="stylesheet" href="(/[^"]+\.css)"\s*/?>', lambda m: '<style>' + read(m.group(1)) + '</style>', html)
     html = re.sub(r'<script type="module" src="(/[^"]+\.js)"></script>', lambda m: '<script type="module">' + read(m.group(1)).replace('</script', '<\\/script') + '</script>', html)
     html = re.sub(r'<script src="(/[^"]+\.js)"></script>', lambda m: '<script>' + read(m.group(1)).replace('</script', '<\\/script') + '</script>', html)

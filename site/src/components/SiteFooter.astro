@@ -17,6 +17,7 @@ const issue = `${SITE.repo}/issues/new?title=${encodeURIComponent('Góp ý: ' + 
         </div>
       ) : <p>Đây là bản beta, được cải tiến theo từng đợt. Góp ý nào cũng được đọc.</p>}
       <p><a class="nb-btn" href={issue} target="_blank" rel="noopener">Góp ý chi tiết trên GitHub ↗</a></p>
+      {SITE.goatcounter && <p class="lic">Trang đếm lượt xem ẩn danh bằng <a href="https://www.goatcounter.com/" lang="en">GoatCounter</a>: không cookie, không lưu IP, không theo dấu giữa các site.</p>}
     </section>
     <section aria-labelledby="sf-about">
       <h2 class="nb-micro" id="sf-about">Về dự án</h2>
