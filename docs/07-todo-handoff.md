@@ -4,7 +4,7 @@
 
 ## 0. Trạng thái một dòng
 
-Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 05b), Design system (**27 component có preview**, đợt sửa 07/11/2026 ở §5b), SAD 4+2, ma trận bề mặt, tài liệu nguồn. **Chưa có code của site.** Kế hoạch: 12–13 tuần, M0–M5 (PRD §12).
+Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 05b), Design system (**27 component có preview**, đợt sửa 07/11/2026 ở §5b), SAD 4+2, ma trận bề mặt, tài liệu nguồn. Site Astro đã có khung toàn site (M0). **Từ 07/11/2026 kế hoạch chạy theo `08-kaizen-go-live.md`** (go live ngay dạng beta, rồi các đợt K0–K6); chuyển động theo `09-motion-script.md`.
 
 ## 1. Việc chặn: làm trước khi viết nội dung chương (P0)
 
@@ -14,7 +14,7 @@ Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 
 | 2 | **Tìm URL chuẩn và đọc 4 bài blog tháng 10/2026**: code review (15/10), agent automations (08/10), cloud sessions (06/10), mods (01/10). Hiện chỉ biết tiêu đề và ngày | Là nguồn bổ sung cho c07, c09, c06 (quyết định 06/11) | `06-sources-and-links.md` §4 |
 | 3 | **Kiểm tra URL chuẩn của bài six shifts**: trang đã tải ghi "claude.dev Blog", tài liệu đang dẫn `claude.com/blog/...` | Nguồn của sợi chỉ xuyên suốt | `06-sources-and-links.md` §3 |
 | 4 | **Kiểm chứng tay các ô "?" của ma trận bề mặt**: 22/36 tính năng trên Cowork chưa có tài liệu; `/compact`, `/memory`, rewind trên Desktop; đường dẫn upload skill; Add plugins; bật Chrome; menu Plan trên Mobile; **Artifacts ở từng bề mặt**; **bộ chọn model/effort trên Desktop và Cowork** | "Không mô tả UI chưa được nguồn xác nhận" (PRD §7); tab mặc định đã chốt là Claude Code app, nhưng Cowork là nơi docs đặt việc văn phòng | `05-surface-matrix.md` §4 |
-| 5 | **Chốt việc phân phối nội bộ.** Sản phẩm dùng nội bộ, không thương mại hoá (chủ dự án, 07/11), nhưng PRD vẫn ghi "dự án cộng đồng độc lập", câu hỏi domain/hosting/analytics còn mở. Palette giữ nguyên giống màu Anthropic theo quyết định của chủ dự án; **nếu sau này công khai thì phải đổi accent và nền trước khi công bố** | Tránh nhầm là trang chính thức; PRD đang mâu thuẫn nhẹ với thực tế dùng nội bộ | PRD §0, §11, §13 |
+| 5 | ✅ *Đã chốt 07/11/2026: go live công khai, giữ palette cam + disclaimer rõ (08 · D7, D10).* ~~**Chốt việc phân phối nội bộ.**~~ Sản phẩm dùng nội bộ, không thương mại hoá (chủ dự án, 07/11), nhưng PRD vẫn ghi "dự án cộng đồng độc lập", câu hỏi domain/hosting/analytics còn mở. Palette giữ nguyên giống màu Anthropic theo quyết định của chủ dự án; **nếu sau này công khai thì phải đổi accent và nền trước khi công bố** | Tránh nhầm là trang chính thức; PRD đang mâu thuẫn nhẹ với thực tế dùng nội bộ | PRD §0, §11, §13 |
 
 ## 2. Nội dung và sư phạm (P1)
 

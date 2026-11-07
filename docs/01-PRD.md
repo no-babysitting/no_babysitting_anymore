@@ -1,7 +1,8 @@
 # PRD · No Babysitting
 
 > **No Babysitting**: *Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi.*
-> *An unofficial guide to Claude Code best practices.*
+> *An unofficial, practical guide to delegating digital work to Claude Code.*
+> **Phiên bản 2.3 · 07/11/2026** · Go live công khai cho mọi người. Các quyết định D1–D16 (ngôn ngữ, câu mô tả, kịch bản khái quát hơn, trang chủ, màu, hosting, đo lường, giấy phép, quy trình duyệt) ở `08-kaizen-go-live.md`; chỗ nào khác với PRD này thì tài liệu đó đúng.
 > Phiên bản 2.1 · 06/11/2026 · Định vị lại: tên tiếng Anh, ẩn dụ "giao việc cho đồng nghiệp", dự án cộng đồng độc lập. Kế thừa bản 2.0: *người dùng Claude nói chung, App là mặc định, Claude Code không chỉ để code.*
 > **Phiên bản 2.2 · 06/11/2026** · Cập nhật sau review tổng thể: thêm chương 05b (model & effort) và S9; Library tính theo từng mục bài viết; nguồn chính thức bổ sung; kế hoạch 12–13 tuần; đường chính app-first; nhãn gói. Chi tiết ở §11–§13.
 > Nguồn: `shanraisshan/claude-code-best-practice` @ `722071c` (06/11/2026); bài *The New Rules of Context Engineering for Claude 5 Generation Models* (Thariq Shihipar, Anthropic, 24/07/2026); docs chính thức về các bề mặt App, kiểm chứng ngày 06/11/2026 (xem `05-surface-matrix.md`).
@@ -16,7 +17,7 @@
 |---|---|
 | **Tên** (EN) | **No Babysitting** |
 | **Tagline** (VI) | *Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi.* |
-| **Descriptor** (EN) | *An unofficial guide to Claude Code best practices.* Luôn đi kèm tên, để rõ đây không phải trang chính thức |
+| **Descriptor** (EN) | *An unofficial, practical guide to delegating digital work to Claude Code.* (từ 07/11/2026, D2; trước đó: *An unofficial guide to Claude Code best practices*). Luôn đi kèm tên, để rõ đây không phải trang chính thức |
 | **Lời hứa** | Từ vibe đến agentic. Bám tagline của repo gốc; "vibe" và "agentic" được giải nghĩa ngay ở Mở đầu cho người không phải dev |
 | **Ẩn dụ trung tâm** | **Giao việc cho đồng nghiệp mới**: brief → tài liệu onboarding → playbook và chuyên gia → công cụ và chính sách → rà soát trước khi bàn giao → làm theo nhóm → việc định kỳ → thôi cầm tay chỉ việc |
 | **Danh nghĩa** | Dự án cộng đồng độc lập; ghi công repo gốc (MIT) và từng nguồn; không dùng logo, mascot hay nhận diện của Anthropic |
@@ -204,7 +205,7 @@ No Babysitting
 | **Phạm vi & lịch** *(06/11/2026)* | Đủ phạm vi, **12–13 tuần** (M0–M5, §12) |
 | **Nội dung dev** *(06/11/2026)* | Đường chính app-first: phần dành cho dev chuyển vào *Đào sâu*, tab CLI và Library; c05 b6 (TodoWrite) → Đào sâu; c06 dạy rào chắn người dùng app tự đặt được; c08 mở bằng quy trình, không bằng danh sách framework |
 | **Gói của người học** *(06/11/2026)* | Trộn lẫn: mỗi bước/tính năng phụ thuộc gói hoặc quyền admin gắn `PlanPill` (FR-18) |
-| **Màu sắc & định vị** *(06/11/2026)* | Giữ nguyên palette và định vị hiện tại (sản phẩm dùng nội bộ, không thương mại hoá; chưa đổi gì thêm). Vẫn giữ disclaimer "không phải trang chính thức" (FR-15) |
+| **Màu sắc & định vị** *(06/11/2026, cập nhật 07/11/2026)* | Sản phẩm **go live công khai** (08 · D9–D16). Chủ dự án quyết định **giữ palette cam** và thêm disclaimer rõ ở hero và chân mọi trang (08 · D7) |
 
 ## 12. Mốc
 
@@ -228,7 +229,7 @@ No Babysitting
 5. ✅ **Đã chốt (06/11/2026): tab mặc định là *Claude Code app*.** Bằng chứng ngược lại (docs Desktop: việc văn phòng ở lại Cowork) vẫn ghi ở `05-surface-matrix.md` §3.
 6. ✅ **Đã chốt (06/11/2026): gói của người học trộn lẫn**, gắn nhãn theo gói (FR-18); chương 09 trình bày cả Claude Tag (Team/Enterprise) lẫn scheduled tasks cá nhân.
 
-**Ghi chú 06/11/2026:** sản phẩm dùng nội bộ, không thương mại hoá. Các câu 1–3 (domain, hosting, analytics) giữ nguyên, chờ quyết định phân phối nội bộ.
+**Ghi chú 06/11/2026:** sản phẩm dùng nội bộ, không thương mại hoá. **Cập nhật 07/11/2026:** chuyển sang go live công khai; câu 2 → GitHub Pages (D10), câu 3 → analytics không cookie + nút phản hồi (D11), câu 1 (domain) làm sau; câu 4 → tiếng Việt trước, tiếng Anh là đợt sau (D1).
 7. ✅ **Đã chốt (07/11/2026): viết lại c02 và S1** theo khung "context tập trung → tốt hơn, rẻ hơn"; ngưỡng 40% thành *Phụ thuộc model / Chưa thống nhất*. Còn việc: ContextMeter, trạng thái `overloaded` của The Colleague và c10 cần cập nhật theo; đọc nguyên văn bảng *What you can stop doing* khi viết.
 
 **Nguồn và liên kết:** repo https://github.com/shanraisshan/claude-code-best-practice · toàn bộ link nghiên cứu và quy tắc nguồn ở `06-sources-and-links.md`.
