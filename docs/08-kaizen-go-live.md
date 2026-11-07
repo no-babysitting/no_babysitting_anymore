@@ -87,7 +87,7 @@ Có những việc làm liên tục chứ không thành đợt:
 | Kiến thức có chính xác, dễ bảo trì? | Tuổi trung bình của `verifiedAt`; số link chết |
 | Kỹ thuật | CPU lúc đứng yên; Lighthouse mobile: Perf ≥ 90, A11y = 100, CLS < 0,05 |
 
-GoatCounter không dùng cookie và không lưu IP. Nó chỉ bật khi đã có mã site (`site/src/config.ts`).
+GoatCounter không dùng cookie và không lưu IP. **Đã bật từ 07/11/2026**, mã site `taisei` (`site/src/config.ts`); bảng số liệu ở https://taisei.goatcounter.com. Mỗi trang gửi sự kiện phản hồi `feedback-yes/<đường dẫn>` hoặc `feedback-no/<đường dẫn>`.
 
 ## 6. Rủi ro
 
