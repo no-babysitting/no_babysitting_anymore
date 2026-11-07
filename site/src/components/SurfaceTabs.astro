@@ -1,0 +1,110 @@
+---
+/* "Cách làm" in three tabs. Reads one feature from matrix.yml. The chosen tab is shared by every
+   SurfaceTabs on the page and remembered (localStorage 'nb-surface'). Default: Claude Code app. */
+import { getFeature, ageDays, inline } from '../lib/matrix';
+const { feature, chapter } = Astro.props as { feature: string; chapter?: string };
+const f = getFeature(feature);
+const uid = `st-${feature}`;
+const TABS = [['cowork', 'Cowork'], ['codeApp', 'Claude Code app'], ['cli', 'CLI']] as const;
+const SURF = [['cowork', 'Cowork'], ['desktop', 'Desktop'], ['web', 'Web'], ['mobile', 'Mobile'], ['cli', 'CLI']] as const;
+const MK = { yes: ['is-signal', 'có'], partial: ['is-warn', 'một phần'], no: ['is-muted', 'chưa có'], unknown: ['is-info', 'chưa rõ'] } as const;
+const stale = ageDays(f.verifiedAt) > 30;
+const [y, m, d] = f.verifiedAt.split('-');
+---
+<section class="nb-frame st" data-surface-tabs aria-labelledby={`${uid}-t`}>
+  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>Cách làm{chapter && ` · ${chapter}`}</span>
+  <span class="nb-corner tr nb-micro">kiểm chứng <b>{`${d}/${m}/${y}`}</b></span>
+  <h3 class="nb-wide feat" id={`${uid}-t`}>{f.title}</h3>
+  <div role="tablist" aria-label="Bề mặt">
+    {TABS.map(([k, label], i) => (
+      <button role="tab" type="button" data-k={k} id={`${uid}-${k}`} aria-controls={`${uid}-p-${k}`} aria-selected={k === 'codeApp' ? 'true' : 'false'} tabindex={k === 'codeApp' ? 0 : -1}>
+        <span class="i">{String(i + 1).padStart(2, '0')}</span>{label}
+      </button>
+    ))}
+    <span class="bar" aria-hidden="true"></span>
+  </div>
+  {TABS.map(([k]) => {
+    const t = f.tabs[k];
+    return (
+      <div role="tabpanel" id={`${uid}-p-${k}`} aria-labelledby={`${uid}-${k}`} hidden={k !== 'codeApp'}>
+        {t?.steps && <ol>{t.steps.map((s) => <li><span set:html={inline(s)} /></li>)}</ol>}
+        {(!t || t.missing) && <p class="na"><span class="nb-tag is-info">Chưa có tài liệu</span> {t?.missing ?? 'Tính năng này chưa có nguồn xác nhận ở bề mặt này.'}</p>}
+        {t?.fallback && <p class="na">{t.fallback.interpretation && <span class="nb-tag is-info interp">Diễn giải</span>}{t.fallback.text}</p>}
+      </div>
+    );
+  })}
+  <div class="avail" aria-label="Khả dụng theo bề mặt">
+    {SURF.map(([k, label]) => {
+      const [cls, word] = MK[f.availability[k]];
+      return <span class={`nb-tag ${cls}`}>{label}{f.availability[k] === 'yes' ? <span class="nb-sr">: {word}</span> : ` · ${word}`}</span>;
+    })}
+    {stale && <span class="nb-tag is-warn">Cần kiểm chứng lại · quá 30 ngày</span>}
+  </div>
+  <div class="foot nb-micro">
+    <span>Nguồn · Docs</span>
+    {f.docs.map((u) => <a href={u} target="_blank" rel="noopener">{u.split('/').pop()} ↗</a>)}
+  </div>
+</section>
+
+<style>
+  .st { padding: 44px 0 0; }
+  .feat { padding: 0 18px 16px; margin: 0; font-size: clamp(26px, 4vw, 40px); }
+  [role='tablist'] { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--control); }
+  [role='tab'] { appearance: none; background: transparent; border: 0; border-right: 1px solid var(--control); border-radius: 0; color: var(--fg-muted); padding: 14px 16px; text-align: left; cursor: pointer; display: grid; gap: 4px; font: 600 12px/1.2 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+  [role='tab']:last-of-type { border-right: 0; }
+  [role='tab'] .i { color: var(--fg-subtle); font-weight: 500; }
+  [role='tab']:hover { background: var(--bg-raised); }
+  [role='tab'][aria-selected='true'] { background: var(--fg); color: var(--bg); }
+  [role='tab'][aria-selected='true'] .i { color: var(--bg); }
+  [role='tab']:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -4px; }
+  .bar { position: absolute; left: 0; bottom: -1px; height: 3px; width: 33.333%; background: var(--accent); pointer-events: none; transform: translateX(100%); }
+  [role='tabpanel'] { padding: 18px 18px 8px; min-height: 150px; }
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: s; }
+  ol li { counter-increment: s; display: grid; grid-template-columns: 4ch 1fr; gap: 10px; line-height: 1.55; max-width: 70ch; }
+  ol li::before { content: counter(s, decimal-leading-zero); font: 600 12px/1.9 var(--font-mono); color: var(--fg-subtle); }
+  .st :global(code) { font: 500 .9em/1 var(--font-mono); background: var(--bg-sunken); border: 1px solid var(--control); padding: 2px 5px; }
+  .na { margin: 0 0 10px; color: var(--fg-muted); line-height: 1.55; max-width: 70ch; }
+  .interp { margin-right: 8px; }
+  .avail { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 12px 18px; border-top: 1px solid var(--control); }
+  .foot { display: flex; justify-content: space-between; gap: 12px; padding: 10px 18px; border-top: 1px solid var(--control); }
+  .foot a { color: var(--fg); text-underline-offset: 3px; }
+  @media (max-width: 640px) { [role='tab'] { padding: 12px 10px; } }
+</style>
+
+<script>
+  const KEY = 'nb-surface';
+  const roots = Array.from(document.querySelectorAll<HTMLElement>('[data-surface-tabs]'));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function selectAll(k: string, focusIn?: HTMLElement) {
+    roots.forEach((root) => {
+      const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      tabs.forEach((t, i) => {
+        const on = t.dataset.k === k;
+        t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+        if (on) {
+          const bar = root.querySelector<HTMLElement>('.bar')!;
+          const g = (window as any).gsap;
+          if (g && !reduce) g.to(bar, { xPercent: i * 100, x: 0, duration: 0.36, ease: 'power3.out' });
+          else bar.style.transform = `translateX(${i * 100}%)`;
+          if (root === focusIn) t.focus();
+        }
+      });
+    });
+    try { localStorage.setItem(KEY, k); } catch {}
+  }
+  roots.forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => selectAll(t.dataset.k!));
+      t.addEventListener('keydown', (e) => {
+        const n = e.key === 'ArrowRight' ? tabs[(i + 1) % tabs.length] : e.key === 'ArrowLeft' ? tabs[(i - 1 + tabs.length) % tabs.length]
+          : e.key === 'Home' ? tabs[0] : e.key === 'End' ? tabs[tabs.length - 1] : null;
+        if (n) { e.preventDefault(); selectAll(n.dataset.k!, root); }
+      });
+    });
+  });
+  let saved: string | null = null;
+  try { saved = localStorage.getItem(KEY); } catch {}
+  if (saved && saved !== 'codeApp') selectAll(saved);
+</script>
