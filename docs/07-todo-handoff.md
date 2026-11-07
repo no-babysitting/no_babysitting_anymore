@@ -77,7 +77,7 @@ Còn lại của bản tự nhận xét (P2): tượng ASCII ở Hero có nghĩa
 
 ## 7. Việc đã làm nhưng nên biết giới hạn
 
-- Artifact design system https://claude.ai/artifact/9M5HYXuu1vwQvsonXsPYUs (version 9) đang **riêng tư**; chia sẻ qua menu Share nếu cần người khác xem.
+- Artifact design system bản mới https://claude.ai/artifact/VmP9E4UDLaN5jpB2rZeRUH (07/11/2026, 26 component) đang **riêng tư**; chia sẻ qua menu Share nếu cần người khác xem. Bản cũ (`9M5HYXuu1vwQvsonXsPYUs`, version 9) báo "không tìm thấy" khi đọc từ tài khoản hiện tại.
 - **Chưa đưa file lên Google Drive** (công cụ Drive không nhận file zip; cần tự tải lên).
 - Các kiểm tra hiển thị chạy trên bản local; chưa mở lại artifact đã publish bằng trình duyệt sau lần publish cuối.
 - Link npm của `asciify-engine` ghi theo trí nhớ, chưa mở lại kiểm tra.

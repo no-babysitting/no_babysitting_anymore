@@ -61,7 +61,7 @@ tools/                         tokens2css.py · contrast.py (tương phản WCAG
 | PRD, kịch bản sư phạm, SAD 4+2, ma trận bề mặt | Xong. Đã tự rà soát (đối chiếu chéo, kiểm tra thuật ngữ); vòng review đa agent chưa chạy lại vì giới hạn quota |
 | Design system: token, 2 theme, chữ, chuyển động | Xong |
 | 26 component (preview + README) | 8 component mới và đợt sửa chữ nhỏ, accent, M4 ngày 07/11/2026. Render-test 2 theme × 2 bề rộng (1000px, 360px): không lỗi JS, không cuộn ngang. Chưa chạy axe, screen reader thật. Độ phủ danh sách §7: 19/28 |
-| Artifact design system | Đã publish (bản 9): https://claude.ai/artifact/9M5HYXuu1vwQvsonXsPYUs · **đang ở chế độ riêng tư**: người nhận chỉ mở được sau khi chủ sở hữu chia sẻ qua menu Share của trang |
+| Artifact design system | Bản mới (07/11/2026, 26 component): https://claude.ai/artifact/VmP9E4UDLaN5jpB2rZeRUH · **đang ở chế độ riêng tư**: người nhận chỉ mở được sau khi chủ sở hữu chia sẻ qua menu Share của trang. Bản cũ (9M5HYXuu1vwQvsonXsPYUs) không còn đọc được từ tài khoản này |
 | Code của site (Astro + GSAP) | Chưa bắt đầu; mốc M0 là bước kế tiếp |
 
 ## Quyết định chính (chi tiết ở PRD §11)
