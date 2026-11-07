@@ -1,35 +1,46 @@
 ---
 import Base from '../layouts/Base.astro';
 import SurfaceTabs from '../components/SurfaceTabs.astro';
+import Hud from '../components/Hud.astro';
+import { chapters, href, PARTS } from '../lib/chapters';
 ---
 <Base>
-  <header class="hud">
-    <div class="wrap row">
-      <span id="wm" class="wm"></span>
-      <span class="nb-micro">Phần I · LOW</span>
-      <span class="nb-micro"><b>c00</b> · 1/12</span>
-    </div>
-  </header>
+  <Hud />
   <main class="wrap hero">
     <span class="nb-micro"><span class="nb-sq"></span>Mở đầu · M0 tracer bullet</span>
     <div id="mark"></div>
     <p class="lead">Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi.</p>
     <p><span class="nb-tag is-info">Đang dựng · M0</span></p>
-    <p><a class="nb-btn is-solid" href="/c02/">Vào chương 02 · The Briefing Budget</a></p>
+    <p class="go"><a class="nb-btn is-solid" href="/c00/">Bắt đầu · Mở đầu</a> <a class="nb-btn" href="/library/">Library</a></p>
+    <section class="toc" aria-labelledby="toc-h">
+      <span class="nb-micro" id="toc-h">12 phần · khoảng 118 phút tự học</span>
+      <ol>
+        {chapters.map((c) => (
+          <li><a href={href(c.id)}>
+            <span class="no nb-cond">{c.no}</span>
+            <span class="meta nb-micro">{PARTS[c.id]}{c.level && c.level !== 'Kết' ? ` · ${c.level.toUpperCase()}` : ''}</span>
+            <span class="en">{c.en}</span><span class="vi">{c.vi}</span>
+            {c.id === 'c02' ? <span class="nb-tag is-signal">Có simulator S1</span> : <span class="nb-tag is-muted">Khung</span>}
+          </a></li>
+        ))}
+      </ol>
+    </section>
     <SurfaceTabs feature="plan-mode" chapter="c03" />
   </main>
 </Base>
 <style>
-  .hud { position: sticky; top: 0; z-index: 10; height: var(--hud-height); border-bottom: 1px solid var(--control); background: var(--bg); }
-  .row { height: 100%; display: flex; align-items: center; gap: 24px; }
-  .wm { width: 208px; flex: none; }
-  .row .nb-micro:last-child { margin-left: auto; }
   .hero { display: grid; gap: 28px; padding-block: 96px 64px; }
   .lead { margin: 0; font-size: 19px; line-height: 1.5; color: var(--fg-muted); max-width: 52ch; }
+  .go { display: flex; gap: 10px; flex-wrap: wrap; margin: 0; }
+  .toc { display: grid; gap: 12px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); border-top: 1px solid var(--control); border-left: 1px solid var(--control); }
+  .toc a { display: grid; gap: 6px; align-content: start; height: 100%; box-sizing: border-box; padding: 16px; border-right: 1px solid var(--control); border-bottom: 1px solid var(--control); color: var(--fg); text-decoration: none; }
+  .toc a:hover { background: var(--bg-raised); }
+  .toc .no { font-size: 56px; line-height: .85; }
+  .toc .en { font: 600 13px/1.3 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+  .toc .vi { font-size: 14px; color: var(--fg-muted); }
 </style>
 <script>
   const NB = (window as any).NoBabysitting;
-  document.getElementById('wm')!.innerHTML = NB.logoSVG('sm');
-  document.querySelector('#wm svg')!.classList.add('is-mono');
   NB.logo(document.getElementById('mark'), { size: 'lg', maxScale: 6 });
 </script>

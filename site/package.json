@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "sync-ds": "node scripts/sync-ds.mjs",
-    "dev": "npm run sync-ds && astro dev",
-    "build": "npm run sync-ds && astro build",
-    "preview": "astro preview"
+    "dev": "npm run sync-ds && python3 scripts/gen-chapters.py && astro dev",
+    "build": "npm run sync-ds && python3 scripts/gen-chapters.py && astro build",
+    "preview": "astro preview",
+    "artifact": "python3 scripts/build-artifact.py"
   },
   "dependencies": {
     "astro": "5.18.2",

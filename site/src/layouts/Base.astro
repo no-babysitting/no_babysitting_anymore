@@ -21,8 +21,9 @@ const { title = 'No Babysitting' } = Astro.props;
   /* one GSAP for the page; the shared runtime (bundle.js) reads window.gsap */
   import { gsap } from 'gsap';
   import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
-  gsap.registerPlugin(ScrambleTextPlugin);
-  (window as any).gsap = gsap; (window as any).ScrambleTextPlugin = ScrambleTextPlugin;
+  import { Flip } from 'gsap/Flip';
+  gsap.registerPlugin(ScrambleTextPlugin, Flip);
+  (window as any).gsap = gsap; (window as any).ScrambleTextPlugin = ScrambleTextPlugin; (window as any).Flip = Flip;
   document.dispatchEvent(new Event('nb:gsap'));
 </script>
 </body>

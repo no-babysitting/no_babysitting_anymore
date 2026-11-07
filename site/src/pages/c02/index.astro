@@ -1,17 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ContextMeter from '../../components/ContextMeter.astro';
+import Hud from '../../components/Hud.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
 /* c02 · The Briefing Budget. Beats b1–b3 and b4 (part) from docs/02-pedagogical-script.md §02.
    Beat text is quoted from the script; sources per beat are listed under each section. */
 ---
 <Base title="02 · The Briefing Budget · No Babysitting">
-  <header class="hud">
-    <div class="wrap row">
-      <a href="/" id="wm" class="wm" aria-label="No babysitting, về trang đầu"></a>
-      <span class="nb-micro">Phần I · LOW</span>
-      <span class="nb-micro"><b>c02</b> · 3/12</span>
-    </div>
-  </header>
+  <Hud current="c02" />
 
   <main class="wrap ch">
     <section class="opener" aria-labelledby="c02-title">
@@ -50,14 +46,12 @@ import ContextMeter from '../../components/ContextMeter.astro';
       <p class="body">Thứ ăn context: file đã đọc, kết quả tra web, mô tả công cụ, hướng dẫn dự án. Hầu hết model có cửa sổ 1M token và tự nén, nên hết context hiếm khi là vấn đề. Nhưng mỗi bản hỏng và lời sửa vẫn nằm lại trong hội thoại. <code>/clear</code> giữa các việc không liên quan vẫn đáng làm: hội thoại tập trung cho kết quả tốt hơn và rẻ hơn.</p>
       <p class="src nb-micro">Nguồn · <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code docs · Best practices ↗</a></p>
     </section>
+
+    <ChapterNav current="c02" />
   </main>
 </Base>
 
 <style>
-  .hud { position: sticky; top: 0; z-index: 10; height: var(--hud-height); border-bottom: 1px solid var(--control); background: var(--bg); }
-  .row { height: 100%; display: flex; align-items: center; gap: 24px; }
-  .wm { width: 208px; flex: none; color: var(--fg); }
-  .row .nb-micro:last-child { margin-left: auto; }
   .ch { display: grid; gap: var(--space-9); padding-block: 64px 128px; }
   .opener { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: end; border-bottom: 1px solid var(--control); padding-bottom: 24px; overflow: hidden; }
   .idx { margin: 0; font-size: clamp(140px, 22vw, 300px); color: var(--fg); }
@@ -77,8 +71,3 @@ import ContextMeter from '../../components/ContextMeter.astro';
   @media (max-width: 640px) { .opener { grid-template-columns: 1fr; } .ch { gap: var(--space-8); } }
 </style>
 
-<script>
-  const NB = (window as any).NoBabysitting;
-  const wm = document.getElementById('wm')!;
-  wm.innerHTML = NB.logoSVG('sm'); wm.firstElementChild!.classList.add('is-mono');
-</script>
