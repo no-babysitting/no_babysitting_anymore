@@ -15,7 +15,10 @@
 .nb-cols > * { min-width: 0; }
 
 /* ---------- typography roles ---------- */
-.nb-micro { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-muted); line-height: 1.4; }
+/* Micro labels: 12px floor, light tracking, NO text-transform. Vietnamese stays sentence case so stacked
+   diacritics (Ư, Ể, Ậ) stay legible; English words and numbers are written in caps in the source or wrapped in .nb-caps. */
+.nb-micro { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; color: var(--fg-muted); line-height: 1.4; }
+.nb-caps { text-transform: uppercase; letter-spacing: .1em; }
 .nb-micro b, .nb-micro strong { color: var(--fg); font-weight: 600; }
 .nb-sq::before { content: ""; display: inline-block; width: 7px; height: 7px; background: var(--accent); margin-right: 9px; vertical-align: 1px; }
 .nb-sq.is-signal::before { background: var(--signal); } .nb-sq.is-warn::before { background: var(--warn); } .nb-sq.is-danger::before { background: var(--danger); }
@@ -31,7 +34,7 @@
 .nb-corner.bl { bottom: 12px; left: 14px; } .nb-corner.br { bottom: 12px; right: 14px; text-align: right; }
 
 /* ---------- controls: bracket buttons ---------- */
-.nb-btn { appearance: none; display: inline-flex; align-items: center; gap: .5em; background: transparent; color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 10px 14px; font: 600 12px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: background .12s, color .12s; }
+.nb-btn { appearance: none; display: inline-flex; align-items: center; gap: .5em; background: transparent; color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 10px 14px; font: 600 12.5px/1.15 var(--font-mono); letter-spacing: .04em; cursor: pointer; text-decoration: none; transition: background .12s, color .12s; }
 .nb-btn::before { content: "["; color: var(--fg-muted); } .nb-btn::after { content: "]"; color: var(--fg-muted); }
 .nb-btn:hover { background: var(--fg); color: var(--bg); }
 .nb-btn:hover::before, .nb-btn:hover::after { color: var(--bg); }
@@ -40,24 +43,48 @@
 .nb-btn[aria-pressed="true"], .nb-btn[aria-selected="true"] { background: var(--fg); color: var(--bg); }
 .nb-btn[aria-pressed="true"]::before, .nb-btn[aria-pressed="true"]::after, .nb-btn[aria-selected="true"]::before, .nb-btn[aria-selected="true"]::after { color: var(--bg); }
 .nb-btn:disabled { opacity: .45; cursor: not-allowed; }
+.nb-btn:disabled:hover { background: transparent; color: var(--fg); }
+.nb-btn:disabled:hover::before, .nb-btn:disabled:hover::after { color: var(--fg-muted); }
 .nb :focus-visible, .nb-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
 /* ---------- tags ---------- */
-.nb-tag { display: inline-flex; align-items: center; gap: .45em; font: 600 11px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; padding: 6px 8px; border: 1px solid currentColor; white-space: nowrap; }
+.nb-tag { display: inline-flex; align-items: center; gap: .45em; font: 600 12px/1.1 var(--font-mono); letter-spacing: .04em; padding: 5px 8px; border: 1px solid currentColor; white-space: nowrap; }
 .nb-tag.is-signal { color: var(--signal); } .nb-tag.is-warn { color: var(--warn); } .nb-tag.is-danger { color: var(--danger); }
 .nb-tag.is-info { color: var(--info); border-style: dashed; } .nb-tag.is-muted { color: var(--fg-muted); border-color: var(--control); }
 
 /* ---------- ascii ---------- */
 .nb-canvas { display: block; width: 100%; height: 100%; }
 .nb-pre { font-family: var(--font-mono); white-space: pre; line-height: 1.05; margin: 0; }
-.nb-cursor { position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none; opacity: 0; visibility: hidden; font: 600 10.5px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; background: var(--fg); color: var(--bg); padding: 4px 6px; white-space: nowrap; }
+.nb-cursor { position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none; opacity: 0; visibility: hidden; font: 600 12px/1 var(--font-mono); letter-spacing: .06em; background: var(--fg); color: var(--bg); padding: 4px 6px; white-space: nowrap; }
 .c-subtle { color: var(--fg-subtle); } .c-muted { color: var(--fg-muted); } .c-accent { color: var(--accent); } .c-signal { color: var(--signal); }
 .c-warn { color: var(--warn); } .c-danger { color: var(--danger); } .c-info { color: var(--info); } .c-control { color: var(--control); }
+
+/* ---------- pills: release status & plan (StatusPill / PlanPill) ---------- */
+.nb-pill { display: inline-flex; align-items: center; gap: .4em; font: 600 12px/1.1 var(--font-mono); letter-spacing: .04em; padding: 4px 7px; border: 1px solid var(--control); color: var(--fg-muted); white-space: nowrap; }
+.nb-pill.is-plan::before { content: "◇"; color: var(--fg-subtle); }
+.nb-pill.is-ga { color: var(--signal); border-color: currentColor; }
+.nb-pill.is-pre { color: var(--info); border: 1px dashed currentColor; }
+
+/* ---------- form controls: search input & filter chips ---------- */
+.nb-input { appearance: none; width: 100%; background: var(--bg-sunken); color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 11px 12px; font: 400 15px/1.3 var(--font-text); }
+.nb-input::placeholder { color: var(--fg-muted); }
+.nb-chip { appearance: none; display: inline-flex; align-items: center; gap: .4em; background: transparent; color: var(--fg-muted); border: 1px solid var(--control); border-radius: 0; padding: 6px 9px; font: 500 12.5px/1.1 var(--font-mono); letter-spacing: .02em; cursor: pointer; white-space: nowrap; }
+.nb-chip:hover { color: var(--fg); border-color: var(--fg); }
+.nb-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.nb-chip .n { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }
+.nb-chip[aria-pressed="true"] .n { color: var(--bg); opacity: .7; }
 
 /* ---------- utilities ---------- */
 .nb-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .nb-tabular { font-variant-numeric: tabular-nums; }
 
+@media (prefers-reduced-motion: reduce) { .nb-btn, .nb-chip { transition: none; } }
 @media (max-width: 640px) {
   .nb-corner.tl, .nb-corner.tr { top: 8px; } .nb-corner.bl, .nb-corner.br { bottom: 8px; }
+}
+/* Phone width: two corner labels collide. The top-right corner is metadata only, so it goes;
+   anything a learner must see (e.g. "mô phỏng") also lives in the body of the component. */
+@media (max-width: 520px) {
+  .nb-corner.tr { display: none; }
+  .nb-corner.tl { right: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }

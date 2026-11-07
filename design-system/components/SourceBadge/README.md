@@ -13,7 +13,7 @@ SourceBadge gắn nguồn cho mọi con số, trích dẫn và tip: ai nói, khi
 
 ## Quy tắc
 
-- Nhãn mono hoa 11px `src NGƯỜI · NGÀY ↗`, chữ `fg-muted`, gạch chân mảnh `control` (hover: `fg`). Đặt sát con số hoặc trích dẫn mà nó chứng minh, ví dụ dưới một số condensed lớn.
+- Nhãn mono 12px `src người · ngày ↗` (tiếng Việt viết thường, tên riêng giữ hoa đầu chữ), chữ `fg-muted`, gạch chân mảnh `control` (hover: `fg`). Đặt sát con số hoặc trích dẫn mà nó chứng minh, ví dụ dưới một số condensed lớn.
 - **Mọi nguồn dùng chung một màu trung tính.** Không gán màu riêng cho từng người, để nguồn không trông như một chuỗi dữ liệu. Không dùng ảnh chân dung.
 - Toàn bộ chip là một link; khi hover thì chữ chuyển sang `fg`.
 

@@ -16,7 +16,7 @@ ChapterOpener là màn mở mỗi chương: số chương condensed khổng lồ
 - Tên chương: `wordmark` (Archivo 125%, viết hoa). Phụ đề tiếng Việt dùng sans `fg-muted`, tối đa 44ch.
 - Địa hình ASCII: tông `fg-muted`, chỉ chiếm 60% phía trên, lấp lánh rất nhẹ. Lens dùng `accent`, vì "nhìn vào" là hành động.
 - Ghost text ở opacity 0.055, không bao giờ chứa nội dung cần đọc.
-- Chuỗi vào cảnh: số → tên → đường kẻ → phụ đề; tổng ≤ 1,4s. Nhãn góc dùng decode (M4).
+- Chuỗi vào cảnh: số → tên → đường kẻ → phụ đề; tổng ≤ 1,4s. Nhãn góc đổi chữ bằng `NB.say` (fade `dur-quick`); M4 chỉ dành cho hành động của agent.
 - Mobile: tên chương xuống toàn chiều rộng, số chương thu nhỏ còn 200px.
 
 ## Không nên

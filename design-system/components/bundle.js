@@ -289,9 +289,19 @@
   };
 
   /* ---------- text helpers ---------- */
+  /* M4 "agent is processing". ONLY for the verb of an agent action (Đọc, Kiểm tra, Ghi…) and agent log lines.
+     Never for corner labels, stamps, panel titles or status words: use NB.say. The scramble set has no
+     diacritics, so Vietnamese marks never flicker; the final text resolves left to right. */
+  NB.SCRAMBLE = '01/\\<>#*';
   NB.decode = function (el, text, dur) {
-    if (window.gsap && window.ScrambleTextPlugin && !NB.reduce()) return window.gsap.to(el, { duration: dur || 0.8, scrambleText: { text: text, chars: '01/\\<>#*', speed: 0.6 } });
+    if (window.gsap && window.ScrambleTextPlugin && !NB.reduce()) return window.gsap.to(el, { duration: dur || 0.8, scrambleText: { text: text, chars: NB.SCRAMBLE, speed: 0.6 } });
     el.textContent = text; return null;
+  };
+  /* Plain text change for everything that is not an agent action: swap text, short fade (dur-quick). */
+  NB.say = function (el, text) {
+    el.textContent = text;
+    if (window.gsap && !NB.reduce()) return window.gsap.fromTo(el, { autoAlpha: 0.35 }, { autoAlpha: 1, duration: 0.24, ease: 'power2.out', overwrite: true });
+    return null;
   };
   NB.clock = function (el) {
     function f() { var d = new Date(); el.textContent = d.toLocaleTimeString('vi-VN', { hour12: false }); }

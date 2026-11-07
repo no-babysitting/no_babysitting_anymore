@@ -17,7 +17,7 @@ The Colleague là nhân vật ASCII đại diện cho Claude trong vai người 
 | thinking | `[°_°]…` | `info` | Đang đọc hoặc lập kế hoạch |
 | working | `[>_<]≡` | `accent` | Nhật ký đang chạy |
 | asking | `[•_•]?` | `warn` | Xin quyền hoặc hỏi lại |
-| overloaded | `[@_@]` | `warn` | Context vượt 40% |
+| overloaded | `[@_@]` | `warn` | Quá nhiều việc song song (c09). Không gắn với ngưỡng context |
 | verified | `[^_^]✓` | `signal` | Kiểm chứng xong |
 
 - Chuyển trạng thái bằng M14: ScrambleText chỉ trên các ký tự của khuôn mặt, khoảng 0.35s.

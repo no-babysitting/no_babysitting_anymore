@@ -1,7 +1,7 @@
 <!-- @dsCard group="Story" height=340 subtitle="Câu hỏi Socratic mở chương · serif duy nhất của hệ · M5 tách từ + M4 nhãn decode" -->
 <!doctype html>
 <html lang="vi" data-theme="light">
-<head><style>:root, [data-theme="dark"]{--bg:#14120f;--bg-raised:#1c1916;--bg-sunken:#0f0d0b;--grid:#1f1c18;--line:#2e2924;--control:#756a5e;--fg:#ede6da;--fg-muted:#ada395;--fg-subtle:#857b6f;--accent:#d97a4a;--on-accent:#14120f;--focus-ring:var(--accent);--signal:#8cc084;--warn:#e2b04a;--danger:#ee7a66;--info:#8fb3d9;--chart-1:#5a8fd8;--chart-2:#cc6c3e;--level-1:#7a4a33;--level-2:#a9603a;--level-3:#d97a4a;--level-4:#f2a57a;--shadow-overlay:0 12px 32px -8px rgba(0,0,0,0.45);}
+<head><style>:root, [data-theme="dark"]{--bg:#14120f;--bg-raised:#1c1916;--bg-sunken:#0f0d0b;--grid:#1f1c18;--line:#2e2924;--control:#756a5e;--fg:#ede6da;--fg-muted:#ada395;--fg-subtle:#8d8376;--accent:#d97a4a;--on-accent:#14120f;--focus-ring:var(--accent);--signal:#8cc084;--warn:#e2b04a;--danger:#ee7a66;--info:#8fb3d9;--chart-1:#5a8fd8;--chart-2:#cc6c3e;--level-1:#7a4a33;--level-2:#a9603a;--level-3:#d97a4a;--level-4:#f2a57a;--shadow-overlay:0 12px 32px -8px rgba(0,0,0,0.45);}
 [data-theme="light"]{--bg:#f2efe9;--bg-raised:#fbf9f5;--bg-sunken:#e8e4dc;--grid:#e3ded5;--line:#d3ccc0;--control:#857c70;--fg:#1a1714;--fg-muted:#575047;--fg-subtle:#6b6257;--accent:#a0461f;--on-accent:#fbf9f5;--focus-ring:var(--accent);--signal:#3a7034;--warn:#8a5d00;--danger:#ae3524;--info:#2c5a87;--chart-1:#2e64b0;--chart-2:#a0461f;--level-1:#d29373;--level-2:#c9774b;--level-3:#a85428;--level-4:#7e3814;--shadow-overlay:0 12px 32px -12px rgba(26,23,20,0.18);}
 :root{--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;--space-9:96px;--space-10:128px;--r-1:0px;--r-2:0px;--r-pill:0px;--dur-instant:0.12s;--dur-quick:0.24s;--dur-base:0.48s;--dur-slow:0.9s;--dur-narrative:1.6s;--ease-out:cubic-bezier(0.215, 0.61, 0.355, 1);--ease-in-out:cubic-bezier(0.455, 0.03, 0.515, 0.955);--ease-settle:cubic-bezier(0.22, 1, 0.36, 1);--ease-scrub:linear;--grid-cell:40px;--measure:66ch;--hud-height:48px;--page-max:1320px;--font-display:"Newsreader", "Iowan Old Style", "Times New Roman", serif;--font-text:"Be Vietnam Pro", system-ui, "Segoe UI", Roboto, sans-serif;--font-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;--font-wide:"Archivo", "Arial Narrow", "Helvetica Neue", sans-serif;}</style><style>/* No Babysitting · shared chrome · Terminal Brutalism × Cinematic ASCII
    Learned from the references (surveyed 06/11/2026):
@@ -20,7 +20,10 @@
 .nb-cols > * { min-width: 0; }
 
 /* ---------- typography roles ---------- */
-.nb-micro { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--fg-muted); line-height: 1.4; }
+/* Micro labels: 12px floor, light tracking, NO text-transform. Vietnamese stays sentence case so stacked
+   diacritics (Ư, Ể, Ậ) stay legible; English words and numbers are written in caps in the source or wrapped in .nb-caps. */
+.nb-micro { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; color: var(--fg-muted); line-height: 1.4; }
+.nb-caps { text-transform: uppercase; letter-spacing: .1em; }
 .nb-micro b, .nb-micro strong { color: var(--fg); font-weight: 600; }
 .nb-sq::before { content: ""; display: inline-block; width: 7px; height: 7px; background: var(--accent); margin-right: 9px; vertical-align: 1px; }
 .nb-sq.is-signal::before { background: var(--signal); } .nb-sq.is-warn::before { background: var(--warn); } .nb-sq.is-danger::before { background: var(--danger); }
@@ -36,7 +39,7 @@
 .nb-corner.bl { bottom: 12px; left: 14px; } .nb-corner.br { bottom: 12px; right: 14px; text-align: right; }
 
 /* ---------- controls: bracket buttons ---------- */
-.nb-btn { appearance: none; display: inline-flex; align-items: center; gap: .5em; background: transparent; color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 10px 14px; font: 600 12px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: background .12s, color .12s; }
+.nb-btn { appearance: none; display: inline-flex; align-items: center; gap: .5em; background: transparent; color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 10px 14px; font: 600 12.5px/1.15 var(--font-mono); letter-spacing: .04em; cursor: pointer; text-decoration: none; transition: background .12s, color .12s; }
 .nb-btn::before { content: "["; color: var(--fg-muted); } .nb-btn::after { content: "]"; color: var(--fg-muted); }
 .nb-btn:hover { background: var(--fg); color: var(--bg); }
 .nb-btn:hover::before, .nb-btn:hover::after { color: var(--bg); }
@@ -45,26 +48,50 @@
 .nb-btn[aria-pressed="true"], .nb-btn[aria-selected="true"] { background: var(--fg); color: var(--bg); }
 .nb-btn[aria-pressed="true"]::before, .nb-btn[aria-pressed="true"]::after, .nb-btn[aria-selected="true"]::before, .nb-btn[aria-selected="true"]::after { color: var(--bg); }
 .nb-btn:disabled { opacity: .45; cursor: not-allowed; }
+.nb-btn:disabled:hover { background: transparent; color: var(--fg); }
+.nb-btn:disabled:hover::before, .nb-btn:disabled:hover::after { color: var(--fg-muted); }
 .nb :focus-visible, .nb-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
 /* ---------- tags ---------- */
-.nb-tag { display: inline-flex; align-items: center; gap: .45em; font: 600 11px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; padding: 6px 8px; border: 1px solid currentColor; white-space: nowrap; }
+.nb-tag { display: inline-flex; align-items: center; gap: .45em; font: 600 12px/1.1 var(--font-mono); letter-spacing: .04em; padding: 5px 8px; border: 1px solid currentColor; white-space: nowrap; }
 .nb-tag.is-signal { color: var(--signal); } .nb-tag.is-warn { color: var(--warn); } .nb-tag.is-danger { color: var(--danger); }
 .nb-tag.is-info { color: var(--info); border-style: dashed; } .nb-tag.is-muted { color: var(--fg-muted); border-color: var(--control); }
 
 /* ---------- ascii ---------- */
 .nb-canvas { display: block; width: 100%; height: 100%; }
 .nb-pre { font-family: var(--font-mono); white-space: pre; line-height: 1.05; margin: 0; }
-.nb-cursor { position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none; opacity: 0; visibility: hidden; font: 600 10.5px/1 var(--font-mono); letter-spacing: .16em; text-transform: uppercase; background: var(--fg); color: var(--bg); padding: 4px 6px; white-space: nowrap; }
+.nb-cursor { position: absolute; left: 0; top: 0; z-index: 6; pointer-events: none; opacity: 0; visibility: hidden; font: 600 12px/1 var(--font-mono); letter-spacing: .06em; background: var(--fg); color: var(--bg); padding: 4px 6px; white-space: nowrap; }
 .c-subtle { color: var(--fg-subtle); } .c-muted { color: var(--fg-muted); } .c-accent { color: var(--accent); } .c-signal { color: var(--signal); }
 .c-warn { color: var(--warn); } .c-danger { color: var(--danger); } .c-info { color: var(--info); } .c-control { color: var(--control); }
+
+/* ---------- pills: release status & plan (StatusPill / PlanPill) ---------- */
+.nb-pill { display: inline-flex; align-items: center; gap: .4em; font: 600 12px/1.1 var(--font-mono); letter-spacing: .04em; padding: 4px 7px; border: 1px solid var(--control); color: var(--fg-muted); white-space: nowrap; }
+.nb-pill.is-plan::before { content: "◇"; color: var(--fg-subtle); }
+.nb-pill.is-ga { color: var(--signal); border-color: currentColor; }
+.nb-pill.is-pre { color: var(--info); border: 1px dashed currentColor; }
+
+/* ---------- form controls: search input & filter chips ---------- */
+.nb-input { appearance: none; width: 100%; background: var(--bg-sunken); color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 11px 12px; font: 400 15px/1.3 var(--font-text); }
+.nb-input::placeholder { color: var(--fg-muted); }
+.nb-chip { appearance: none; display: inline-flex; align-items: center; gap: .4em; background: transparent; color: var(--fg-muted); border: 1px solid var(--control); border-radius: 0; padding: 6px 9px; font: 500 12.5px/1.1 var(--font-mono); letter-spacing: .02em; cursor: pointer; white-space: nowrap; }
+.nb-chip:hover { color: var(--fg); border-color: var(--fg); }
+.nb-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.nb-chip .n { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }
+.nb-chip[aria-pressed="true"] .n { color: var(--bg); opacity: .7; }
 
 /* ---------- utilities ---------- */
 .nb-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .nb-tabular { font-variant-numeric: tabular-nums; }
 
+@media (prefers-reduced-motion: reduce) { .nb-btn, .nb-chip { transition: none; } }
 @media (max-width: 640px) {
   .nb-corner.tl, .nb-corner.tr { top: 8px; } .nb-corner.bl, .nb-corner.br { bottom: 8px; }
+}
+/* Phone width: two corner labels collide. The top-right corner is metadata only, so it goes;
+   anything a learner must see (e.g. "mô phỏng") also lives in the body of the component. */
+@media (max-width: 520px) {
+  .nb-corner.tr { display: none; }
+  .nb-corner.tl { right: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 </style><script>/* No Babysitting · shared runtime for component previews.
    One classic script, no imports, no network. GSAP is optional at call time (window.gsap).
@@ -357,9 +384,19 @@
   };
 
   /* ---------- text helpers ---------- */
+  /* M4 "agent is processing". ONLY for the verb of an agent action (Đọc, Kiểm tra, Ghi…) and agent log lines.
+     Never for corner labels, stamps, panel titles or status words: use NB.say. The scramble set has no
+     diacritics, so Vietnamese marks never flicker; the final text resolves left to right. */
+  NB.SCRAMBLE = '01/\\<>#*';
   NB.decode = function (el, text, dur) {
-    if (window.gsap && window.ScrambleTextPlugin && !NB.reduce()) return window.gsap.to(el, { duration: dur || 0.8, scrambleText: { text: text, chars: '01/\\<>#*', speed: 0.6 } });
+    if (window.gsap && window.ScrambleTextPlugin && !NB.reduce()) return window.gsap.to(el, { duration: dur || 0.8, scrambleText: { text: text, chars: NB.SCRAMBLE, speed: 0.6 } });
     el.textContent = text; return null;
+  };
+  /* Plain text change for everything that is not an agent action: swap text, short fade (dur-quick). */
+  NB.say = function (el, text) {
+    el.textContent = text;
+    if (window.gsap && !NB.reduce()) return window.gsap.fromTo(el, { autoAlpha: 0.35 }, { autoAlpha: 1, duration: 0.24, ease: 'power2.out', overwrite: true });
+    return null;
   };
   NB.clock = function (el) {
     function f() { var d = new Date(); el.textContent = d.toLocaleTimeString('vi-VN', { hour12: false }); }
@@ -422,7 +459,7 @@
   document.fonts.ready.then(function () {
     var split = SplitText.create('#q', { type: 'words', mask: 'words' });
     tl = gsap.timeline();
-    tl.call(function () { col.set('thinking', true); NB.decode(document.getElementById('eb'), 'Chương 04 · Hỏi', 0.6); })
+    tl.call(function () { col.set('thinking', true); NB.say(document.getElementById('eb'), 'Chương 04 · hỏi'); })
       .from('.ghost', { xPercent: 6, autoAlpha: 0, duration: 1.2, ease: 'power2.out' }, 0)
       .from(split.words, { yPercent: 110, duration: 0.5, ease: 'power3.out', stagger: 0.04 }, 0.15)
       .call(function () { col.set('asking'); }, null, '-=0.1');

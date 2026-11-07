@@ -23,15 +23,15 @@
   .meta{grid-template-columns:auto 1fr;column-gap:14px;align-items:center}
   .meta .id{grid-row:span 2}
   .meta{display:grid;gap:2px}
-  .id{font-family:var(--font-wide);font-stretch:62%;font-weight:800;font-size:44px;line-height:.8;color:var(--accent);min-width:1.6ch}
+  .id{font-family:var(--font-wide);font-stretch:62%;font-weight:800;font-size:44px;line-height:.8;color:var(--fg);min-width:2.4ch}
   .mean{font-weight:600;font-size:15px}
-  .tech{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted)}
+  .tech{font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;color:var(--fg-muted)}
   .stage{min-width:0;display:flex;align-items:center;gap:var(--space-3);overflow:hidden}
-  button.run{padding:8px 11px;font-size:11px}
+  button.run{padding:8px 11px}
   :focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
   svg path.ink{fill:none;stroke:var(--fg-muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
   .track{flex:1;height:14px;background:var(--bg-sunken);border:1px solid var(--control);overflow:hidden;max-width:420px}
-  .fill{height:100%;background:var(--accent);transform-origin:left center;transform:scaleX(.62)}
+  .fill{height:100%;background:var(--fg);transform-origin:left center;transform:scaleX(.62)}
   .chips{display:flex;gap:6px}
   .chips.v{display:grid;grid-template-columns:repeat(2,auto)}
   .chip{padding:3px 10px;border:1px solid var(--control);font-family:var(--font-mono);font-size:12px;color:var(--fg-muted)}
@@ -46,18 +46,18 @@
   .ok{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border:1px solid var(--signal);color:var(--signal);font-family:var(--font-mono);font-size:12px;position:relative}
   .ok .f{position:absolute;inset:-1px;background:var(--signal);opacity:0}
   .loop circle.path{fill:none;stroke:var(--line);stroke-width:1.5}
-  .loop text{font-family:var(--font-mono);font-size:10px;fill:var(--fg-muted)}
+  .loop text{font-family:var(--font-mono);font-size:12px;fill:var(--fg-muted)}
   .loop .dot{fill:var(--accent)}
-  .rein{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .rein{fill:none;stroke:var(--fg);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .check{fill:none;stroke:var(--signal);stroke-width:1.5;opacity:0;visibility:hidden}
-  .checkmark{fill:var(--signal);font-family:var(--font-mono);font-size:11px;text-anchor:middle;opacity:0;visibility:hidden}
+  .checkmark{fill:var(--signal);font-family:var(--font-mono);font-size:12px;text-anchor:middle;opacity:0;visibility:hidden}
   .static{font-size:12px;color:var(--fg-subtle)}
   @media (max-width:640px){.row{grid-template-columns:1fr}.stage{flex-wrap:wrap}}
 </style>
 </head>
 <body>
 <section class="nb nb-frame mg" aria-label="Ngữ pháp chuyển động">
-<span class="nb-corner tl nb-micro"><span class="nb-sq"></span>Motion grammar · một chuyển động, một nghĩa</span>
+<span class="nb-corner tl nb-micro"><span class="nb-sq"></span>MOTION GRAMMAR · một chuyển động, một nghĩa</span>
 <span class="nb-corner tr nb-micro">GSAP <b>3.15.0</b></span>
 <div class="rows">
   <section class="row"><div class="meta"><span class="id">M1</span><span class="mean">Dẫn tới / chuyển thành</span><span class="tech">DrawSVG</span></div>

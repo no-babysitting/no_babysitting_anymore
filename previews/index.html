@@ -6,7 +6,7 @@
 <title>No Babysitting · Previews</title>
 <style>
   :root { --bg:#14120f; --fg:#ede6da; --muted:#ada395; --line:#756a5e; --accent:#d97a4a; }
-  @media (prefers-color-scheme: light) { :root { --bg:#f3eee5; --fg:#1d1a16; --muted:#5e554b; --line:#8a7f72; --accent:#a0461f; } }
+  @media (prefers-color-scheme: light) { :root { --bg:#f2efe9; --fg:#1a1714; --muted:#575047; --line:#857c70; --accent:#a0461f; } }
   body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui, sans-serif; padding:24px 16px; }
   main { max-width:980px; margin:0 auto; }
   h1 { font:800 28px/1.1 system-ui, sans-serif; letter-spacing:.02em; text-transform:uppercase; margin:0 0 6px; }
@@ -16,7 +16,7 @@
   th { font:600 13px/1.4 ui-monospace, Menlo, monospace; white-space:nowrap; }
   td { color:var(--muted); }
   td.l { white-space:nowrap; }
-  a { color:var(--accent); font:600 12px/1 ui-monospace, Menlo, monospace; text-decoration:none; margin-right:8px; }
+  a { color:var(--fg); font:600 12px/1 ui-monospace, Menlo, monospace; text-decoration:none; margin-right:8px; }
   a:hover { text-decoration:underline; }
   @media (max-width:640px) { td:nth-child(2) { display:none; } }
 </style>
@@ -24,22 +24,30 @@
 <body>
 <main>
 <h1>No Babysitting · Previews</h1>
-<p>18 component, mỗi cái 2 theme. File đã nhúng sẵn token và runtime; cần mạng để tải font (Google Fonts) và GSAP 3.15.0 (jsDelivr).</p>
+<p>26 component, mỗi cái 2 theme. File đã nhúng sẵn token và runtime; cần mạng để tải font (Google Fonts) và GSAP 3.15.0 (jsDelivr). Trạng thái từng component: design-system/SOURCE-OF-TRUTH.md.</p>
 <table>
 <thead><tr><th>Component</th><td>Mô tả</td><td>Theme</td></tr></thead>
 <tbody>
 <tr><th scope="row">AgentWindow</th><td>Bàn làm việc của agent · khung app / cli · máy trạng thái chạy → chờ quyền → xong · M4</td><td class="l"><a href="AgentWindow-dark.html">[ dark ]</a> <a href="AgentWindow-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">AsciiHero</th><td>Hero chữ ký · noise → điêu khắc ký tự · nav nhúng trong ASCII · lens + nhãn theo con trỏ</td><td class="l"><a href="AsciiHero-dark.html">[ dark ]</a> <a href="AsciiHero-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">ChapterOpener</th><td>Mở chương · số condensed tràn khung · tên expanded · địa hình ASCII · metadata 4 góc · ghost text</td><td class="l"><a href="ChapterOpener-dark.html">[ dark ]</a> <a href="ChapterOpener-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">ChapterRail</th><td>ChapterRail · 12 mốc dọc chia 4 phần · đã qua ✓ · hiện tại ■ accent · sắp tới · dạng thu gọn 12 ô cho mobile</td><td class="l"><a href="ChapterRail-dark.html">[ dark ]</a> <a href="ChapterRail-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">CinematicAscii</th><td>Cảnh full-color (finale) · màu lấy từ ảnh · tiêu đề và metadata kiểu điện ảnh</td><td class="l"><a href="CinematicAscii-dark.html">[ dark ]</a> <a href="CinematicAscii-light.html">[ light ]</a></td></tr>
-<tr><th scope="row">ContextMeter</th><td>S1 · ngân sách context · số condensed khổng lồ + thanh khối ASCII · đồng nghiệp quá tải khi vượt 60%</td><td class="l"><a href="ContextMeter-dark.html">[ dark ]</a> <a href="ContextMeter-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">ContextMeter</th><td>S1 · nhiễu tích tụ · hai chỉ số: độ tập trung và chi phí mỗi lượt · không có vùng đỏ cố định · mốc 1M ở rất xa</td><td class="l"><a href="ContextMeter-dark.html">[ dark ]</a> <a href="ContextMeter-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">ContradictionNote</th><td>ContradictionNote ⇄ · hai hoặc ba trích dẫn ngang hàng, mỗi bên một nguồn · không ngầm chọn bên nào · viền đứt nét info</td><td class="l"><a href="ContradictionNote-dark.html">[ dark ]</a> <a href="ContradictionNote-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">Cover</th><td></td><td class="l"><a href="Cover-dark.html">[ dark ]</a> <a href="Cover-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">DurabilityTag</th><td>4 mức độ bền · viền + ký hiệu + chữ (không chỉ màu) · góc vuông, mono hoa</td><td class="l"><a href="DurabilityTag-dark.html">[ dark ]</a> <a href="DurabilityTag-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">FilterBar</th><td>FilterBar + SearchBox · tìm không dấu · chip lọc loại, cấp độ, độ bền, bề mặt, vai trò · đếm kết quả · danh sách đổi bằng Flip (M3)</td><td class="l"><a href="FilterBar-dark.html">[ dark ]</a> <a href="FilterBar-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">FloatingOps</th><td>Giao diện AI đang vận hành · máy trạng thái báo cáo tuần · panel nhiều lớp + parallax</td><td class="l"><a href="FloatingOps-dark.html">[ dark ]</a> <a href="FloatingOps-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">GrillCard</th><td>Nhớ lại · tự viết rồi mới mở đáp án · tự chấm 3 mức · gate, don&#x27;t trap</td><td class="l"><a href="GrillCard-dark.html">[ dark ]</a> <a href="GrillCard-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">JourneyHUD</th><td>JourneyHUD · thanh trên 48px · cấp độ Low → Pro · bản đồ harness 6 phần (PRD G1) · báo cáo tuần ■■□□ · chương n/12 · mở rộng khi bấm</td><td class="l"><a href="JourneyHUD-dark.html">[ dark ]</a> <a href="JourneyHUD-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">LibraryCard</th><td>Thẻ mục Library · loại, tiêu đề, một dòng VI, nguồn, độ bền, cấp độ · bấm để mở chi tiết bằng Flip (M3)</td><td class="l"><a href="LibraryCard-dark.html">[ dark ]</a> <a href="LibraryCard-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">MotionGrammar</th><td>M1–M10 · một chuyển động, một nghĩa · GSAP 3.15.0</td><td class="l"><a href="MotionGrammar-dark.html">[ dark ]</a> <a href="MotionGrammar-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">PlanPill</th><td>PlanPill · StatusPill · AvailabilityBadges · gói, trạng thái phát hành, bề mặt · chọn gói của bạn để thấy bước nào có sẵn</td><td class="l"><a href="PlanPill-dark.html">[ dark ]</a> <a href="PlanPill-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">PredictPrompt</th><td>Chốt dự đoán trước khi xem · lựa chọn đảo màu · quan sát bằng thanh khối ASCII</td><td class="l"><a href="PredictPrompt-dark.html">[ dark ]</a> <a href="PredictPrompt-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">PresenterHUD</th><td>PresenterHUD · thanh dưới khi trình chiếu · beat c02:b2 + pha · đồng hồ chương so với dự kiến · thanh Thảo luận ở pha đoán · phím tắt (?)</td><td class="l"><a href="PresenterHUD-dark.html">[ dark ]</a> <a href="PresenterHUD-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">QuestionCard</th><td>Câu hỏi Socratic mở chương · serif duy nhất của hệ · M5 tách từ + M4 nhãn decode</td><td class="l"><a href="QuestionCard-dark.html">[ dark ]</a> <a href="QuestionCard-light.html">[ light ]</a></td></tr>
+<tr><th scope="row">SimulatorFrame</th><td>SimulatorFrame · khung chung cho S1–S11 · tiêu đề, mục tiêu, khu thao tác, phản hồi, Kiểm tra / Làm lại · chờ ▍ → đang làm → hoàn tất · ví dụ S4 Linter</td><td class="l"><a href="SimulatorFrame-dark.html">[ dark ]</a> <a href="SimulatorFrame-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">SourceBadge</th><td>Nguồn trung tính cạnh mọi con số · người · ngày · link · mono hoa, gạch chân mảnh</td><td class="l"><a href="SourceBadge-dark.html">[ dark ]</a> <a href="SourceBadge-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">SourceButton</th><td>Nút Nguồn · mở bảng nguồn để người học tự đối chiếu · loại, người, ngày, verifiedAt, trích nguyên văn, mở bản gốc, sao chép link</td><td class="l"><a href="SourceButton-dark.html">[ dark ]</a> <a href="SourceButton-light.html">[ light ]</a></td></tr>
 <tr><th scope="row">StatusBoard</th><td>BÁO CÁO TUẦN · 4 tiêu chí [ ] → [✓] · bộ đếm condensed · dạng HUD thu gọn ■■□□ ở góc · M9</td><td class="l"><a href="StatusBoard-dark.html">[ dark ]</a> <a href="StatusBoard-light.html">[ light ]</a></td></tr>

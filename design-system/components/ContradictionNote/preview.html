@@ -1,0 +1,84 @@
+<!-- @dsCard group="Nhãn" height=640 subtitle="ContradictionNote ⇄ · hai hoặc ba trích dẫn ngang hàng, mỗi bên một nguồn · không ngầm chọn bên nào · viền đứt nét info" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>ContradictionNote</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .cn-wrap{padding:48px 18px 18px;display:grid;gap:22px}
+  .cn{border:1px dashed var(--info);display:grid}
+  .cn > header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 14px;align-items:center;padding:10px 14px;border-bottom:1px dashed var(--info)}
+  .cn h3{margin:0;font:600 15.5px/1.35 var(--font-text);color:var(--fg)}
+  .sides{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr)}
+  .side{position:relative;display:grid;gap:10px;align-content:start;padding:14px}
+  .side + .side{border-left:1px dashed var(--control)}
+  .side + .side::before{content:"⇄";position:absolute;left:-10px;top:14px;width:20px;text-align:center;background:var(--bg);color:var(--info);font:600 14px/20px var(--font-mono)}
+  .claim{margin:0;font-family:var(--font-display);font-size:19px;line-height:1.35;color:var(--fg)}
+  .big{margin:0;font-size:56px;color:var(--fg)}
+  .claim.q{font-style:italic}
+  .who{font:500 12.5px/1.5 var(--font-mono);color:var(--fg-muted)}
+  .who b{color:var(--fg);font-weight:600}
+  .side .nb-btn{justify-self:start;padding:7px 10px}
+  .cn > footer{padding:10px 14px;border-top:1px dashed var(--control);font-size:14px;line-height:1.5;color:var(--fg-muted)}
+  .cn > footer b{color:var(--fg);font-weight:600}
+  @media (max-width:640px){
+    .sides{grid-auto-flow:row}
+    .side + .side{border-left:0;border-top:1px dashed var(--control)}
+    .side + .side::before{left:14px;top:-11px}
+  }
+</style>
+</head>
+<body>
+<section class="nb nb-frame cn-wrap" aria-labelledby="cnt">
+  <span class="nb-corner tl nb-micro" id="cnt"><span class="nb-sq"></span>ContradictionNote · ⇄</span>
+  <span class="nb-corner tr nb-micro">ngang hàng · không chọn bên</span>
+
+  <aside class="cn" aria-labelledby="h1">
+    <header><h3 id="h1">Từ mức nào thì context bắt đầu làm Claude kém đi?</h3><span class="nb-tag is-info">⇄ Chưa thống nhất · 3 nguồn</span></header>
+    <div class="sides" role="list">
+      <div class="side" role="listitem">
+        <p class="nb-cond big nb-tabular" aria-hidden="true">~40%</p>
+        <p class="claim">Chất lượng bắt đầu giảm khi context vượt khoảng 40%.</p>
+        <span class="who"><b>Dex</b> · video · 24/03/2026 · diễn giải</span>
+        <button class="nb-btn" type="button">Nguồn · 1 ↗</button>
+      </div>
+      <div class="side" role="listitem">
+        <p class="nb-cond big nb-tabular" aria-hidden="true">~100K</p>
+        <p class="claim">Nên dừng hoặc làm mới phiên quanh mốc khoảng 100K token.</p>
+        <span class="who"><b>Matt Pocock</b> · video · diễn giải</span>
+        <button class="nb-btn" type="button">Nguồn · 1 ↗</button>
+      </div>
+      <div class="side" role="listitem">
+        <p class="nb-cond big nb-tabular" aria-hidden="true">—</p>
+        <p class="claim q">"…you'll rarely run out of context."</p>
+        <span class="who"><b>Claude Code docs</b> · Best practices · nguyên văn · kiểm chứng 07/11/2026</span>
+        <button class="nb-btn" type="button">Nguồn · 1 ↗</button>
+      </div>
+    </div>
+    <footer>Các ngưỡng phụ thuộc model và tác vụ. Trang chính thức <b>không nêu ngưỡng phần trăm</b>. Trang không chọn bên nào; xem chương 02 · b4.</footer>
+  </aside>
+
+  <aside class="cn" aria-labelledby="h2">
+    <header><h3 id="h2">README của repo nguồn có bao nhiêu tip?</h3><span class="nb-tag is-info">⇄ Số đếm lệch · 2 nguồn</span></header>
+    <div class="sides" role="list">
+      <div class="side" role="listitem">
+        <p class="nb-cond big nb-tabular" aria-hidden="true">83</p>
+        <p class="claim">Tiêu đề README ghi 83 tip.</p>
+        <span class="who"><b>claude-code-best-practice</b> · README</span>
+        <button class="nb-btn" type="button">Nguồn · 1 ↗</button>
+      </div>
+      <div class="side" role="listitem">
+        <p class="nb-cond big nb-tabular" aria-hidden="true">82</p>
+        <p class="claim">Bộ ingest đếm được 82 dòng tip.</p>
+        <span class="who"><b>Ingest của site</b> · lần chạy gần nhất</span>
+        <button class="nb-btn" type="button">Xem nhật ký ingest</button>
+      </div>
+    </div>
+    <footer>Library dùng <b>số đếm được</b> và hiện ghi chú này cạnh con số.</footer>
+  </aside>
+</section>
+</body>
+</html>

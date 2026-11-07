@@ -1,0 +1,183 @@
+<!-- @dsCard group="Library" height=820 subtitle="FilterBar + SearchBox · tìm không dấu · chip lọc loại, cấp độ, độ bền, bề mặt, vai trò · đếm kết quả · danh sách đổi bằng Flip (M3)" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>FilterBar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .fb{padding:48px 18px 18px;display:grid;gap:14px}
+  .top{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end}
+  .search{display:grid;gap:6px}
+  .search .box{position:relative}
+  .search .box::before{content:"⌕";position:absolute;left:12px;top:50%;transform:translateY(-52%);font:500 17px/1 var(--font-mono);color:var(--fg-muted);pointer-events:none}
+  .search .nb-input{padding-left:36px;font-size:16px}
+  .kbd{position:absolute;right:10px;top:50%;transform:translateY(-50%);font:600 12px/1 var(--font-mono);color:var(--fg-subtle);border:1px solid var(--control);padding:3px 6px}
+  .count{margin:0;display:flex;align-items:baseline;gap:8px}
+  .count .n{font-size:64px;color:var(--fg)}
+  .count small{font:500 13px/1.3 var(--font-mono);color:var(--fg-subtle);max-width:13ch}
+  details.filters{border-top:1px solid var(--control);border-bottom:1px solid var(--control)}
+  details.filters > summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:10px 0}
+  details.filters > summary::-webkit-details-marker{display:none}
+  details.filters > summary::after{content:"[ + ]";font:600 12px/1 var(--font-mono);color:var(--fg-muted)}
+  details.filters[open] > summary::after{content:"[ − ]"}
+  .groups{display:grid;gap:10px;padding:2px 0 14px}
+  fieldset{border:0;margin:0;padding:0;display:grid;grid-template-columns:12ch 1fr;gap:10px;align-items:start}
+  legend{float:left;padding:7px 0 0;font:600 12px/1.3 var(--font-mono);color:var(--fg-muted);letter-spacing:.04em}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .active{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:32px}
+  .active .nb-btn{padding:6px 9px}
+  .active .none{color:var(--fg-subtle);font-size:13.5px}
+  ol.res{list-style:none;margin:0;padding:0;border-top:1px solid var(--control)}
+  ol.res li{display:grid;grid-template-columns:13ch minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:11px 2px;border-bottom:1px solid var(--control)}
+  ol.res .ty{font:600 12px/1.3 var(--font-mono);color:var(--fg-muted);letter-spacing:.04em}
+  ol.res a{color:var(--fg);text-decoration:none;font:500 15px/1.4 var(--font-text)}
+  ol.res a:hover{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--control)}
+  ol.res li.is-superseded a{color:var(--fg-muted)}
+  ol.res .du{font:600 12px/1 var(--font-mono);white-space:nowrap}
+  ol.res .lv{font:600 12px/1 var(--font-mono);color:var(--fg-subtle);min-width:7ch;text-align:right}
+  mark{background:transparent;color:var(--fg);text-decoration:underline 2px var(--fg-muted);text-underline-offset:3px}
+  .empty{padding:22px 2px;color:var(--fg-muted);font-size:15px}
+  .note{margin:0;font-size:13px;color:var(--fg-subtle)}
+  @media (max-width:640px){
+    .top{grid-template-columns:1fr}
+    .count .n{font-size:48px}
+    fieldset{grid-template-columns:1fr;gap:6px}
+    legend{padding:0}
+    ol.res li{grid-template-columns:minmax(0,1fr) auto;gap:4px 10px}
+    ol.res .ty{grid-column:1/-1}
+    ol.res .lv{display:none}
+    .kbd{display:none}
+  }
+</style>
+</head>
+<body>
+<section class="nb nb-frame fb" aria-labelledby="ft">
+  <span class="nb-corner tl nb-micro" id="ft"><span class="nb-sq"></span>FilterBar · Library</span>
+  <span class="nb-corner tr nb-micro">tìm không dấu · lọc nhiều chiều</span>
+
+  <div class="top">
+    <div class="search" role="search">
+      <label class="nb-micro" for="q">Tìm trong Library</label>
+      <div class="box"><input class="nb-input" id="q" type="search" autocomplete="off" placeholder="ví dụ: tua lai, plan, CLAUDE.md" aria-describedby="cnt-t"><span class="kbd" aria-hidden="true">/</span></div>
+    </div>
+    <p class="count" id="cnt-t" aria-live="polite"><span class="nb-cond n nb-tabular" id="cnt">14</span><small id="cnt-l">trên 14 mục</small></p>
+  </div>
+
+  <details class="filters" id="filters" open>
+    <summary><span class="nb-micro">Bộ lọc · <b id="on">0</b> đang bật</span></summary>
+    <div class="groups" id="groups"></div>
+  </details>
+
+  <div class="active" id="active" aria-label="Bộ lọc đang bật"></div>
+  <ol class="res" id="res" aria-label="Kết quả"></ol>
+  <p class="note">Bản xem trước có 14 mục mẫu. Site thật dùng MiniSearch trên khoảng 350–450 mục; quy tắc hiển thị giữ nguyên.</p>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  var hasFlip = window.gsap && window.Flip; if (hasFlip) gsap.registerPlugin(Flip);
+  var anim = hasFlip && !NB.reduce();
+  var DUR = { timeless: ['◆ Bền vững', 'c-signal'], 'model-sensitive': ['◐ Phụ thuộc model', 'c-warn'], superseded: ['✕ Đã thay thế', 'c-danger'], contested: ['⇄ Chưa thống nhất', 'c-info'] };
+  var ITEMS = [
+    { t: 'Sau hai lần sửa không được, xoá hội thoại và viết lại prompt', ty: 'TIP', lv: 'low', du: 'timeless', sf: ['cowork', 'app', 'cli'], ro: [] },
+    { t: 'Tua lại thay vì sửa tiếp khi Claude đi sai hướng', ty: 'TIP', lv: 'low', du: 'timeless', sf: ['app', 'cli'], ro: [] },
+    { t: 'Ngưỡng "dumb zone" khoảng 40% context', ty: 'TIP', lv: 'medium', du: 'contested', sf: ['cowork', 'app', 'cli'], ro: [] },
+    { t: 'Plan mode: lập kế hoạch trước khi sửa', ty: 'Tính năng', lv: 'medium', du: 'timeless', sf: ['app', 'cli'], ro: [] },
+    { t: 'Để Claude phỏng vấn bạn trước khi viết brief', ty: 'TIP', lv: 'medium', du: 'timeless', sf: ['cowork', 'app', 'cli'], ro: [] },
+    { t: 'CLAUDE.md: chỉ ghi gotcha Claude không tự suy ra được', ty: 'TIP', lv: 'medium', du: 'timeless', sf: ['app', 'cli'], ro: [] },
+    { t: 'Viết "think hard" để Claude nghĩ kỹ hơn', ty: 'TIP', lv: 'medium', du: 'superseded', sf: ['app', 'cli'], ro: [] },
+    { t: 'Dùng Opus cho mọi việc', ty: 'TIP', lv: 'high', du: 'superseded', sf: ['app', 'cli'], ro: [] },
+    { t: 'Skill: đóng gói quy trình rà soát báo cáo', ty: 'Tính năng', lv: 'high', du: 'timeless', sf: ['cowork', 'app', 'cli'], ro: [] },
+    { t: 'Hook: tự xuất PDF sau mỗi lần sửa báo cáo', ty: 'Tính năng', lv: 'high', du: 'model-sensitive', sf: ['cli'], ro: [] },
+    { t: 'Subagent đối chiếu số liệu độc lập', ty: 'WORKFLOW', lv: 'high', du: 'timeless', sf: ['app', 'cli'], ro: [] },
+    { t: 'Quét đối thủ hằng tuần', ty: 'Ca sử dụng', lv: 'pro', du: 'timeless', sf: ['cowork', 'app'], ro: ['marketing'] },
+    { t: 'Đối soát và giải thích chênh lệch', ty: 'Ca sử dụng', lv: 'pro', du: 'timeless', sf: ['cowork', 'app'], ro: ['tai-chinh'] },
+    { t: 'Từ bug report đến PR', ty: 'Ca sử dụng', lv: 'pro', du: 'timeless', sf: ['app', 'cli'], ro: ['dev'] }
+  ];
+  var GROUPS = [
+    { k: 'ty', l: 'Loại', o: [['TIP', 'TIP'], ['Tính năng', 'Tính năng'], ['WORKFLOW', 'WORKFLOW'], ['Ca sử dụng', 'Ca sử dụng']] },
+    { k: 'lv', l: 'Cấp độ', o: [['low', 'LOW'], ['medium', 'MEDIUM'], ['high', 'HIGH'], ['pro', 'PRO']] },
+    { k: 'du', l: 'Độ bền', o: [['timeless', '◆ Bền vững'], ['model-sensitive', '◐ Phụ thuộc model'], ['superseded', '✕ Đã thay thế'], ['contested', '⇄ Chưa thống nhất']] },
+    { k: 'sf', l: 'Bề mặt', o: [['cowork', 'Cowork'], ['app', 'Claude Code app'], ['cli', 'CLI']] },
+    { k: 'ro', l: 'Vai trò', o: [['marketing', 'Marketing'], ['tai-chinh', 'Tài chính'], ['dev', 'Dev']] }
+  ];
+  var sel = {}; GROUPS.forEach(function (g) { sel[g.k] = []; });
+  var $ = function (id) { return document.getElementById(id); };
+  function fold(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase(); }
+  function has(it, k, v) { var x = it[k]; return Array.isArray(x) ? x.indexOf(v) >= 0 : x === v; }
+  function match(it, q) {
+    if (q && fold(it.t).indexOf(q) < 0) return false;
+    return GROUPS.every(function (g) { return !sel[g.k].length || sel[g.k].some(function (v) { return has(it, g.k, v); }); });
+  }
+  function hl(text, q) {
+    var frag = document.createDocumentFragment(); if (!q) { frag.appendChild(document.createTextNode(text)); return frag; }
+    var i = fold(text).indexOf(q); if (i < 0) { frag.appendChild(document.createTextNode(text)); return frag; }
+    frag.appendChild(document.createTextNode(text.slice(0, i)));
+    var m = document.createElement('mark'); m.textContent = text.slice(i, i + q.length); frag.appendChild(m);
+    frag.appendChild(document.createTextNode(text.slice(i + q.length))); return frag;
+  }
+  /* chips */
+  GROUPS.forEach(function (g) {
+    var fs = document.createElement('fieldset'), lg = document.createElement('legend'), ch = document.createElement('div');
+    lg.textContent = g.l; ch.className = 'chips'; fs.appendChild(lg); fs.appendChild(ch);
+    g.o.forEach(function (o) {
+      var n = ITEMS.filter(function (it) { return has(it, g.k, o[0]); }).length;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'nb-chip'; b.setAttribute('aria-pressed', 'false');
+      b.dataset.k = g.k; b.dataset.v = o[0]; b.dataset.l = o[1];
+      b.innerHTML = '<span></span> <span class="n"></span>'; b.firstChild.textContent = o[1]; b.lastChild.textContent = n;
+      b.addEventListener('click', function () {
+        var a = sel[g.k], i = a.indexOf(o[0]); if (i >= 0) a.splice(i, 1); else a.push(o[0]);
+        b.setAttribute('aria-pressed', String(i < 0)); render();
+      });
+      ch.appendChild(b);
+    });
+    $('groups').appendChild(fs);
+  });
+  function clearAll() { GROUPS.forEach(function (g) { sel[g.k] = []; }); document.querySelectorAll('.nb-chip').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); $('q').value = ''; render(); }
+  function render() {
+    var q = fold($('q').value.trim()), res = $('res');
+    var state = anim ? Flip.getState(res.children) : null;
+    var hits = ITEMS.filter(function (it) { return match(it, q); });
+    res.textContent = '';
+    hits.forEach(function (it) {
+      var li = document.createElement('li'); if (it.du === 'superseded') li.className = 'is-superseded';
+      li.setAttribute('data-flip-id', it.t);
+      var ty = document.createElement('span'); ty.className = 'ty'; ty.textContent = it.ty;
+      var a = document.createElement('a'); a.href = '#'; a.appendChild(hl(it.t, q));
+      var du = document.createElement('span'); du.className = 'du ' + DUR[it.du][1]; du.textContent = DUR[it.du][0];
+      var lv = document.createElement('span'); lv.className = 'lv'; lv.textContent = it.lv.toUpperCase();
+      li.appendChild(ty); li.appendChild(a); li.appendChild(du); li.appendChild(lv); res.appendChild(li);
+    });
+    if (!hits.length) {
+      var e = document.createElement('li'); e.className = 'empty';
+      e.innerHTML = 'Không có mục nào khớp. Thử từ khác, hoặc <button class="nb-btn" type="button">Xoá lọc</button>';
+      e.querySelector('button').addEventListener('click', clearAll); res.appendChild(e);
+    }
+    $('cnt').textContent = hits.length; $('cnt-l').textContent = 'trên ' + ITEMS.length + ' mục';
+    /* active filters echo */
+    var act = $('active'), on = 0; act.textContent = '';
+    GROUPS.forEach(function (g) { sel[g.k].forEach(function (v) {
+      on++; var lab = g.o.filter(function (o) { return o[0] === v; })[0][1];
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'nb-btn'; b.textContent = g.l + ': ' + lab + ' ✕';
+      b.setAttribute('aria-label', 'Bỏ lọc ' + g.l + ' ' + lab);
+      b.addEventListener('click', function () { sel[g.k].splice(sel[g.k].indexOf(v), 1); document.querySelector('.nb-chip[data-k="' + g.k + '"][data-v="' + v + '"]').setAttribute('aria-pressed', 'false'); render(); });
+      act.appendChild(b);
+    }); });
+    if (on) { var c = document.createElement('button'); c.type = 'button'; c.className = 'nb-btn'; c.textContent = 'Xoá lọc'; c.addEventListener('click', clearAll); act.appendChild(c); }
+    else { var s = document.createElement('span'); s.className = 'none'; s.textContent = 'Chưa bật bộ lọc nào.'; act.appendChild(s); }
+    $('on').textContent = on;
+    if (anim && state) Flip.from(state, { duration: 0.36, ease: 'power2.inOut', absolute: true, onEnter: function (els) { return gsap.fromTo(els, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.24 }); }, onLeave: function (els) { return gsap.to(els, { autoAlpha: 0, duration: 0.2 }); } });
+  }
+  var t; $('q').addEventListener('input', function () { clearTimeout(t); t = setTimeout(render, 120); });
+  document.addEventListener('keydown', function (e) { if (e.key === '/' && document.activeElement !== $('q')) { e.preventDefault(); $('q').focus(); } });
+  if (window.matchMedia('(max-width:640px)').matches) $('filters').open = false;
+  render();
+})();
+</script>
+</body>
+</html>

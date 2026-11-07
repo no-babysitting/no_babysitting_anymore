@@ -1,0 +1,162 @@
+<!-- @dsCard group="Library" height=760 subtitle="Thẻ mục Library · loại, tiêu đề, một dòng VI, nguồn, độ bền, cấp độ · bấm để mở chi tiết bằng Flip (M3)" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>LibraryCard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .lib{padding:48px 18px 18px}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--control);border-left:1px solid var(--control)}
+  .card{position:relative;display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;padding:16px 16px 14px;border-right:1px solid var(--control);border-bottom:1px solid var(--control);background:var(--bg);min-width:0;transition:background .12s}
+  .card:hover{background:var(--bg-raised)}
+  .card:focus-within{outline:2px solid var(--focus-ring);outline-offset:-2px}
+  .card .eb{display:flex;justify-content:space-between;gap:8px}
+  .card h3{margin:0;font:600 17px/1.35 var(--font-text);color:var(--fg)}
+  .card h3 a{color:inherit;text-decoration:none}
+  .card h3 a::after{content:"";position:absolute;inset:0;z-index:1}
+  .card h3 a:focus-visible{outline:none}
+  .card .sum{margin:0;font-size:14.5px;line-height:1.5;color:var(--fg-muted)}
+  .card.is-superseded h3{color:var(--fg-muted)}
+  .card .instead{margin:0;font:500 13px/1.45 var(--font-text);color:var(--fg)}
+  .card .instead::before{content:"→ ";color:var(--fg-subtle)}
+  .foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding-top:10px;border-top:1px dashed var(--control)}
+  .who{font:500 12px/1.3 var(--font-mono);color:var(--fg-subtle);margin-right:auto}
+  .lvl{display:inline-flex;align-items:center;gap:6px;font:600 12px/1 var(--font-mono);color:var(--fg-muted)}
+  .lvl i{display:inline-block;width:7px;height:10px;background:var(--control)}
+  .lvl i.on.l1{background:var(--level-1)} .lvl i.on.l2{background:var(--level-2)} .lvl i.on.l3{background:var(--level-3)} .lvl i.on.l4{background:var(--level-4)}
+  .nb-tag.is-danger s{text-decoration-thickness:1px}
+  /* open = detail */
+  .card.is-open{grid-column:1/-1;background:var(--bg-raised);grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto;column-gap:28px;padding:20px}
+  .card.is-open > .head{grid-column:1}
+  .card.is-open h3{font-size:24px;line-height:1.25}
+  .detail{display:none}
+  .card.is-open .detail{display:grid;gap:14px;grid-column:2;grid-row:1 / span 4;align-content:start;position:relative;z-index:2}
+  .card.is-open h3 a::after{display:none}
+  .head{display:grid;gap:10px;align-content:start}
+  .detail p{margin:0;font-size:15px;line-height:1.6;color:var(--fg)}
+  .detail dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+  .detail dt{font:600 12px/1.6 var(--font-mono);color:var(--fg-muted);letter-spacing:.04em}
+  .detail dd{margin:0;color:var(--fg)}
+  .detail dd a{color:var(--fg);text-underline-offset:3px;text-decoration-color:var(--control)}
+  .detail .acts{display:flex;flex-wrap:wrap;gap:8px}
+  .card.is-open .foot{grid-column:1}
+  .hint{margin:12px 0 0;font-size:13px;color:var(--fg-subtle)}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr}
+    .card.is-open{grid-template-columns:1fr;padding:16px}
+    .card.is-open .detail{grid-column:1;grid-row:auto}
+  }
+</style>
+</head>
+<body>
+<section class="nb nb-frame lib" aria-labelledby="lt">
+  <span class="nb-corner tl nb-micro" id="lt"><span class="nb-sq"></span>LibraryCard · 3 trạng thái</span>
+  <span class="nb-corner tr nb-micro">thường · hover · mở</span>
+  <div class="grid" id="grid">
+    <article class="card" data-id="tip-context-02" aria-labelledby="t1">
+      <div class="head">
+        <div class="eb"><span class="nb-micro">TIP · context</span><span class="nb-micro">c02</span></div>
+        <h3 id="t1"><a href="#tip-context-02" aria-expanded="false" aria-controls="d1">Sau hai lần sửa không được, xoá hội thoại và viết lại prompt</a></h3>
+        <p class="sum">Mỗi bản hỏng vẫn nằm lại trong hội thoại. Viết lại yêu cầu từ đầu thường nhanh hơn sửa tiếp.</p>
+      </div>
+      <div class="detail" id="d1">
+        <p>Khi Claude đã hai lần làm sai cùng một việc, hội thoại chứa cả hai bản hỏng và hai lời sửa. Lần thử thứ ba dễ lặp lại chúng. <code>/clear</code> hoặc tua lại, rồi viết một yêu cầu đã rút kinh nghiệm.</p>
+        <dl>
+          <dt>Bề mặt</dt><dd><span class="nb-pill">Cowork ✓</span> <span class="nb-pill">App ✓</span> <span class="nb-pill">CLI ✓</span></dd>
+          <dt>Chương</dt><dd><a href="#c02-b6">c02 · b6 Sửa tiếp hay tua lại</a></dd>
+          <dt>Kiểm chứng</dt><dd>07/11/2026</dd>
+        </dl>
+        <div class="acts"><button class="nb-btn" type="button">Nguồn · 2 ↗</button><button class="nb-btn" type="button" data-close>Đóng · Esc</button></div>
+      </div>
+      <div class="foot">
+        <span class="who">Docs · Thariq</span>
+        <span class="nb-tag is-signal">◆ Bền vững</span>
+        <span class="lvl" role="img" aria-label="Cấp độ Low, 1 trên 4"><i class="on l1"></i><i></i><i></i><i></i>LOW</span>
+      </div>
+    </article>
+
+    <article class="card is-superseded" data-id="tip-thinking-07" aria-labelledby="t2">
+      <div class="head">
+        <div class="eb"><span class="nb-micro">TIP · model</span><span class="nb-micro">05b</span></div>
+        <h3 id="t2"><a href="#tip-thinking-07" aria-expanded="false" aria-controls="d2">Viết "think hard" để Claude suy nghĩ kỹ hơn</a></h3>
+        <p class="instead">Nay chỉnh bằng mức effort; model mới tự quyết khi nào cần nghĩ.</p>
+      </div>
+      <div class="detail" id="d2">
+        <p>Mẹo này đúng với các model đời trước. Docs chính thức hiện nay chỉnh mức suy nghĩ bằng effort, nên lời dặn trong prompt chỉ thêm ràng buộc. Mục vẫn giữ trong Library để người học nhận ra khi gặp lại.</p>
+        <dl>
+          <dt>Thay bằng</dt><dd><a href="#c05b">c05b · Đúng đồng nghiệp, đúng mức nghĩ</a></dd>
+          <dt>Kiểm chứng</dt><dd>07/11/2026</dd>
+        </dl>
+        <div class="acts"><button class="nb-btn" type="button">Nguồn · 3 ↗</button><button class="nb-btn" type="button" data-close>Đóng · Esc</button></div>
+      </div>
+      <div class="foot">
+        <span class="who">Repo · cộng đồng</span>
+        <span class="nb-tag is-danger">✕ <s>Đã thay thế</s></span>
+        <span class="lvl" role="img" aria-label="Cấp độ Medium, 2 trên 4"><i class="on l1"></i><i class="on l2"></i><i></i><i></i>MEDIUM</span>
+      </div>
+    </article>
+
+    <article class="card" data-id="feature-plan-mode" aria-labelledby="t3">
+      <div class="head">
+        <div class="eb"><span class="nb-micro">Tính năng · plan</span><span class="nb-micro">c03</span></div>
+        <h3 id="t3"><a href="#feature-plan-mode" aria-expanded="false" aria-controls="d3">Plan mode: để Claude lập kế hoạch trước khi sửa gì</a></h3>
+        <p class="sum">Claude chỉ đọc và hỏi lại, rồi trình kế hoạch cho bạn duyệt trước khi động vào file.</p>
+      </div>
+      <div class="detail" id="d3">
+        <p>Dùng khi việc có nhiều bước hoặc bạn chưa chắc yêu cầu đã rõ. Ở chế độ này Claude không sửa file; nó đọc, hỏi lại và đưa ra kế hoạch để bạn duyệt hoặc chỉnh.</p>
+        <dl>
+          <dt>Bề mặt</dt><dd><span class="nb-pill">Cowork ?</span> <span class="nb-pill">App ✓</span> <span class="nb-pill">CLI ✓</span></dd>
+          <dt>Trạng thái</dt><dd><span class="nb-pill is-ga">GA</span></dd>
+          <dt>Chương</dt><dd><a href="#c03-b5">c03 · b5 Cách làm</a></dd>
+        </dl>
+        <div class="acts"><button class="nb-btn" type="button">Nguồn · 1 ↗</button><button class="nb-btn" type="button" data-close>Đóng · Esc</button></div>
+      </div>
+      <div class="foot">
+        <span class="who">Docs · 06/11/2026</span>
+        <span class="nb-tag is-signal">◆ Bền vững</span>
+        <span class="lvl" role="img" aria-label="Cấp độ Medium, 2 trên 4"><i class="on l1"></i><i class="on l2"></i><i></i><i></i>MEDIUM</span>
+      </div>
+    </article>
+  </div>
+  <p class="hint">Cả thẻ là một link. Bấm để mở chi tiết ngay tại chỗ; Esc hoặc [ Đóng ] để thu lại.</p>
+  <p class="nb-sr" id="live" aria-live="polite"></p>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  var hasFlip = window.gsap && window.Flip; if (hasFlip) gsap.registerPlugin(Flip);
+  var anim = hasFlip && !NB.reduce(), grid = document.getElementById('grid'), live = document.getElementById('live');
+  var cards = [].slice.call(grid.querySelectorAll('.card')), open = null;
+  function setOpen(card) {
+    var state = anim ? Flip.getState(cards) : null;
+    cards.forEach(function (c) {
+      var on = c === card; c.classList.toggle('is-open', on);
+      c.querySelector('h3 a').setAttribute('aria-expanded', String(on));
+    });
+    if (card) grid.prepend(card); else cards.forEach(function (c) { grid.appendChild(c); });
+    if (anim) Flip.from(state, { duration: 0.48, ease: 'power2.inOut', absolute: false, nested: true });
+    open = card;
+    live.textContent = card ? 'Đã mở chi tiết: ' + card.querySelector('h3').textContent : 'Đã thu lại';
+  }
+  cards.forEach(function (c) {
+    var a = c.querySelector('h3 a');
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (open === c) return;
+      setOpen(c); c.querySelector('[data-close]').focus({ preventScroll: true });
+    });
+    c.querySelector('[data-close]').addEventListener('click', function () { setOpen(null); a.focus({ preventScroll: true }); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && open) { var a = open.querySelector('h3 a'); setOpen(null); a.focus({ preventScroll: true }); }
+  });
+})();
+</script>
+</body>
+</html>

@@ -9,7 +9,7 @@ Chuyển động ở No Babysitting là **một phần của lời giải thích
 | M1 | Dẫn tới / chuyển thành | Mũi tên tự vẽ | DrawSVG `0% → 100%` | Mũi tên vẽ sẵn |
 | M2 | Tiêu hao | Thanh đầy dần | `scaleX` hoặc biến `--fill` | Thanh ở giá trị cuối, kèm số |
 | M3 | Tái cấu trúc | Cùng phần tử, bố cục mới | Flip | Bố cục cuối; mục vừa đổi có viền `accent` |
-| M4 | Agent đang xử lý | Ký tự xáo trộn | ScrambleText (chỉ chữ mono) | Chữ cuối |
+| M4 | Agent đang xử lý | Ký tự xáo trộn | ScrambleText (chỉ chữ mono, bộ ký tự `NB.SCRAMBLE` không dấu). **Chỉ** cho động từ hành động và dòng nhật ký của agent; nhãn góc, con dấu, tiêu đề, chữ trạng thái dùng `NB.say` | Chữ cuối |
 | M5 | Câu hỏi bước vào | Từ trồi lên khỏi mask | SplitText `words` + `mask` | Chữ thường |
 | M6 | Lỗi thời | Gạch ngang rồi mờ đi | `scaleX` đường gạch + autoAlpha 0.45 | Gạch tĩnh |
 | M7 | Tới lượt bạn | Con trỏ ▍ nhấp nháy 3 chu kỳ | `repeat: 5, yoyo, ease: steps(1)` | Khối đặc |
@@ -57,4 +57,4 @@ Mỗi chương xuất **một** `gsap.timeline({ paused: true })` có label trù
 
 ## Khoảnh khắc lớn của từng chương
 
-Mở đầu: đồng xu lật, hai bản báo cáo khác nhau · 01: bàn làm việc của đồng nghiệp mới tự dựng lên; các bề mặt nối vào một harness · 02: context meter vượt 40% · 03: lưới việc Flip từ lát ngang sang lát dọc · 04: rule cũ rơi rụng thành một principle · 05: mô tả TodoWrite co từ 9.100 ký tự xuống một dòng · 06: hành động đi qua cổng quyền · 07: con số sai bị bắt ở các trạm · 08: 12 làn workflow co về 5 cột · 09: một cửa sổ agent nhân thành năm · 10: sáu mũi tên tự vẽ; đường can thiệp zig-zag dãn thành một trạm rà soát.
+Mở đầu: đồng xu lật, hai bản báo cáo khác nhau · 01: bàn làm việc của đồng nghiệp mới tự dựng lên; các bề mặt nối vào một harness · 02: nhiễu tích tụ, độ tập trung giảm và chi phí mỗi lượt tăng (S1) · 03: lưới việc Flip từ lát ngang sang lát dọc · 04: rule cũ rơi rụng thành một principle · 05: mô tả TodoWrite co từ 9.100 ký tự xuống một dòng · 06: hành động đi qua cổng quyền · 07: con số sai bị bắt ở các trạm · 08: 12 làn workflow co về 5 cột · 09: một cửa sổ agent nhân thành năm · 10: sáu mũi tên tự vẽ; đường can thiệp zig-zag dãn thành một trạm rà soát.

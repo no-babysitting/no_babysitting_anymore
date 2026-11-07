@@ -11,9 +11,9 @@ SourceButton là nút "Nguồn" luôn nhìn thấy cạnh mỗi con số, trích
 
 ## Quy tắc
 
-- Nút là `nb-btn`: `[ NGUỒN · n ↗ ]`, mono hoa, hover đảo màu; số nguồn màu `accent`.
+- Nút là `nb-btn`: `[ Nguồn · n ↗ ]`, mono 12,5px viết thường, hover đảo màu; số nguồn cùng màu chữ của nút (không accent).
 - Bảng nguồn nổi (`shadow-overlay`, viền `fg`): mỗi nguồn gồm nhãn loại, tiêu đề, người · ngày · `verifiedAt`, trích nguyên văn, `[ Mở bản gốc ↗ ]` và `[ Sao chép link ]`. Mobile: bottom sheet.
-- Mở bằng M4 (decode tiêu đề bảng) + fade `dur-quick`. Reduced motion: hiện thẳng.
+- Mở bằng fade `dur-quick`; tiêu đề bảng đổi bằng `NB.say` (không dùng M4: mở bảng nguồn không phải hành động của agent). Reduced motion: hiện thẳng.
 - Không có link thì không đăng; nội dung do trang diễn giải gắn nhãn "Diễn giải".
 
 ## Không nên

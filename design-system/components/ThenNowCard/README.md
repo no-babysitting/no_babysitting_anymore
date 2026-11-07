@@ -14,8 +14,8 @@ ThenNowCard cho thấy một best practice đã đổi theo thế hệ model: c�
 
 ## Quy tắc
 
-- Thẻ "Hồi đó" có eyebrow `HỒI ĐÓ`. Sau M6, nội dung mờ về 0.45 và có đường gạch `danger`.
-- Mũi tên M1 nối hai thẻ là ký tự `─────▶` màu `accent`, gõ ra từng ký tự (`steps`). Ghost text "THEN" / "NOW" mờ 0.055 phía sau mỗi thẻ; thẻ "Bây giờ" nền `bg-raised`.
+- Thẻ "Hồi đó" có eyebrow `Hồi đó`. Sau M6, nội dung mờ về 0.45 và có đường gạch `danger`.
+- Mũi tên M1 nối hai thẻ là ký tự `─────▶` màu `fg-muted`, gõ ra từng ký tự (`steps`). Ghost text "THEN" / "NOW" mờ 0.055 phía sau mỗi thẻ; thẻ "Bây giờ" nền `bg-raised`.
 - Thẻ "Bây giờ" có eyebrow `BÂY GIỜ` màu `signal`, đậu vào bằng `ease-settle`. Tổng chuỗi ≤ 1,6s.
 - Trên màn hẹp, hai thẻ xếp dọc và mũi tên quay xuống.
 - Reduced motion: gạch tĩnh, mũi tên vẽ sẵn, thẻ đứng yên.

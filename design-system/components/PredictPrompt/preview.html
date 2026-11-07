@@ -16,7 +16,7 @@
   .face{display:inline-block;font:600 13px/1 var(--font-mono);letter-spacing:0;margin-right:10px;vertical-align:2px}
   .opt{position:relative;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--control);margin-top:-1px;cursor:pointer;font-size:15px;transition:background .12s,color .12s}
   .opt .k{font:600 12px/1 var(--font-mono);letter-spacing:.12em;color:var(--fg-muted)}
-  .opt .mark{font:600 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase}
+  .opt .mark{font:600 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
   .opt:hover{background:var(--bg-raised)}
   .opt:has(input:checked){background:var(--fg);color:var(--bg)}
   .opt:has(input:checked) .k{color:var(--bg)}
@@ -74,7 +74,7 @@
     form.querySelectorAll('input').forEach(function (i) { i.disabled = true; });
     commit.disabled = true; document.getElementById('skip').disabled = true;
     var t = new Date().toLocaleTimeString('vi-VN', { hour12: false });
-    NB.decode(document.getElementById('lock'), chosen < 0 ? 'Dự đoán · bỏ qua' : 'Đã chốt · ' + t, 0.6);
+    NB.say(document.getElementById('lock'), chosen < 0 ? 'Dự đoán · bỏ qua' : 'Đã chốt · ' + t);
     form.querySelectorAll('.opt').forEach(function (opt, i) {
       var m = opt.querySelector('.mark');
       if (i === CORRECT) { opt.classList.add('is-ok'); m.textContent = '[✓] đúng'; }

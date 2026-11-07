@@ -53,7 +53,7 @@
   function setRow(li, ok) {
     li.className = ok ? 'ok' : ''; li.querySelector('.mk').textContent = ok ? '[✓]' : '[ ]';
     var t = li.querySelector('.nb-tag'); t.className = 'nb-tag ' + (ok ? 'is-signal' : 'is-muted');
-    if (ok && anim) NB.decode(t, 'Đã đạt', 0.5); else t.textContent = ok ? 'Đã đạt' : 'Chưa đạt';
+    if (ok) NB.say(t, 'Đã đạt'); else t.textContent = 'Chưa đạt';
   }
   btn.addEventListener('click', function () {
     if (i >= items.length) { items.forEach(function (li) { setRow(li, false); }); i = 0; sync(); btn.textContent = 'Hoàn thành chương kế tiếp'; return; }

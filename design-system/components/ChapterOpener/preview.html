@@ -25,7 +25,7 @@
 <section class="nb nb-frame op" id="op" aria-labelledby="t">
   <canvas class="nb-canvas cv" id="cv" aria-hidden="true"></canvas>
   <span class="nb-ghost gh" aria-hidden="true">Budget</span>
-  <span class="nb-corner tl nb-micro" id="m1"><span class="nb-sq"></span>Phần I · Low</span>
+  <span class="nb-corner tl nb-micro" id="m1"><span class="nb-sq"></span>Phần I · LOW</span>
   <span class="nb-corner tr nb-micro">c02 &nbsp;·&nbsp; <b id="clk" class="nb-tabular">--:--:--</b></span>
   <span class="nb-corner br nb-micro"><b>02</b> / 10 &nbsp;·&nbsp; 8 beat · 10′</span>
   <p class="nb-cond idx" id="idx" aria-hidden="true">02</p>
@@ -52,7 +52,7 @@
     .from('#t', { y: 30, autoAlpha: 0, duration: 0.7 }, 0.25)
     .from('#line', { scaleX: 0, duration: 0.6, ease: 'power2.inOut' }, 0.45)
     .from('.sub', { y: 12, autoAlpha: 0, duration: 0.5 }, 0.6);
-  NB.decode(document.getElementById('m1'), 'Phần I · Low', 0.9);
+  NB.say(document.getElementById('m1'), 'Phần I · LOW');
 })();
 </script>
 </body>

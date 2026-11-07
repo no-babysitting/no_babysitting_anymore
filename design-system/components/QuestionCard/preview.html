@@ -43,7 +43,7 @@
   document.fonts.ready.then(function () {
     var split = SplitText.create('#q', { type: 'words', mask: 'words' });
     tl = gsap.timeline();
-    tl.call(function () { col.set('thinking', true); NB.decode(document.getElementById('eb'), 'Chương 04 · Hỏi', 0.6); })
+    tl.call(function () { col.set('thinking', true); NB.say(document.getElementById('eb'), 'Chương 04 · hỏi'); })
       .from('.ghost', { xPercent: 6, autoAlpha: 0, duration: 1.2, ease: 'power2.out' }, 0)
       .from(split.words, { yPercent: 110, duration: 0.5, ease: 'power3.out', stagger: 0.04 }, 0.15)
       .call(function () { col.set('asking'); }, null, '-=0.1');

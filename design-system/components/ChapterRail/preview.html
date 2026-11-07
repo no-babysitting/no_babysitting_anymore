@@ -1,0 +1,131 @@
+<!-- @dsCard group="Điều hướng" height=820 subtitle="ChapterRail · 12 mốc dọc chia 4 phần · đã qua ✓ · hiện tại ■ accent · sắp tới · dạng thu gọn 12 ô cho mobile" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>ChapterRail</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .cr{padding:48px 18px 18px;display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:28px}
+  nav ol{list-style:none;margin:0;padding:0}
+  .part{margin:14px 0 4px;font:600 12px/1.3 var(--font-mono);color:var(--fg-muted);letter-spacing:.04em;display:flex;justify-content:space-between;gap:8px}
+  .part:first-child{margin-top:0}
+  .part .lv{color:var(--fg-subtle)}
+  .mk{position:relative;display:grid;grid-template-columns:2.2ch 3.6ch 1fr;gap:10px;align-items:baseline;padding:7px 8px 7px 0;text-decoration:none;color:var(--fg-subtle);border-left:1px solid var(--control);padding-left:12px}
+  .mk:hover{background:var(--bg-raised)}
+  .mk .g{font:600 13px/1 var(--font-mono);text-align:center}
+  .mk .no{font:600 13px/1 var(--font-mono);font-variant-numeric:tabular-nums}
+  .mk .tt{display:grid;gap:2px;min-width:0}
+  .mk .en{font:600 13px/1.25 var(--font-mono);letter-spacing:.06em;text-transform:uppercase}
+  .mk .vi{font:400 13.5px/1.35 var(--font-text)}
+  .mk.is-past{color:var(--fg-muted)}
+  .mk.is-past .g{color:var(--fg-muted)}
+  .mk[aria-current="step"]{color:var(--fg);border-left:3px solid var(--accent);padding-left:10px;background:var(--bg-raised)}
+  .mk[aria-current="step"] .g{color:var(--accent)}
+  .mk[aria-current="step"] .vi{color:var(--fg-muted)}
+  .beats{display:flex;gap:3px;margin-top:6px}
+  .beats i{width:14px;height:4px;background:var(--control)}
+  .beats i.on{background:var(--fg)}
+  .side{display:grid;gap:18px;align-content:start;min-width:0}
+  .now{border:1px solid var(--control);padding:16px;display:grid;gap:6px}
+  .now .big{margin:0;font-size:96px;color:var(--fg)}
+  .now .en{margin:0;font-size:26px;color:var(--fg)}
+  .now p{margin:0;color:var(--fg-muted);font-size:14.5px;line-height:1.5}
+  .strip{display:grid;gap:8px}
+  .cells{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px}
+  .cells a{display:block;height:22px;border:1px solid var(--control);background:transparent;position:relative}
+  .cells a.is-past{background:var(--fg-muted);border-color:var(--fg-muted)}
+  .cells a[aria-current="step"]{background:var(--accent);border-color:var(--accent)}
+  .cells a.gap{margin-left:6px}
+  .strip .lab{display:flex;justify-content:space-between;gap:10px}
+  .hint{margin:0;font-size:13px;color:var(--fg-subtle)}
+  @media (max-width:760px){.cr{grid-template-columns:1fr}.now .big{font-size:72px}}
+</style>
+</head>
+<body>
+<section class="nb nb-frame cr" aria-labelledby="crt">
+  <span class="nb-corner tl nb-micro" id="crt"><span class="nb-sq"></span>ChapterRail · 12 mốc</span>
+  <span class="nb-corner tr nb-micro">qua · hiện tại · sắp tới</span>
+
+  <nav aria-label="Mục lục chương"><ol id="rail"></ol></nav>
+
+  <div class="side">
+    <div class="now" aria-hidden="true">
+      <span class="nb-micro" id="nowPart">Phần II · MEDIUM</span>
+      <p class="nb-cond big nb-tabular" id="nowNo">03</p>
+      <p class="nb-wide en" id="nowEn">THE BRIEF</p>
+      <p id="nowVi">Brief trước khi giao: plan, để Claude phỏng vấn, cắt lát, rich references</p>
+    </div>
+    <div class="strip">
+      <div class="lab"><span class="nb-micro">Dạng thu gọn · mobile và HUD</span><span class="nb-micro" id="stripLab"><b>c03</b> · 4/12</span></div>
+      <nav aria-label="Mục lục chương (thu gọn)"><div class="cells" id="cells"></div></nav>
+    </div>
+    <p class="hint">Bấm một mốc để nhảy tới chương (site thật cuộn bằng ScrollToPlugin; preview chỉ đổi mốc hiện tại). Mốc chưa học vẫn bấm được: không khoá nội dung.</p>
+  </div>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  var CH = [
+    { id: 'c00', no: '00', en: 'Two Coin Flips', vi: 'Mở đầu: vibe hay agentic', part: 0 },
+    { id: 'c01', no: '01', en: 'The New Colleague', vi: 'Đồng nghiệp mới: model + harness', part: 1 },
+    { id: 'c02', no: '02', en: 'The Briefing Budget', vi: 'Ngân sách ngữ cảnh', part: 1 },
+    { id: 'c03', no: '03', en: 'The Brief', vi: 'Brief trước khi giao', part: 2, long: 'Brief trước khi giao: plan, để Claude phỏng vấn, cắt lát, rich references' },
+    { id: 'c04', no: '04', en: 'The Onboarding Doc', vi: 'Tài liệu onboarding', part: 2 },
+    { id: 'c05', no: '05', en: 'Playbooks & Specialists', vi: 'Skill · command · subagent', part: 3 },
+    { id: 'c05b', no: '05b', en: 'The Right Colleague', vi: 'Model, effort, Fast mode', part: 3 },
+    { id: 'c06', no: '06', en: 'Tools & Policies', vi: 'Connector, quyền, hook', part: 3 },
+    { id: 'c07', no: '07', en: 'Review Before Handoff', vi: 'Rà soát trước khi bàn giao', part: 3 },
+    { id: 'c08', no: '08', en: 'The Team', vi: 'Làm theo nhóm', part: 4 },
+    { id: 'c09', no: '09', en: 'Recurring Duties', vi: 'Việc định kỳ', part: 4 },
+    { id: 'c10', no: '10', en: 'No Babysitting', vi: 'Kết: thôi cầm tay chỉ việc', part: 5 }
+  ];
+  var PARTS = [['Mở đầu', ''], ['Phần I · hiểu cách Claude làm việc', 'LOW'], ['Phần II · giao việc có cấu trúc', 'MEDIUM'], ['Phần III · trang bị cho đồng nghiệp', 'HIGH'], ['Phần IV · làm việc kiểu agentic', 'PRO'], ['Kết', '']];
+  var cur = 3, beat = 3, $ = function (id) { return document.getElementById(id); };
+  var rail = $('rail'), cells = $('cells'), anim = window.gsap && !NB.reduce();
+  CH.forEach(function (c, i) {
+    if (i === 0 || CH[i - 1].part !== c.part) {
+      var h = document.createElement('li'); h.className = 'part'; h.setAttribute('aria-hidden', 'true');
+      h.innerHTML = '<span></span><span class="lv"></span>'; h.firstChild.textContent = PARTS[c.part][0]; h.lastChild.textContent = PARTS[c.part][1];
+      rail.appendChild(h);
+    }
+    var li = document.createElement('li'), a = document.createElement('a');
+    a.className = 'mk'; a.href = '#' + c.id; a.dataset.i = i;
+    a.innerHTML = '<span class="g" aria-hidden="true"></span><span class="no"></span><span class="tt"><span class="en"></span><span class="vi"></span></span>';
+    a.querySelector('.no').textContent = c.no; a.querySelector('.en').textContent = c.en; a.querySelector('.vi').textContent = c.vi;
+    li.appendChild(a); rail.appendChild(li);
+    var s = document.createElement('a'); s.href = '#' + c.id; s.dataset.i = i; s.setAttribute('aria-label', c.no + ' ' + c.en);
+    if (i > 0 && CH[i - 1].part !== c.part) s.className = 'gap';
+    cells.appendChild(s);
+  });
+  function sync() {
+    rail.querySelectorAll('.mk').forEach(function (a) {
+      var i = +a.dataset.i, st = i < cur ? 'past' : i === cur ? 'cur' : 'next';
+      a.classList.toggle('is-past', st === 'past');
+      if (st === 'cur') a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+      a.querySelector('.g').textContent = st === 'past' ? '✓' : st === 'cur' ? '■' : '·';
+      var sr = a.querySelector('.nb-sr'); if (!sr) { sr = document.createElement('span'); sr.className = 'nb-sr'; a.appendChild(sr); }
+      sr.textContent = st === 'past' ? ' (đã học)' : st === 'cur' ? ' (đang học, beat ' + beat + ' trên 8)' : '';
+      var b = a.querySelector('.beats'); if (b) b.remove();
+      if (st === 'cur') { b = document.createElement('span'); b.className = 'beats'; b.setAttribute('aria-hidden', 'true'); for (var k = 1; k <= 8; k++) { var x = document.createElement('i'); if (k <= beat) x.className = 'on'; b.appendChild(x); } a.querySelector('.tt').appendChild(b); }
+    });
+    cells.querySelectorAll('a').forEach(function (s) {
+      var i = +s.dataset.i; s.classList.toggle('is-past', i < cur);
+      if (i === cur) s.setAttribute('aria-current', 'step'); else s.removeAttribute('aria-current');
+    });
+    var c = CH[cur];
+    $('nowPart').textContent = PARTS[c.part][0].split(' · ')[0] + (PARTS[c.part][1] ? ' · ' + PARTS[c.part][1] : '');
+    $('nowNo').textContent = c.no; $('nowEn').textContent = c.en.toUpperCase(); $('nowVi').textContent = c.long || c.vi;
+    $('stripLab').innerHTML = '<b></b> · ' + (cur + 1) + '/12'; $('stripLab').firstChild.textContent = c.id;
+    if (anim) gsap.from('#nowNo', { yPercent: 30, autoAlpha: 0, duration: 0.36, ease: 'power3.out' });
+  }
+  function go(e) { var a = e.target.closest('a'); if (!a) return; e.preventDefault(); cur = +a.dataset.i; beat = 1; sync(); }
+  rail.addEventListener('click', go); cells.addEventListener('click', go);
+  sync();
+})();
+</script>
+</body>
+</html>

@@ -9,7 +9,7 @@
 
 ### 0.0 Thương hiệu
 
-- **Tên:** *No Babysitting*. **Wordmark:** set bằng serif `display` (Newsreader 400) ở cover và hero; ở HUD là mono `eyebrow`. Luôn đi kèm descriptor *"An unofficial guide to Claude Code best practices"* (`small`, `fg-muted`).
+- **Tên:** *No Babysitting*. **Wordmark:** set bằng Archivo expanded (`--font-wide`, style `wordmark`, §2.1) ở cover, hero và HUD. Serif chỉ dành cho câu hỏi Socratic và trích dẫn (thống nhất 07/11/2026). Luôn đi kèm descriptor *"An unofficial guide to Claude Code best practices"* (`small`, `fg-muted`).
 - **Ẩn dụ "giao việc cho đồng nghiệp mới"** khớp với khung "bàn làm việc của agent" ở §0.1: bàn làm việc chính là nơi đồng nghiệp mới làm việc, và harness là những gì bạn đặt lên bàn đó (công cụ, hồ sơ, quyền, người duyệt).
 - **Không dùng** logo, mascot hay bảng màu nhận diện của Anthropic. "Nhân vật" của trang là **The Colleague**, một gương mặt ASCII trung tính (§12.6), cố ý không giống mascot chính thức nào.
 
@@ -69,20 +69,20 @@ Tất cả là CSS custom properties. Dark là theme gốc, khai báo trên `:ro
 | `--control` | `#756A5E` | `#857C70` | Viền input/nút/khay kéo thả (≥ 3:1 theo WCAG 1.4.11) |
 | `--fg` | `#EDE6DA` | `#1A1714` | Chữ chính |
 | `--fg-muted` | `#ADA395` | `#575047` | Chữ phụ, chú thích |
-| `--fg-subtle` | `#857B6F` | `#6B6257` | Meta (chỉ dùng trên `--bg`) |
+| `--fg-subtle` | `#8D8376` | `#6B6257` | Meta. Đạt ≥ 4,5:1 trên `--bg` và `--bg-raised` ở cả hai theme (dark trước 07/11/2026 là `#857B6F`, chỉ 4,2:1 trên `bg-raised`). Không dùng trên `--bg-sunken` |
 
 ### 1.2 Accent & ngữ nghĩa
 
 | Token | Dark | Light | Nghĩa (cố định) |
 |---|---|---|---|
-| `--accent` | `#D97A4A` | `#A0461F` | Claude / hành động / tiêu điểm / CTA / beat hiện tại |
+| `--accent` | `#D97A4A` | `#A0461F` | **Chỉ hành động và hiện tại:** CTA và nút chính, viền focus, vị trí hiện tại (tab, mốc chương, beat), agent đang làm, con trỏ ▍ tới lượt bạn, ô ■ ở nhãn góc. **Không** dùng cho số lớn, mã M1–M14, mũi tên, gạch ngang, nhãn tiêu đề, chip lọc, HUD |
 | `--on-accent` | `#14120F` | `#FBF9F5` | Chữ trên nền accent |
 | `--signal` | `#8CC084` | `#3A7034` | Đã kiểm chứng · đạt · "Bây giờ" · nhãn *Bền vững* |
 | `--warn` | `#E2B04A` | `#8A5D00` | Dumb zone · cần cân nhắc · nhãn *Phụ thuộc model* |
 | `--danger` | `#EE7A66` | `#AE3524` | Thất bại · bị chặn · nhãn *Đã thay thế* |
 | `--info` | `#8FB3D9` | `#2C5A87` | Tham chiếu · "Đào sâu" · nhãn *Chưa thống nhất* |
 
-**Tương phản đo được** (WCAG 2, chữ trên `--bg`): fg 15,1 / 15,6 · muted 7,5 / 6,9 · accent 6,1 / 5,4 · signal 8,9 / 5,2 · warn 9,4 / 5,0 · danger 6,8 / 5,5 · info 8,6 / 6,3. Tất cả ≥ 4,5:1. *Quy tắc:* chữ màu ngữ nghĩa chỉ đặt trên `--bg` hoặc `--bg-raised`. Trên `--bg-sunken` dùng `--fg` kèm icon.
+**Tương phản đo được** (WCAG 2, chữ trên `--bg`): fg 15,1 / 15,6 · muted 7,5 / 6,9 · accent 6,1 / 5,4 · signal 8,9 / 5,2 · warn 9,4 / 5,0 · danger 6,8 / 5,5 · info 8,6 / 6,3 · subtle 5,0 / 5,2 (trên `--bg-raised`: 4,7 / 5,7). Tất cả ≥ 4,5:1. Kiểm lại bằng `python3 tools/contrast.py design-system/tokens.json --fail`. *Quy tắc:* chữ màu ngữ nghĩa chỉ đặt trên `--bg` hoặc `--bg-raised`. Trên `--bg-sunken` dùng `--fg` kèm icon.
 
 ### 1.3 Màu dữ liệu (đã chạy validator dataviz)
 
@@ -95,7 +95,7 @@ Tất cả là CSS custom properties. Dark là theme gốc, khai báo trên `:ro
 - Cặp chart-1/chart-2: ΔE (CVD) khoảng 22, normal khoảng 25; đạt ở cả hai theme.
 - Ramp cấp độ đạt cả 4 kiểm tra ordinal (đơn điệu, ΔL ≥ 0,06, đầu nhạt ≥ 2:1, một tông).
 - **Vì sao không dùng dải đỏ → xanh lá như deck gốc:** dải đó là cầu vồng, và người mù màu đỏ–lục không phân biệt được Low với Pro. Thanh cấp độ còn mã hoá bằng **độ dài** (25/50/75/100%) và **nhãn chữ**, nên màu không phải kênh duy nhất.
-- Context meter dùng **status**: < 40% `--signal`, 40–60% `--warn`, > 60% `--danger`. Luôn kèm nhãn ("dumb zone", "nên kết thúc") và icon. Đây là trạng thái, không phải chuỗi dữ liệu.
+- Context meter (S1, khung mới 07/11/2026) **không dùng màu trạng thái và không có ngưỡng**: *độ tập trung* vẽ bằng `--fg`, *chi phí mỗi lượt* là chuỗi dữ liệu `--chart-1`. Ngưỡng của từng nguồn nằm trong ContradictionNote.
 - Chữ trong biểu đồ dùng token chữ (`--fg`, `--fg-muted`), không dùng màu của chuỗi.
 
 ### 1.4 Nhãn độ bền & nguồn
@@ -137,7 +137,7 @@ Self-host qua Fontsource, chỉ nạp subset `latin` + `latin-ext` + `vietnamese
 | `--step-1` | `1.1875rem` | Lead, phương án Predict | 1.5 |
 | `--step-0` | `1.0625rem` (17px) | Thân bài | 1.65 |
 | `--step--1` | `0.875rem` | Chú thích, badge | 1.45 |
-| `--step--2` | `0.75rem` | Nhãn mono viết hoa (eyebrow) | 1.3 |
+| `--step--2` | `0.75rem` (12px, sàn tuyệt đối) | Nhãn mono: eyebrow, micro, nút, tag | 1.3–1.4 |
 
 ### 2.3 Quy tắc chữ tiếng Việt
 
@@ -147,7 +147,7 @@ Self-host qua Fontsource, chỉ nạp subset `latin` + `latin-ext` + `vietnamese
 - Không dùng `text-wrap: balance` trên phần tử có SplitText (gây lệch dòng). Các heading khác thì dùng.
 - Thuật ngữ tiếng Anh đặt trong `<span lang="en">` để screen reader đọc đúng giọng. Ở thân bài để cùng font, không in nghiêng.
 - Độ dài dòng thân bài: 60–68ch. Số liệu và cột số dùng `font-variant-numeric: tabular-nums`.
-- Eyebrow: mono, viết hoa, `letter-spacing: 0.08em`, `--step--2`, màu `--fg-muted`. Ví dụ: `PHẦN II · MEDIUM · 11 PHÚT`.
+- **Nhãn micro, eyebrow, nút, tag (quyết định 07/11/2026):** mono 12px trở lên, `letter-spacing` 0,04–0,06em, **không `text-transform`**. Phần tiếng Việt viết thường (hoa chữ đầu câu); phần tiếng Anh, mã và số viết hoa sẵn trong nguồn hoặc bọc `.nb-caps`. Ví dụ: `Phần II · MEDIUM · 11 phút`, `Chương 04 · hỏi`, `S4 · CLAUDE.MD LINTER`. Tên component và mã định danh (`SourceButton`, `c04:b3`) giữ nguyên cách viết. Lý do: dấu chồng của chữ hoa tiếng Việt (Ư, Ể, Ậ) ở cỡ 10–11px giãn chữ rộng gần như không đọc được.
 
 ---
 
@@ -172,7 +172,7 @@ Self-host qua Fontsource, chỉ nạp subset `latin` + `latin-ext` + `vietnamese
 ### 3.3 HUD
 
 - **Trên (sticky, cao 48px):** wordmark "No Babysitting" bằng mono + `JourneyHUD` (thanh cấp độ) + nút Tìm, Library, Theme, Motion, Presenter.
-- **Trái (desktop ≥ 1200px):** `ChapterRail` dọc với 11 mốc. Mốc hiện tại tô `--accent`, mốc đã qua dùng `--fg-muted`.
+- **Trái (desktop ≥ 1200px):** `ChapterRail` dọc với 12 mốc (Mở đầu, 01–10 và 05b). Mốc hiện tại tô `--accent`, mốc đã qua dùng `--fg-muted`.
 - **Dưới phải:** `StatusBoard` BÁO CÁO TUẦN thu gọn thành 4 chấm, mở ra khi hover hoặc focus.
 - Trên mobile, HUD gộp vào một thanh dưới cùng có `padding-bottom: env(safe-area-inset-bottom)`.
 
@@ -231,7 +231,7 @@ Token được export ở `src/motion/tokens.ts` và gọi `gsap.defaults({ dura
 | M1 | *Dẫn tới / chuyển thành* | Mũi tên tự vẽ | DrawSVG `0% → 100%` | Then → Now, C → A → S, R → P → E → Rv → S, six shifts |
 | M2 | *Tiêu hao* | Thanh đầy dần | `scaleX` hoặc biến CSS `--fill` | Context meter, chi phí MCP, histogram PR |
 | M3 | *Tái cấu trúc* | Cùng phần tử, bố cục mới | **Flip** (`absolute`, `nested`) | Cắt lát, 12 workflow hội tụ, chip → panel, lọc Library |
-| M4 | *Máy đang xử lý* | Ký tự xáo trộn | **ScrambleText** (chỉ trên chữ mono) | Tên lệnh, "vibe → agentic" |
+| M4 | *Agent đang xử lý* | Ký tự xáo trộn | **ScrambleText** (chỉ chữ mono; bộ ký tự `NB.SCRAMBLE` không dấu) | **Chỉ** động từ hành động của agent và dòng nhật ký agent (`Đọc`, `Kiểm tra`, `Tra web`), tên lệnh trong tab CLI. **Không** dùng cho nhãn góc, con dấu, tiêu đề bảng, chữ trạng thái: những chỗ đó dùng `NB.say` (fade `dur-quick`) |
 | M5 | *Câu hỏi bước vào* | Từ trồi lên khỏi mask | **SplitText** `type: "words"`, `mask: "words"` | Chỉ `QuestionCard` |
 | M6 | *Lỗi thời* | Gạch ngang rồi mờ đi | Đường gạch `scaleX` + `autoAlpha: 0.45` | Thẻ "Hồi đó", S8 |
 | M7 | *Tới lượt bạn* | Con trỏ ▍ nhấp nháy | `repeat: 5, yoyo, ease: "steps(1)"` rồi đứng yên | `PredictPrompt`, `GrillCard` |
@@ -285,7 +285,7 @@ Có hai nguồn kích hoạt: `prefers-reduced-motion` (OS) và nút **Motion** 
 |---|---|
 | Mở đầu | Đồng xu lật; hai bản báo cáo khác nhau bay vào bảng BÁO CÁO TUẦN |
 | 01 | Bàn làm việc của đồng nghiệp mới tự dựng lên (quy trình, quyền dùng công cụ, hồ sơ, người duyệt, sổ bàn giao); các bề mặt (Desktop, Web, Mobile, Slack, CLI) cùng nối vào một harness |
-| 02 | Context meter vượt 40% và đổi trạng thái |
+| 02 | Nhiễu tích tụ: mỗi bản hỏng làm độ tập trung giảm, chi phí mỗi lượt tăng; tua lại thì cả hai hồi lại (S1) |
 | 03 | Lưới việc Flip từ lát ngang (thu thập hết, phân tích hết…) sang lát dọc (một thị trường trọn vẹn) |
 | 04 | Rule cũ rơi rụng từng chữ, thành một câu principle |
 | 05 | Chip mô tả `report-style` nở ra thành thư mục `SKILL.md` + `templates/` + `scripts/` (ví dụ TodoWrite chuyển vào "Đào sâu") |
@@ -311,13 +311,13 @@ Mỗi thành phần ghi: mục đích · cấu tạo · trạng thái · chuyể
 
 | Thành phần | Mục đích & cấu tạo | Trạng thái | Chuyển động | A11y |
 |---|---|---|---|---|
-| **QuestionCard** | Câu hỏi Socratic. Eyebrow mono (`CHƯƠNG 04 · HỎI`) + câu hỏi bằng `--step-q` serif | — | M5 | `<h2>`; SplitText `aria: "auto"` |
+| **QuestionCard** | Câu hỏi Socratic. Eyebrow mono (`Chương 04 · hỏi`) + câu hỏi bằng `--step-q` serif | — | M5 | `<h2>`; SplitText `aria: "auto"` |
 | **PredictPrompt** | 3 phương án `[A] [B] [C]` dạng hàng, chọn thì **đảo màu** (fg/bg); `[ Chốt dự đoán ]` khoá form và ghi giờ chốt ở góc; pha Quan sát dùng thanh khối `█░` theo lượt thử | chưa chọn · đã chọn · đã mở (đúng ✓ / chưa đúng → giải thích) | M7; đáp án mở bằng Flip | `fieldset` + `legend`; phím mũi tên; không ai bị đánh dấu "sai" trước lớp |
 | **ObserveStage** | Khung stage pinned chứa SVG/HTML của cảnh | khoá (trước khi predict) · chạy · xong | Timeline chương | Có "Tóm tắt khung hình" (text) gắn bằng `aria-describedby`; nút dừng/tiếp |
 | **ExplainBlock** | Thân bài ≤ 120 từ + `SourceBadge` + `DeepDive` | — | Batch reveal | Heading theo cấp |
 | **DeepDive** `↳` | Ngăn "Đào sâu" nạp nội dung từ Library | đóng · mở | Flip chiều cao | `<details>`/`<summary>` |
 | **SourceBadge** | Chip mono: người · ngày · link (dạng thu gọn của SourceButton) | — | — | Link có tên mô tả đầy đủ |
-| **SourceButton** *(cần thiết kế và duyệt preview trước khi áp dụng đại trà)* | Nút `[ NGUỒN · n ↗ ]` mở bảng nguồn (popover/bottom sheet): loại, tiêu đề, người · ngày, `verifiedAt`, trích nguyên văn, `[ MỞ BẢN GỐC ↗ ]`, `[ SAO CHÉP LINK ]`. Phải đẹp, luôn nhìn thấy, đúng hệ brutalist. Đặc tả đầy đủ ở `06-sources-and-links.md` §2 | thường · hover · focus · mở · link chết · quá 30 ngày | M4 + fade `dur-quick` | `aria-expanded`, Esc đóng, link báo "mở tab mới" |
+| **SourceButton** *(cần thiết kế và duyệt preview trước khi áp dụng đại trà)* | Nút `[ Nguồn · n ↗ ]` mở bảng nguồn (popover/bottom sheet): loại, tiêu đề, người · ngày, `verifiedAt`, trích nguyên văn, `[ MỞ BẢN GỐC ↗ ]`, `[ SAO CHÉP LINK ]`. Phải đẹp, luôn nhìn thấy, đúng hệ brutalist. Đặc tả đầy đủ ở `06-sources-and-links.md` §2 | thường · hover · focus · mở · link chết · quá 30 ngày | M4 + fade `dur-quick` | `aria-expanded`, Esc đóng, link báo "mở tab mới" |
 | **DurabilityTag** | Viền + icon + chữ (§1.4) | 4 loại | — | Không dựa riêng vào màu |
 | **ThenNowCard** | Hai thẻ "Hồi đó" / "Bây giờ" nối bằng mũi tên, kèm câu hỏi dẫn (serif italic) và nhãn độ bền | — | M6 → M1 → `ease.settle` | Đọc tuần tự "Hồi đó… Bây giờ…" |
 | **ContradictionNote** `⇄` | Hai trích dẫn ngang hàng, mỗi bên một nguồn | — | — | Không ngầm chọn bên nào |
@@ -330,7 +330,7 @@ Mỗi thành phần ghi: mục đích · cấu tạo · trạng thái · chuyể
 | **SimulatorFrame** | Tiêu đề (`S4 · CLAUDE.md Linter`) + mục tiêu học + khu thao tác + phản hồi + nút "Làm lại" | chờ ▍ · đang làm · hoàn tất | M3/M9 | Kéo thả luôn có thay thế bàn phím (Space nhặt, mũi tên di chuyển, Enter thả); `aria-live` cho phản hồi |
 | **GrillCard** | Câu hỏi → ô tự trả lời (mono, đếm ký tự) → `[ Xem đáp án khuyến nghị ]` → tự chấm `[ Trúng ] [ Gần đúng ] [ Chưa ]`. Gate, don't trap: ô trống thì nhắc một lần, bấm lần nữa vẫn xem được | ẩn · nhắc · hiện · đã tự chấm | M4 cho nhãn đáp án | Nút có `aria-expanded`/`aria-pressed` |
 | **StatusBoard** | BÁO CÁO TUẦN với 4 tiêu chí `[ ]` → `[✓]` + nhãn "Chưa đạt/Đã đạt", bộ đếm condensed `0 / 4`, dạng HUD thu gọn `■■□□` | chưa đạt · đã đạt | M9 khi đổi trạng thái | Danh sách có trạng thái bằng chữ |
-| **JourneyHUD** | Thanh cấp độ 4 nấc (`--level-1…4`, độ dài + nhãn) + bản đồ 10 trụ harness | trụ đã mở / chưa mở | M2 | `progressbar` + `aria-valuetext` "Medium, chương 4/10" |
+| **JourneyHUD** | Thanh trên 48px: cấp độ 4 nấc (`--level-1…4`, ô + nhãn chữ) · bản đồ harness **6 phần theo PRD G1** (context, kế hoạch, trí nhớ, khối xây dựng, rào chắn, kiểm chứng) · báo cáo tuần `■■□□` · vị trí `c03 · 4/12` · `[ Chi tiết ]` | phần đã mở / chưa mở | không có (lên cấp đổi tức thì) | `progressbar` + `aria-valuetext` "Medium, chương 4/10" |
 | **ChapterRail** | 11 mốc dọc | qua · hiện tại · sắp tới | ScrollToPlugin khi bấm | `<nav>` + `aria-current` |
 | **LibraryCard** | Loại (mono eyebrow) + tiêu đề + 1 dòng VI + nguồn + nhãn độ bền + cấp độ | thường · hover · mở | Flip card → detail | Card là `<article>`; toàn bộ là một link |
 | **FilterBar / SearchBox** | Một hàng: tìm kiếm + chip lọc (loại, nhóm, nguồn, cấp độ, nguyên lý, độ bền, chương) + đếm kết quả | — | Flip khi danh sách đổi | Kết quả cập nhật qua `aria-live="polite"` |
@@ -348,7 +348,7 @@ Tất cả vẽ bằng SVG tự viết, không dùng thư viện chart. Scale t�
 
 | Biểu đồ | Hình thức | Ghi chú |
 |---|---|---|
-| Context meter (S1) | Một thanh ngang + 3 dải ngưỡng | Màu status kèm nhãn và icon; ngưỡng ghi nguồn (Dex 40% · Matt ~100K · Thariq 300–400k/1M) dưới dạng ContradictionNote |
+| Context meter (S1) | Hai thanh khối: độ tập trung (`--fg`, 0–100) và chi phí mỗi lượt (`--chart-1`, trục tới 1M) | Không có dải ngưỡng; mốc 1M là vạch đứt mờ "hiếm khi chạm tới". Ngưỡng của từng nguồn (Dex 40% · Matt ~100K · Thariq 300–400k/1M) nằm trong ContradictionNote |
 | Xác suất token (c01, ngăn "Đào sâu") | Thanh ngang, một chuỗi `--chart-1` | Có nhãn giá trị trên từng thanh vì chỉ có 4 thanh; ghi "số liệu minh hoạ" |
 | Chi phí context của công cụ (c06) | Thanh ngang, một chuỗi | Đơn vị: nghìn token và % context; nguồn: report 19/12/2025 |
 | Kích thước PR (Library / tab CLI của c09) | Các mốc phân vị p50/p90/p99 trên **trục log** có nhãn rõ | Một chuỗi; ghi chú "1 ngày, 141 PR". Không đưa vào Story chính vì là chỉ số riêng của dev |
@@ -496,11 +496,11 @@ Luật: M13 dùng tối đa **1 lần mỗi chương**, chỉ khi trạng thái 
 | thinking | `[°_°]…` | `info` | Đang đọc hoặc lập kế hoạch |
 | working | `[>_<]≡` | `accent` | Nhật ký AgentWindow đang chạy |
 | asking | `[•_•]?` | `warn` | Xin quyền / hỏi lại |
-| overloaded | `[@_@]` | `warn` | Context > 60% (c02); từ 40% đến 60% là `thinking` kèm cảnh báo `warn` |
+| overloaded | `[@_@]` | `warn` | Quá nhiều việc song song (c09, FloatingOps). **Không** gắn với ngưỡng context: S1 dùng `thinking` khi hội thoại còn từ 2 bản hỏng trở lên |
 | verified | `[^_^]✓` | `signal` | Kiểm chứng xong |
 
 - Có mặt ở HUD (cạnh StatusBoard) và trong AgentWindow. Được giới thiệu lớn ở c01 (The New Colleague).
-- **Không** dùng hình con vật, không dùng khối pixel màu cam, để tránh giống mascot chính thức. Không có lời thoại riêng: "lời" của nó là nhật ký hành động.
+- **Không** dùng hình con vật hay hình khối pixel kiểu mascot, để tránh giống mascot chính thức. Quy tắc này cấm *hình*, không cấm *màu* (chốt 07/11/2026): `working` vẫn dùng `accent` vì accent nghĩa là "đang hành động". Không có lời thoại riêng: "lời" của nó là nhật ký hành động.
 - `role="img"` với `aria-label` đổi theo trạng thái ("Đồng nghiệp: đang làm việc"); thông báo qua `aria-live="polite"`.
 
 ### 12.7 Bốn khoảnh khắc chữ ký
@@ -554,7 +554,7 @@ Luật: M13 dùng tối đa **1 lần mỗi chương**, chỉ khi trạng thái 
 Mọi preview (và sau này là site) dùng chung hai file, không import, không mạng:
 
 - **`bundle.css`** · khung chung: `.nb` `.nb-frame` `.nb-dots` · vai chữ `.nb-micro` `.nb-wide` `.nb-cond` `.nb-q` `.nb-mono` `.nb-ghost` · `.nb-corner.tl/.tr/.bl/.br` (có nền `bg` để không bị ASCII đè) · `.nb-btn` (ngoặc vuông, hover đảo màu, `.is-solid` accent, `aria-pressed/selected` đảo màu) · `.nb-tag` (`.is-signal/.is-warn/.is-danger/.is-info/.is-muted`) · `.nb-sq` · `.nb-cursor` · `.nb-sr`.
-- **`bundle.js`** → `window.NoBabysitting`: `ascii(canvas, opt)` (renderer: `order` 0→1, `sweep`, `lens`, `mode: 'color'`, 30 fps, tự dừng khi ra khỏi màn hình, đổi theme tự vẽ lại) · `sources.text / sculpture / terrain / scene` · `colleague(el, state)` · `decode(el, text)` (M4) · `clock(el)` · `cursorLabel(host, text)` · `blocks(v, width)` (thanh `█░`) · `reduce()`.
+- **`bundle.js`** → `window.NoBabysitting`: `ascii(canvas, opt)` (renderer: `order` 0→1, `sweep`, `lens`, `mode: 'color'`, 30 fps, tự dừng khi ra khỏi màn hình, đổi theme tự vẽ lại) · `sources.text / sculpture / terrain / scene` · `colleague(el, state)` · `decode(el, text)` (M4, chỉ cho hành động của agent) · `say(el, text)` (đổi chữ thường, fade `dur-quick`) · `clock(el)` · `cursorLabel(host, text)` · `blocks(v, width)` (thanh `█░`) · `reduce()`.
 
 Tween nào cũng phải ứng với một mục M1–M14; component không tự định nghĩa easing riêng ngoài `nb-settle`.
 
@@ -569,7 +569,11 @@ Tween nào cũng phải ứng với một mục M1–M14; component không tự 
 | ASCII | **TheColleague** | Mặt lớn như chân dung ký tự + lưới 7 trạng thái; con trỏ đến gần thì chuyển `tracking` |
 | Story | QuestionCard · PredictPrompt · ThenNowCard · GrillCard | Khung + nhãn góc; serif chỉ ở câu hỏi; mũi tên `─────▶` gõ từng ký tự; lựa chọn đảo màu |
 | Sân khấu | AgentWindow | Log mono đánh số, dòng xin quyền viền `warn` nét đứt, kết quả viền `signal`, ô nhập kiểu app/CLI |
-| Simulator | ContextMeter | Phần trăm condensed khổng lồ + thanh khối 50 ô + thước 40/60; đồng nghiệp `[@_@]` khi vượt 60% |
-| Nhãn | DurabilityTag · SourceBadge | Mono hoa, góc vuông; SourceBadge đặt cạnh một con số condensed lớn |
+| Simulator | ContextMeter | Hai chỉ số condensed (độ tập trung · chi phí mỗi lượt) + thanh khối 32 ô; mốc 1M là vạch đứt mờ "hiếm khi chạm tới"; không có vùng đỏ |
+| Simulator | SimulatorFrame | Khung chung S1–S11: mã condensed + mục tiêu + trạng thái chờ ▍ / đang làm / hoàn tất + phản hồi ✓ Khớp / ◐ Khuyến nghị |
+| Library | LibraryCard · FilterBar | Lưới thẻ chung viền, mở chi tiết tại chỗ bằng Flip; tìm không dấu, chip lọc 5 chiều, đếm kết quả condensed |
+| Điều hướng | ChapterRail · JourneyHUD · PresenterHUD | Rail 12 mốc (hiện tại ■ accent) + dải 12 ô; HUD trên 48px không accent; HUD trình chiếu với đồng hồ chương và thanh Thảo luận |
+| Nhãn | ContradictionNote · PlanPill | Các bên ngang hàng trong khung đứt nét `info`; pill trạng thái, gói, bề mặt kèm bộ chọn "gói của tôi" |
+| Nhãn | DurabilityTag · SourceBadge | Mono 12px, góc vuông, nhãn tiếng Việt viết thường; SourceBadge đặt cạnh một con số condensed lớn |
 
-> **Việc còn lại sau đợt c02 (07/11/2026):** ContextMeter đang vẽ trục "đầy dần tới ngưỡng 40/60"; đổi sang hai chỉ số *độ tập trung* và *chi phí* theo S1 mới, và trạng thái `overloaded` của The Colleague bỏ ngưỡng 60% cố định (xem Script c02).
+> **Đã xử lý 07/11/2026:** ContextMeter vẽ theo khung S1 mới (hai chỉ số, không ngưỡng); `overloaded` không còn gắn với ngưỡng context. Trạng thái từng component xem `design-system/SOURCE-OF-TRUTH.md`.
