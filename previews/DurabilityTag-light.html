@@ -1,4 +1,4 @@
-<!-- @dsCard group="Nhãn" height=230 subtitle="4 mức độ bền · viền + ký hiệu + chữ (không chỉ màu) · góc vuông, mono hoa" -->
+<!-- @dsCard group="Nhãn" height=640 subtitle="4 mức độ bền · ô đánh dấu 9px mang nghĩa bằng hình (đặc · nửa · gạch chéo · chấm) · chữ mono trung tính · không khung, không chữ màu" -->
 <!doctype html>
 <html lang="vi" data-theme="light">
 <head><style>:root, [data-theme="dark"]{--bg:#14120f;--bg-raised:#1c1916;--bg-sunken:#0f0d0b;--grid:#1f1c18;--line:#2e2924;--control:#756a5e;--fg:#ede6da;--fg-muted:#ada395;--fg-subtle:#8d8376;--accent:#d97a4a;--on-accent:#14120f;--focus-ring:var(--accent);--signal:#8cc084;--warn:#e2b04a;--danger:#ee7a66;--info:#8fb3d9;--chart-1:#5a8fd8;--chart-2:#cc6c3e;--level-1:#7a4a33;--level-2:#a9603a;--level-3:#d97a4a;--level-4:#f2a57a;--shadow-overlay:0 12px 32px -8px rgba(0,0,0,0.45);}
@@ -52,10 +52,22 @@
 .nb-btn:disabled:hover::before, .nb-btn:disabled:hover::after { color: var(--fg-muted); }
 .nb :focus-visible, .nb-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
-/* ---------- tags ---------- */
-.nb-tag { display: inline-flex; align-items: center; gap: .45em; font: 600 12px/1.1 var(--font-mono); letter-spacing: .04em; padding: 5px 8px; border: 1px solid currentColor; white-space: nowrap; }
-.nb-tag.is-signal { color: var(--signal); } .nb-tag.is-warn { color: var(--warn); } .nb-tag.is-danger { color: var(--danger); }
-.nb-tag.is-info { color: var(--info); border-style: dashed; } .nb-tag.is-muted { color: var(--fg-muted); border-color: var(--control); }
+/* ---------- tags: a 9px marker + neutral mono text, no box ----------
+   The marker's SHAPE carries the meaning; its colour only reinforces it (07/11/2026, replaces boxed coloured tags):
+   filled = settled, yes (signal) · half = depends (warn) · crossed = replaced, blocked (danger)
+   · open with a dot = unresolved, needs checking (info) · open = none, not yet (muted).
+   .nb-mk is the same marker on its own (chips, legends, availability cells). */
+.nb-tag { display: inline-flex; align-items: center; gap: .6em; font: 600 12px/1.25 var(--font-mono); letter-spacing: .04em; color: var(--fg); white-space: nowrap; }
+.nb-tag::before, .nb-mk { content: ""; flex: none; display: inline-block; width: 9px; height: 9px; box-sizing: border-box; border: 1.5px solid var(--control); background: transparent; }
+.nb-tag.is-signal::before, .nb-mk.is-signal { background: var(--signal); border-color: var(--signal); }
+.nb-tag.is-warn::before, .nb-mk.is-warn { border-color: var(--warn); background: linear-gradient(90deg, var(--warn) 50%, transparent 50%); }
+.nb-tag.is-danger::before, .nb-mk.is-danger { border-color: var(--danger); background:
+  linear-gradient(45deg, transparent 42%, var(--danger) 42% 58%, transparent 58%),
+  linear-gradient(-45deg, transparent 42%, var(--danger) 42% 58%, transparent 58%); }
+.nb-tag.is-info::before, .nb-mk.is-info { border-color: var(--info); background: radial-gradient(circle closest-side, var(--info) 0 46%, transparent 52%); }
+.nb-tag.is-muted { color: var(--fg-muted); }
+.nb-tag.is-danger s, .nb-tag s { text-decoration-thickness: 1px; text-decoration-color: var(--danger); }
+.nb-tag.is-lg { font-size: 13px; gap: .7em; } .nb-tag.is-lg::before { width: 11px; height: 11px; }
 
 /* ---------- ascii ---------- */
 .nb-canvas { display: block; width: 100%; height: 100%; }
@@ -78,6 +90,13 @@
 .nb-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .nb-chip .n { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }
 .nb-chip[aria-pressed="true"] .n { color: var(--bg); opacity: .7; }
+
+/* ---------- logo: Blocks lettering (NB.logoSVG / NB.logo) ---------- */
+.nb-logo { display: block; width: 100%; height: auto; color: var(--accent); }
+.nb-logo.is-mono { color: var(--fg); }
+.nb-logo-stage { position: relative; color: var(--accent); }
+.nb-logo-code { position: absolute; left: 0; top: 0; white-space: nowrap; font-family: var(--font-mono); font-weight: 500; line-height: 1; letter-spacing: 0; color: var(--fg); pointer-events: none; }
+.nb-logo-caret { color: var(--fg); }
 
 /* ---------- utilities ---------- */
 .nb-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -358,6 +377,113 @@
     return api;
   };
 
+  /* ---------- Logo: "Blocks" lettering ----------
+     The bitmap IS the logo (Newsreader 800 sampled onto a coarse grid by tools/make-logo.js; masters in
+     design-system/assets/Logo/). Never re-typeset it. lg = 139x18 for >= 36px tall, sm = 104x14 for HUD-size marks. */
+  NB.LOGO = {
+    lg: { w: 139, h: 18, base: 14, rows: [
+      '######....###..................###....................###.............................###.....................###..........................',
+      '.######....#................######..................#####............................####.....................####.........................',
+      '.######....#.................#####...................####.............................###......#........#.....###..........................',
+      '.#.#####...#..................####...................####....................................###......###..................................',
+      '.#.######..#.....#####........####.####.....#####....####.####..#####.....#..#####.....##..########.########....##....##..####....#########',
+      '.#..#####..#...###..###.......##########..##..####...##########..####.......##....#.#####..########.########.#####.###########...###.######',
+      '.#...#####.#...###..####......####..####.###...####..####..####..#####...#..###...#..####...####.....####....#####..###########.####.####..',
+      '.#...#####.#..####..####......####..####.......####..####..#####..####...#..######...####...####.....####.....####..####..#####.####.####..',
+      '.#....######..####..####......####..####.....######..####..#####..#####.#...#######..####...####.....####.....####..####...####..###.####..',
+      '.#.....#####..####..####......####..####..###..####..####..####....####.#....######..####...####.....####.....####..####...####..###.###...',
+      '.#.....#####..####..####......####..####.####..####..####..####....#####.......#####.####...####.....####.....####..####...####...#........',
+      '.#......####..####..####......####..####.####.#####..####..####.....####.........##..####...####.....####.....####..####...####..###.......',
+      '.#.......###...###..###.......####..###..##########..####..###.......##.....#....##..####...#######..#######..####..####...####.#########..',
+      '###......###....######.......########.....####.####..########........##.....######...#####...#####....#####..#####..#####.#####.##########.',
+      '......................................................................#..........................................................#########.',
+      '..................................................................#..#...........................................................##....###.',
+      '.................................................................#####..........................................................###.....##.',
+      '..................................................................###...........................................................########...'
+    ] },
+    sm: { w: 104, h: 14, base: 11, rows: [
+      '.......................##................#......................##.................#....................',
+      '#####...#............####..............####.....................###...............###...................',
+      '#.###...#.............###..............####.....................##....##.....##....#....................',
+      '#.####..#....###......###.###....###....###.##..###.......#.#.....#.######.######...#....#..##....######',
+      '#..####.#..##..##.....########.##.###...#######.####.....##..#.####.######.######.###.#########.###.##.#',
+      '#..####.#.###..###....###..###.#...###..###.###..###....####....###..###....###...###..###.####.###.##..',
+      '#...#####.###..###....###..###....####..###.###..####.#.######..###..###....###...###..###..###.###.##..',
+      '#....####.###..###....###..###.###.###..###.###...###....#####..###..###....###...###..###..###..####...',
+      '#....####.###..###....###..###.###.###..###.###...####......##..###..###....###...###..###..###..#......',
+      '#.....###..##..##.....###..##..#######.####.##.....##.......##..###..#####..#####.###..###..###.######..',
+      '#......##...####......#.####....##.###.#.####.......#....#..#...###...###....##...###..###..###.#######.',
+      '....................................................#............................................######.',
+      '.................................................###............................................##....#.',
+      '.................................................##.............................................####....'
+    ] }
+  };
+  NB.logoPath = function (L) {
+    var d = '';
+    L.rows.forEach(function (s, y) { var re = /#+/g, m; while ((m = re.exec(s))) d += 'M' + m.index + ' ' + y + 'h' + m[0].length + 'v1h-' + m[0].length + 'z'; });
+    return d;
+  };
+  /* static mark: inline SVG, fill currentColor (accent by default, fg for monochrome) */
+  NB.logoSVG = function (size, label) {
+    var L = NB.LOGO[size || 'lg'];
+    return '<svg class="nb-logo" viewBox="0 0 ' + L.w + ' ' + L.h + '" shape-rendering="crispEdges" role="img" aria-label="' + (label || 'No babysitting') + '"><path fill="currentColor" d="' + NB.logoPath(L) + '"/></svg>';
+  };
+  /* reveal: a white line of code is typed, then compiled into the blocks left to right.
+     Trail: just-converted pixels are fg (white), they settle to accent behind the head (M11 family).
+     host gets: .nb-logo-stage > [.nb-logo-code, svg]. Returns { play, stage }. Reduced motion: final mark. */
+  var LOGO_N = 0;
+  NB.logo = function (host, opt) {
+    opt = opt || {};
+    var L = NB.LOGO[opt.size || 'lg'], id = 'nblg' + (++LOGO_N), d = NB.logoPath(L), text = opt.text || 'No babysitting';
+    host.classList.add('nb-logo-stage');
+    host.innerHTML = '<span class="nb-logo-code" aria-hidden="true"><span class="t"></span><span class="nb-logo-caret">▍</span></span>' +
+      '<svg class="nb-logo" viewBox="0 0 ' + L.w + ' ' + L.h + '" shape-rendering="crispEdges" role="img" aria-label="' + text + '">' +
+      '<defs><clipPath id="' + id + 'a"><rect x="0" y="0" width="0" height="' + L.h + '"/></clipPath>' +
+      '<clipPath id="' + id + 'w"><rect x="0" y="0" width="0" height="' + L.h + '"/></clipPath></defs>' +
+      '<path class="a" fill="currentColor" clip-path="url(#' + id + 'a)" d="' + d + '"/>' +
+      '<path class="w" fill="var(--fg)" clip-path="url(#' + id + 'w)" d="' + d + '"/></svg>';
+    var code = host.querySelector('.nb-logo-code'), t = code.querySelector('.t'), caret = code.querySelector('.nb-logo-caret');
+    var svg = host.querySelector('svg'), ra = svg.querySelector('#' + id + 'a rect'), rw = svg.querySelector('#' + id + 'w rect');
+    var TRAIL = opt.trail || 14, S = { n: 0, s: 0 };
+    function fit() {
+      /* code line spans the mark (JetBrains Mono advance = 0.6em) and sits on the mark's baseline */
+      if (opt.snap !== false && host.parentNode) { /* whole screen pixels per logo pixel keeps the block edges crisp */
+        var k = Math.max(1, Math.min(opt.maxScale || 5, Math.floor(host.parentNode.clientWidth / L.w)));
+        host.style.width = k * L.w + 'px';
+      }
+      var W = svg.getBoundingClientRect().width, fs = W / (text.length * 0.6), px = W / L.w;
+      code.style.fontSize = fs + 'px';
+      var g = document.createElement('canvas').getContext('2d'); g.font = '500 ' + fs + 'px "JetBrains Mono", monospace';
+      var m = g.measureText('N'), a = m.fontBoundingBoxAscent || fs * 1.02, de = m.fontBoundingBoxDescent || fs * 0.3;
+      code.style.top = (L.base * px - ((fs - (a + de)) / 2 + a)) + 'px';
+    }
+    function paint() {
+      t.textContent = text.slice(0, Math.round(S.n));
+      var s = S.s, px = svg.getBoundingClientRect().width / L.w;
+      ra.setAttribute('width', Math.max(0, s - TRAIL));
+      rw.setAttribute('x', Math.max(0, s - TRAIL)); rw.setAttribute('width', Math.max(0, Math.min(s, L.w) - Math.max(0, s - TRAIL)));
+      code.style.clipPath = 'inset(0 0 0 ' + Math.min(s, L.w) * px + 'px)';
+      code.style.visibility = s >= L.w ? 'hidden' : 'visible';
+    }
+    function final() { S.n = text.length; S.s = L.w + TRAIL; paint(); caret.style.visibility = 'hidden'; }
+    var G = window.gsap, tl = null;
+    function play() {
+      if (tl) tl.kill();
+      fit(); S.n = 0; S.s = 0; caret.style.visibility = 'visible'; paint();
+      if (!G || NB.reduce()) { final(); return null; }
+      tl = G.timeline({ onUpdate: paint });
+      tl.to(S, { n: text.length, duration: text.length * 0.055, ease: 'steps(' + text.length + ')' })
+        .to(caret, { autoAlpha: 0, duration: 0.3, repeat: 3, yoyo: true, ease: 'steps(1)' })
+        .set(caret, { visibility: 'hidden' })
+        .to(S, { s: L.w + TRAIL, duration: opt.sweep || 1.1, ease: 'none' }, '-=0.15');
+      return tl;
+    }
+    window.addEventListener('resize', function () { fit(); paint(); });
+    var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    fonts.then(function () { if (opt.autoplay === false) { fit(); final(); } else play(); });
+    return { play: play, final: final, stage: host };
+  };
+
   /* ---------- The Colleague ---------- */
   NB.FACES = {
     idle: ['[•_•]', 'fg-muted', 'đang chờ'],
@@ -420,28 +546,85 @@
 </script>
 <meta charset="utf-8">
 <title>DurabilityTag</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
   html,body{margin:0}
   body{background:var(--bg);padding:20px}
-  .dt{padding:44px 0 0}
-  .grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--control)}
-  .grid > div{padding:16px 16px 18px;border-right:1px solid var(--control);display:grid;gap:10px;align-content:start}
-  .grid > div:last-child{border-right:0}
-  .grid p{margin:0;font-size:13px;line-height:1.5;color:var(--fg-muted)}
-  .k{color:var(--fg-subtle)}
-  @media (max-width:640px){.grid{grid-template-columns:1fr 1fr}.grid > div{border-bottom:1px solid var(--control)}}
+  .dt{padding:48px 0 0;display:grid}
+  /* shape key: the four markers large, so the shape language reads before the colour does */
+  .key{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--control);border-bottom:1px solid var(--control)}
+  .key > div{display:grid;gap:14px;padding:22px 18px 18px;align-content:start}
+  .key > div + div{border-left:1px solid var(--line)}
+  .key .nb-mk{width:34px;height:34px;border-width:2px}
+  .key .nm{font:600 13px/1.3 var(--font-mono);color:var(--fg);letter-spacing:.04em}
+  .key .sh{font:500 12px/1.3 var(--font-mono);color:var(--fg-subtle)}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;vertical-align:baseline;padding:13px 18px 13px 0;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{padding-left:18px}
+  thead th{font:600 12px/1.3 var(--font-mono);color:var(--fg-muted);letter-spacing:.04em;padding-top:16px;padding-bottom:10px}
+  td{font-size:14.5px;line-height:1.5;color:var(--fg-muted)}
+  td.ex{color:var(--fg)}
+  td.k{font:500 12.5px/1.5 var(--font-mono);color:var(--fg-subtle);white-space:nowrap}
+  td.tg{white-space:nowrap}
+  .ctx{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);border-top:1px solid var(--control)}
+  .ctx > div{padding:18px;display:grid;gap:12px;align-content:start}
+  .ctx > div + div{border-left:1px solid var(--control)}
+  .ctx ol{list-style:none;margin:0;padding:0}
+  .ctx li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+  .ctx li.old span:first-child{color:var(--fg-muted)}
+  .big{margin:0;font-size:84px;color:var(--fg)}
+  .big small{font-size:.4em;color:var(--fg-subtle)}
+  @media (max-width:720px){
+    .key{grid-template-columns:1fr 1fr}
+    .key > div:nth-child(3){border-left:0}
+    .key > div:nth-child(n+3){border-top:1px solid var(--line)}
+    thead{display:none}
+    tbody tr{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+    tbody td{border:0;padding:0}
+    tbody td:first-child{padding-left:0}
+    tbody td:nth-child(2),tbody td:nth-child(3){grid-column:1 / -1}
+    tbody td.k{grid-row:1;grid-column:2}
+    .ctx{grid-template-columns:1fr}
+    .ctx > div + div{border-left:0;border-top:1px solid var(--control)}
+  }
 </style>
 </head>
 <body>
-<section class="nb nb-frame dt" aria-label="Nhãn độ bền">
-  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>DurabilityTag · 4 mức</span>
-  <span class="nb-corner tr nb-micro">kind</span>
-  <div class="grid">
-    <div><span><span class="nb-tag is-signal"><span aria-hidden="true">◆</span>Bền vững</span></span><p>Đúng qua nhiều thế hệ model.</p><span class="nb-micro k">timeless</span></div>
-    <div><span><span class="nb-tag is-warn"><span aria-hidden="true">◐</span>Phụ thuộc model</span></span><p>Đúng hôm nay, nên xem lại khi model đổi.</p><span class="nb-micro k">model-sensitive</span></div>
-    <div><span><span class="nb-tag is-danger"><span aria-hidden="true">✕</span>Đã thay thế</span></span><p>Đã có cách tốt hơn; giữ để hiểu lịch sử.</p><span class="nb-micro k">superseded</span></div>
-    <div><span><span class="nb-tag is-info"><span aria-hidden="true">⇄</span>Chưa thống nhất</span></span><p>Các nguồn uy tín nói khác nhau.</p><span class="nb-micro k">contested</span></div>
+<section class="nb nb-frame dt" aria-labelledby="dtt">
+  <span class="nb-corner tl nb-micro" id="dtt"><span class="nb-sq"></span>DurabilityTag · 4 mức</span>
+  <span class="nb-corner tr nb-micro">hình mang nghĩa · màu chỉ nhấn</span>
+
+  <div class="key" aria-hidden="true">
+    <div><span class="nb-mk is-signal"></span><span class="nm">Bền vững</span><span class="sh">ô đặc · đã chắc</span></div>
+    <div><span class="nb-mk is-warn"></span><span class="nm">Phụ thuộc model</span><span class="sh">nửa ô · còn tuỳ</span></div>
+    <div><span class="nb-mk is-danger"></span><span class="nm">Đã thay thế</span><span class="sh">gạch chéo · bỏ</span></div>
+    <div><span class="nb-mk is-info"></span><span class="nm">Chưa thống nhất</span><span class="sh">ô rỗng có chấm · chưa ngã ngũ</span></div>
+  </div>
+
+  <table>
+    <thead><tr><th scope="col">Nhãn</th><th scope="col">Nghĩa</th><th scope="col">Ví dụ</th><th scope="col">kind</th></tr></thead>
+    <tbody>
+      <tr><td class="tg"><span class="nb-tag is-signal">Bền vững</span></td><td>Đúng qua nhiều thế hệ model.</td><td class="ex">Cho Claude cách tự kiểm chứng kết quả.</td><td class="k">timeless</td></tr>
+      <tr><td class="tg"><span class="nb-tag is-warn">Phụ thuộc model</span></td><td>Đúng hôm nay; xem lại khi model đổi.</td><td class="ex">Ngưỡng "dumb zone" khoảng 40% context.</td><td class="k">model-sensitive</td></tr>
+      <tr><td class="tg"><span class="nb-tag is-danger"><s>Đã thay thế</s></span></td><td>Đã có cách tốt hơn; giữ để hiểu lịch sử.</td><td class="ex">Phím <code>#</code> để ghi nhớ → nay là auto-memory.</td><td class="k">superseded</td></tr>
+      <tr><td class="tg"><span class="nb-tag is-info">Chưa thống nhất</span></td><td>Các nguồn uy tín nói khác nhau.</td><td class="ex">CLAUDE.md nên dưới 150 hay dưới 200 dòng.</td><td class="k">contested</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ctx">
+    <div>
+      <span class="nb-micro">Trong danh sách Library</span>
+      <ol>
+        <li><span>Sau hai lần sửa không được, xoá hội thoại và viết lại prompt</span><span class="nb-tag is-signal">Bền vững</span></li>
+        <li class="old"><span>Viết "think hard" để Claude nghĩ kỹ hơn</span><span class="nb-tag is-danger"><s>Đã thay thế</s></span></li>
+        <li><span>Hook tự xuất PDF sau mỗi lần sửa báo cáo</span><span class="nb-tag is-warn">Phụ thuộc model</span></li>
+      </ol>
+    </div>
+    <div>
+      <span class="nb-micro">Cạnh một con số</span>
+      <p class="nb-cond big nb-tabular" aria-hidden="true">~40<small>%</small></p>
+      <span class="nb-tag is-lg is-info">Chưa thống nhất · 3 nguồn</span>
+    </div>
   </div>
 </section>
 </body>

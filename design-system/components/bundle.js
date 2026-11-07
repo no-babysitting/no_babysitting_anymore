@@ -263,6 +263,113 @@
     return api;
   };
 
+  /* ---------- Logo: "Blocks" lettering ----------
+     The bitmap IS the logo (Newsreader 800 sampled onto a coarse grid by tools/make-logo.js; masters in
+     design-system/assets/Logo/). Never re-typeset it. lg = 139x18 for >= 36px tall, sm = 104x14 for HUD-size marks. */
+  NB.LOGO = {
+    lg: { w: 139, h: 18, base: 14, rows: [
+      '######....###..................###....................###.............................###.....................###..........................',
+      '.######....#................######..................#####............................####.....................####.........................',
+      '.######....#.................#####...................####.............................###......#........#.....###..........................',
+      '.#.#####...#..................####...................####....................................###......###..................................',
+      '.#.######..#.....#####........####.####.....#####....####.####..#####.....#..#####.....##..########.########....##....##..####....#########',
+      '.#..#####..#...###..###.......##########..##..####...##########..####.......##....#.#####..########.########.#####.###########...###.######',
+      '.#...#####.#...###..####......####..####.###...####..####..####..#####...#..###...#..####...####.....####....#####..###########.####.####..',
+      '.#...#####.#..####..####......####..####.......####..####..#####..####...#..######...####...####.....####.....####..####..#####.####.####..',
+      '.#....######..####..####......####..####.....######..####..#####..#####.#...#######..####...####.....####.....####..####...####..###.####..',
+      '.#.....#####..####..####......####..####..###..####..####..####....####.#....######..####...####.....####.....####..####...####..###.###...',
+      '.#.....#####..####..####......####..####.####..####..####..####....#####.......#####.####...####.....####.....####..####...####...#........',
+      '.#......####..####..####......####..####.####.#####..####..####.....####.........##..####...####.....####.....####..####...####..###.......',
+      '.#.......###...###..###.......####..###..##########..####..###.......##.....#....##..####...#######..#######..####..####...####.#########..',
+      '###......###....######.......########.....####.####..########........##.....######...#####...#####....#####..#####..#####.#####.##########.',
+      '......................................................................#..........................................................#########.',
+      '..................................................................#..#...........................................................##....###.',
+      '.................................................................#####..........................................................###.....##.',
+      '..................................................................###...........................................................########...'
+    ] },
+    sm: { w: 104, h: 14, base: 11, rows: [
+      '.......................##................#......................##.................#....................',
+      '#####...#............####..............####.....................###...............###...................',
+      '#.###...#.............###..............####.....................##....##.....##....#....................',
+      '#.####..#....###......###.###....###....###.##..###.......#.#.....#.######.######...#....#..##....######',
+      '#..####.#..##..##.....########.##.###...#######.####.....##..#.####.######.######.###.#########.###.##.#',
+      '#..####.#.###..###....###..###.#...###..###.###..###....####....###..###....###...###..###.####.###.##..',
+      '#...#####.###..###....###..###....####..###.###..####.#.######..###..###....###...###..###..###.###.##..',
+      '#....####.###..###....###..###.###.###..###.###...###....#####..###..###....###...###..###..###..####...',
+      '#....####.###..###....###..###.###.###..###.###...####......##..###..###....###...###..###..###..#......',
+      '#.....###..##..##.....###..##..#######.####.##.....##.......##..###..#####..#####.###..###..###.######..',
+      '#......##...####......#.####....##.###.#.####.......#....#..#...###...###....##...###..###..###.#######.',
+      '....................................................#............................................######.',
+      '.................................................###............................................##....#.',
+      '.................................................##.............................................####....'
+    ] }
+  };
+  NB.logoPath = function (L) {
+    var d = '';
+    L.rows.forEach(function (s, y) { var re = /#+/g, m; while ((m = re.exec(s))) d += 'M' + m.index + ' ' + y + 'h' + m[0].length + 'v1h-' + m[0].length + 'z'; });
+    return d;
+  };
+  /* static mark: inline SVG, fill currentColor (accent by default, fg for monochrome) */
+  NB.logoSVG = function (size, label) {
+    var L = NB.LOGO[size || 'lg'];
+    return '<svg class="nb-logo" viewBox="0 0 ' + L.w + ' ' + L.h + '" shape-rendering="crispEdges" role="img" aria-label="' + (label || 'No babysitting') + '"><path fill="currentColor" d="' + NB.logoPath(L) + '"/></svg>';
+  };
+  /* reveal: a white line of code is typed, then compiled into the blocks left to right.
+     Trail: just-converted pixels are fg (white), they settle to accent behind the head (M11 family).
+     host gets: .nb-logo-stage > [.nb-logo-code, svg]. Returns { play, stage }. Reduced motion: final mark. */
+  var LOGO_N = 0;
+  NB.logo = function (host, opt) {
+    opt = opt || {};
+    var L = NB.LOGO[opt.size || 'lg'], id = 'nblg' + (++LOGO_N), d = NB.logoPath(L), text = opt.text || 'No babysitting';
+    host.classList.add('nb-logo-stage');
+    host.innerHTML = '<span class="nb-logo-code" aria-hidden="true"><span class="t"></span><span class="nb-logo-caret">▍</span></span>' +
+      '<svg class="nb-logo" viewBox="0 0 ' + L.w + ' ' + L.h + '" shape-rendering="crispEdges" role="img" aria-label="' + text + '">' +
+      '<defs><clipPath id="' + id + 'a"><rect x="0" y="0" width="0" height="' + L.h + '"/></clipPath>' +
+      '<clipPath id="' + id + 'w"><rect x="0" y="0" width="0" height="' + L.h + '"/></clipPath></defs>' +
+      '<path class="a" fill="currentColor" clip-path="url(#' + id + 'a)" d="' + d + '"/>' +
+      '<path class="w" fill="var(--fg)" clip-path="url(#' + id + 'w)" d="' + d + '"/></svg>';
+    var code = host.querySelector('.nb-logo-code'), t = code.querySelector('.t'), caret = code.querySelector('.nb-logo-caret');
+    var svg = host.querySelector('svg'), ra = svg.querySelector('#' + id + 'a rect'), rw = svg.querySelector('#' + id + 'w rect');
+    var TRAIL = opt.trail || 14, S = { n: 0, s: 0 };
+    function fit() {
+      /* code line spans the mark (JetBrains Mono advance = 0.6em) and sits on the mark's baseline */
+      if (opt.snap !== false && host.parentNode) { /* whole screen pixels per logo pixel keeps the block edges crisp */
+        var k = Math.max(1, Math.min(opt.maxScale || 5, Math.floor(host.parentNode.clientWidth / L.w)));
+        host.style.width = k * L.w + 'px';
+      }
+      var W = svg.getBoundingClientRect().width, fs = W / (text.length * 0.6), px = W / L.w;
+      code.style.fontSize = fs + 'px';
+      var g = document.createElement('canvas').getContext('2d'); g.font = '500 ' + fs + 'px "JetBrains Mono", monospace';
+      var m = g.measureText('N'), a = m.fontBoundingBoxAscent || fs * 1.02, de = m.fontBoundingBoxDescent || fs * 0.3;
+      code.style.top = (L.base * px - ((fs - (a + de)) / 2 + a)) + 'px';
+    }
+    function paint() {
+      t.textContent = text.slice(0, Math.round(S.n));
+      var s = S.s, px = svg.getBoundingClientRect().width / L.w;
+      ra.setAttribute('width', Math.max(0, s - TRAIL));
+      rw.setAttribute('x', Math.max(0, s - TRAIL)); rw.setAttribute('width', Math.max(0, Math.min(s, L.w) - Math.max(0, s - TRAIL)));
+      code.style.clipPath = 'inset(0 0 0 ' + Math.min(s, L.w) * px + 'px)';
+      code.style.visibility = s >= L.w ? 'hidden' : 'visible';
+    }
+    function final() { S.n = text.length; S.s = L.w + TRAIL; paint(); caret.style.visibility = 'hidden'; }
+    var G = window.gsap, tl = null;
+    function play() {
+      if (tl) tl.kill();
+      fit(); S.n = 0; S.s = 0; caret.style.visibility = 'visible'; paint();
+      if (!G || NB.reduce()) { final(); return null; }
+      tl = G.timeline({ onUpdate: paint });
+      tl.to(S, { n: text.length, duration: text.length * 0.055, ease: 'steps(' + text.length + ')' })
+        .to(caret, { autoAlpha: 0, duration: 0.3, repeat: 3, yoyo: true, ease: 'steps(1)' })
+        .set(caret, { visibility: 'hidden' })
+        .to(S, { s: L.w + TRAIL, duration: opt.sweep || 1.1, ease: 'none' }, '-=0.15');
+      return tl;
+    }
+    window.addEventListener('resize', function () { fit(); paint(); });
+    var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    fonts.then(function () { if (opt.autoplay === false) { fit(); final(); } else play(); });
+    return { play: play, final: final, stage: host };
+  };
+
   /* ---------- The Colleague ---------- */
   NB.FACES = {
     idle: ['[•_•]', 'fg-muted', 'đang chờ'],

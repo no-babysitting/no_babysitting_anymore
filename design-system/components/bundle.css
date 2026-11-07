@@ -47,10 +47,22 @@
 .nb-btn:disabled:hover::before, .nb-btn:disabled:hover::after { color: var(--fg-muted); }
 .nb :focus-visible, .nb-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
-/* ---------- tags ---------- */
-.nb-tag { display: inline-flex; align-items: center; gap: .45em; font: 600 12px/1.1 var(--font-mono); letter-spacing: .04em; padding: 5px 8px; border: 1px solid currentColor; white-space: nowrap; }
-.nb-tag.is-signal { color: var(--signal); } .nb-tag.is-warn { color: var(--warn); } .nb-tag.is-danger { color: var(--danger); }
-.nb-tag.is-info { color: var(--info); border-style: dashed; } .nb-tag.is-muted { color: var(--fg-muted); border-color: var(--control); }
+/* ---------- tags: a 9px marker + neutral mono text, no box ----------
+   The marker's SHAPE carries the meaning; its colour only reinforces it (07/11/2026, replaces boxed coloured tags):
+   filled = settled, yes (signal) · half = depends (warn) · crossed = replaced, blocked (danger)
+   · open with a dot = unresolved, needs checking (info) · open = none, not yet (muted).
+   .nb-mk is the same marker on its own (chips, legends, availability cells). */
+.nb-tag { display: inline-flex; align-items: center; gap: .6em; font: 600 12px/1.25 var(--font-mono); letter-spacing: .04em; color: var(--fg); white-space: nowrap; }
+.nb-tag::before, .nb-mk { content: ""; flex: none; display: inline-block; width: 9px; height: 9px; box-sizing: border-box; border: 1.5px solid var(--control); background: transparent; }
+.nb-tag.is-signal::before, .nb-mk.is-signal { background: var(--signal); border-color: var(--signal); }
+.nb-tag.is-warn::before, .nb-mk.is-warn { border-color: var(--warn); background: linear-gradient(90deg, var(--warn) 50%, transparent 50%); }
+.nb-tag.is-danger::before, .nb-mk.is-danger { border-color: var(--danger); background:
+  linear-gradient(45deg, transparent 42%, var(--danger) 42% 58%, transparent 58%),
+  linear-gradient(-45deg, transparent 42%, var(--danger) 42% 58%, transparent 58%); }
+.nb-tag.is-info::before, .nb-mk.is-info { border-color: var(--info); background: radial-gradient(circle closest-side, var(--info) 0 46%, transparent 52%); }
+.nb-tag.is-muted { color: var(--fg-muted); }
+.nb-tag.is-danger s, .nb-tag s { text-decoration-thickness: 1px; text-decoration-color: var(--danger); }
+.nb-tag.is-lg { font-size: 13px; gap: .7em; } .nb-tag.is-lg::before { width: 11px; height: 11px; }
 
 /* ---------- ascii ---------- */
 .nb-canvas { display: block; width: 100%; height: 100%; }
@@ -73,6 +85,13 @@
 .nb-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .nb-chip .n { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }
 .nb-chip[aria-pressed="true"] .n { color: var(--bg); opacity: .7; }
+
+/* ---------- logo: Blocks lettering (NB.logoSVG / NB.logo) ---------- */
+.nb-logo { display: block; width: 100%; height: auto; color: var(--accent); }
+.nb-logo.is-mono { color: var(--fg); }
+.nb-logo-stage { position: relative; color: var(--accent); }
+.nb-logo-code { position: absolute; left: 0; top: 0; white-space: nowrap; font-family: var(--font-mono); font-weight: 500; line-height: 1; letter-spacing: 0; color: var(--fg); pointer-events: none; }
+.nb-logo-caret { color: var(--fg); }
 
 /* ---------- utilities ---------- */
 .nb-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

@@ -8,7 +8,8 @@ No Babysitting (*An unofficial guide to Claude Code best practices*) là trang h
 - **Hai mặt của cùng một tờ giấy.** Theme `dark` (mặc định) là *bàn làm việc*: nền `bg` tối ấm, chữ `fg`. Theme `light` là *bản vẽ*: giấy kẻ ô `bg` sáng. Cả hai dùng chung lưới ô `grid-cell` (40px) vẽ bằng `grid`.
 - **Ba giọng + một giọng cấu trúc.** *Serif hỏi, sans giải thích, mono chứng minh, wide dựng khung.* Không đổi vai giữa các giọng.
   - Câu hỏi Socratic (và chỉ câu hỏi): họ `display` (Newsreader), style `question`.
-  - Tên chương, wordmark, số chương, bộ đếm lớn: họ `wide` (Archivo, trục `wdth` 62–125), style `wordmark`, `index-cond`. Chỉ cho tên tiếng Anh, số, từ khoá.
+  - Logo: chữ Blocks (bitmap, component `Logo`), không phải một font.
+  - Tên chương, số chương, bộ đếm lớn: họ `wide` (Archivo, trục `wdth` 62–125), style `wordmark`, `index-cond`. Chỉ cho tên tiếng Anh, số, từ khoá.
   - Giải thích: họ `text` (Be Vietnam Pro), style `body`, `lead`.
   - Hành động của agent, tên file, tên tính năng, số liệu: họ `mono` (JetBrains Mono), style `action`, `eyebrow`. Lệnh shell (`code`) chỉ xuất hiện trong tab CLI.
 - **Ba motif mang nghĩa.** Mũi tên → nghĩa là *dẫn tới / chuyển thành*. Con trỏ ▍ nghĩa là *tới lượt bạn*. Thanh █░ nghĩa là *ngân sách có hạn*. Không dùng chúng để trang trí.
@@ -28,9 +29,10 @@ No Babysitting (*An unofficial guide to Claude Code best practices*) là trang h
 
 - Dùng `accent` (cam đất) **chỉ cho hành động và hiện tại**: CTA và nút chính, viền focus (`focus-ring`), vị trí hiện tại (tab, mốc chương, beat), agent đang làm, con trỏ ▍ tới lượt bạn, và ô ■ ở nhãn góc. **Không** dùng cho số lớn, mã M1–M14, mũi tên, gạch ngang, nhãn tiêu đề, chip lọc hay HUD. Chữ trên nền `accent` là `on-accent`, không bao giờ dùng trắng tinh.
 - Dùng `signal`, `warn`, `danger` **chỉ cho trạng thái**, và luôn kèm icon + chữ:
-  - `signal` ✓ ◆: đã kiểm chứng, đạt, "Bây giờ", *Bền vững*.
-  - `warn` ◐: dumb zone, *Phụ thuộc model*.
-  - `danger` ✕: bị chặn, "nên kết thúc", *Đã thay thế* (kèm gạch ngang).
+  - `signal` (ô đặc): đã kiểm chứng, đạt, "Bây giờ", *Bền vững*.
+  - `warn` (nửa ô): cần cân nhắc, *Phụ thuộc model*.
+  - `danger` (ô gạch chéo): bị chặn, *Đã thay thế* (kèm gạch ngang).
+  - Trong nhãn (`.nb-tag`), màu trạng thái chỉ nằm ở ô đánh dấu 9px; chữ luôn `fg`, không khung.
 - Dùng `info` cho tham chiếu, "Đào sâu", *Chưa thống nhất* (viền đứt nét), và trạng thái chưa GA (Beta, Research preview).
 - Chữ màu ngữ nghĩa chỉ đặt trên `bg` hoặc `bg-raised`. Trên `bg-sunken` dùng `fg` kèm icon.
 - Viền control (input, radio-card, khay thả) dùng `control` (≥ 3:1). `line` chỉ là hairline trang trí.
@@ -41,7 +43,7 @@ No Babysitting (*An unofficial guide to Claude Code best practices*) là trang h
 ## Chữ
 
 - Câu hỏi mở chương dùng `question` (fluid 40–72px), H2 dùng `heading`, trích dẫn và câu hỏi dẫn dùng `quote` (italic).
-- Tên chương và wordmark dùng `wordmark` (Archivo 125%, 800, viết hoa, line-height 0.92). Số chương, bộ đếm, phần trăm lớn dùng `index-cond` (Archivo 62%, 800), được phép tràn khỏi khung. Metadata dùng nhãn micro (`.nb-micro`): mono 12px, giãn 0.06em, **không** `text-transform`.
+- Tên chương dùng `wordmark` (Archivo 125%, 800, viết hoa, line-height 0.92). Logo không gõ bằng font: dùng `NB.logoSVG()` hoặc file trong `assets/Logo/`. Số chương, bộ đếm, phần trăm lớn dùng `index-cond` (Archivo 62%, 800), được phép tràn khỏi khung. Metadata dùng nhãn micro (`.nb-micro`): mono 12px, giãn 0.06em, **không** `text-transform`.
 - Thân bài dùng `body` (17px / 1.65), rộng tối đa `measure` (66ch).
 - Eyebrow, nhãn micro, nút, tag: mono ≥ 12px, giãn 0.04–0.06em. **Tiếng Việt viết thường** (hoa chữ đầu câu); tiếng Anh, mã và số viết hoa sẵn trong nguồn hoặc bọc `.nb-caps`. Ví dụ: `Phần II · MEDIUM · 11 phút`. Tên component và mã định danh (`SourceButton`, `c04:b3`) giữ nguyên cách viết.
 - **Tiếng Việt:**
@@ -67,7 +69,7 @@ No Babysitting (*An unofficial guide to Claude Code best practices*) là trang h
 
 ## Biểu tượng
 
-- Ưu tiên glyph mono thay cho icon và emoji: `→` dẫn tới · `▍` tới lượt bạn · `█░` ngân sách · `◆` bền vững · `◐` phụ thuộc model · `✕` thay thế/chặn · `⇄` chưa thống nhất · `✓` đạt · `?` chưa có tài liệu · `↳` đào sâu.
+- Ưu tiên glyph mono thay cho icon và emoji: `→` dẫn tới · `▍` tới lượt bạn · `█░` ngân sách · `✕` chặn · `⇄` hai nguồn đối nhau · `✓` đạt · `↳` đào sâu. Nhãn trạng thái và độ bền dùng ô đánh dấu `.nb-mk`, không dùng glyph.
 - Khi cần icon nét: nét 1,5px, đầu tròn, khung 20px, `currentColor`.
 - Mũi tên chuẩn: thân 1,5px, đầu nhọn mở 45°, dài 8px, vẽ bằng một `<path>` để DrawSVG chạy mượt.
 - Không dùng logo hay mascot của Anthropic. "Nhân vật" của trang là con trỏ ▍.
@@ -91,7 +93,8 @@ Chi tiết ở mục **Chuyển động**. Tóm tắt:
 | AgentWindow | Sân khấu chính: nhật ký hành động của agent |
 | SurfaceTabs | "Cách làm" theo 3 tab: Cowork · Claude Code app · CLI |
 | ContextMeter | Simulator S1 và mọi chỗ minh hoạ ngân sách context |
-| DurabilityTag, SourceBadge | Nhãn độ bền và nguồn trên mọi mục |
+| Logo | Chữ Blocks "No babysitting": dòng code trắng biên dịch thành khối; bản lớn, bản nhỏ, bản văn bản |
+| DurabilityTag, SourceBadge | Nhãn độ bền (ô đánh dấu theo hình + chữ trung tính) và nguồn trên mọi mục |
 | SourceButton | Nút "Nguồn" luôn nhìn thấy: mở bảng nguồn (loại, người, ngày, verifiedAt, trích nguyên văn, mở bản gốc, sao chép link) để người học tự đối chiếu |
 | GrillCard | Câu hỏi nhớ lại cuối chương |
 | StatusBoard | Bảng trạng thái BÁO CÁO TUẦN |

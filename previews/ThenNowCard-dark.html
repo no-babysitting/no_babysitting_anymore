@@ -52,10 +52,22 @@
 .nb-btn:disabled:hover::before, .nb-btn:disabled:hover::after { color: var(--fg-muted); }
 .nb :focus-visible, .nb-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
-/* ---------- tags ---------- */
-.nb-tag { display: inline-flex; align-items: center; gap: .45em; font: 600 12px/1.1 var(--font-mono); letter-spacing: .04em; padding: 5px 8px; border: 1px solid currentColor; white-space: nowrap; }
-.nb-tag.is-signal { color: var(--signal); } .nb-tag.is-warn { color: var(--warn); } .nb-tag.is-danger { color: var(--danger); }
-.nb-tag.is-info { color: var(--info); border-style: dashed; } .nb-tag.is-muted { color: var(--fg-muted); border-color: var(--control); }
+/* ---------- tags: a 9px marker + neutral mono text, no box ----------
+   The marker's SHAPE carries the meaning; its colour only reinforces it (07/11/2026, replaces boxed coloured tags):
+   filled = settled, yes (signal) · half = depends (warn) · crossed = replaced, blocked (danger)
+   · open with a dot = unresolved, needs checking (info) · open = none, not yet (muted).
+   .nb-mk is the same marker on its own (chips, legends, availability cells). */
+.nb-tag { display: inline-flex; align-items: center; gap: .6em; font: 600 12px/1.25 var(--font-mono); letter-spacing: .04em; color: var(--fg); white-space: nowrap; }
+.nb-tag::before, .nb-mk { content: ""; flex: none; display: inline-block; width: 9px; height: 9px; box-sizing: border-box; border: 1.5px solid var(--control); background: transparent; }
+.nb-tag.is-signal::before, .nb-mk.is-signal { background: var(--signal); border-color: var(--signal); }
+.nb-tag.is-warn::before, .nb-mk.is-warn { border-color: var(--warn); background: linear-gradient(90deg, var(--warn) 50%, transparent 50%); }
+.nb-tag.is-danger::before, .nb-mk.is-danger { border-color: var(--danger); background:
+  linear-gradient(45deg, transparent 42%, var(--danger) 42% 58%, transparent 58%),
+  linear-gradient(-45deg, transparent 42%, var(--danger) 42% 58%, transparent 58%); }
+.nb-tag.is-info::before, .nb-mk.is-info { border-color: var(--info); background: radial-gradient(circle closest-side, var(--info) 0 46%, transparent 52%); }
+.nb-tag.is-muted { color: var(--fg-muted); }
+.nb-tag.is-danger s, .nb-tag s { text-decoration-thickness: 1px; text-decoration-color: var(--danger); }
+.nb-tag.is-lg { font-size: 13px; gap: .7em; } .nb-tag.is-lg::before { width: 11px; height: 11px; }
 
 /* ---------- ascii ---------- */
 .nb-canvas { display: block; width: 100%; height: 100%; }
@@ -78,6 +90,13 @@
 .nb-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .nb-chip .n { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }
 .nb-chip[aria-pressed="true"] .n { color: var(--bg); opacity: .7; }
+
+/* ---------- logo: Blocks lettering (NB.logoSVG / NB.logo) ---------- */
+.nb-logo { display: block; width: 100%; height: auto; color: var(--accent); }
+.nb-logo.is-mono { color: var(--fg); }
+.nb-logo-stage { position: relative; color: var(--accent); }
+.nb-logo-code { position: absolute; left: 0; top: 0; white-space: nowrap; font-family: var(--font-mono); font-weight: 500; line-height: 1; letter-spacing: 0; color: var(--fg); pointer-events: none; }
+.nb-logo-caret { color: var(--fg); }
 
 /* ---------- utilities ---------- */
 .nb-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -358,6 +377,113 @@
     return api;
   };
 
+  /* ---------- Logo: "Blocks" lettering ----------
+     The bitmap IS the logo (Newsreader 800 sampled onto a coarse grid by tools/make-logo.js; masters in
+     design-system/assets/Logo/). Never re-typeset it. lg = 139x18 for >= 36px tall, sm = 104x14 for HUD-size marks. */
+  NB.LOGO = {
+    lg: { w: 139, h: 18, base: 14, rows: [
+      '######....###..................###....................###.............................###.....................###..........................',
+      '.######....#................######..................#####............................####.....................####.........................',
+      '.######....#.................#####...................####.............................###......#........#.....###..........................',
+      '.#.#####...#..................####...................####....................................###......###..................................',
+      '.#.######..#.....#####........####.####.....#####....####.####..#####.....#..#####.....##..########.########....##....##..####....#########',
+      '.#..#####..#...###..###.......##########..##..####...##########..####.......##....#.#####..########.########.#####.###########...###.######',
+      '.#...#####.#...###..####......####..####.###...####..####..####..#####...#..###...#..####...####.....####....#####..###########.####.####..',
+      '.#...#####.#..####..####......####..####.......####..####..#####..####...#..######...####...####.....####.....####..####..#####.####.####..',
+      '.#....######..####..####......####..####.....######..####..#####..#####.#...#######..####...####.....####.....####..####...####..###.####..',
+      '.#.....#####..####..####......####..####..###..####..####..####....####.#....######..####...####.....####.....####..####...####..###.###...',
+      '.#.....#####..####..####......####..####.####..####..####..####....#####.......#####.####...####.....####.....####..####...####...#........',
+      '.#......####..####..####......####..####.####.#####..####..####.....####.........##..####...####.....####.....####..####...####..###.......',
+      '.#.......###...###..###.......####..###..##########..####..###.......##.....#....##..####...#######..#######..####..####...####.#########..',
+      '###......###....######.......########.....####.####..########........##.....######...#####...#####....#####..#####..#####.#####.##########.',
+      '......................................................................#..........................................................#########.',
+      '..................................................................#..#...........................................................##....###.',
+      '.................................................................#####..........................................................###.....##.',
+      '..................................................................###...........................................................########...'
+    ] },
+    sm: { w: 104, h: 14, base: 11, rows: [
+      '.......................##................#......................##.................#....................',
+      '#####...#............####..............####.....................###...............###...................',
+      '#.###...#.............###..............####.....................##....##.....##....#....................',
+      '#.####..#....###......###.###....###....###.##..###.......#.#.....#.######.######...#....#..##....######',
+      '#..####.#..##..##.....########.##.###...#######.####.....##..#.####.######.######.###.#########.###.##.#',
+      '#..####.#.###..###....###..###.#...###..###.###..###....####....###..###....###...###..###.####.###.##..',
+      '#...#####.###..###....###..###....####..###.###..####.#.######..###..###....###...###..###..###.###.##..',
+      '#....####.###..###....###..###.###.###..###.###...###....#####..###..###....###...###..###..###..####...',
+      '#....####.###..###....###..###.###.###..###.###...####......##..###..###....###...###..###..###..#......',
+      '#.....###..##..##.....###..##..#######.####.##.....##.......##..###..#####..#####.###..###..###.######..',
+      '#......##...####......#.####....##.###.#.####.......#....#..#...###...###....##...###..###..###.#######.',
+      '....................................................#............................................######.',
+      '.................................................###............................................##....#.',
+      '.................................................##.............................................####....'
+    ] }
+  };
+  NB.logoPath = function (L) {
+    var d = '';
+    L.rows.forEach(function (s, y) { var re = /#+/g, m; while ((m = re.exec(s))) d += 'M' + m.index + ' ' + y + 'h' + m[0].length + 'v1h-' + m[0].length + 'z'; });
+    return d;
+  };
+  /* static mark: inline SVG, fill currentColor (accent by default, fg for monochrome) */
+  NB.logoSVG = function (size, label) {
+    var L = NB.LOGO[size || 'lg'];
+    return '<svg class="nb-logo" viewBox="0 0 ' + L.w + ' ' + L.h + '" shape-rendering="crispEdges" role="img" aria-label="' + (label || 'No babysitting') + '"><path fill="currentColor" d="' + NB.logoPath(L) + '"/></svg>';
+  };
+  /* reveal: a white line of code is typed, then compiled into the blocks left to right.
+     Trail: just-converted pixels are fg (white), they settle to accent behind the head (M11 family).
+     host gets: .nb-logo-stage > [.nb-logo-code, svg]. Returns { play, stage }. Reduced motion: final mark. */
+  var LOGO_N = 0;
+  NB.logo = function (host, opt) {
+    opt = opt || {};
+    var L = NB.LOGO[opt.size || 'lg'], id = 'nblg' + (++LOGO_N), d = NB.logoPath(L), text = opt.text || 'No babysitting';
+    host.classList.add('nb-logo-stage');
+    host.innerHTML = '<span class="nb-logo-code" aria-hidden="true"><span class="t"></span><span class="nb-logo-caret">▍</span></span>' +
+      '<svg class="nb-logo" viewBox="0 0 ' + L.w + ' ' + L.h + '" shape-rendering="crispEdges" role="img" aria-label="' + text + '">' +
+      '<defs><clipPath id="' + id + 'a"><rect x="0" y="0" width="0" height="' + L.h + '"/></clipPath>' +
+      '<clipPath id="' + id + 'w"><rect x="0" y="0" width="0" height="' + L.h + '"/></clipPath></defs>' +
+      '<path class="a" fill="currentColor" clip-path="url(#' + id + 'a)" d="' + d + '"/>' +
+      '<path class="w" fill="var(--fg)" clip-path="url(#' + id + 'w)" d="' + d + '"/></svg>';
+    var code = host.querySelector('.nb-logo-code'), t = code.querySelector('.t'), caret = code.querySelector('.nb-logo-caret');
+    var svg = host.querySelector('svg'), ra = svg.querySelector('#' + id + 'a rect'), rw = svg.querySelector('#' + id + 'w rect');
+    var TRAIL = opt.trail || 14, S = { n: 0, s: 0 };
+    function fit() {
+      /* code line spans the mark (JetBrains Mono advance = 0.6em) and sits on the mark's baseline */
+      if (opt.snap !== false && host.parentNode) { /* whole screen pixels per logo pixel keeps the block edges crisp */
+        var k = Math.max(1, Math.min(opt.maxScale || 5, Math.floor(host.parentNode.clientWidth / L.w)));
+        host.style.width = k * L.w + 'px';
+      }
+      var W = svg.getBoundingClientRect().width, fs = W / (text.length * 0.6), px = W / L.w;
+      code.style.fontSize = fs + 'px';
+      var g = document.createElement('canvas').getContext('2d'); g.font = '500 ' + fs + 'px "JetBrains Mono", monospace';
+      var m = g.measureText('N'), a = m.fontBoundingBoxAscent || fs * 1.02, de = m.fontBoundingBoxDescent || fs * 0.3;
+      code.style.top = (L.base * px - ((fs - (a + de)) / 2 + a)) + 'px';
+    }
+    function paint() {
+      t.textContent = text.slice(0, Math.round(S.n));
+      var s = S.s, px = svg.getBoundingClientRect().width / L.w;
+      ra.setAttribute('width', Math.max(0, s - TRAIL));
+      rw.setAttribute('x', Math.max(0, s - TRAIL)); rw.setAttribute('width', Math.max(0, Math.min(s, L.w) - Math.max(0, s - TRAIL)));
+      code.style.clipPath = 'inset(0 0 0 ' + Math.min(s, L.w) * px + 'px)';
+      code.style.visibility = s >= L.w ? 'hidden' : 'visible';
+    }
+    function final() { S.n = text.length; S.s = L.w + TRAIL; paint(); caret.style.visibility = 'hidden'; }
+    var G = window.gsap, tl = null;
+    function play() {
+      if (tl) tl.kill();
+      fit(); S.n = 0; S.s = 0; caret.style.visibility = 'visible'; paint();
+      if (!G || NB.reduce()) { final(); return null; }
+      tl = G.timeline({ onUpdate: paint });
+      tl.to(S, { n: text.length, duration: text.length * 0.055, ease: 'steps(' + text.length + ')' })
+        .to(caret, { autoAlpha: 0, duration: 0.3, repeat: 3, yoyo: true, ease: 'steps(1)' })
+        .set(caret, { visibility: 'hidden' })
+        .to(S, { s: L.w + TRAIL, duration: opt.sweep || 1.1, ease: 'none' }, '-=0.15');
+      return tl;
+    }
+    window.addEventListener('resize', function () { fit(); paint(); });
+    var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    fonts.then(function () { if (opt.autoplay === false) { fit(); final(); } else play(); });
+    return { play: play, final: final, stage: host };
+  };
+
   /* ---------- The Colleague ---------- */
   NB.FACES = {
     idle: ['[•_•]', 'fg-muted', 'đang chờ'],
@@ -462,7 +588,7 @@
       <span class="nb-micro c-signal">Bây giờ</span>
       <p class="txt">“Viết giống văn phong các báo cáo đã duyệt.”</p>
       <p class="nb-q guide">Rule này chặn một rủi ro thật, hay đang mã hoá cứng một sở thích Claude tự suy ra được?</p>
-      <span><span class="nb-tag is-warn">◐ Phụ thuộc model</span></span>
+      <span><span class="nb-tag is-warn">Phụ thuộc model</span></span>
     </article>
   </div>
   <div class="foot">

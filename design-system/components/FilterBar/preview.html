@@ -38,7 +38,6 @@
   ol.res a{color:var(--fg);text-decoration:none;font:500 15px/1.4 var(--font-text)}
   ol.res a:hover{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--control)}
   ol.res li.is-superseded a{color:var(--fg-muted)}
-  ol.res .du{font:600 12px/1 var(--font-mono);white-space:nowrap}
   ol.res .lv{font:600 12px/1 var(--font-mono);color:var(--fg-subtle);min-width:7ch;text-align:right}
   mark{background:transparent;color:var(--fg);text-decoration:underline 2px var(--fg-muted);text-underline-offset:3px}
   .empty{padding:22px 2px;color:var(--fg-muted);font-size:15px}
@@ -82,7 +81,7 @@
   var NB = window.NoBabysitting; if (!NB) return;
   var hasFlip = window.gsap && window.Flip; if (hasFlip) gsap.registerPlugin(Flip);
   var anim = hasFlip && !NB.reduce();
-  var DUR = { timeless: ['◆ Bền vững', 'c-signal'], 'model-sensitive': ['◐ Phụ thuộc model', 'c-warn'], superseded: ['✕ Đã thay thế', 'c-danger'], contested: ['⇄ Chưa thống nhất', 'c-info'] };
+  var DUR = { timeless: ['Bền vững', 'is-signal'], 'model-sensitive': ['Phụ thuộc model', 'is-warn'], superseded: ['Đã thay thế', 'is-danger'], contested: ['Chưa thống nhất', 'is-info'] };
   var ITEMS = [
     { t: 'Sau hai lần sửa không được, xoá hội thoại và viết lại prompt', ty: 'TIP', lv: 'low', du: 'timeless', sf: ['cowork', 'app', 'cli'], ro: [] },
     { t: 'Tua lại thay vì sửa tiếp khi Claude đi sai hướng', ty: 'TIP', lv: 'low', du: 'timeless', sf: ['app', 'cli'], ro: [] },
@@ -102,7 +101,7 @@
   var GROUPS = [
     { k: 'ty', l: 'Loại', o: [['TIP', 'TIP'], ['Tính năng', 'Tính năng'], ['WORKFLOW', 'WORKFLOW'], ['Ca sử dụng', 'Ca sử dụng']] },
     { k: 'lv', l: 'Cấp độ', o: [['low', 'LOW'], ['medium', 'MEDIUM'], ['high', 'HIGH'], ['pro', 'PRO']] },
-    { k: 'du', l: 'Độ bền', o: [['timeless', '◆ Bền vững'], ['model-sensitive', '◐ Phụ thuộc model'], ['superseded', '✕ Đã thay thế'], ['contested', '⇄ Chưa thống nhất']] },
+    { k: 'du', l: 'Độ bền', o: [['timeless', 'Bền vững'], ['model-sensitive', 'Phụ thuộc model'], ['superseded', 'Đã thay thế'], ['contested', 'Chưa thống nhất']] },
     { k: 'sf', l: 'Bề mặt', o: [['cowork', 'Cowork'], ['app', 'Claude Code app'], ['cli', 'CLI']] },
     { k: 'ro', l: 'Vai trò', o: [['marketing', 'Marketing'], ['tai-chinh', 'Tài chính'], ['dev', 'Dev']] }
   ];
@@ -129,7 +128,8 @@
       var n = ITEMS.filter(function (it) { return has(it, g.k, o[0]); }).length;
       var b = document.createElement('button'); b.type = 'button'; b.className = 'nb-chip'; b.setAttribute('aria-pressed', 'false');
       b.dataset.k = g.k; b.dataset.v = o[0]; b.dataset.l = o[1];
-      b.innerHTML = '<span></span> <span class="n"></span>'; b.firstChild.textContent = o[1]; b.lastChild.textContent = n;
+      b.innerHTML = (g.k === 'du' ? '<span class="nb-mk ' + DUR[o[0]][1] + '" aria-hidden="true"></span>' : '') + '<span class="lb"></span> <span class="n"></span>';
+      b.querySelector('.lb').textContent = o[1]; b.lastChild.textContent = n;
       b.addEventListener('click', function () {
         var a = sel[g.k], i = a.indexOf(o[0]); if (i >= 0) a.splice(i, 1); else a.push(o[0]);
         b.setAttribute('aria-pressed', String(i < 0)); render();
@@ -149,7 +149,8 @@
       li.setAttribute('data-flip-id', it.t);
       var ty = document.createElement('span'); ty.className = 'ty'; ty.textContent = it.ty;
       var a = document.createElement('a'); a.href = '#'; a.appendChild(hl(it.t, q));
-      var du = document.createElement('span'); du.className = 'du ' + DUR[it.du][1]; du.textContent = DUR[it.du][0];
+      var du = document.createElement('span'); du.className = 'du nb-tag ' + DUR[it.du][1];
+      if (it.du === 'superseded') { var st = document.createElement('s'); st.textContent = DUR[it.du][0]; du.appendChild(st); } else du.textContent = DUR[it.du][0];
       var lv = document.createElement('span'); lv.className = 'lv'; lv.textContent = it.lv.toUpperCase();
       li.appendChild(ty); li.appendChild(a); li.appendChild(du); li.appendChild(lv); res.appendChild(li);
     });

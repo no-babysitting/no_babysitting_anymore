@@ -1,3 +1,15 @@
+```text
+▀█████▄   ▀█▀               ▄▄▄███                  ▄▄███                            ▄███                     ███▄
+ █▀████▄   █                 ▀████                   ████                             ▀▀▀    ▄▄█      ▄▄█     ▀▀▀
+ █ ▀█████  █   ▄▄█▀▀██▄       ████▄████▄  ▄▄▀▀███▄   ████▄████▄ ▀████     ▀ ▄█▀▀▀▀▄ ▄▄▄██  ████████ ████████ ▄▄▄██ ▄▄▄██▄▄████   ▄██▀██████
+ █   █████ █  ▄███  ████      ████  ████ ▀▀▀   ████  ████  ████▄ ▀████   █  ███▄▄▄▀  ████   ████     ████    ▀████  ████▀▀█████ ████ ████
+ █    ▀█████  ████  ████      ████  ████  ▄▄▄▀▀████  ████  ████▀  ▀████ █   ▀██████  ████   ████     ████     ████  ████   ████  ███ ███▀
+ █     ▀████  ████  ████      ████  ████ ████ ▄████  ████  ████    ▀████       ▀▀██▀ ████   ████     ████     ████  ████   ████  ▄█▄
+▄█▄      ███   ▀██▄▄██▀      ▄████▄▄█▀▀  ▀████▀████  ████▄▄██▀       ██     █▄▄▄▄█▀  ████▄  ▀█████▀  ▀█████▀ ▄████  ████▄ ▄████ █████████▄
+                                                                  ▄  ▄▀                                                          ██▀▀▀▀███
+                                                                 ▀███▀                                                          ███▄▄▄▄▄▀▀
+```
+
 # No Babysitting · Gói handoff (cập nhật 07/11/2026)
 
 *An unofficial guide to Claude Code best practices.* "Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi."
@@ -28,7 +40,7 @@ Tài liệu trong `docs/` đã được sửa theo 10 quyết định của ch�
 5. `docs/05-surface-matrix.md`: tính năng nào có trên Cowork / Claude Code app / CLI, kèm ngày kiểm chứng.
 6. `docs/06-sources-and-links.md`: **mọi link nguồn đã dùng + quy tắc bắt buộc về link nguồn + đặc tả nút SourceButton.**
 7. **`docs/07-todo-handoff.md`: danh sách việc còn lại theo mức ưu tiên (P0 chặn việc kế tiếp). Đọc ngay sau README này.**
-8. Mở `previews/index.html` để xem 26 component chạy thật (cần mạng: font Google và GSAP từ jsDelivr). Tra nhanh token, vai chữ, quy tắc và trạng thái từng component ở **`design-system/SOURCE-OF-TRUTH.md`**.
+8. Mở `previews/index.html` để xem 27 component chạy thật (cần mạng: font Google và GSAP từ jsDelivr). Tra nhanh token, vai chữ, quy tắc và trạng thái từng component ở **`design-system/SOURCE-OF-TRUTH.md`**.
 
 ## Cấu trúc gói
 
@@ -38,6 +50,7 @@ docs/                          7 tài liệu chính (07 = todo handoff) (Markdow
 design-system/                 nguồn của design system (giống bản đã publish)
   README.md                    hướng dẫn dùng hệ thiết kế
   SOURCE-OF-TRUTH.md           trang ngắn: token, vai chữ, quy tắc đã chốt, trạng thái từng component
+  assets/Logo/                 logo Blocks: bitmap gốc (.json), SVG, bản văn bản (.txt); bản lớn và bản nhỏ
   tokens.json                  token nguồn (2 theme dark/light)
   tokens.css                   token đã biên dịch ra CSS custom properties
   design-system.json           metadata của artifact
@@ -51,7 +64,7 @@ screenshots/components/        ảnh chụp cuối của từng component, dark 
 screenshots/references/        ảnh chụp 5 site reference đã khảo sát
 research/knowledge-base/       ghi chú đọc 3 repo nguồn (concepts, tips, workflows, voices, pedagogy, GSAP); đường dẫn `repos/…` trong ghi chú là bản clone của các repo ở mục Nguồn
 research/surface-verification/ dữ liệu nghiên cứu bề mặt + vòng kiểm chứng (JSON) và bản tóm tắt (TXT)
-tools/                         tokens2css.py · contrast.py (tương phản WCAG) · check.js (render-test, nhiều bề rộng) · build-previews.py · shoot-references.js
+tools/                         tokens2css.py · contrast.py (tương phản WCAG) · make-logo.js (dựng logo Blocks) · check.js (render-test, nhiều bề rộng) · build-previews.py · shoot-references.js
 ```
 
 ## Trạng thái
@@ -60,8 +73,8 @@ tools/                         tokens2css.py · contrast.py (tương phản WCAG
 |---|---|
 | PRD, kịch bản sư phạm, SAD 4+2, ma trận bề mặt | Xong. Đã tự rà soát (đối chiếu chéo, kiểm tra thuật ngữ); vòng review đa agent chưa chạy lại vì giới hạn quota |
 | Design system: token, 2 theme, chữ, chuyển động | Xong |
-| 26 component (preview + README) | 8 component mới và đợt sửa chữ nhỏ, accent, M4 ngày 07/11/2026. Render-test 2 theme × 2 bề rộng (1000px, 360px): không lỗi JS, không cuộn ngang. Chưa chạy axe, screen reader thật. Độ phủ danh sách §7: 19/28 |
-| Artifact design system | Bản mới (07/11/2026, 26 component): https://claude.ai/artifact/VmP9E4UDLaN5jpB2rZeRUH · **đang ở chế độ riêng tư**: người nhận chỉ mở được sau khi chủ sở hữu chia sẻ qua menu Share của trang. Bản cũ (9M5HYXuu1vwQvsonXsPYUs) không còn đọc được từ tài khoản này |
+| 27 component (preview + README) | 8 component mới, Logo Blocks, DurabilityTag/`.nb-tag` làm lại, và đợt sửa chữ nhỏ, accent, M4 ngày 07/11/2026. Render-test 2 theme × 2 bề rộng (1000px, 360px): không lỗi JS, không cuộn ngang. Chưa chạy axe, screen reader thật. Độ phủ danh sách §7: 19/28 |
+| Artifact design system | Bản mới (07/11/2026, 27 component): https://claude.ai/artifact/VmP9E4UDLaN5jpB2rZeRUH · **đang ở chế độ riêng tư**: người nhận chỉ mở được sau khi chủ sở hữu chia sẻ qua menu Share của trang. Bản cũ (9M5HYXuu1vwQvsonXsPYUs) không còn đọc được từ tài khoản này |
 | Code của site (Astro + GSAP) | Chưa bắt đầu; mốc M0 là bước kế tiếp |
 
 ## Quyết định chính (chi tiết ở PRD §11)

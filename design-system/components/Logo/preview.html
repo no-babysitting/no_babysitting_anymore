@@ -1,0 +1,133 @@
+<!-- @dsCard group="Thương hiệu" height=900 subtitle="Logo Blocks · dòng code trắng được gõ ra rồi biên dịch thành chữ khối · bản lớn 139×18, bản nhỏ 104×14 · màu accent hoặc đơn sắc" -->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Logo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+  html,body{margin:0}
+  body{background:var(--bg);padding:20px}
+  .lg{padding:0;display:grid}
+  .hero{position:relative;padding:64px 28px 40px;border-bottom:1px solid var(--control);display:grid;gap:22px;min-height:250px;align-content:center}
+  .hero .gut{display:flex;gap:14px;align-items:center}
+  .hero .ln{font:500 12px/1 var(--font-mono);color:var(--fg-subtle)}
+  .hero .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+  .hero .tagline{margin:0;font-size:15px;line-height:1.5;color:var(--fg-muted);max-width:52ch}
+  .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--control)}
+  .cell{display:grid;gap:12px;align-content:start;padding:18px;min-width:0}
+  .cell + .cell{border-left:1px solid var(--control)}
+  .cell .art{min-height:64px;display:flex;align-items:center}
+  .cell p{margin:0;font-size:13.5px;line-height:1.5;color:var(--fg-muted)}
+  .cell.inv{background:var(--fg)}
+  .cell.inv .nb-micro{color:var(--bg)} .cell.inv p{color:var(--bg);opacity:.8}
+  .cell.inv .nb-logo{color:var(--bg)}
+  .hudmock{display:flex;align-items:center;gap:12px;height:var(--hud-height);border:1px solid var(--control);padding:0 12px}
+  .hudmock .sep{width:1px;align-self:stretch;background:var(--control)}
+  .term{padding:18px;display:grid;gap:10px;border-bottom:1px solid var(--control)}
+  .term pre{margin:0;padding:14px;background:var(--bg-sunken);color:var(--fg);font:400 9px/1.32 var(--font-mono);overflow-x:auto;letter-spacing:0}
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .rules > div{padding:18px;display:grid;gap:8px;align-content:start}
+  .rules > div + div{border-left:1px solid var(--control)}
+  .rules ul{margin:0;padding-left:18px;font-size:14px;line-height:1.55;color:var(--fg)}
+  .rules li::marker{color:var(--fg-subtle)}
+  .cell .nb-logo{max-width:100%}
+  .hudmock{overflow:hidden}
+  .space{max-width:100%;position:relative;display:inline-block;outline:1px dashed var(--control);outline-offset:0;padding:8px}
+  @media (max-width:720px){
+    .row,.rules{grid-template-columns:1fr}
+    .cell + .cell,.rules > div + div{border-left:0;border-top:1px solid var(--control)}
+    .hero{padding:52px 16px 28px}
+  }
+</style>
+</head>
+<body>
+<section class="nb nb-frame lg" aria-labelledby="lgt">
+  <span class="nb-corner tl nb-micro" id="lgt"><span class="nb-sq"></span>LOGO · BLOCKS</span>
+  <span class="nb-corner tr nb-micro">dòng code → chữ khối · M11</span>
+
+  <div class="hero">
+    <div class="gut"><span class="ln" aria-hidden="true">01</span><span class="nb-micro">~/no-babysitting · logo --blocks</span></div>
+    <div id="mark"></div>
+    <div class="bar">
+      <p class="tagline">Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi.</p>
+      <button class="nb-btn" type="button" id="replay">Phát lại</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <span class="nb-micro">Chính · accent</span>
+      <div class="art" id="a1"></div>
+      <p>Trên <code>bg</code> và <code>bg-raised</code>. Dùng ở bìa, mở đầu, finale.</p>
+    </div>
+    <div class="cell">
+      <span class="nb-micro">Đơn sắc · fg</span>
+      <div class="art" id="a2"></div>
+      <p>Nơi accent đã dành cho hành động: HUD, chân trang, ảnh chia sẻ đen trắng.</p>
+    </div>
+    <div class="cell inv">
+      <span class="nb-micro">Đảo màu · bg trên fg</span>
+      <div class="art" id="a3"></div>
+      <p>Trên khối màu <code>fg</code>, ví dụ tem, nhãn in.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <span class="nb-micro">Bản lớn · 139×18 · ≥ 36px</span>
+      <div class="art"><span class="space" id="s1"></span></div>
+      <p>Chừa trống ít nhất 4 pixel logo ở mọi phía (viền đứt nét). Hiện ở 2px mỗi pixel.</p>
+    </div>
+    <div class="cell" style="grid-column:span 2">
+      <span class="nb-micro">Bản nhỏ · 104×14 · trong HUD 48px</span>
+      <div class="art"><div class="hudmock"><span id="s2" style="display:block;width:208px"></span><span class="sep"></span><span class="nb-micro">MEDIUM</span><span class="sep"></span><span class="nb-micro"><b>c03</b> · 4/12</span></div></div>
+      <p>Dưới 36px dùng bản nhỏ, luôn 2px mỗi pixel (cao 28px). Không thu bản lớn xuống cỡ này: nét serif vỡ thành nhiễu.</p>
+    </div>
+  </div>
+
+  <div class="term">
+    <span class="nb-micro">Bản văn bản · README, banner CLI · nửa khối ▀▄█</span>
+    <pre id="txt" aria-label="No babysitting (chữ khối)"></pre>
+  </div>
+
+  <div class="rules">
+    <div>
+      <span class="nb-micro">Nên</span>
+      <ul>
+        <li>Dùng file trong <code>assets/Logo/</code> hoặc <code>NB.logoSVG()</code>; bitmap là bản gốc.</li>
+        <li>Phóng theo bội số nguyên (139 × n, 104 × n) để mép khối sắc.</li>
+        <li>Chạy hiệu ứng gõ → biên dịch đúng một lần, ở mở đầu hoặc bìa.</li>
+      </ul>
+    </div>
+    <div>
+      <span class="nb-micro">Không nên</span>
+      <ul>
+        <li>Gõ lại "No babysitting" bằng font rồi gọi là logo.</li>
+        <li>Kéo giãn, viền, đổ bóng, gradient, hay đổi sang màu khác accent, fg, bg.</li>
+        <li>Đặt logo accent cạnh một nút accent: hai thứ cùng màu tranh nhau.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<script>
+(function () {
+  var NB = window.NoBabysitting; if (!NB) return;
+  var hero = NB.logo(document.getElementById('mark'), { size: 'lg', maxScale: 5 });
+  document.getElementById('replay').addEventListener('click', function () { hero.play(); });
+  function place(id, size, cls, px) {
+    var el = document.getElementById(id); el.innerHTML = NB.logoSVG(size);
+    var svg = el.querySelector('svg'); if (cls) svg.classList.add(cls);
+    if (px) svg.style.width = NB.LOGO[size].w * px + 'px';
+  }
+  place('a1', 'lg', '', 2); place('a2', 'lg', 'is-mono', 2); place('a3', 'lg', '', 2);
+  place('s1', 'lg', '', 2); place('s2', 'sm', 'is-mono', 2);
+  /* text art from the same bitmap: one text row = two pixel rows */
+  var L = NB.LOGO.lg, HB = { '..': ' ', '#.': '▀', '.#': '▄', '##': '█' }, out = [];
+  for (var y = 0; y < L.h; y += 2) { var s = ''; for (var x = 0; x < L.w; x++) s += HB[L.rows[y][x] + ((L.rows[y + 1] || '')[x] || '.')]; out.push(s.replace(/\s+$/, '')); }
+  document.getElementById('txt').textContent = out.join('\n');
+})();
+</script>
+</body>
+</html>

@@ -9,7 +9,7 @@
 
 ### 0.0 Thương hiệu
 
-- **Tên:** *No Babysitting*. **Wordmark:** set bằng Archivo expanded (`--font-wide`, style `wordmark`, §2.1) ở cover, hero và HUD. Serif chỉ dành cho câu hỏi Socratic và trích dẫn (thống nhất 07/11/2026). Luôn đi kèm descriptor *"An unofficial guide to Claude Code best practices"* (`small`, `fg-muted`).
+- **Tên:** *No Babysitting*. **Logo (chốt 07/11/2026):** chữ "No babysitting" dạng **Blocks**: Newsreader 800 lấy mẫu xuống lưới pixel thô (bản lớn 139×18, bản nhỏ 104×14), màu accent hoặc đơn sắc `fg`. Bitmap là bản gốc (`design-system/assets/Logo/`, component `Logo`); không gõ lại bằng font. Khi xuất hiện lần đầu, logo là một dòng code chữ trắng được gõ ra rồi biên dịch thành chữ khối (họ M11). Tên chương tiếng Anh vẫn dùng Archivo expanded (§2.1); serif dạng chữ chỉ dành cho câu hỏi Socratic và trích dẫn. Luôn đi kèm descriptor *"An unofficial guide to Claude Code best practices"* (`small`, `fg-muted`).
 - **Ẩn dụ "giao việc cho đồng nghiệp mới"** khớp với khung "bàn làm việc của agent" ở §0.1: bàn làm việc chính là nơi đồng nghiệp mới làm việc, và harness là những gì bạn đặt lên bàn đó (công cụ, hồ sơ, quyền, người duyệt).
 - **Không dùng** logo, mascot hay bảng màu nhận diện của Anthropic. "Nhân vật" của trang là **The Colleague**, một gương mặt ASCII trung tính (§12.6), cố ý không giống mascot chính thức nào.
 
@@ -100,12 +100,14 @@ Tất cả là CSS custom properties. Dark là theme gốc, khai báo trên `:ro
 
 ### 1.4 Nhãn độ bền & nguồn
 
-| Nhãn | Hình thức (không dựa riêng vào màu) |
+| Nhãn | Hình thức: ô đánh dấu 9px + chữ mono `fg`, không khung, không chữ màu (07/11/2026) |
 |---|---|
-| **Bền vững** | viền `--signal`, icon `◆` |
-| **Phụ thuộc model** | viền `--warn`, icon `◐` |
-| **Đã thay thế** | viền `--danger`, chữ gạch ngang, icon `✕` |
-| **Chưa thống nhất** | viền **đứt nét** `--info`, icon `⇄` |
+| **Bền vững** | ô đặc `--signal` |
+| **Phụ thuộc model** | nửa trái ô đặc `--warn` |
+| **Đã thay thế** | ô gạch chéo `--danger`, chữ gạch ngang |
+| **Chưa thống nhất** | ô rỗng có chấm giữa `--info` |
+
+Hình của ô mang nghĩa, màu chỉ nhấn thêm; cùng ngôn ngữ cho mọi `.nb-tag` (đặc = có/đã chắc, nửa = một phần, gạch chéo = bị thay/bị chặn, chấm = chưa rõ, rỗng = chưa có).
 
 `SourceBadge` (Boris · Thariq · Dex · Matt · Cat · Lydia · Karpathy · Docs · Community · Shayan) là chip mono chữ nhỏ trung tính (`--fg-muted` trên `--bg-raised`). **Không dùng màu riêng cho từng người** để tránh biến nguồn thành "chuỗi dữ liệu", và không dùng ảnh chân dung.
 
@@ -171,7 +173,7 @@ Self-host qua Fontsource, chỉ nạp subset `latin` + `latin-ext` + `vietnamese
 
 ### 3.3 HUD
 
-- **Trên (sticky, cao 48px):** wordmark "No Babysitting" bằng mono + `JourneyHUD` (thanh cấp độ) + nút Tìm, Library, Theme, Motion, Presenter.
+- **Trên (sticky, cao 48px):** logo Blocks bản nhỏ, đơn sắc `fg` + `JourneyHUD` (thanh cấp độ) + nút Tìm, Library, Theme, Motion, Presenter.
 - **Trái (desktop ≥ 1200px):** `ChapterRail` dọc với 12 mốc (Mở đầu, 01–10 và 05b). Mốc hiện tại tô `--accent`, mốc đã qua dùng `--fg-muted`.
 - **Dưới phải:** `StatusBoard` BÁO CÁO TUẦN thu gọn thành 4 chấm, mở ra khi hover hoặc focus.
 - Trên mobile, HUD gộp vào một thanh dưới cùng có `padding-bottom: env(safe-area-inset-bottom)`.
@@ -184,7 +186,7 @@ Self-host qua Fontsource, chỉ nạp subset `latin` + `latin-ext` + `vietnamese
 |---|---|---|
 | `--r-1` | **0** | Chip, input, khay (Terminal Brutalism: góc vuông) |
 | `--r-2` | **0** | AgentWindow, panel, simulator |
-| `--r-pill` | **0** | Badge nguồn, nhãn độ bền: hiển thị dạng ngoặc vuông `[◆ Bền vững]`, không bo tròn |
+| `--r-pill` | **0** | Badge nguồn, pill gói và trạng thái phát hành: góc vuông. Nhãn độ bền không có khung (§1.4) |
 | `--border-hard` | `1px solid var(--control)` | Khung cấu trúc brutalist: viền panel, đường chia cột |
 | `--shadow-overlay` | `0 12px 32px -8px rgb(0 0 0 / .45)` (dark) · `0 12px 32px -12px rgb(26 23 20 / .18)` (light) | **Chỉ** dùng cho tooltip, dialog, cửa sổ notes |
 
@@ -195,7 +197,7 @@ Self-host qua Fontsource, chỉ nạp subset `latin` + `latin-ext` + `vietnamese
 
 ## 5. Biểu tượng
 
-- **Glyph mono** thay cho emoji: `→` dẫn tới · `▍` tới lượt bạn · `█░` ngân sách · `◆` bền vững · `◐` phụ thuộc model · `✕` thay thế/chặn · `⇄` chưa thống nhất · `✓` đạt · `⟲` vòng lặp · `↳` đào sâu.
+- **Glyph mono** thay cho emoji: `→` dẫn tới · `▍` tới lượt bạn · `█░` ngân sách · `✕` chặn · `⇄` hai nguồn đối nhau (ContradictionNote) · `✓` đạt · `⟲` vòng lặp · `↳` đào sâu. Nhãn trạng thái và độ bền dùng ô đánh dấu (§1.4), không dùng glyph.
 - **Icon nét** (khi glyph không đủ): nét 1,5px, đầu tròn, khung 20px, màu `currentColor`.
 - **Mũi tên chuẩn:** thân nét 1,5px, đầu nhọn **mở** 45°, dài 8px. Vẽ bằng SVG `<path>` một đoạn duy nhất để DrawSVG chạy mượt.
 - **Không dùng logo hay mascot Anthropic.** "Nhân vật" của trang là **The Colleague** (§12.6); con trỏ ▍ vẫn mang nghĩa *tới lượt bạn*.
@@ -318,7 +320,7 @@ Mỗi thành phần ghi: mục đích · cấu tạo · trạng thái · chuyể
 | **DeepDive** `↳` | Ngăn "Đào sâu" nạp nội dung từ Library | đóng · mở | Flip chiều cao | `<details>`/`<summary>` |
 | **SourceBadge** | Chip mono: người · ngày · link (dạng thu gọn của SourceButton) | — | — | Link có tên mô tả đầy đủ |
 | **SourceButton** *(cần thiết kế và duyệt preview trước khi áp dụng đại trà)* | Nút `[ Nguồn · n ↗ ]` mở bảng nguồn (popover/bottom sheet): loại, tiêu đề, người · ngày, `verifiedAt`, trích nguyên văn, `[ MỞ BẢN GỐC ↗ ]`, `[ SAO CHÉP LINK ]`. Phải đẹp, luôn nhìn thấy, đúng hệ brutalist. Đặc tả đầy đủ ở `06-sources-and-links.md` §2 | thường · hover · focus · mở · link chết · quá 30 ngày | M4 + fade `dur-quick` | `aria-expanded`, Esc đóng, link báo "mở tab mới" |
-| **DurabilityTag** | Viền + icon + chữ (§1.4) | 4 loại | — | Không dựa riêng vào màu |
+| **DurabilityTag** | Ô đánh dấu 9px + chữ mono `fg`, không khung (§1.4) | 4 loại | — | Chữ tự đủ nghĩa; ô đánh dấu là trang trí |
 | **ThenNowCard** | Hai thẻ "Hồi đó" / "Bây giờ" nối bằng mũi tên, kèm câu hỏi dẫn (serif italic) và nhãn độ bền | — | M6 → M1 → `ease.settle` | Đọc tuần tự "Hồi đó… Bây giờ…" |
 | **ContradictionNote** `⇄` | Hai trích dẫn ngang hàng, mỗi bên một nguồn | — | — | Không ngầm chọn bên nào |
 | **AgentWindow** | Sân khấu chính, trung tính về bề mặt. Thanh tiêu đề (tên dự án hoặc thư mục) + nhật ký: tin nhắn của bạn (sans), hành động của agent (mono, có icon: đọc · tra web · sửa · hỏi quyền · kiểm), kết quả. Biến thể *chrome*: `app` (khung cửa sổ giản lược, không logo) và `cli` (dấu nhắc `>`) | đang chạy · chờ quyền · xong | M4 cho tên hành động; M8 cho luồng | Nhật ký là `<ol>`; trạng thái đọc qua `aria-live` |
@@ -574,6 +576,7 @@ Tween nào cũng phải ứng với một mục M1–M14; component không tự 
 | Library | LibraryCard · FilterBar | Lưới thẻ chung viền, mở chi tiết tại chỗ bằng Flip; tìm không dấu, chip lọc 5 chiều, đếm kết quả condensed |
 | Điều hướng | ChapterRail · JourneyHUD · PresenterHUD | Rail 12 mốc (hiện tại ■ accent) + dải 12 ô; HUD trên 48px không accent; HUD trình chiếu với đồng hồ chương và thanh Thảo luận |
 | Nhãn | ContradictionNote · PlanPill | Các bên ngang hàng trong khung đứt nét `info`; pill trạng thái, gói, bề mặt kèm bộ chọn "gói của tôi" |
-| Nhãn | DurabilityTag · SourceBadge | Mono 12px, góc vuông, nhãn tiếng Việt viết thường; SourceBadge đặt cạnh một con số condensed lớn |
+| Thương hiệu | Logo | Chữ Blocks (bitmap 139×18 và 104×14); dòng code trắng được gõ rồi biên dịch thành khối, vệt sau chuyển sang accent |
+| Nhãn | DurabilityTag · SourceBadge | Ô đánh dấu 9px theo hình (đặc, nửa, gạch chéo, chấm) + chữ mono trung tính; SourceBadge đặt cạnh một con số condensed lớn |
 
 > **Đã xử lý 07/11/2026:** ContextMeter vẽ theo khung S1 mới (hai chỉ số, không ngưỡng); `overloaded` không còn gắn với ngưỡng context. Trạng thái từng component xem `design-system/SOURCE-OF-TRUTH.md`.

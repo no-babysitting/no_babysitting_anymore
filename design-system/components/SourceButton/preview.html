@@ -64,7 +64,7 @@
       <p class="claim">Ngưỡng "dumb zone" của context: các nguồn nói khác nhau.</p>
       <div class="row">
         <button class="nb-btn src has-conflict" type="button" data-set="b" aria-expanded="false" aria-controls="panel"><span class="dot" aria-hidden="true"></span>Nguồn · <span class="n">3</span> ↗</button>
-        <span class="nb-tag is-info">⇄ Chưa thống nhất</span>
+        <span class="nb-tag is-info">Chưa thống nhất</span>
       </div>
     </div>
   </div>
@@ -75,7 +75,7 @@
       <p class="claim">Task lặp bằng <code>/loop</code> hết hạn sau 7 ngày.</p>
       <div class="row">
         <button class="nb-btn src is-stale" type="button" data-set="c" aria-expanded="false" aria-controls="panel">Nguồn · <span class="n">1</span> ↗</button>
-        <span class="nb-tag is-warn">◐ Cần kiểm chứng lại · quá 30 ngày</span>
+        <span class="nb-tag is-warn">Cần kiểm chứng lại · quá 30 ngày</span>
       </div>
     </div>
   </div>
@@ -112,7 +112,7 @@
     DATA[set].forEach(function (s) {
       var it = el('div', 'item');
       var tags = el('div', 'row');
-      var kind = el('span', 'nb-tag ' + (s.k === 'Docs' ? 'is-signal' : s.k === 'Blog' ? 'is-info' : 'is-muted'), s.k);
+      var kind = el('span', 'nb-pill' + (s.k === 'Docs' ? ' is-ga' : ''), s.k);
       tags.appendChild(kind);
       it.appendChild(tags);
       it.appendChild(el('p', 't', s.t));

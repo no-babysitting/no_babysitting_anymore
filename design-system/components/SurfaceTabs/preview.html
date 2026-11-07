@@ -27,7 +27,7 @@
   code,.mono{font:500 .9em/1 var(--font-mono);background:var(--bg-sunken);border:1px solid var(--control);padding:2px 5px}
   .na{margin:0 0 10px;color:var(--fg-muted);line-height:1.55;max-width:70ch}
   .interp{margin-right:8px}
-  .avail{display:flex;flex-wrap:wrap;gap:6px;padding:12px 18px;border-top:1px solid var(--control)}
+  .avail{display:flex;flex-wrap:wrap;gap:8px 22px;padding:12px 18px;border-top:1px solid var(--control)}
   .foot{display:flex;justify-content:space-between;gap:12px;padding:10px 18px;border-top:1px solid var(--control)}
   .foot a{color:var(--fg);text-underline-offset:3px}
   @media (max-width:640px){[role="tab"]{padding:12px 10px;font-size:12px}}
@@ -45,7 +45,7 @@
     <span class="bar" id="bar" aria-hidden="true"></span>
   </div>
   <div role="tabpanel" id="p-cowork" aria-labelledby="tab-cowork" hidden>
-    <p class="na"><span class="nb-tag is-muted">? chưa có tài liệu</span> Docs Cowork chỉ liệt kê các mode Manual, Auto và Skip.</p>
+    <p class="na"><span class="nb-tag is-info">chưa có tài liệu</span> Docs Cowork chỉ liệt kê các mode Manual, Auto và Skip.</p>
     <p class="na"><span class="nb-tag is-info interp">Diễn giải</span>Chọn Manual, rồi yêu cầu: "Lập kế hoạch, hỏi tôi chỗ còn mơ hồ, chờ tôi duyệt rồi mới làm."</p>
   </div>
   <div role="tabpanel" id="p-app" aria-labelledby="tab-app">
@@ -63,11 +63,11 @@
     </ol>
   </div>
   <div class="avail" aria-label="Khả dụng">
-    <span class="nb-tag is-muted">? Cowork</span>
-    <span class="nb-tag is-signal">✓ Desktop</span>
-    <span class="nb-tag is-signal">✓ Web</span>
-    <span class="nb-tag is-signal">✓ Mobile</span>
-    <span class="nb-tag is-signal">✓ CLI</span>
+    <span class="nb-tag is-info">Cowork · chưa rõ</span>
+    <span class="nb-tag is-signal">Desktop<span class="nb-sr">: có</span></span>
+    <span class="nb-tag is-signal">Web<span class="nb-sr">: có</span></span>
+    <span class="nb-tag is-signal">Mobile<span class="nb-sr">: có</span></span>
+    <span class="nb-tag is-signal">CLI<span class="nb-sr">: có</span></span>
   </div>
   <div class="foot nb-micro"><span>Nguồn · Docs</span><a href="https://code.claude.com/docs/en/permission-modes" target="_blank" rel="noopener">permission-modes ↗</a></div>
 </section>

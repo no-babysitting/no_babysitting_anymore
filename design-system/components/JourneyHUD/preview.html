@@ -13,7 +13,8 @@
   .hud{display:flex;align-items:stretch;height:var(--hud-height);border-top:1px solid var(--control);border-bottom:1px solid var(--control);background:var(--bg)}
   .hud > *{display:flex;align-items:center;gap:10px;padding:0 14px;border-right:1px solid var(--control);min-width:0}
   .hud > *:last-child{border-right:0;margin-left:auto}
-  .wm{font-size:15px;color:var(--fg);white-space:nowrap}
+  .wm{flex:none}
+  .wm .nb-logo{width:208px}
   .lvl{gap:10px}
   .lvbar{display:grid;grid-template-columns:repeat(4,22px);gap:3px}
   .lvbar i{height:10px;background:transparent;border:1px solid var(--control)}
@@ -45,6 +46,8 @@
   .demo{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 18px}
   .demo .nb-micro{margin-left:auto}
   th{white-space:nowrap}
+  .hud .nb-micro{white-space:nowrap}
+  @media (max-width:1100px){.hud .hmw > .nb-micro,.hud .sbw > .nb-micro{display:none}}
   .pos,.toggle{white-space:nowrap}
   @media (max-width:760px){
     .hud .hmw,.hud .sbw,.wm{display:none}
@@ -66,13 +69,13 @@
   <span class="nb-corner tr nb-micro">cao 48px · dính đầu trang</span>
 
   <header class="hud" aria-label="Tiến độ học">
-    <span class="nb-wide wm" aria-hidden="true">NO BABYSITTING</span>
+    <span class="wm" id="wm"></span>
     <div class="lvl" role="progressbar" id="pb" aria-label="Cấp độ" aria-valuemin="1" aria-valuemax="12" aria-valuenow="4" aria-valuetext="MEDIUM, chương 4 trên 12">
       <span class="lvbar" aria-hidden="true"><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i></span>
       <span class="lvname" id="lvname" aria-hidden="true">MEDIUM</span>
     </div>
-    <div class="hmw"><span class="nb-micro">Harness</span><span class="hm" id="hm" role="img" aria-label=""></span></div>
-    <div class="sbw"><span class="nb-micro">Báo cáo tuần</span><span class="sb" id="sb" role="img" aria-label=""></span></div>
+    <div class="hmw" title="Harness: phần đã hiểu"><span class="nb-micro">Harness</span><span class="hm" id="hm" role="img" aria-label=""></span></div>
+    <div class="sbw" title="Báo cáo tuần: tiêu chí đã đạt"><span class="nb-micro">Báo cáo tuần</span><span class="sb" id="sb" role="img" aria-label=""></span></div>
     <div class="pos"><span class="nb-micro"><b id="cid">c03</b> · <span id="cno">4</span>/12</span></div>
     <button class="toggle" type="button" id="tg" aria-expanded="false" aria-controls="panel">[ Chi tiết ]</button>
   </header>
@@ -114,6 +117,7 @@
   ];
   var CRIT = [['Hiểu đúng yêu cầu', 3], ['Đúng chuẩn trình bày của team', 4], ['Số liệu được kiểm chứng', 8], ['Lặp lại được và tự chạy', 10]];
   var done = 3, $ = function (id) { return document.getElementById(id); }, anim = window.gsap && !NB.reduce();
+  $('wm').innerHTML = NB.logoSVG('sm'); $('wm').firstChild.classList.add('is-mono');
   HARNESS.forEach(function (h) {
     var tr = document.createElement('tr'); tr.innerHTML = '<td class="g"></td><td></td><td class="nb-mono"></td><td></td>';
     tr.children[1].textContent = h[0]; tr.children[2].textContent = h[1]; tr.children[3].textContent = h[3]; $('hmRows').appendChild(tr);

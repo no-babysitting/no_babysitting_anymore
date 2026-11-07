@@ -1,31 +1,88 @@
-<!-- @dsCard group="Nhãn" height=230 subtitle="4 mức độ bền · viền + ký hiệu + chữ (không chỉ màu) · góc vuông, mono hoa" -->
+<!-- @dsCard group="Nhãn" height=640 subtitle="4 mức độ bền · ô đánh dấu 9px mang nghĩa bằng hình (đặc · nửa · gạch chéo · chấm) · chữ mono trung tính · không khung, không chữ màu" -->
 <!doctype html>
 <html lang="vi">
 <head>
 <meta charset="utf-8">
 <title>DurabilityTag</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
   html,body{margin:0}
   body{background:var(--bg);padding:20px}
-  .dt{padding:44px 0 0}
-  .grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--control)}
-  .grid > div{padding:16px 16px 18px;border-right:1px solid var(--control);display:grid;gap:10px;align-content:start}
-  .grid > div:last-child{border-right:0}
-  .grid p{margin:0;font-size:13px;line-height:1.5;color:var(--fg-muted)}
-  .k{color:var(--fg-subtle)}
-  @media (max-width:640px){.grid{grid-template-columns:1fr 1fr}.grid > div{border-bottom:1px solid var(--control)}}
+  .dt{padding:48px 0 0;display:grid}
+  /* shape key: the four markers large, so the shape language reads before the colour does */
+  .key{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--control);border-bottom:1px solid var(--control)}
+  .key > div{display:grid;gap:14px;padding:22px 18px 18px;align-content:start}
+  .key > div + div{border-left:1px solid var(--line)}
+  .key .nb-mk{width:34px;height:34px;border-width:2px}
+  .key .nm{font:600 13px/1.3 var(--font-mono);color:var(--fg);letter-spacing:.04em}
+  .key .sh{font:500 12px/1.3 var(--font-mono);color:var(--fg-subtle)}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;vertical-align:baseline;padding:13px 18px 13px 0;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{padding-left:18px}
+  thead th{font:600 12px/1.3 var(--font-mono);color:var(--fg-muted);letter-spacing:.04em;padding-top:16px;padding-bottom:10px}
+  td{font-size:14.5px;line-height:1.5;color:var(--fg-muted)}
+  td.ex{color:var(--fg)}
+  td.k{font:500 12.5px/1.5 var(--font-mono);color:var(--fg-subtle);white-space:nowrap}
+  td.tg{white-space:nowrap}
+  .ctx{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);border-top:1px solid var(--control)}
+  .ctx > div{padding:18px;display:grid;gap:12px;align-content:start}
+  .ctx > div + div{border-left:1px solid var(--control)}
+  .ctx ol{list-style:none;margin:0;padding:0}
+  .ctx li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+  .ctx li.old span:first-child{color:var(--fg-muted)}
+  .big{margin:0;font-size:84px;color:var(--fg)}
+  .big small{font-size:.4em;color:var(--fg-subtle)}
+  @media (max-width:720px){
+    .key{grid-template-columns:1fr 1fr}
+    .key > div:nth-child(3){border-left:0}
+    .key > div:nth-child(n+3){border-top:1px solid var(--line)}
+    thead{display:none}
+    tbody tr{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+    tbody td{border:0;padding:0}
+    tbody td:first-child{padding-left:0}
+    tbody td:nth-child(2),tbody td:nth-child(3){grid-column:1 / -1}
+    tbody td.k{grid-row:1;grid-column:2}
+    .ctx{grid-template-columns:1fr}
+    .ctx > div + div{border-left:0;border-top:1px solid var(--control)}
+  }
 </style>
 </head>
 <body>
-<section class="nb nb-frame dt" aria-label="Nhãn độ bền">
-  <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>DurabilityTag · 4 mức</span>
-  <span class="nb-corner tr nb-micro">kind</span>
-  <div class="grid">
-    <div><span><span class="nb-tag is-signal"><span aria-hidden="true">◆</span>Bền vững</span></span><p>Đúng qua nhiều thế hệ model.</p><span class="nb-micro k">timeless</span></div>
-    <div><span><span class="nb-tag is-warn"><span aria-hidden="true">◐</span>Phụ thuộc model</span></span><p>Đúng hôm nay, nên xem lại khi model đổi.</p><span class="nb-micro k">model-sensitive</span></div>
-    <div><span><span class="nb-tag is-danger"><span aria-hidden="true">✕</span>Đã thay thế</span></span><p>Đã có cách tốt hơn; giữ để hiểu lịch sử.</p><span class="nb-micro k">superseded</span></div>
-    <div><span><span class="nb-tag is-info"><span aria-hidden="true">⇄</span>Chưa thống nhất</span></span><p>Các nguồn uy tín nói khác nhau.</p><span class="nb-micro k">contested</span></div>
+<section class="nb nb-frame dt" aria-labelledby="dtt">
+  <span class="nb-corner tl nb-micro" id="dtt"><span class="nb-sq"></span>DurabilityTag · 4 mức</span>
+  <span class="nb-corner tr nb-micro">hình mang nghĩa · màu chỉ nhấn</span>
+
+  <div class="key" aria-hidden="true">
+    <div><span class="nb-mk is-signal"></span><span class="nm">Bền vững</span><span class="sh">ô đặc · đã chắc</span></div>
+    <div><span class="nb-mk is-warn"></span><span class="nm">Phụ thuộc model</span><span class="sh">nửa ô · còn tuỳ</span></div>
+    <div><span class="nb-mk is-danger"></span><span class="nm">Đã thay thế</span><span class="sh">gạch chéo · bỏ</span></div>
+    <div><span class="nb-mk is-info"></span><span class="nm">Chưa thống nhất</span><span class="sh">ô rỗng có chấm · chưa ngã ngũ</span></div>
+  </div>
+
+  <table>
+    <thead><tr><th scope="col">Nhãn</th><th scope="col">Nghĩa</th><th scope="col">Ví dụ</th><th scope="col">kind</th></tr></thead>
+    <tbody>
+      <tr><td class="tg"><span class="nb-tag is-signal">Bền vững</span></td><td>Đúng qua nhiều thế hệ model.</td><td class="ex">Cho Claude cách tự kiểm chứng kết quả.</td><td class="k">timeless</td></tr>
+      <tr><td class="tg"><span class="nb-tag is-warn">Phụ thuộc model</span></td><td>Đúng hôm nay; xem lại khi model đổi.</td><td class="ex">Ngưỡng "dumb zone" khoảng 40% context.</td><td class="k">model-sensitive</td></tr>
+      <tr><td class="tg"><span class="nb-tag is-danger"><s>Đã thay thế</s></span></td><td>Đã có cách tốt hơn; giữ để hiểu lịch sử.</td><td class="ex">Phím <code>#</code> để ghi nhớ → nay là auto-memory.</td><td class="k">superseded</td></tr>
+      <tr><td class="tg"><span class="nb-tag is-info">Chưa thống nhất</span></td><td>Các nguồn uy tín nói khác nhau.</td><td class="ex">CLAUDE.md nên dưới 150 hay dưới 200 dòng.</td><td class="k">contested</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ctx">
+    <div>
+      <span class="nb-micro">Trong danh sách Library</span>
+      <ol>
+        <li><span>Sau hai lần sửa không được, xoá hội thoại và viết lại prompt</span><span class="nb-tag is-signal">Bền vững</span></li>
+        <li class="old"><span>Viết "think hard" để Claude nghĩ kỹ hơn</span><span class="nb-tag is-danger"><s>Đã thay thế</s></span></li>
+        <li><span>Hook tự xuất PDF sau mỗi lần sửa báo cáo</span><span class="nb-tag is-warn">Phụ thuộc model</span></li>
+      </ol>
+    </div>
+    <div>
+      <span class="nb-micro">Cạnh một con số</span>
+      <p class="nb-cond big nb-tabular" aria-hidden="true">~40<small>%</small></p>
+      <span class="nb-tag is-lg is-info">Chưa thống nhất · 3 nguồn</span>
+    </div>
   </div>
 </section>
 </body>

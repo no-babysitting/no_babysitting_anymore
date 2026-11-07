@@ -27,10 +27,8 @@
   ol.steps li.no .t{color:var(--fg-muted)}
   ol.steps li.yes .fit{color:var(--signal)}
   .av{display:flex;flex-wrap:wrap;gap:0}
-  .av span{display:inline-flex;gap:6px;align-items:center;padding:6px 9px;border:1px solid var(--control);margin:0 -1px -1px 0;font:600 12.5px/1 var(--font-mono);color:var(--fg-muted)}
-  .av span b{font-weight:600}
-  .av .yes b{color:var(--signal)} .av .part b{color:var(--warn)} .av .no b{color:var(--fg-subtle)} .av .unk b{color:var(--info)}
-  .av .yes{color:var(--fg)}
+  .av > span{display:inline-flex;gap:8px;align-items:center;padding:6px 9px;border:1px solid var(--control);margin:0 -1px -1px 0;font:600 12.5px/1 var(--font-mono);color:var(--fg-muted)}
+  .av > .yes{color:var(--fg)}
   .note{margin:8px 0 0;font-size:13px;color:var(--fg-subtle);line-height:1.5}
   @media (max-width:640px){.blk{grid-template-columns:1fr;gap:10px}}
 </style>
@@ -75,17 +73,17 @@
     <span class="nb-micro">AvailabilityBadges</span>
     <div>
       <div class="av" role="list" aria-label="Plan mode có trên các bề mặt">
-        <span class="unk" role="listitem"><b aria-hidden="true">?</b>Cowork<span class="nb-sr">: chưa rõ</span></span>
-        <span class="yes" role="listitem"><b aria-hidden="true">✓</b>Desktop<span class="nb-sr">: có</span></span>
-        <span class="yes" role="listitem"><b aria-hidden="true">✓</b>Web<span class="nb-sr">: có</span></span>
-        <span class="yes" role="listitem"><b aria-hidden="true">✓</b>Mobile<span class="nb-sr">: có</span></span>
-        <span class="yes" role="listitem"><b aria-hidden="true">✓</b>CLI<span class="nb-sr">: có</span></span>
+        <span class="unk" role="listitem"><i class="nb-mk is-info" aria-hidden="true"></i>Cowork<span class="nb-sr">: chưa rõ</span></span>
+        <span class="yes" role="listitem"><i class="nb-mk is-signal" aria-hidden="true"></i>Desktop<span class="nb-sr">: có</span></span>
+        <span class="yes" role="listitem"><i class="nb-mk is-signal" aria-hidden="true"></i>Web<span class="nb-sr">: có</span></span>
+        <span class="yes" role="listitem"><i class="nb-mk is-signal" aria-hidden="true"></i>Mobile<span class="nb-sr">: có</span></span>
+        <span class="yes" role="listitem"><i class="nb-mk is-signal" aria-hidden="true"></i>CLI<span class="nb-sr">: có</span></span>
       </div>
       <dl class="legend">
-        <dt class="c-signal">✓</dt><dd>Có, docs xác nhận.</dd>
-        <dt class="c-warn">◐</dt><dd>Một phần (thiếu tuỳ chọn, hoặc chỉ một số gói).</dd>
-        <dt class="c-subtle">—</dt><dd>Chưa có ở bề mặt này.</dd>
-        <dt class="c-info">?</dt><dd>Chưa rõ: chưa có nguồn xác nhận, cần kiểm chứng tay (ma trận bề mặt §4).</dd>
+        <dt><i class="nb-mk is-signal"></i></dt><dd>Có, docs xác nhận.</dd>
+        <dt><i class="nb-mk is-warn"></i></dt><dd>Một phần (thiếu tuỳ chọn, hoặc chỉ một số gói).</dd>
+        <dt><i class="nb-mk is-muted"></i></dt><dd>Chưa có ở bề mặt này.</dd>
+        <dt><i class="nb-mk is-info"></i></dt><dd>Chưa rõ: chưa có nguồn xác nhận, cần kiểm chứng tay (ma trận bề mặt §4).</dd>
       </dl>
     </div>
   </div>

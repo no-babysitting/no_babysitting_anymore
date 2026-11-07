@@ -4,7 +4,7 @@
 
 ## 0. Trạng thái một dòng
 
-Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 05b), Design system (**26 component có preview**, đợt sửa 07/11/2026 ở §5b), SAD 4+2, ma trận bề mặt, tài liệu nguồn. **Chưa có code của site.** Kế hoạch: 12–13 tuần, M0–M5 (PRD §12).
+Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 05b), Design system (**27 component có preview**, đợt sửa 07/11/2026 ở §5b), SAD 4+2, ma trận bề mặt, tài liệu nguồn. **Chưa có code của site.** Kế hoạch: 12–13 tuần, M0–M5 (PRD §12).
 
 ## 1. Việc chặn: làm trước khi viết nội dung chương (P0)
 
@@ -52,7 +52,7 @@ Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 
 - [ ] **Cảnh/hình cho c05b** (thanh mức nghĩ `░▒▓█`, S9) chưa có preview.
 - [ ] **CinematicAscii:** cảnh dựng bằng code, mặt trời chưa thành hình tròn rõ. Bản thật nên render sẵn lúc build bằng asciify-engine từ **ảnh tự chụp/tự dựng** (không ảnh stock, không ảnh có thương hiệu); ghim bản đã phát hành ≥ 2 tuần.
 - [ ] **Component hiện là preview HTML tĩnh**, không phải module sản xuất: chuyển `bundle.js`/`bundle.css` thành module của Astro, cache glyph atlas, kiểm tra hiệu năng trên thiết bị yếu (≤ 4k ô, 30 fps), ngân sách JS ≤ 150 KB gzip mỗi trang.
-- [ ] **Reduced motion, axe, screen reader thật, snapshot 3 bề rộng × 2 theme trong CI** chưa chạy. Đã có: render-test 26 component × 2 theme × 2 bề rộng (1000px, 360px), không lỗi JS, không cuộn ngang (07/11/2026).
+- [ ] **Reduced motion, axe, screen reader thật, snapshot 3 bề rộng × 2 theme trong CI** chưa chạy. Đã có: render-test 27 component × 2 theme × 2 bề rộng (1000px, 360px), không lỗi JS, không cuộn ngang (07/11/2026).
 - [ ] Palette giữ nguyên theo quyết định chủ dự án (xem P0 số 5).
 
 ## 5b. Đợt sửa design system 07/11/2026 (theo bản tự nhận xét 7/10)
@@ -66,6 +66,13 @@ Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 
 - **Sửa mâu thuẫn tài liệu:** wordmark, Colleague, ContextMeter, 10 trụ, ChapterRail 11 → 12 mốc, M4.
 - **Mobile:** nhãn góc phải ẩn ở ≤ 520px (hai nhãn góc đè nhau ở 360px); `check.js` nhận bề rộng (`1000,360`) và bỏ qua nút ẩn.
 
+**Bổ sung cùng ngày (theo yêu cầu chủ dự án):**
+
+- **Logo Blocks:** chữ "No babysitting" dạng khối pixel (Newsreader 800 lấy mẫu, bản lớn 139×18, bản nhỏ 104×14), xuất hiện như một dòng code chữ trắng được gõ rồi biên dịch thành khối. Component `Logo`, file gốc ở `design-system/assets/Logo/`, công cụ `tools/make-logo.js`. Đã gắn vào Cover (bản lớn) và JourneyHUD (bản nhỏ, đơn sắc).
+- **DurabilityTag và mọi `.nb-tag` làm lại:** bỏ khung viền màu và chữ màu; còn ô đánh dấu 9px mang nghĩa bằng hình (đặc, nửa, gạch chéo, chấm, rỗng) + chữ mono `fg`.
+- [ ] Nếu công khai: chữ khối màu cam gợi tới banner của Claude Code; xem lại logo cùng việc đổi accent (P0 số 5).
+- [ ] Favicon: chưa có (bitmap 104×14 quá rộng cho ô vuông); cần một monogram khối, ví dụ "Nb".
+
 Còn lại của bản tự nhận xét (P2): tượng ASCII ở Hero có nghĩa; CinematicAscii từ ảnh thật; subset font Archivo; thử canvas trên máy yếu; 9 component §7 chưa có preview (ObserveStage, ExplainBlock, DeepDive, CommandBlock, UseCaseCard, GlossaryTerm, NotesWindow, ThemeToggle/MotionToggle, StarterTemplate).
 
 ## 6. Quy trình và chất lượng (P1)
@@ -77,7 +84,7 @@ Còn lại của bản tự nhận xét (P2): tượng ASCII ở Hero có nghĩa
 
 ## 7. Việc đã làm nhưng nên biết giới hạn
 
-- Artifact design system bản mới https://claude.ai/artifact/VmP9E4UDLaN5jpB2rZeRUH (07/11/2026, 26 component) đang **riêng tư**; chia sẻ qua menu Share nếu cần người khác xem. Bản cũ (`9M5HYXuu1vwQvsonXsPYUs`, version 9) báo "không tìm thấy" khi đọc từ tài khoản hiện tại.
+- Artifact design system bản mới https://claude.ai/artifact/VmP9E4UDLaN5jpB2rZeRUH (07/11/2026, 27 component) đang **riêng tư**; chia sẻ qua menu Share nếu cần người khác xem. Bản cũ (`9M5HYXuu1vwQvsonXsPYUs`, version 9) báo "không tìm thấy" khi đọc từ tài khoản hiện tại.
 - **Chưa đưa file lên Google Drive** (công cụ Drive không nhận file zip; cần tự tải lên).
 - Các kiểm tra hiển thị chạy trên bản local; chưa mở lại artifact đã publish bằng trình duyệt sau lần publish cuối.
 - Link npm của `asciify-engine` ghi theo trí nhớ, chưa mở lại kiểm tra.

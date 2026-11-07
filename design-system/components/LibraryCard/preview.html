@@ -29,7 +29,6 @@
   .lvl{display:inline-flex;align-items:center;gap:6px;font:600 12px/1 var(--font-mono);color:var(--fg-muted)}
   .lvl i{display:inline-block;width:7px;height:10px;background:var(--control)}
   .lvl i.on.l1{background:var(--level-1)} .lvl i.on.l2{background:var(--level-2)} .lvl i.on.l3{background:var(--level-3)} .lvl i.on.l4{background:var(--level-4)}
-  .nb-tag.is-danger s{text-decoration-thickness:1px}
   /* open = detail */
   .card.is-open{grid-column:1/-1;background:var(--bg-raised);grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto;column-gap:28px;padding:20px}
   .card.is-open > .head{grid-column:1}
@@ -42,6 +41,7 @@
   .detail dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
   .detail dt{font:600 12px/1.6 var(--font-mono);color:var(--fg-muted);letter-spacing:.04em}
   .detail dd{margin:0;color:var(--fg)}
+  .detail dd.avl{display:flex;flex-wrap:wrap;gap:6px 16px}
   .detail dd a{color:var(--fg);text-underline-offset:3px;text-decoration-color:var(--control)}
   .detail .acts{display:flex;flex-wrap:wrap;gap:8px}
   .card.is-open .foot{grid-column:1}
@@ -68,7 +68,7 @@
       <div class="detail" id="d1">
         <p>Khi Claude đã hai lần làm sai cùng một việc, hội thoại chứa cả hai bản hỏng và hai lời sửa. Lần thử thứ ba dễ lặp lại chúng. <code>/clear</code> hoặc tua lại, rồi viết một yêu cầu đã rút kinh nghiệm.</p>
         <dl>
-          <dt>Bề mặt</dt><dd><span class="nb-pill">Cowork ✓</span> <span class="nb-pill">App ✓</span> <span class="nb-pill">CLI ✓</span></dd>
+          <dt>Bề mặt</dt><dd class="avl"><span class="nb-tag is-signal">Cowork<span class="nb-sr">: có</span></span><span class="nb-tag is-signal">App<span class="nb-sr">: có</span></span><span class="nb-tag is-signal">CLI<span class="nb-sr">: có</span></span></dd>
           <dt>Chương</dt><dd><a href="#c02-b6">c02 · b6 Sửa tiếp hay tua lại</a></dd>
           <dt>Kiểm chứng</dt><dd>07/11/2026</dd>
         </dl>
@@ -76,7 +76,7 @@
       </div>
       <div class="foot">
         <span class="who">Docs · Thariq</span>
-        <span class="nb-tag is-signal">◆ Bền vững</span>
+        <span class="nb-tag is-signal">Bền vững</span>
         <span class="lvl" role="img" aria-label="Cấp độ Low, 1 trên 4"><i class="on l1"></i><i></i><i></i><i></i>LOW</span>
       </div>
     </article>
@@ -97,7 +97,7 @@
       </div>
       <div class="foot">
         <span class="who">Repo · cộng đồng</span>
-        <span class="nb-tag is-danger">✕ <s>Đã thay thế</s></span>
+        <span class="nb-tag is-danger"><s>Đã thay thế</s></span>
         <span class="lvl" role="img" aria-label="Cấp độ Medium, 2 trên 4"><i class="on l1"></i><i class="on l2"></i><i></i><i></i>MEDIUM</span>
       </div>
     </article>
@@ -111,7 +111,7 @@
       <div class="detail" id="d3">
         <p>Dùng khi việc có nhiều bước hoặc bạn chưa chắc yêu cầu đã rõ. Ở chế độ này Claude không sửa file; nó đọc, hỏi lại và đưa ra kế hoạch để bạn duyệt hoặc chỉnh.</p>
         <dl>
-          <dt>Bề mặt</dt><dd><span class="nb-pill">Cowork ?</span> <span class="nb-pill">App ✓</span> <span class="nb-pill">CLI ✓</span></dd>
+          <dt>Bề mặt</dt><dd class="avl"><span class="nb-tag is-info">Cowork · chưa rõ</span><span class="nb-tag is-signal">App<span class="nb-sr">: có</span></span><span class="nb-tag is-signal">CLI<span class="nb-sr">: có</span></span></dd>
           <dt>Trạng thái</dt><dd><span class="nb-pill is-ga">GA</span></dd>
           <dt>Chương</dt><dd><a href="#c03-b5">c03 · b5 Cách làm</a></dd>
         </dl>
@@ -119,7 +119,7 @@
       </div>
       <div class="foot">
         <span class="who">Docs · 06/11/2026</span>
-        <span class="nb-tag is-signal">◆ Bền vững</span>
+        <span class="nb-tag is-signal">Bền vững</span>
         <span class="lvl" role="img" aria-label="Cấp độ Medium, 2 trên 4"><i class="on l1"></i><i class="on l2"></i><i></i><i></i>MEDIUM</span>
       </div>
     </article>
