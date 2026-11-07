@@ -1,0 +1,310 @@
+---
+/* Scene · Vòng giao việc (docs/09-motion-script.md §3, data docs/10 §5).
+   One delegation from brief to sign-off in seven steps, for the kind of work the visitor picks.
+   Desktop: pinned, scroll scrubs through the steps; the rail marks the current one (accent = current).
+   Phone and reduced motion: the seven steps stack; each plays once as it enters (or shows its end state).
+   ASCII runs numbers (brief) → terrain (exploration); the full-colour moment stays with the finale. */
+import { WORK, AVAIL } from '../../content/work-types';
+import { url } from '../../lib/url';
+import { chapters } from '../../lib/chapters';
+const STEPS = [
+  ['Brief', 'Bạn nói kết quả, ràng buộc và thế nào là xong'],
+  ['Hiểu mục tiêu', 'Claude nhắc lại mục tiêu và hỏi điều còn mơ hồ'],
+  ['Khám phá', 'Đọc file, tra web, gọi công cụ đã kết nối'],
+  ['Kế hoạch', 'Chia việc, chạy song song khi có lợi'],
+  ['Thực thi', 'Làm từng bước, ghi nhật ký'],
+  ['Kiểm chứng', 'Chạy phép kiểm, sửa chỗ hỏng'],
+  ['Bàn giao', 'Bạn duyệt trước việc không hoàn tác được'],
+];
+const w = WORK[0];
+const chName = (id: string) => { const c = chapters.find((x) => x.id === id); return c ? `${c.no} · ${c.en}` : id; };
+---
+<section class="run" id="run" aria-labelledby="run-h">
+  <div class="pin" id="run-pin">
+    <header class="hd">
+      <span class="nb-micro"><span class="nb-sq"></span>Một lần giao việc · 7 bước</span>
+      <h2 class="nb-wide" id="run-h">Bạn giao kết quả. Claude tự làm. Bạn duyệt.</h2>
+      <div class="pick" role="radiogroup" aria-label="Chọn loại việc">
+        {WORK.map((k, i) => (
+          <label class="chip"><input type="radio" name="run-kind" value={k.id} checked={i === 0} /><span>{k.label}</span></label>
+        ))}
+        <span class="nb-micro ex">ví dụ minh hoạ</span>
+      </div>
+    </header>
+
+    <div class="body">
+      <div class="side"><p class="who"><span class="wf" data-railface>[•_•]</span><span class="nb-micro" data-railstate>đang chờ việc</span></p>
+      <ol class="rail" aria-hidden="true">
+        {STEPS.map((s, i) => <li data-i={i}><span class="no">{String(i + 1).padStart(2, '0')}</span><span class="nm">{s[0]}</span></li>)}
+      </ol></div>
+
+      <div class="stage">
+        <article class="step" data-step="0" aria-labelledby="run-s0">
+          <h3 class="sh" id="run-s0"><span class="nb-micro">01 · {STEPS[0][0]}</span><span class="sd">{STEPS[0][1]}</span></h3>
+          <p class="prompt"><span class="pr" aria-hidden="true">›</span><span data-f="outcome">{w.outcome}</span></p>
+          <canvas class="nb-canvas ncv" data-cv="numbers" aria-hidden="true"></canvas>
+          <ul class="brief" data-f="brief">{w.brief.map((b) => <li><b>{b[0]}</b><span>{b[1]}</span></li>)}</ul>
+        </article>
+
+        <article class="step" data-step="1" aria-labelledby="run-s1">
+          <h3 class="sh" id="run-s1"><span class="nb-micro">02 · {STEPS[1][0]}</span><span class="sd">{STEPS[1][1]}</span></h3>
+          <div class="think">
+            <span class="face" data-face aria-live="polite">[°_°]…</span>
+            <div class="said">
+              <p class="re"><span class="nb-micro">Claude nhắc lại</span><span data-f="restate">{w.restate}</span></p>
+              <p class="ask"><span class="nb-micro">Claude hỏi lại một câu</span><span><span data-f="ask">{w.ask}</span><span class="caret" aria-hidden="true">▍</span></span></p>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" data-step="2" aria-labelledby="run-s2">
+          <h3 class="sh" id="run-s2"><span class="nb-micro">03 · {STEPS[2][0]}</span><span class="sd">{STEPS[2][1]}</span></h3>
+          <canvas class="nb-canvas tcv" data-cv="terrain" aria-hidden="true"></canvas>
+          <ul class="tools" data-f="tools">
+            {w.tools.map((t) => <li><span class={`nb-tag ${AVAIL[t.avail].mark}`}>{AVAIL[t.avail].label}</span><b>{t.name}</b>{t.note && <span class="note">{t.note}</span>}</li>)}
+          </ul>
+        </article>
+
+        <article class="step" data-step="3" aria-labelledby="run-s3">
+          <h3 class="sh" id="run-s3"><span class="nb-micro">04 · {STEPS[3][0]}</span><span class="sd">{STEPS[3][1]}</span></h3>
+          <ol class="plan" data-f="plan">{w.plan.map((p) => <li><span>{p}</span></li>)}</ol>
+          <div class="lanes" data-f="lanes" aria-label={`${w.lanes} luồng làm song song`}>{Array.from({ length: w.lanes }, () => <i><b></b></i>)}</div>
+        </article>
+
+        <article class="step" data-step="4" aria-labelledby="run-s4">
+          <h3 class="sh" id="run-s4"><span class="nb-micro">05 · {STEPS[4][0]}</span><span class="sd">{STEPS[4][1]}</span></h3>
+          <ol class="log" data-f="log">{w.log.map((l) => <li class="done"><span class="st" aria-hidden="true">✓</span><span class="t">{l}</span></li>)}</ol>
+        </article>
+
+        <article class="step" data-step="5" aria-labelledby="run-s5">
+          <h3 class="sh" id="run-s5"><span class="nb-micro">06 · {STEPS[5][0]}</span><span class="sd">{STEPS[5][1]}</span></h3>
+          <ul class="checks" data-f="checks">
+            {w.checks.map((c) => <li class="ok"><span class="mk" aria-hidden="true">[✓]</span><span class="t">{c.text}</span>{c.fix && <span class="fx">{c.fix}</span>}</li>)}
+          </ul>
+        </article>
+
+        <article class="step" data-step="6" aria-labelledby="run-s6">
+          <h3 class="sh" id="run-s6"><span class="nb-micro">07 · {STEPS[6][0]}</span><span class="sd">{STEPS[6][1]}</span></h3>
+          <div class="hand">
+            <p class="deliv" data-f="deliver">{w.deliver}</p>
+            <p class="appr"><span data-f="approve">{w.approve}</span></p>
+            <p class="act"><button class="nb-btn is-solid" type="button" data-approve>Duyệt</button><span class="nb-micro done-msg" data-done hidden>đã duyệt · Claude gửi đi</span></p>
+            <dl class="meta">
+              <dt class="nb-micro">Bề mặt hợp</dt><dd data-f="surface">{w.surface}</dd>
+              <dt class="nb-micro">Học ở</dt><dd data-f="chapters">{w.chapters.map((id, i) => <>{i > 0 && ' · '}<a href={url(`${id}/`)}>{chName(id)}</a></>)}</dd>
+            </dl>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" id="run-data" set:html={JSON.stringify({ work: WORK, avail: AVAIL, base: url(), names: Object.fromEntries(chapters.map((c) => [c.id, `${c.no} · ${c.en}`])) })}></script>
+</section>
+
+<style>
+  .run { position: relative; border-top: 1px solid var(--control); }
+  .pin { display: grid; grid-template-rows: auto 1fr; gap: 20px; padding-block: 28px 28px; }
+  .hd { display: grid; gap: 12px; }
+  .hd h2 { margin: 0; font-size: clamp(24px, 3.6vw, 48px); line-height: 1.08; text-wrap: balance; }
+  .pick { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .chip { position: relative; cursor: pointer; }
+  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .chip span { display: inline-block; font: 600 13px/1 var(--font-mono); letter-spacing: .04em; padding: 9px 12px; border: 1px solid var(--control); color: var(--fg-muted); background: var(--bg); transition: background .12s, color .12s; }
+  .chip:hover span { color: var(--fg); border-color: var(--fg-muted); }
+  .chip input:checked + span { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .chip input:focus-visible + span { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+  .ex { color: var(--fg-subtle); margin-left: 6px; }
+
+  .body { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 32px; min-height: 0; }
+  .side { display: grid; gap: 16px; align-content: start; }
+  .who { margin: 0; display: grid; gap: 4px; }
+  .wf { font: 600 28px/1 var(--font-mono); white-space: nowrap; }
+  .rail { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; align-content: start; border-left: 1px solid var(--control); }
+  .rail li { display: flex; gap: 10px; align-items: baseline; padding: 8px 12px; color: var(--fg-subtle); border-left: 3px solid transparent; margin-left: -2px; transition: color .24s, border-color .24s, background .24s; }
+  .rail .no { font: 600 12px/1 var(--font-mono); font-variant-numeric: tabular-nums; }
+  .rail .nm { font: 600 15px/1.2 var(--font-text); }
+  .rail li.on { color: var(--fg-muted); }
+  .rail li.cur { color: var(--fg); border-left-color: var(--accent); background: var(--bg-raised); }
+
+  .stage { position: relative; min-width: 0; }
+  .step { display: grid; gap: 14px; align-content: start; padding-bottom: 40px; }
+  .sh { margin: 0; display: grid; gap: 6px; font-weight: 400; }
+  .sd { font: 500 clamp(19px, 2vw, 26px)/1.25 var(--font-text); color: var(--fg); }
+
+  .prompt { margin: 0; display: flex; gap: .55em; font: 500 clamp(16px, 1.6vw, 20px)/1.45 var(--font-mono); color: var(--fg); max-width: 60ch; }
+  .pr { color: var(--fg-subtle); }
+  .ncv { display: block; width: 100%; height: clamp(110px, 18vh, 170px); }
+  .brief { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 28px; }
+  .brief :global(li) { display: grid; gap: 2px; }
+  .brief :global(b) { font: 800 clamp(28px, 3.4vw, 44px)/1 var(--font-wide); font-stretch: 62%; font-variant-numeric: tabular-nums; color: var(--fg); }
+  .brief :global(span) { font: 600 12px/1.3 var(--font-mono); color: var(--fg-muted); letter-spacing: .04em; }
+
+  .think { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; align-items: start; }
+  .face { font: 600 clamp(40px, 5vw, 72px)/1 var(--font-mono); color: var(--info); white-space: nowrap; }
+  .said { display: grid; gap: 16px; }
+  .said p { margin: 0; display: grid; gap: 6px; font-size: 17px; line-height: 1.55; max-width: 56ch; }
+  .ask > span:last-child { font: 400 clamp(19px, 2vw, 24px)/1.35 var(--font-display); }
+  .caret { color: var(--accent); margin-left: 2px; }
+
+  .tcv { display: block; width: 100%; height: clamp(120px, 20vh, 190px); }
+  .tools { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .tools :global(li) { display: grid; grid-template-columns: minmax(150px, auto) minmax(0, 1fr); gap: 4px 16px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+  .tools :global(b) { font: 600 16px/1.4 var(--font-text); }
+  .tools :global(.note) { grid-column: 2; color: var(--fg-muted); font-size: 14.5px; }
+
+  .plan { list-style: none; margin: 0; padding: 0 0 0 14px; display: grid; gap: 12px; border-left: 1px solid var(--control); counter-reset: p; }
+  .plan :global(li) { counter-increment: p; font-size: 17px; line-height: 1.45; display: grid; grid-template-columns: 3ch minmax(0, 1fr); gap: 10px; align-items: baseline; }
+  .plan :global(li)::before { content: counter(p, decimal-leading-zero); font: 600 12px/1 var(--font-mono); color: var(--fg-subtle); }
+  .lanes { display: grid; gap: 8px; max-width: 420px; }
+  .lanes :global(i) { display: block; height: 10px; border: 1px solid var(--control); position: relative; overflow: hidden; }
+  .lanes :global(b) { position: absolute; inset: 0 auto 0 0; width: 100%; background: var(--fg-muted); transform-origin: left; }
+
+  .log { list-style: none; margin: 0; padding: 14px 16px; display: grid; gap: 8px; background: var(--bg-sunken); border: 1px solid var(--control); font: 500 14.5px/1.45 var(--font-mono); max-width: 640px; }
+  .log :global(li) { display: grid; grid-template-columns: 2ch minmax(0, 1fr); gap: 10px; color: var(--fg); }
+  .log :global(.st) { color: var(--signal); }
+  .log :global(li.wait) { color: var(--fg-subtle); } .log :global(li.wait .st) { color: var(--fg-subtle); }
+  .log :global(li.doing .st) { color: var(--accent); }
+
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; max-width: 640px; }
+  .checks :global(li) { display: grid; grid-template-columns: 4ch minmax(0, 1fr); gap: 4px 10px; font-size: 17px; line-height: 1.45; padding: 6px 8px; }
+  .checks :global(.mk) { font: 600 14px/1.6 var(--font-mono); color: var(--fg-subtle); }
+  .checks :global(li.ok .mk) { color: var(--signal); }
+  .checks :global(li.bad .mk) { color: var(--danger); }
+  .checks :global(.fx) { grid-column: 2; font-size: 14.5px; color: var(--fg-muted); }
+  .checks :global(li.bad .fx) { visibility: hidden; }
+
+  .hand { display: grid; gap: 14px; max-width: 640px; }
+  .deliv { margin: 0; font: 400 clamp(20px, 2.2vw, 28px)/1.3 var(--font-display); color: var(--fg); }
+  .appr { margin: 0; color: var(--fg-muted); font-size: 16px; line-height: 1.55; }
+  .act { margin: 0; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .done-msg { color: var(--signal); }
+  .meta { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; margin: 6px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
+  .meta dd { margin: 0; font-size: 15px; color: var(--fg-muted); }
+  .meta :global(a) { color: var(--fg); text-underline-offset: 3px; }
+
+  /* desktop with motion: one step on stage at a time, the scroll scrubs between them */
+  @media (min-width: 900px) {
+    :global(html.motion) .pin { height: calc(100svh - var(--hud-height)); box-sizing: border-box; overflow: hidden; }
+    :global(html.motion) .stage .step { position: absolute; inset: 0 0 auto 0; }
+  }
+  @media (max-width: 899px) {
+    .body { grid-template-columns: minmax(0, 1fr); }
+    .side { display: none; }
+    .step { border-top: 1px solid var(--line); padding-top: 18px; }
+    .think { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .tools :global(li) { grid-template-columns: minmax(0, 1fr); } .tools :global(.note) { grid-column: 1; }
+  }
+</style>
+
+<script>
+  type Avail = 'builtin' | 'connector' | 'cli' | 'browser' | 'other';
+  function start(w: any) {
+    const NB = w.NoBabysitting, gsap = w.gsap, ST = w.ScrollTrigger;
+    const D = JSON.parse(document.getElementById('run-data')!.textContent || '{}');
+    const root = document.getElementById('run')!;
+    const steps = [...root.querySelectorAll<HTMLElement>('.step')];
+    const rail = [...root.querySelectorAll<HTMLElement>('.rail li')];
+    const f = (k: string) => root.querySelector<HTMLElement>(`[data-f="${k}"]`)!;
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+    const reduce = NB.reduce(), wide = matchMedia('(min-width: 900px)').matches, scrub = !!gsap && !reduce && wide;
+    const col = NB.colleague(root.querySelector('[data-face]'), 'thinking');
+    const side = NB.colleague(root.querySelector('[data-railface]'), 'idle'), sideTxt = root.querySelector<HTMLElement>('[data-railstate]')!;
+    const SIDE: [string, string][] = [['idle', 'đang chờ việc'], ['thinking', 'đang đọc yêu cầu'], ['thinking', 'đang khám phá'], ['thinking', 'đang lập kế hoạch'], ['working', 'đang làm việc'], ['working', 'đang kiểm chứng'], ['verified', 'chờ bạn duyệt']];
+    let lastSide = -1;
+    const sideAt = (i: number) => { if (i === lastSide) return; lastSide = i; side.set(SIDE[i][0]); NB.say(sideTxt, SIDE[i][1]); };
+    let kind = D.work[0];
+
+    /* ASCII: the brief's numbers converge (M11); the workspace terrain is swept as Claude explores (M11) */
+    const numSource = (k: any) => NB.sources.text([k.brief.map((b: string[]) => b[0]).join('  ')], { family: '"Archivo", "Arial Black", sans-serif', weight: 900, stretch: 'ultra-condensed', fill: 0.94, vfill: 0.86, cy: 0.52 });
+    const A1 = NB.ascii(root.querySelector('[data-cv="numbers"]'), { cell: wide ? [8, 14] : [6, 10], font: wide ? '600 12px "JetBrains Mono", monospace' : '600 9px "JetBrains Mono", monospace',
+      ramp: ' .:-=+*#%@', order: scrub ? 0 : 1, sweep: 0.5, noiseFill: 0.22, pointer: false, tone: 'fg', frontColor: 'accent', fontLoad: '900 100px Archivo', source: numSource(kind) });
+    const A2 = NB.ascii(root.querySelector('[data-cv="terrain"]'), { cell: [9, 16], order: scrub ? 0 : 1, sweep: 0.85, noiseFill: 0.3, pointer: false,
+      ramp: ' .·:/\\+*', tone: 'fg-muted', frontColor: 'accent', source: NB.sources.terrain({ scale: 0.06, threshold: 0.5, slope: 0.4, seed: 11 }) });
+
+    /* the picker swaps every step's content at once (P tier: NB.say for words, no replay of the scene) */
+    function render(k: any, animate: boolean) {
+      kind = k;
+      const say = (el: HTMLElement, t: string) => (animate ? NB.say(el, t) : (el.textContent = t));
+      say(f('outcome'), k.outcome); say(f('restate'), k.restate); say(f('ask'), k.ask);
+      say(f('deliver'), k.deliver); say(f('approve'), k.approve); say(f('surface'), k.surface);
+      f('brief').innerHTML = k.brief.map((b: string[]) => `<li><b>${esc(b[0])}</b><span>${esc(b[1])}</span></li>`).join('');
+      f('tools').innerHTML = k.tools.map((t: { name: string; avail: Avail; note?: string }) => `<li><span class="nb-tag ${D.avail[t.avail].mark}">${esc(D.avail[t.avail].label)}</span><b>${esc(t.name)}</b>${t.note ? `<span class="note">${esc(t.note)}</span>` : ''}</li>`).join('');
+      f('plan').innerHTML = k.plan.map((p: string) => `<li><span>${esc(p)}</span></li>`).join('');
+      f('lanes').innerHTML = Array.from({ length: k.lanes }, () => '<i><b></b></i>').join('');
+      f('lanes').setAttribute('aria-label', `${k.lanes} luồng làm song song`);
+      f('log').innerHTML = k.log.map((l: string) => `<li class="done"><span class="st" aria-hidden="true">✓</span><span class="t">${esc(l)}</span></li>`).join('');
+      f('checks').innerHTML = k.checks.map((c: any) => `<li class="ok"><span class="mk" aria-hidden="true">[✓]</span><span class="t">${esc(c.text)}</span>${c.fix ? `<span class="fx">${esc(c.fix)}</span>` : ''}</li>`).join('');
+      f('chapters').innerHTML = k.chapters.map((id: string) => `<a href="${D.base}${id}/">${esc(D.names[id] || id)}</a>`).join(' · ');
+      root.querySelector<HTMLElement>('[data-done]')!.hidden = true; root.querySelector<HTMLButtonElement>('[data-approve]')!.disabled = false;
+      A1.setSource(numSource(k));
+      fixedOnce = false;
+      if (tl) applyAt(tl.scrollTrigger ? tl.scrollTrigger.progress : 0); else endStates();
+    }
+    root.querySelectorAll<HTMLInputElement>('[name="run-kind"]').forEach((r) => r.addEventListener('change', () => {
+      const k = D.work.find((x: any) => x.id === r.value); if (k) render(k, !reduce);
+    }));
+    root.querySelector('[data-approve]')!.addEventListener('click', (e) => {
+      (e.currentTarget as HTMLButtonElement).disabled = true; root.querySelector<HTMLElement>('[data-done]')!.hidden = false;
+      side.set('verified'); NB.say(sideTxt, 'đã được duyệt');
+    });
+
+    /* per-step internals as functions of a 0..1 progress, so scrub, once-play and reduced motion share them */
+    const q = (s: string) => [...root.querySelectorAll<HTMLElement>(s)];
+    function logState(p: number) {
+      const rows = q('[data-f="log"] li'), n = rows.length, k = Math.floor(p * (n + 0.999));
+      rows.forEach((li, i) => { li.className = i < k ? 'done' : i === k ? 'doing' : 'wait'; li.querySelector('.st')!.textContent = i < k ? '✓' : i === k ? '›' : '·'; });
+    }
+    function checkState(p: number) {
+      const rows = q('[data-f="checks"] li'), n = rows.length, k = Math.floor(p * (n + 1.2));
+      rows.forEach((li, i) => {
+        const c = kind.checks[i], seen = i < k, fixed = !c.ok && k > n;
+        li.className = !seen ? '' : c.ok || fixed ? 'ok' : 'bad';
+        li.querySelector('.mk')!.textContent = !seen ? '[ ]' : c.ok || fixed ? '[✓]' : '[✕]';
+        const fx = li.querySelector<HTMLElement>('.fx'); if (fx) fx.style.visibility = fixed ? 'visible' : 'hidden';
+        /* M13, once: the caught error snaps into its fixed state */
+        if (fixed && !fixedOnce && gsap && !reduce) { fixedOnce = true; gsap.fromTo(li, { x: -6 }, { x: 0, duration: 0.3, ease: 'steps(3)' }); }
+      });
+    }
+    function laneState(p: number) { q('[data-f="lanes"] b').forEach((b, i) => { b.style.transform = `scaleX(${Math.max(0, Math.min(1, p * 1.25 - i * 0.12))})`; }); }
+    function planState(p: number) { q('[data-f="plan"] li').forEach((li, i, a) => { li.style.opacity = String(p >= i / a.length ? 1 : 0.25); }); }
+    function endStates() { A1.state.order = 1; A2.state.order = 1; A1.redraw(); A2.redraw(); logState(1); checkState(1); laneState(1); planState(1); }
+
+    let tl: any = null, fixedOnce = false;
+    const SEG = 1 / steps.length, FNS: ((p: number) => void)[] = [];
+    /* the state every step shows at timeline progress p (used after a kind switch mid-scroll) */
+    function applyAt(p: number) { FNS.forEach((fn, i) => fn(Math.max(0, Math.min(1, (p - (i * SEG + SEG * 0.15)) / (SEG * 0.6))))); }
+    function build() {
+      if (tl) { tl.scrollTrigger && tl.scrollTrigger.kill(); tl.kill(); }
+      const N = steps.length, seg = 1 / N;
+      gsap.set(steps, { autoAlpha: 0, y: 24 });
+      tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#run', start: 'top top+=48', end: '+=' + N * 85 + '%', pin: '#run-pin', scrub: 0.6, invalidateOnRefresh: true,
+        onUpdate: (s: any) => { const i = Math.min(N - 1, Math.floor(s.progress * N)); rail.forEach((r, j) => { r.classList.toggle('cur', j === i); r.classList.toggle('on', j < i); }); sideAt(i); } } });
+      steps.forEach((st, i) => {
+        const t0 = i * seg;
+        tl.to(st, { autoAlpha: 1, y: 0, duration: seg * 0.18, ease: 'power2.out' }, t0);
+        if (i < N - 1) tl.to(st, { autoAlpha: 0, y: -24, duration: seg * 0.14, ease: 'power2.in' }, t0 + seg * 0.86);
+      });
+      const inner = (i: number, fn: (p: number) => void) => { FNS[i] = fn; const o = { p: 0 }; tl.to(o, { p: 1, duration: seg * 0.6, onUpdate: () => fn(o.p) }, i * seg + seg * 0.15); };
+      inner(0, (p) => { A1.state.order = p; A1.redraw(); });
+      inner(1, (p) => col.set(p < 0.5 ? 'thinking' : 'asking'));
+      inner(2, (p) => { A2.state.order = p; A2.redraw(); });
+      inner(3, (p) => { planState(p); laneState(p); });
+      inner(4, logState);
+      inner(5, checkState);
+      inner(6, () => {});
+      ST.refresh();
+    }
+
+    if (scrub) { build(); return; }
+    if (!gsap || reduce) { endStates(); return; }
+    /* phone with motion: each step plays once as it enters */
+    const play = (i: number, fn: (p: number) => void, d = 1.2) => ST.create({ trigger: steps[i], start: 'top 75%', once: true, onEnter: () => { const o = { p: 0 }; gsap.to(o, { p: 1, duration: d, ease: 'power2.out', onUpdate: () => fn(o.p) }); } });
+    A1.state.order = 0; A2.state.order = 0; logState(0); checkState(0); laneState(0); planState(0);
+    play(0, (p) => { A1.state.order = p; A1.redraw(); }, 1.6);
+    play(2, (p) => { A2.state.order = p; A2.redraw(); }, 1.6);
+    play(3, (p) => { planState(p); laneState(p); });
+    play(4, logState, 1.6);
+    play(5, checkState, 1.8);
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>
