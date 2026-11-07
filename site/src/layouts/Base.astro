@@ -1,0 +1,20 @@
+---
+const { title = 'No Babysitting' } = Astro.props;
+---
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" />
+  <link rel="stylesheet" href="/ds/tokens.css" />
+  <link rel="stylesheet" href="/ds/bundle.css" />
+  <script is:inline src="/ds/bundle.js"></script>
+  <style is:global>
+    html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-text); }
+    .wrap { max-width: var(--page-max); margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+  </style>
+</head>
+<body class="nb"><slot /></body>
+</html>

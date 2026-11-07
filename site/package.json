@@ -1,0 +1,15 @@
+{
+  "name": "no-babysitting-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync-ds": "node scripts/sync-ds.mjs",
+    "dev": "npm run sync-ds && astro dev",
+    "build": "npm run sync-ds && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "5.18.2",
+    "gsap": "3.15.0"
+  }
+}

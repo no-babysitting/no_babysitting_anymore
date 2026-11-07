@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base>
+  <header class="hud">
+    <div class="wrap row">
+      <span id="wm" class="wm"></span>
+      <span class="nb-micro">Phần I · LOW</span>
+      <span class="nb-micro"><b>c00</b> · 1/12</span>
+    </div>
+  </header>
+  <main class="wrap hero">
+    <span class="nb-micro"><span class="nb-sq"></span>Mở đầu · M0 tracer bullet</span>
+    <div id="mark"></div>
+    <p class="lead">Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi.</p>
+    <p><span class="nb-tag is-info">Đang dựng · M0</span></p>
+  </main>
+</Base>
+<style>
+  .hud { position: sticky; top: 0; z-index: 10; height: var(--hud-height); border-bottom: 1px solid var(--control); background: var(--bg); }
+  .row { height: 100%; display: flex; align-items: center; gap: 24px; }
+  .wm { width: 208px; flex: none; }
+  .row .nb-micro:last-child { margin-left: auto; }
+  .hero { display: grid; gap: 28px; padding-block: 96px 64px; }
+  .lead { margin: 0; font-size: 19px; line-height: 1.5; color: var(--fg-muted); max-width: 52ch; }
+</style>
+<script>
+  import { gsap } from 'gsap';
+  (window as any).gsap = gsap;
+  const NB = (window as any).NoBabysitting;
+  document.getElementById('wm')!.innerHTML = NB.logoSVG('sm');
+  document.querySelector('#wm svg')!.classList.add('is-mono');
+  NB.logo(document.getElementById('mark'), { size: 'lg', maxScale: 6 });
+</script>
