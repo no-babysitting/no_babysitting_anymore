@@ -1,0 +1,95 @@
+---
+/* Scene · Hành trình. The 12 chapters as one horizontal track, pinned and scrubbed by vertical scroll.
+   Inside each panel the giant number drifts slower than the track (containerAnimation parallax);
+   the level meter (Low → Pro) lights up as the track passes each part; the counter follows. */
+import { chapters, href, PARTS } from '../../lib/chapters';
+const LV = ['LOW', 'MEDIUM', 'HIGH', 'PRO'];
+const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
+---
+<section class="journey" id="journey" aria-labelledby="journey-h">
+  <div class="jpin" id="journey-pin">
+    <div class="jhead wrap">
+      <span class="nb-micro"><span class="nb-sq"></span>Hành trình · 12 phần · từ vibe đến agentic</span>
+      <h2 class="nb-sr" id="journey-h">12 chương</h2>
+      <div class="meter" aria-hidden="true">
+        {LV.map((l, i) => <span class={`lv l${i + 1}`}><i></i><b>{l}</b></span>)}
+      </div>
+      <span class="nb-micro cnt"><b id="journey-n">00</b> / 10</span>
+    </div>
+    <div class="viewport">
+      <ol class="track" id="journey-track">
+        {chapters.map((c) => (
+          <li class="panel" data-lv={c.id === 'c00' ? 0 : c.id === 'c10' ? 3 : lvOf(c.level)} data-no={c.no}>
+            <a href={href(c.id)}>
+              <span class="nb-ghost gh" aria-hidden="true">{c.en.split(/\s+/).pop()}</span>
+              <span class="no nb-cond" aria-hidden="true">{c.no}</span>
+              <span class="meta nb-micro">{PARTS[c.id]}{c.level && c.level !== 'Kết' ? ` · ${c.level.toUpperCase()}` : ''} · {c.minutes.split('/')[0].replace("'", ' phút')}</span>
+              <span class="en nb-wide">{c.en}</span>
+              <span class="vi">{c.vi}</span>
+              <span class="q nb-q">{c.question}</span>
+              <span class="go nb-micro">Vào chương →</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .journey { position: relative; border-top: 1px solid var(--control); }
+  .jpin { min-height: calc(100svh - var(--hud-height)); width: 100%; display: grid; grid-template-rows: auto 1fr; grid-template-columns: minmax(0, 1fr); overflow: hidden; }
+  .jhead { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; padding-block: 20px; width: 100%; box-sizing: border-box; }
+  .meter { display: flex; gap: 4px; margin-left: auto; }
+  .lv { display: grid; gap: 5px; font: 600 11.5px/1 var(--font-mono); color: var(--fg-subtle); letter-spacing: .06em; }
+  .lv i { display: block; width: 56px; height: 8px; border: 1px solid var(--control); }
+  .lv.on { color: var(--fg); }
+  .lv.on.l1 i { background: var(--level-1); border-color: var(--level-1); } .lv.on.l2 i { background: var(--level-2); border-color: var(--level-2); }
+  .lv.on.l3 i { background: var(--level-3); border-color: var(--level-3); } .lv.on.l4 i { background: var(--level-4); border-color: var(--level-4); }
+  .cnt b { font-variant-numeric: tabular-nums; }
+  .viewport { position: relative; min-width: 0; overflow: hidden; }
+  .track { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .panel a { position: relative; display: grid; align-content: start; gap: 10px; padding: 26px 26px 30px; height: 100%; box-sizing: border-box; color: var(--fg); text-decoration: none; border-right: 1px solid var(--control); border-top: 1px solid var(--control); overflow: hidden; }
+  .panel a:hover .go { color: var(--fg); }
+  .gh { right: -10px; bottom: -14px; font-size: 180px; }
+  .no { font-size: clamp(120px, 20vh, 240px); line-height: .8; color: var(--fg); }
+  .en { font-size: clamp(20px, 2.2vw, 30px); }
+  .vi { color: var(--fg-muted); font-size: 15px; }
+  .q { font-size: clamp(18px, 1.7vw, 23px); line-height: 1.3; color: var(--fg); max-width: 26ch; margin-top: 8px; }
+  .go { margin-top: auto; padding-top: 10px; color: var(--fg-muted); }
+  :global(html.motion) .track { display: flex; width: max-content; height: 100%; }
+  :global(html.motion) .panel { width: min(46vw, 620px); flex: none; }
+  :global(html.motion) .panel a { border-top: 0; }
+  @media (max-width: 720px) {
+    :global(html.motion) .panel { width: 86vw; }
+    .meter .lv i { width: 34px; }
+    .jhead { gap: 12px; }
+  }
+</style>
+
+<script>
+  function start(w: any) {
+    const gsap = w.gsap;
+    if (!gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const track = document.getElementById('journey-track')!, n = document.getElementById('journey-n')!;
+    const panels = gsap.utils.toArray<HTMLElement>('#journey .panel'), lvs = gsap.utils.toArray<HTMLElement>('#journey .lv');
+    const dist = () => track.scrollWidth - innerWidth + 32;
+    const move = gsap.to(track, {
+      x: () => -dist(), ease: 'none',
+      scrollTrigger: { trigger: '#journey', start: 'top top+=48', end: () => '+=' + dist(), pin: '#journey-pin', scrub: 0.8, invalidateOnRefresh: true },
+    });
+    panels.forEach((p) => {
+      gsap.fromTo(p.querySelector('.no'), { xPercent: 45 }, { xPercent: -25, ease: 'none',
+        scrollTrigger: { trigger: p, containerAnimation: move, start: 'left right', end: 'right left', scrub: true } });
+      gsap.fromTo(p.querySelector('.gh'), { xPercent: -20 }, { xPercent: 20, ease: 'none',
+        scrollTrigger: { trigger: p, containerAnimation: move, start: 'left right', end: 'right left', scrub: true } });
+      gsap.from(p.querySelectorAll('.meta, .en, .vi, .q, .go'), { y: 24, autoAlpha: 0, stagger: 0.06, duration: 0.6,
+        scrollTrigger: { trigger: p, containerAnimation: move, start: 'left 75%', toggleActions: 'play none none reverse' } });
+      w.ScrollTrigger.create({ trigger: p, containerAnimation: move, start: 'left center', end: 'right center',
+        onToggle: (s: any) => { if (!s.isActive) return;
+          n.textContent = p.dataset.no!; const lv = +p.dataset.lv!;
+          lvs.forEach((l, i) => l.classList.toggle('on', i <= lv)); } });
+    });
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>

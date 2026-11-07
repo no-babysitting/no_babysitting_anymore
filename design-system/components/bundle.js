@@ -104,6 +104,21 @@
         return { cov: cov };
       };
     },
+    /* a 1-bit bitmap (rows of '#'/'.', e.g. NB.LOGO.lg) fitted into the grid, square pixels.
+       opt.fill: share of width it may take; opt.vfill: share of height; opt.cy: vertical centre (0..1). */
+    bitmap: function (L, opt) {
+      opt = opt || {};
+      return function (cols, rows, cw, ch) {
+        var n = cols * rows, cov = new Float32Array(n), W = cols * cw, H = rows * ch;
+        var px = Math.min(W * (opt.fill || 0.84) / L.w, H * (opt.vfill || 0.42) / L.h);
+        var ox = (W - L.w * px) / 2, oy = H * (opt.cy || 0.5) - L.h * px / 2;
+        for (var y = 0; y < rows; y++) for (var x = 0; x < cols; x++) {
+          var bx = Math.floor(((x + 0.5) * cw - ox) / px), by = Math.floor(((y + 0.5) * ch - oy) / px);
+          if (bx >= 0 && by >= 0 && bx < L.w && by < L.h && L.rows[by][bx] === '#') cov[y * cols + x] = 0.62 + 0.38 * vnoise(x * 0.35, y * 0.5, 9);
+        }
+        return { cov: cov };
+      };
+    },
     /* Asciify-style full-colour: a procedural dusk city (own artwork, no stock). Per-pixel "shader" so every row has texture.
        Colours come from the "image", lightened (minLum) so marks stay legible on bg. */
     scene: function (opt) {

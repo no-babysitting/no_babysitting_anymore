@@ -10,27 +10,27 @@ const { title = 'No Babysitting' } = Astro.props;
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" />
   <link rel="stylesheet" href="/ds/tokens.css" />
   <link rel="stylesheet" href="/ds/bundle.css" />
+  <script is:inline>
+    /* motion mode before first paint; falls back to static if the motion core never reports in */
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('motion');
+      setTimeout(function () { if (!window.gsap) document.documentElement.classList.remove('motion'); }, 4000);
+    }
+  </script>
   <script is:inline src="/ds/bundle.js"></script>
   <style is:global>
     html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-text); }
     .wrap { max-width: var(--page-max); margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+    html.motion:not(.motion-ready) [data-reveal='up'], html.motion:not(.motion-ready) [data-reveal='rule'] { visibility: hidden; }
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    ::selection { background: var(--fg); color: var(--bg); }
   </style>
 </head>
 <body class="nb"><slot />
 <script>
-  /* one GSAP for the page; the shared runtime (bundle.js) reads window.gsap */
-  import { gsap } from 'gsap';
-  import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
-  import { Flip } from 'gsap/Flip';
-  import { SplitText } from 'gsap/SplitText';
-  import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
-  import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
-  import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-  import { CustomEase } from 'gsap/CustomEase';
-  const P = { ScrambleTextPlugin, Flip, SplitText, DrawSVGPlugin, MorphSVGPlugin, MotionPathPlugin, CustomEase };
-  gsap.registerPlugin(...Object.values(P));
-  Object.assign(window as any, P, { gsap });
-  document.dispatchEvent(new Event('nb:gsap'));
+  import '../scripts/motion';
 </script>
 </body>
 </html>
