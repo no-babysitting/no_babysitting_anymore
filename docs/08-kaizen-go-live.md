@@ -13,7 +13,7 @@
 | D1 | Ngôn ngữ | Tiếng Việt trước, kiến trúc sẵn i18n; bản tiếng Anh là một đợt sau | giữ như PRD |
 | D2 | Câu mô tả | *An unofficial, practical guide to delegating digital work to Claude Code* | *An unofficial guide to Claude Code best practices* |
 | D3 | Kịch bản Story | **Khái quát hơn**, theo hướng bản review: giao việc số nói chung (nghiên cứu, dữ liệu, marketing, sáng tạo, dựng sản phẩm, vận hành), không xoay quanh một kịch bản | "Một kịch bản chung: Báo cáo thị trường hằng tuần" (PRD §5, §11) |
-| D4 | Kiến trúc nội dung | Chưa chốt. Kiểm chứng lại nguồn chính thức (ưu tiên) và repo best practice (thực chiến), rồi đề xuất kịch bản v3. 5 trụ của bản review là ứng viên thay cho "nguyên lý P1–P12" chưa từng được định nghĩa | — |
+| D4 | Kiến trúc nội dung | **Đã chốt 07/11/2026** theo `10-script-v3-proposal.md`: trục 3 câu hỏi; giữ 12 phần và mã chương; ví dụ xoay vòng qua 6 loại việc; 5 trụ làm chiều lọc chính của Library, thay cho P1–P12 | "nguyên lý P1–P12" chưa từng được định nghĩa |
 | D5 | Xương sống trang chủ | Vòng giao việc 7 bước, người xem chọn loại việc. ASCII đi từ số (brief) → địa hình (khám phá) → full-color (bàn giao) | logo → tuyên ngôn → đồng xu → hành trình → bàn làm việc → finale |
 | D6 | Số chương khổng lồ | Vẫn tràn mép có chủ ý, nhưng là lớp trang trí tách khỏi luồng chữ và **không bao giờ đè chữ**. Bỏ cú phóng ×3,4 | phóng ×3,4 khi rời opener |
 | D7 | Màu | **Giữ palette cam** (quyết định của chủ dự án), thêm disclaimer rõ ở hero và chân mọi trang. Rủi ro ở §6 | todo P0 #5 "đổi accent nếu công khai" |

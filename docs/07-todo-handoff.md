@@ -41,7 +41,7 @@ Giai đoạn trước phát triển đã xong: PRD 2.2, Script (12 phần gồm 
 - [ ] `05-surface-matrix.md` vẫn dùng **tên chương cũ** ở các tiêu đề c02–c09; đồng bộ với Script (The Briefing Budget, The Brief, …).
 - [x] ~~The Colleague `working` màu accent so với lệnh cấm "khối pixel màu cam"~~ → **chốt 07/11/2026: cấm *hình*, không cấm *màu*.** Wordmark và tên chương thống nhất theo §2.1 (Archivo expanded; serif chỉ cho câu hỏi Socratic), đã sửa §0.0.
 - [x] ~~"10 trụ harness" chưa định nghĩa~~ → JourneyHUD dùng **6 phần harness theo PRD G1** (đã sửa §7 và preview).
-- [ ] **Nguyên lý P1–P12**: `Overlay.principles` (SAD §7.1) có trường này nhưng **không tài liệu nào định nghĩa 12 nguyên lý** (đã kiểm 07/11/2026). Định nghĩa danh sách, hoặc bỏ trường và chip lọc "nguyên lý" của FR-06.
+- [x] ~~**Nguyên lý P1–P12**~~ → thay bằng 5 trụ (Hiểu agent · Dựng harness · Thiết kế quy trình · Áp vào công việc · Tin cậy và mở rộng), chốt 07/11/2026 (`10-script-v3-proposal.md` §3).
 - [ ] Mốc M0 ghi số tính năng của c02 khác ma trận (xem SAD §9); đối chiếu lại.
 - [x] ~~Ngưỡng 40%/60% của `overloaded` và ContextMeter~~ → đã bỏ (07/11/2026).
 

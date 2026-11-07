@@ -1,6 +1,6 @@
-# 10 · Kịch bản v3: đề xuất chờ duyệt (07/11/2026)
+# 10 · Kịch bản v3 (đã duyệt 07/11/2026)
 
-> **Trạng thái: đề xuất.** Theo `08-kaizen-go-live.md` D13, chủ dự án phải duyệt bản này trước khi viết lại chương và dựng trang chủ mới (K2). Phần cần duyệt nằm ở §8. Mọi khẳng định về sản phẩm đều có nguồn ở §1. Reviewer độc lập ghi kết quả ở §7.
+> **Trạng thái: đã duyệt ngày 07/11/2026** (chủ dự án duyệt nguyên bản, gồm cả 6 điểm ở §8). Từ đây K2 (trang chủ mới) và K4 (viết lại chương) làm theo tài liệu này. Câu chữ hiển thị trên site vẫn được duyệt ở từng PR (D13). Mọi khẳng định về sản phẩm đều có nguồn ở §1; kết quả reviewer độc lập ở §7.
 
 ## 0. Tóm tắt
 
