@@ -15,7 +15,9 @@ Bitmap là bản gốc của logo; không gõ lại bằng font. Mọi định d
 | Lớn | 139 × 18 pixel, đường chân chữ ở hàng 14 | ≥ 36px | `assets/Logo/logo-blocks.svg` · `.json` · `.txt` |
 | Nhỏ | 104 × 14 pixel, đường chân chữ ở hàng 11 | 28–35px (2px mỗi pixel) | `assets/Logo/logo-blocks-sm.svg` · `.json` · `.txt` |
 
-Trong trang: `NB.logoSVG('lg' | 'sm')` trả về SVG một path, `fill: currentColor`; `NB.logo(el, { size, maxScale })` dựng hiệu ứng.
+Bản **xếp hai dòng** (`NB.LOGO.st`, 111 × 40) được cắt tự động từ bitmap lớn: "No" ở dòng trên, "babysitting" ở dòng dưới, căn trái, cách 4 pixel. Dùng cho màn hình dọc (điện thoại), nơi bản ngang quá dẹt.
+
+Trong trang: `NB.logoSVG('lg' | 'sm' | NB.LOGO.st)` trả về SVG một path, `fill: currentColor`; `NB.logo(el, { size, maxScale })` dựng hiệu ứng.
 
 ## Quy tắc
 

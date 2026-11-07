@@ -56,7 +56,14 @@ const CRIT = ['Hiểu đúng yêu cầu', 'Đúng chuẩn trình bày của team
   .cnt { margin: 0; font-size: 64px; color: var(--fg); }
   .cnt small { font-size: .42em; color: var(--fg-subtle); }
   @media (max-width: 820px) {
-    .desk { grid-template-columns: 1fr 1fr; }
+    .pin { gap: 12px; padding-block: 16px 14px; }
+    .hd h2 { font-size: 26px; }
+    .face { font-size: 46px; }
+    .report ol { font-size: 12.5px; gap: 3px 14px; }
+    .cnt { font-size: 44px; }
+    .part b { font-size: 15px; }
+    .desk { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .parts { gap: 8px; }
     .core { grid-column: 1 / -1; grid-row: 1; }
     .part { padding: 10px 12px; } .part .d { display: none; }
     .report { grid-template-columns: 1fr auto; } .report > .nb-micro { display: none; }
@@ -85,7 +92,8 @@ const CRIT = ['Hiểu đúng yêu cầu', 'Đúng chuẩn trình bày của team
       scrollTrigger: { trigger: '#harness', start: 'top top+=48', end: '+=200%', pin: '#harness-pin', scrub: 0.6, onUpdate: (s: any) => sync(s.progress) } });
     parts.forEach((p, i) => {
       const side = p.closest('.l') ? -1 : 1;
-      tl.fromTo(p, { x: side * (240 + 60 * (i % 3)), y: (i % 3 - 1) * 90, rotation: side * (6 + i * 2), autoAlpha: 0 },
+      const far = innerWidth < 820 ? 0.35 : 1;
+      tl.fromTo(p, { x: side * (240 + 60 * (i % 3)) * far, y: (i % 3 - 1) * 90 * far, rotation: side * (6 + i * 2), autoAlpha: 0 },
         { x: 0, y: 0, rotation: 0, autoAlpha: 1, duration: 1, ease: 'nb-settle' }, i * 0.55);
     });
     tl.to({}, { duration: 2.2 });

@@ -324,9 +324,21 @@
     L.rows.forEach(function (s, y) { var re = /#+/g, m; while ((m = re.exec(s))) d += 'M' + m.index + ' ' + y + 'h' + m[0].length + 'v1h-' + m[0].length + 'z'; });
     return d;
   };
+  /* stacked lockup for tall screens, cut from the master bitmap (never re-typeset):
+     "No" on the first line, "babysitting" on the second, left aligned, a 4-pixel gap */
+  NB.LOGO.st = (function (L) {
+    var used = function (x) { return L.rows.some(function (r) { return r[x] === '#'; }); }, x = 12, run = 0;
+    for (; x < L.w; x++) { run = used(x) ? 0 : run + 1; if (run >= 4) break; }
+    var a0 = x - run + 1, b0 = x; while (b0 < L.w && !used(b0)) b0++;
+    var w2 = L.w - b0, gap = 4, blank = new Array(w2 + 1).join('.');
+    var top = L.rows.map(function (r) { var s = r.slice(0, a0); return (s + blank).slice(0, w2); });
+    var mid = []; for (var i = 0; i < gap; i++) mid.push(blank);
+    var bot = L.rows.map(function (r) { return r.slice(b0); });
+    return { w: w2, h: L.h * 2 + gap, base: L.h + gap + L.base, rows: top.concat(mid, bot) };
+  })(NB.LOGO.lg);
   /* static mark: inline SVG, fill currentColor (accent by default, fg for monochrome) */
   NB.logoSVG = function (size, label) {
-    var L = NB.LOGO[size || 'lg'];
+    var L = typeof size === 'object' ? size : NB.LOGO[size || 'lg'];
     return '<svg class="nb-logo" viewBox="0 0 ' + L.w + ' ' + L.h + '" shape-rendering="crispEdges" role="img" aria-label="' + (label || 'No babysitting') + '"><path fill="currentColor" d="' + NB.logoPath(L) + '"/></svg>';
   };
   /* reveal: a white line of code is typed, then compiled into the blocks left to right.

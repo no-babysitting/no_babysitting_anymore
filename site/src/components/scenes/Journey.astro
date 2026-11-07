@@ -14,7 +14,7 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
       <div class="meter" aria-hidden="true">
         {LV.map((l, i) => <span class={`lv l${i + 1}`}><i></i><b>{l}</b></span>)}
       </div>
-      <span class="nb-micro cnt"><b id="journey-n">00</b> / 10</span>
+      <span class="nb-micro cnt"><b id="journey-n">00</b> / 10 · <span id="journey-lv">LOW</span></span>
     </div>
     <div class="viewport">
       <ol class="track" id="journey-track">
@@ -49,7 +49,7 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
   .cnt b { font-variant-numeric: tabular-nums; }
   .viewport { position: relative; min-width: 0; overflow: hidden; }
   .track { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-  .panel a { position: relative; display: grid; align-content: start; gap: 10px; padding: 26px 26px 30px; height: 100%; box-sizing: border-box; color: var(--fg); text-decoration: none; border-right: 1px solid var(--control); border-top: 1px solid var(--control); overflow: hidden; }
+  .panel a { position: relative; display: grid; align-content: center; gap: 10px; padding: 26px 26px 30px; height: 100%; box-sizing: border-box; color: var(--fg); text-decoration: none; border-right: 1px solid var(--control); border-top: 1px solid var(--control); overflow: hidden; }
   .panel a:hover .go { color: var(--fg); }
   .gh { right: -10px; bottom: -14px; font-size: 180px; }
   .no { font-size: clamp(120px, 20vh, 240px); line-height: .8; color: var(--fg); }
@@ -57,13 +57,16 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
   .vi { color: var(--fg-muted); font-size: 15px; }
   .q { font-size: clamp(18px, 1.7vw, 23px); line-height: 1.3; color: var(--fg); max-width: 26ch; margin-top: 8px; }
   .go { margin-top: auto; padding-top: 10px; color: var(--fg-muted); }
-  :global(html.motion) .track { display: flex; width: max-content; height: 100%; }
+  :global(html.motion) .track { display: flex; width: max-content; height: 100%; padding-left: max(16px, calc((100vw - var(--page-max)) / 2)); }
   :global(html.motion) .panel { width: min(46vw, 620px); flex: none; }
   :global(html.motion) .panel a { border-top: 0; }
   @media (max-width: 720px) {
-    :global(html.motion) .panel { width: 86vw; }
-    .meter .lv i { width: 34px; }
-    .jhead { gap: 12px; }
+    :global(html.motion) .panel { width: calc(100vw - 32px); }
+    .panel a { padding: 22px 18px 26px; border-left: 0; }
+    .meter .lv i { width: 30px; }
+    .lv b { display: none; }
+    .jhead { gap: 10px; }
+    .gh { font-size: 120px; }
   }
 </style>
 
@@ -73,13 +76,15 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
     if (!gsap || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const track = document.getElementById('journey-track')!, n = document.getElementById('journey-n')!;
     const panels = gsap.utils.toArray<HTMLElement>('#journey .panel'), lvs = gsap.utils.toArray<HTMLElement>('#journey .lv');
-    const dist = () => track.scrollWidth - innerWidth + 32;
+    const small = innerWidth < 720;
+    const dist = () => track.scrollWidth - innerWidth + (small ? 16 : 32);
     const move = gsap.to(track, {
       x: () => -dist(), ease: 'none',
-      scrollTrigger: { trigger: '#journey', start: 'top top+=48', end: () => '+=' + dist(), pin: '#journey-pin', scrub: 0.8, invalidateOnRefresh: true },
+      scrollTrigger: { trigger: '#journey', start: 'top top+=48', end: () => '+=' + dist(), pin: '#journey-pin', scrub: 0.8, invalidateOnRefresh: true,
+        snap: { snapTo: 1 / (panels.length - 1), duration: { min: 0.2, max: 0.6 }, delay: 0.08, ease: 'power2.inOut' } },
     });
     panels.forEach((p) => {
-      gsap.fromTo(p.querySelector('.no'), { xPercent: 45 }, { xPercent: -25, ease: 'none',
+      gsap.fromTo(p.querySelector('.no'), { xPercent: small ? 14 : 45 }, { xPercent: small ? -8 : -25, ease: 'none',
         scrollTrigger: { trigger: p, containerAnimation: move, start: 'left right', end: 'right left', scrub: true } });
       gsap.fromTo(p.querySelector('.gh'), { xPercent: -20 }, { xPercent: 20, ease: 'none',
         scrollTrigger: { trigger: p, containerAnimation: move, start: 'left right', end: 'right left', scrub: true } });
@@ -88,7 +93,7 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
       w.ScrollTrigger.create({ trigger: p, containerAnimation: move, start: 'left center', end: 'right center',
         onToggle: (s: any) => { if (!s.isActive) return;
           n.textContent = p.dataset.no!; const lv = +p.dataset.lv!;
-          lvs.forEach((l, i) => l.classList.toggle('on', i <= lv)); } });
+          lvs.forEach((l, i) => l.classList.toggle('on', i <= lv)); document.getElementById('journey-lv')!.textContent = ['LOW', 'MEDIUM', 'HIGH', 'PRO'][lv]; } });
     });
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });

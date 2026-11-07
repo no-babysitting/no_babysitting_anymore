@@ -43,12 +43,14 @@
     const $ = (id: string) => document.getElementById(id)!;
     const caret = document.querySelector<HTMLElement>('#intro-code .caret')!;
     const stage = $('intro-stage'), cv = $('intro-cv') as HTMLCanvasElement, code = $('intro-code'), t = $('intro-t'), mark = $('intro-mark');
-    const L = NB.LOGO.lg, TEXT = 'No babysitting', FILL = 0.86, VFILL = 0.34, CY = 0.42;
-    NB.clock($('intro-clk'));
-    mark.innerHTML = NB.logoSVG('lg');
     const small = innerWidth < 640;
+    /* tall screens get the stacked lockup so the compiled mark is large enough to read */
+    const L = small ? NB.LOGO.st : NB.LOGO.lg, TEXT = 'No babysitting', FILL = small ? 0.9 : 0.86, VFILL = small ? 0.4 : 0.34, CY = 0.42;
+    NB.clock($('intro-clk'));
+    mark.innerHTML = NB.logoSVG(L);
     const A = NB.ascii(cv, {
-      host: stage, cell: small ? [6, 11] : [9, 16], font: small ? '500 9.5px "JetBrains Mono", monospace' : undefined,
+      /* phones: cells close to one logo pixel, otherwise the letters break into noise */
+      host: stage, cell: small ? [6, 10] : [9, 16], font: small ? '600 9px "JetBrains Mono", monospace' : undefined,
       ramp: ' .:-=+*#%@', noise: '/\\|<>{}[]~^!?;:.', order: reduce ? 1 : 0, sweep: 0.62, noiseFill: 0.5,
       ambient: true, flicker: 0.012, tone: 'accent', frontColor: 'fg', lensColor: 'fg', lensPx: 110,
       source: NB.sources.bitmap(L, { fill: FILL, vfill: VFILL, cy: CY }),
@@ -59,8 +61,8 @@
       const px = Math.min((W * FILL) / L.w, (H * VFILL) / L.h), w = L.w * px, h = L.h * px;
       const left = (W - w) / 2, top = H * CY - h / 2;
       Object.assign(mark.style, { width: w + 'px', left: left + 'px', top: top + 'px' });
-      const fs = w / (TEXT.length * 0.6);
-      Object.assign(code.style, { fontSize: fs + 'px', left: left + 'px', top: top + L.base * px - fs * 0.82 + 'px' });
+      const fs = Math.min(w / (TEXT.length * 0.6), W * 0.92 / (TEXT.length * 0.6));
+      Object.assign(code.style, { fontSize: fs + 'px', left: (W - fs * 0.6 * TEXT.length) / 2 + 'px', top: top + h / 2 - fs * 0.5 + 'px' });
     }
     place(); addEventListener('resize', place);
     if (reduce || !gsap) { t.textContent = TEXT; code.style.display = 'none'; return; }
@@ -81,7 +83,7 @@
     });
     tl.to(S, { order: 1, duration: 0.62, onUpdate: () => {
         A.redraw();
-        const front = Math.max(0, Math.min(1, (S.order - 0.19) / 0.62));
+        const front = Math.max(0, Math.min(1, (S.order - (small ? 0.1 : 0.19)) / 0.62));
         code.style.clipPath = `inset(0 0 0 ${front * 100}%)`;
         caret.style.display = S.order > 0.02 ? 'none' : '';
       } }, 0)
