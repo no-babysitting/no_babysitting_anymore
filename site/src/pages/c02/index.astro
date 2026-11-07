@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+import ContextMeter from '../../components/ContextMeter.astro';
+/* c02 · The Briefing Budget. Beats b1–b3 and b4 (part) from docs/02-pedagogical-script.md §02.
+   Beat text is quoted from the script; sources per beat are listed under each section. */
+---
+<Base title="02 · The Briefing Budget · No Babysitting">
+  <header class="hud">
+    <div class="wrap row">
+      <a href="/" id="wm" class="wm" aria-label="No babysitting, về trang đầu"></a>
+      <span class="nb-micro">Phần I · LOW</span>
+      <span class="nb-micro"><b>c02</b> · 3/12</span>
+    </div>
+  </header>
+
+  <main class="wrap ch">
+    <section class="opener" aria-labelledby="c02-title">
+      <p class="nb-cond idx" aria-hidden="true">02</p>
+      <div>
+        <span class="nb-micro"><span class="nb-sq"></span>Chương 02 · 10 phút</span>
+        <h1 class="nb-wide name" id="c02-title">The Briefing Budget</h1>
+        <p class="sub">Ngân sách ngữ cảnh: độ tập trung và chi phí, ngã ba sau mỗi lượt.</p>
+      </div>
+    </section>
+
+    <section class="beat" id="c02-b1" aria-labelledby="b1q">
+      <span class="nb-micro">b1 · hỏi</span>
+      <h2 class="nb-q q" id="b1q">Claude vừa viết hỏng phần phân tích 2 lần. Bạn nhắn "không phải vậy, thử lại". Lần thứ 3 sẽ tốt hơn hay tệ hơn?</h2>
+    </section>
+
+    <section class="beat" id="c02-b2" aria-labelledby="b2h">
+      <span class="nb-micro" id="b2h">b2 · đoán</span>
+      <fieldset class="predict">
+        <legend class="nb-sr">Dự đoán của bạn</legend>
+        <label><input type="radio" name="p" value="1" /> <span>Tốt hơn, vì Claude đã có thêm thông tin về điều bạn muốn.</span></label>
+        <label><input type="radio" name="p" value="2" /> <span>Như cũ, vì mỗi lần thử Claude đều bắt đầu lại từ đầu phiên.</span></label>
+        <label><input type="radio" name="p" value="3" /> <span>Dễ tệ hơn: hai bản hỏng vẫn nằm trong cuộc trò chuyện.</span></label>
+      </fieldset>
+      <p class="hint">Chọn một phương án rồi cuộn xuống để thấy chuyện gì xảy ra. Không có đáp án bị chấm sai.</p>
+    </section>
+
+    <section class="beat" id="c02-b3" aria-labelledby="b3h">
+      <span class="nb-micro" id="b3h">b3 · thấy</span>
+      <ContextMeter />
+    </section>
+
+    <section class="beat" id="c02-b4" aria-labelledby="b4h">
+      <span class="nb-micro">b4 · hiểu</span>
+      <h2 class="h" id="b4h">Context là bộ nhớ làm việc, xoá ở mỗi phiên</h2>
+      <p class="body">Thứ ăn context: file đã đọc, kết quả tra web, mô tả công cụ, hướng dẫn dự án. Hầu hết model có cửa sổ 1M token và tự nén, nên hết context hiếm khi là vấn đề. Nhưng mỗi bản hỏng và lời sửa vẫn nằm lại trong hội thoại. <code>/clear</code> giữa các việc không liên quan vẫn đáng làm: hội thoại tập trung cho kết quả tốt hơn và rẻ hơn.</p>
+      <p class="src nb-micro">Nguồn · <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code docs · Best practices ↗</a></p>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .hud { position: sticky; top: 0; z-index: 10; height: var(--hud-height); border-bottom: 1px solid var(--control); background: var(--bg); }
+  .row { height: 100%; display: flex; align-items: center; gap: 24px; }
+  .wm { width: 208px; flex: none; color: var(--fg); }
+  .row .nb-micro:last-child { margin-left: auto; }
+  .ch { display: grid; gap: var(--space-9); padding-block: 64px 128px; }
+  .opener { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: end; border-bottom: 1px solid var(--control); padding-bottom: 24px; overflow: hidden; }
+  .idx { margin: 0; font-size: clamp(140px, 22vw, 300px); color: var(--fg); }
+  .name { margin: 8px 0 10px; font-size: clamp(30px, 5vw, 64px); }
+  .sub { margin: 0; color: var(--fg-muted); font-size: 17px; max-width: 44ch; }
+  .beat { display: grid; gap: 16px; max-width: 980px; }
+  .q { margin: 0; font-size: clamp(30px, 4.2vw, 56px); max-width: 24ch; }
+  .predict { border: 0; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--control); }
+  .predict label { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: baseline; padding: 14px 4px; border-bottom: 1px solid var(--control); cursor: pointer; font-size: 18px; line-height: 1.5; }
+  .predict label:has(input:checked) { background: var(--fg); color: var(--bg); }
+  .predict input { accent-color: var(--accent); }
+  .hint { margin: 0; color: var(--fg-subtle); font-size: 14px; }
+  .h { margin: 0; font: 500 clamp(24px, 3vw, 34px)/1.22 var(--font-display); }
+  .body { margin: 0; font-size: 17px; line-height: 1.65; max-width: 66ch; }
+  .body code { font: 500 .9em var(--font-mono); background: var(--bg-sunken); border: 1px solid var(--control); padding: 1px 5px; }
+  .src a { color: var(--fg); }
+  @media (max-width: 640px) { .opener { grid-template-columns: 1fr; } .ch { gap: var(--space-8); } }
+</style>
+
+<script>
+  const NB = (window as any).NoBabysitting;
+  const wm = document.getElementById('wm')!;
+  wm.innerHTML = NB.logoSVG('sm'); wm.firstElementChild!.classList.add('is-mono');
+</script>

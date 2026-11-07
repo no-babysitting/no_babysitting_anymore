@@ -16,5 +16,14 @@ const { title = 'No Babysitting' } = Astro.props;
     .wrap { max-width: var(--page-max); margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
   </style>
 </head>
-<body class="nb"><slot /></body>
+<body class="nb"><slot />
+<script>
+  /* one GSAP for the page; the shared runtime (bundle.js) reads window.gsap */
+  import { gsap } from 'gsap';
+  import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
+  gsap.registerPlugin(ScrambleTextPlugin);
+  (window as any).gsap = gsap; (window as any).ScrambleTextPlugin = ScrambleTextPlugin;
+  document.dispatchEvent(new Event('nb:gsap'));
+</script>
+</body>
 </html>

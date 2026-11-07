@@ -15,6 +15,7 @@ import SurfaceTabs from '../components/SurfaceTabs.astro';
     <div id="mark"></div>
     <p class="lead">Từ vibe đến agentic, giao việc cho Claude như giao cho một đồng nghiệp giỏi.</p>
     <p><span class="nb-tag is-info">Đang dựng · M0</span></p>
+    <p><a class="nb-btn is-solid" href="/c02/">Vào chương 02 · The Briefing Budget</a></p>
     <SurfaceTabs feature="plan-mode" chapter="c03" />
   </main>
 </Base>
@@ -27,8 +28,6 @@ import SurfaceTabs from '../components/SurfaceTabs.astro';
   .lead { margin: 0; font-size: 19px; line-height: 1.5; color: var(--fg-muted); max-width: 52ch; }
 </style>
 <script>
-  import { gsap } from 'gsap';
-  (window as any).gsap = gsap;
   const NB = (window as any).NoBabysitting;
   document.getElementById('wm')!.innerHTML = NB.logoSVG('sm');
   document.querySelector('#wm svg')!.classList.add('is-mono');
