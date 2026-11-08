@@ -49,7 +49,7 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
         <article class="step" data-step="1" aria-labelledby="run-s1">
           <h3 class="sh" id="run-s1"><span class="nb-micro">02 · {STEPS[1][0]}</span><span class="sd">{STEPS[1][1]}</span></h3>
           <div class="think">
-            <span class="face" data-face aria-live="polite">[°_°]…</span>
+            <span class="face" data-face>[°_°]…</span>
             <div class="said">
               <p class="re"><span class="nb-micro">Claude nhắc lại</span><span data-f="restate">{w.restate}</span></p>
               <p class="ask"><span class="nb-micro">Claude hỏi lại một câu</span><span><span data-f="ask">{w.ask}</span><span class="caret" aria-hidden="true">▍</span></span></p>
@@ -68,7 +68,7 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
         <article class="step" data-step="3" aria-labelledby="run-s3">
           <h3 class="sh" id="run-s3"><span class="nb-micro">04 · {STEPS[3][0]}</span><span class="sd">{STEPS[3][1]}</span></h3>
           <ol class="plan" data-f="plan">{w.plan.map((p) => <li><span>{p}</span></li>)}</ol>
-          <div class="lanes" data-f="lanes" aria-label={`${w.lanes} luồng làm song song`}>{Array.from({ length: w.lanes }, () => <i><b></b></i>)}</div>
+          <div class="lanes" data-f="lanes" role="img" aria-label={`${w.lanes} luồng làm song song`}>{Array.from({ length: w.lanes }, () => <i><b></b></i>)}</div>
         </article>
 
         <article class="step" data-step="4" aria-labelledby="run-s4">
@@ -269,20 +269,20 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
     function planState(p: number) { q('[data-f="plan"] li').forEach((li, i, a) => { li.style.opacity = String(p >= i / a.length ? 1 : 0.25); }); }
     function endStates() { A1.state.order = 1; A2.state.order = 1; A1.redraw(); A2.redraw(); logState(1); checkState(1); laneState(1); planState(1); }
 
-    let tl: any = null, fixedOnce = false;
+    let tl: any = null, fixedOnce = false, focusBound = false;
     const SEG = 1 / steps.length, FNS: ((p: number) => void)[] = [];
     /* the state every step shows at timeline progress p (used after a kind switch mid-scroll) */
     function applyAt(p: number) { FNS.forEach((fn, i) => fn(Math.max(0, Math.min(1, (p - (i * SEG + SEG * 0.15)) / (SEG * 0.6))))); }
     function build() {
       if (tl) { tl.scrollTrigger && tl.scrollTrigger.kill(); tl.kill(); }
       const N = steps.length, seg = 1 / N;
-      gsap.set(steps, { autoAlpha: 0, y: 24 });
+      gsap.set(steps, { opacity: 0, pointerEvents: 'none', y: 24 });
       tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#run', start: 'top top+=48', end: '+=' + N * 85 + '%', pin: '#run-pin', scrub: 0.6, invalidateOnRefresh: true,
         onUpdate: (s: any) => { const i = Math.min(N - 1, Math.floor(s.progress * N)); rail.forEach((r, j) => { r.classList.toggle('cur', j === i); r.classList.toggle('on', j < i); }); sideAt(i); } } });
       steps.forEach((st, i) => {
         const t0 = i * seg;
-        tl.to(st, { autoAlpha: 1, y: 0, duration: seg * 0.18, ease: 'power2.out' }, t0);
-        if (i < N - 1) tl.to(st, { autoAlpha: 0, y: -24, duration: seg * 0.14, ease: 'power2.in' }, t0 + seg * 0.86);
+        tl.to(st, { opacity: 1, pointerEvents: 'auto', y: 0, duration: seg * 0.18, ease: 'power2.out' }, t0);
+        if (i < N - 1) tl.to(st, { opacity: 0, pointerEvents: 'none', y: -24, duration: seg * 0.14, ease: 'power2.in' }, t0 + seg * 0.86);
       });
       const inner = (i: number, fn: (p: number) => void) => { FNS[i] = fn; const o = { p: 0 }; tl.to(o, { p: 1, duration: seg * 0.6, onUpdate: () => fn(o.p) }, i * seg + seg * 0.15); };
       inner(0, (p) => { A1.state.order = p; A1.redraw(); });
@@ -292,6 +292,12 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
       inner(4, logState);
       inner(5, checkState);
       inner(6, () => {});
+      /* keyboard: tabbing into a step that is not on screen moves the pin to it (its text is in the page, only dimmed) */
+      if (!focusBound) { focusBound = true; root.addEventListener('focusin', (e) => {
+        const st = (e.target as HTMLElement).closest('.step') as HTMLElement | null, trig = tl && tl.scrollTrigger; if (!st || !trig) return;
+        const y = trig.start + (trig.end - trig.start) * (steps.indexOf(st) * seg + seg * 0.5);
+        if (Math.abs(trig.scroll() - y) > innerHeight * 0.4) (window as any).lenis ? (window as any).lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y);
+      }); }
       ST.refresh();
     }
 

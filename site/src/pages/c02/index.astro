@@ -14,7 +14,7 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
 <Base title="02 · The Briefing Budget · No Babysitting">
   <Hud current="c02" />
 
-  <main class="wrap ch">
+  <main id="main" tabindex="-1" class="wrap ch">
     <div data-ch-opener><ChapterOpener {...openerProps(c02)} /></div>
 
     <section class="beat ask" data-ask id="c02-b1" aria-labelledby="b1q">
@@ -59,11 +59,15 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
         /* behind the veil the meter is inactive: no focus, no clicks, no screen reader until the prediction is in */
         const meter = document.getElementById('cm');
         if (meter) meter.inert = true;
+        /* cookieless counters (docs/08 · D11): did the visitor commit a prediction, and did the session run to its end */
+        const count = (name: string) => { try { const gc = (window as any).goatcounter; if (gc && gc.count) gc.count({ path: name, title: name, event: true }); } catch (e) { /* analytics never breaks the page */ } };
+        const used = new Set<string>(); let ended = false;
+        lock.addEventListener('click', (e) => { const b = (e.target as HTMLElement).closest('[data-a]') as HTMLElement | null; if (!b) return; used.add(b.dataset.a!); if (used.size >= 3 && !ended) { ended = true; count('event-c02-sim-done'); } });
         let open = false;
         const unlock = () => { if (open) return; open = true; if (meter) meter.inert = false; gsap ? gsap.to(veil, { autoAlpha: 0, duration: 0.36, onComplete: () => veil.remove() }) : veil.remove();
           document.getElementById('c02-hint')!.textContent = 'Đã chốt. Cuộn xuống để xem chuyện gì xảy ra.'; };
-        document.querySelectorAll('#c02-predict input').forEach((i) => i.addEventListener('change', unlock));
-        document.getElementById('c02-skip')!.addEventListener('click', unlock);
+        document.querySelectorAll('#c02-predict input').forEach((i) => i.addEventListener('change', () => { if (!open) count('event-c02-predict'); unlock(); }));
+        document.getElementById('c02-skip')!.addEventListener('click', () => { if (!open) count('event-c02-skip'); unlock(); });
         if (!gsap || w.NoBabysitting.reduce()) return;
         const STEPS = ['excel', 'web', 'bad', 'bad'];
         const btn = (a: string) => lock.querySelector<HTMLButtonElement>(`[data-a="${a}"]`)!;

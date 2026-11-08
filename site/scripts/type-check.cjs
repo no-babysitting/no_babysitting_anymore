@@ -588,7 +588,7 @@ function where(list, nPages) {
     if (!fs.existsSync(DIST)) { console.error('no dist/: run the build first'); process.exit(1); }
     server = await serve();
     const origin = `http://127.0.0.1:${server.address().port}`;
-    const pages = args.pages || htmlFiles().map((f) => path.relative(DIST, path.dirname(f)).split(path.sep).join('/')).map((d) => (d ? d + '/' : '')).filter((d) => !/^(404|ds)\b/.test(d)).sort();
+    const pages = args.pages || [...new Set(htmlFiles().map((f) => { const r = path.relative(DIST, f).split(path.sep).join('/'); return path.basename(r) === 'index.html' ? r.slice(0, -'index.html'.length) : r; }))].filter((d) => !/^ds\//.test(d)).sort();
     targets = pages.map((pg) => ({ name: '/' + pg, url: origin + BASE + pg }));
   }
   const vps = Object.entries(R.viewports).filter(([k]) => !args.only || args.only === k);

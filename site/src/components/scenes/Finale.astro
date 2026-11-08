@@ -42,15 +42,20 @@ import { url } from '../../lib/url';
       source: NB.sources.scene({ sunX: small ? 0.6 : 0.68 }),
     });
     if (reduce || !gsap) { n.textContent = '12'; col.set('verified', true); return; }
-    gsap.set('#finale-ct', { autoAlpha: 0, y: 40 });
+    gsap.set('#finale-ct', { opacity: 0, pointerEvents: 'none', y: 40 });
     const S = A.state, c = { v: 0 };
-    gsap.timeline({ defaults: { ease: 'none' },
+    const tl = gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: '#finale', start: 'top top+=48', end: '+=160%', pin: true, scrub: 0.6,
         onUpdate: (s: any) => col.set(s.progress > 0.62 ? 'verified' : 'working') } })
       .to(S, { order: 1, noiseFill: 0.05, duration: 0.6, onUpdate: A.redraw }, 0)
       .to(c, { v: 12, duration: 0.55, onUpdate: () => { n.textContent = String(Math.round(c.v)).padStart(2, '0'); } }, 0.05)
-      .to('#finale-ct', { autoAlpha: 1, y: 0, duration: 0.18, ease: 'power2.out' }, 0.66)
+      .to('#finale-ct', { opacity: 1, pointerEvents: 'auto', y: 0, duration: 0.18, ease: 'power2.out' }, 0.66)
       .to({}, { duration: 0.16 });
+    /* a keyboard user who tabs to the call to action should see it: move the pin to where it is shown */
+    document.getElementById('finale-ct')!.addEventListener('focusin', () => {
+      const st = tl.scrollTrigger; if (!st || st.progress > 0.7) return;
+      const y = st.start + (st.end - st.start) * 0.8; w.lenis ? w.lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y);
+    });
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
 </script>

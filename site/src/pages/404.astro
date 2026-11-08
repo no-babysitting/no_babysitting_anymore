@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Hud from '../components/Hud.astro';
+import { url } from '../lib/url';
+---
+<Base title="Không tìm thấy trang · No Babysitting">
+  <Hud />
+  <main id="main" tabindex="-1" class="wrap nf">
+    <span class="nb-micro"><span class="nb-sq"></span>404</span>
+    <h1 class="nb-q">Không tìm thấy trang này.</h1>
+    <p>Đường dẫn có thể đã đổi hoặc gõ nhầm. Quay về trang chủ, hoặc mở Library.</p>
+    <p class="go"><a class="nb-btn is-solid" href={url()}>Trang chủ</a><a class="nb-btn" href={url('library/')}>Library</a></p>
+  </main>
+</Base>
+<style>
+  .nf { display: grid; gap: 20px; align-content: start; padding-block: 96px; min-height: 60svh; }
+  .nf h1 { margin: 0; font-size: clamp(34px, 5vw, 56px); text-wrap: balance; }
+  .nf p { margin: 0; color: var(--fg-muted); max-width: var(--measure); line-height: 1.6; }
+  .go { display: flex; gap: 10px; flex-wrap: wrap; }
+</style>

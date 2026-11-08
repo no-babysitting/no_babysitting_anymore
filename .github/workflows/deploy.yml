@@ -37,7 +37,7 @@ jobs:
       - run: npm run build
       - name: Install Chromium for the checks
         run: |
-          npm i --no-save playwright@1.63.0
+          npm i --no-save playwright@1.63.0 axe-core@4.10.2
           npx playwright install --with-deps chromium
       - name: Checks (links, JS errors, overflow, reduced motion, idle cost)
         run: node scripts/check.cjs

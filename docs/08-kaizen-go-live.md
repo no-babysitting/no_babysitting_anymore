@@ -26,6 +26,10 @@
 | D14 | Phát hành | Claude tự merge vào `main` khi kiểm tra tự động đạt. Với nội dung mới thì phải có thêm duyệt của D13 | — |
 | D15 | Bắt đầu | Làm song song: nền tảng (K0) và nghiên cứu cho kịch bản v3 (K1) | — |
 | D16 | Mốc beta | **Ngay bây giờ**: K0 lên site trong phiên này | M5, tuần 12–13 |
+| D17 | Tác giả (08/11) | Trang nêu **biệt danh + GitHub** của người duy trì, kèm ngày kiểm chứng và cách báo sai. Không nêu tên thật | "sẽ nêu tên" (nói với bên đánh giá độc lập) |
+| D18 | Màu nhấn (08/11) | **Giữ nguyên** cam `#d97a4a`, không thêm nhãn cố định. Chấp nhận rủi ro nhầm thương hiệu; disclaimer vẫn ở hero, ảnh chia sẻ và chân trang. Nên có ý kiến luật sư trước khi đăng rộng | đề xuất đổi sắc hoặc thêm nhãn của bên đánh giá (M2) |
+| D19 | Cửa vào (08/11) | Soft launch ngay sau khi sửa cửa vào: hai nút CTA trỏ về chương có thật, ghi "c03, c07 đang viết", thêm đoạn tóm tắt ngắn trên trang chủ. c03 và c07 viết sau | cổng "c03, c07 phải xong" chỉ áp dụng cho đăng rộng |
+| D20 | Kiểm thử thật (08/11) | **Chưa làm**: thiết bị thật (đã có iPhone Safari của chủ dự án), trình đọc màn hình, 5 buổi quan sát. Rủi ro chấp nhận cho soft launch; **không đăng rộng** cho tới khi làm | cổng đăng rộng của bên đánh giá |
 
 ## 2. Quan sát site ngày 07/11/2026
 

@@ -14,8 +14,8 @@
       /* exit, not pin: the number sinks below the frame edge and fades while the title lifts away;
          it never grows over the title (docs/09 §4, D6) */
       gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: op, start: 'top top+=48', end: 'bottom top+=48', scrub: 0.5 } })
-        .to(idx, { yPercent: 40, autoAlpha: 0 }, 0)
-        .to(ttl, { y: -80, autoAlpha: 0 }, 0.15)
+        .to(idx, { yPercent: 40, opacity: 0 }, 0)
+        .to(ttl, { y: -80, opacity: 0 }, 0.15)
         .to(gh, { xPercent: -30 }, 0)
         .to(cv, { opacity: 0.25 }, 0);
     }

@@ -3,12 +3,16 @@
 //   2. key pages, desktop 1440 and phone 390: no JS errors, no horizontal scroll
 //   3. reduced motion: no readable text left hidden
 //   4. idle cost: with nobody scrolling, the home page barely paints (docs/09-motion-script.md §5)
+//   5. accessibility with the motion ON, every page: axe-core, text that is hidden until scrolled must still be in the
+//      accessibility tree (a split paragraph once exposed nothing), and no link without a destination (href="#")
 // usage (from site/): NB_BASE=/no_babysitting_anymore/ node scripts/check.cjs
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const { BASE, DIST, file, serve, htmlFiles } = require('./serve-dist.cjs');
 
 const PAGES = ['', 'c00/', 'c02/', 'c03/', 'c10/', 'library/'];
+/* every page that was built: index.html of each folder, plus loose files such as 404.html */
+const ALL = [...new Set(htmlFiles().map((f) => { const r = path.relative(DIST, f).split(path.sep).join('/'); return path.basename(r) === 'index.html' ? r.slice(0, -'index.html'.length) : r; }))].filter((d) => !/^ds\//.test(d)).sort();
 const IDLE_DRAWS_PER_S = 600; /* breathing hero: tens per second; the old renderer: ~80k */
 const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.push(m); console.log('  ✕ ' + m); };
 
@@ -84,6 +88,47 @@ const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.pus
       note(`${spot}: ${draws} glyph draws/s, main thread busy ${cpu}%`);
       if (draws > IDLE_DRAWS_PER_S) fail(`${spot}: ${draws} glyph draws/s while idle (budget ${IDLE_DRAWS_PER_S})`);
     }
+    await ctx.close();
+  }
+
+  console.log('5 · accessibility with the motion on (axe-core, accessibility tree, dead links)');
+  {
+    const axeSrc = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
+    const norm = (s) => s.replace(/[\s"'\\]/g, '');
+    const ctx = await browser.newContext(sizes.desktop);
+    let nTree = 0;
+    for (const pg of ALL) {
+      const p = await ctx.newPage();
+      await p.goto(origin + BASE + pg, { waitUntil: 'networkidle' }); await p.waitForTimeout(1500);
+      /* (a) axe. Colour contrast is measured on the settled text by type-check.cjs; mid-animation opacity would only add noise here */
+      await p.addScriptTag({ content: axeSrc });
+      const v = await p.evaluate(() => axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] }, rules: { 'color-contrast': { enabled: false } } })
+        .then((r) => r.violations.map((x) => ({ id: x.id, impact: x.impact, n: x.nodes.length, at: x.nodes[0].target.join(' ').slice(0, 70) }))));
+      for (const x of v) {
+        const msg = `/${pg}: axe ${x.id} (${x.impact}) ×${x.n}, e.g. ${x.at}`;
+        if (x.impact === 'serious' || x.impact === 'critical') fail(msg); else note(msg);
+      }
+      /* (b) every text that a reveal hides until it is scrolled to must already be in the accessibility tree */
+      const items = await p.evaluate(() => {
+        const out = [];
+        document.querySelectorAll('[data-reveal]').forEach((e, i) => {
+          if (!/^(P|H[1-6]|SPAN|B)$/.test(e.tagName) || e.closest('details, [hidden], [aria-hidden="true"], .nb-sr')) return;
+          const t = ((e.querySelector(':scope > .nb-sr') || e).textContent || '').replace(/\s+/g, ' ').trim(); if (t.replace(/\s/g, '').length < 12) return;
+          e.setAttribute('data-axchk', String(i)); out.push([i, t.slice(0, 40)]);
+        });
+        return out;
+      });
+      for (const [i, t] of items) {
+        nTree++;
+        const snap = norm(await p.locator(`[data-axchk="${i}"]`).ariaSnapshot());
+        if (!snap.includes(norm(t).slice(0, 14))) fail(`/${pg}: "${t.slice(0, 40)}" is not in the accessibility tree (hidden, or a label on a paragraph)`);
+      }
+      /* (c) a link must go somewhere */
+      const dead = await p.evaluate(() => [...document.querySelectorAll('a')].filter((a) => !a.getAttribute('href') || a.getAttribute('href') === '#').map((a) => a.textContent.trim().slice(0, 30)));
+      if (dead.length) fail(`/${pg}: ${dead.length} link(s) with no destination: ${dead.slice(0, 3).join(' | ')}`);
+      await p.close();
+    }
+    note(`${ALL.length} pages · ${nTree} revealed texts checked against the accessibility tree`);
     await ctx.close();
   }
 
