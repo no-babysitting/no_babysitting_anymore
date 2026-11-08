@@ -17,7 +17,7 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
   <main id="main" tabindex="-1" class="wrap ch">
     <div data-ch-opener><ChapterOpener {...openerProps(c02)} /></div>
 
-    <section class="beat ask" data-ask id="c02-b1" aria-labelledby="b1q">
+    <section class="beat ask" data-ask data-hold="0.6" id="c02-b1" aria-labelledby="b1q">
       <span class="nb-micro" data-reveal="up">b1 · hỏi</span>
       <h2 class="nb-q q" id="b1q" data-reveal="words">Claude vừa viết hỏng phần phân tích 2 lần. Bạn nhắn "không phải vậy, thử lại". Lần thứ 3 sẽ tốt hơn hay tệ&nbsp;hơn?</h2>
     </section>
@@ -92,7 +92,7 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
   .name { margin: 8px 0 10px; font-size: clamp(30px, 5vw, 64px); }
   .sub { margin: 0; color: var(--fg-muted); font-size: 17px; max-width: 44ch; }
   .beat { display: grid; gap: 16px; max-width: 980px; }
-  .ask { min-height: calc(100svh - var(--hud-height) - 64px); align-content: center; gap: 22px; max-width: none; }
+  .ask { align-content: center; gap: 22px; max-width: none; padding-block: clamp(36px, 9svh, 88px); }
   .ask .q { font-size: clamp(34px, 5.6vw, 72px); max-width: 20ch; }
   .lock { position: relative; }
   .veil { position: absolute; inset: 0; z-index: 5; display: grid; place-content: center; justify-items: center; gap: 14px; background: color-mix(in srgb, var(--bg) 72%, transparent); }

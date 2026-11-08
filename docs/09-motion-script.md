@@ -17,6 +17,8 @@ Luật cũ "không có gì lặp vô hạn" đổi thành: **chỉ tầng N đư
 - dừng khi canvas ra khỏi màn hình;
 - dừng khi tab bị ẩn.
 
+Hai thứ lặp mới (08/11, đợt B), cả hai thuộc tầng N và theo ba điều kiện trên: **dải khối ASCII quét qua nút "chương kế"** (`NB.sweep`, `data-sweep`: 4,6 giây quét, 1,8 giây nghỉ, chỉ vẽ khi nút trên màn hình, không có canvas nào khi tắt chuyển động) và **dấu cam của chương hiện tại ở mục lục nháy như con trỏ terminal** (`nb-blink`, 1,1 giây, `steps(1)`, chỉ khi `html.motion`).
+
 ## 2. Mật độ ASCII và vùng yên
 
 - **Vùng yên (calm zone).** Không vẽ ký tự nhiễu trong hộp chữ cần đọc, cộng thêm 1 ô quanh hộp. Trong vòng 4 ô tiếp theo, nhiễu chỉ vẽ nhạt và thưa; càng ra rìa càng đậm. Khai báo bằng `calm: [phần tử…]` khi tạo canvas.
@@ -69,8 +71,10 @@ Chọn loại việc thuộc tầng P: nội dung bước đổi ngay (Flip M3 c
 | CPU luồng chính khi đứng yên (desktop, đầu trang) | ≤ 8% | `site/scripts/check.mjs` (CDP `TaskDuration` trong 3 giây) |
 | Ô canvas đổi mỗi giây khi đứng yên | ≤ 4% số ô ở hero và finale; 0 ở các cảnh khác | đếm `drawImage` |
 | Canvas đang sống cùng lúc | ≤ 2 | |
-| Lỗi JS / cuộn ngang | 0 / không có, ở 1440px và 390px | |
+| Lỗi JS / cuộn ngang | 0 / không có, ở 1440px, 390px và 320px | `check.cjs` |
 | Reduced motion | Không chữ nào bị ẩn; mọi cảnh ở trạng thái cuối | |
+| Trình bày: chữ đè nhau, chữ bị cắt, dải trống, nút < 40px, hai cột lệch hàng | 0, ở 390, 375×667, 320 và 1440 | `design-check.cjs` (luật và cách đo: `13-design-taste.md`) |
+| Câu cần đọc có được giữ; mô phỏng chờ được thấy rồi chạy ≥ 4 giây | mọi `[data-ask]` và `[data-reveal="fill"]` nằm trong `[data-held]`; mọi `[data-demo]` bắt đầu ở `idle` | `design-check.cjs` mục 3 |
 
 ## 6. Kỹ thuật
 
@@ -80,4 +84,6 @@ Chọn loại việc thuộc tầng P: nội dung bước đổi ngay (Flip M3 c
   - `breathe` thay cho `ambient`: mỗi tick đổi vài ô và chỉ vẽ lại đúng các ô đó;
   - `calm` để khai báo vùng yên;
   - vẽ lại cả canvas chỉ khi gọi `redraw()`.
+- **Giữ lại để đọc** (`motion.ts`): `data-hold="<số màn hình>"` ghim khối ở giữa vùng nhìn thấy trong chừng đó chiều cao cuộn, rồi buông; khối cao hơn màn hình thì bỏ qua. `[data-reveal="fill"]` trong khối được giữ sáng chữ dần theo lúc giữ. Các lớp ghim phải làm mới từ trên xuống (`ScrollTrigger.sort()` trước `refresh()`).
+- **Mô phỏng chờ được thấy** (`bundle.js`): `NB.seen(el, fn)` chạy `fn` một lần khi `el` lên màn hình được 40% (hoặc 40% chiều cao màn hình nếu `el` cao hơn); mô phỏng đặt `data-demo = idle | playing | done`.
 - **Dọn dẹp:** site là MPA nên mỗi trang tự dọn khi rời đi. Khi resize, canvas tính lại lưới sau 150 ms; ScrollTrigger dùng `invalidateOnRefresh` cho các giá trị phụ thuộc kích thước.

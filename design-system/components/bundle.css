@@ -89,6 +89,8 @@
 .nb-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .nb-chip .n { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }
 .nb-chip[aria-pressed="true"] .n { color: var(--bg); opacity: .7; }
+/* a finger is about 44px: every button and chip is at least that tall on touch and narrow screens (the owner's phone, WCAG 2.5.8) */
+@media (pointer: coarse), (max-width: 640px) { .nb-btn, .nb-chip { min-height: 44px; } }
 
 /* ---------- logo: Blocks lettering (NB.logoSVG / NB.logo) ---------- */
 .nb-logo { display: block; width: 100%; height: auto; color: var(--accent); }

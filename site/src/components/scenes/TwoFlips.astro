@@ -38,13 +38,16 @@ const runs = {
 
 <style>
   .flips { position: relative; overflow-x: clip; }
-  .pin { min-height: calc(100svh - var(--hud-height)); display: grid; grid-template-rows: auto 1fr auto; gap: 22px; padding-block: 36px 32px; }
+  .pin { min-height: calc(100svh - var(--hud-height)); display: grid; grid-template-rows: auto auto auto; align-content: center; gap: 22px; padding-block: 36px 32px; }
   .hd { display: grid; gap: 14px; }
   .req { margin: 0; font: 500 clamp(18px, 2.4vw, 30px)/1.2 var(--font-mono); color: var(--fg); display: flex; gap: .5em; align-items: baseline; }
   .pr { color: var(--fg-subtle); } .caret { color: var(--fg); }
-  .cols { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--control); border-bottom: 1px solid var(--control); }
-  .col { display: grid; align-content: start; gap: 14px; padding: 20px 20px 22px 0; }
-  .col + .col { border-left: 1px solid var(--control); padding-left: 20px; }
+  /* both columns share five rows (header, first run, coin, second run, verdict), so each pair sits on one line however long its text is */
+  .cols { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: repeat(5, auto); column-gap: 40px; row-gap: 14px; padding-block: 20px 22px; border-top: 1px solid var(--control); border-bottom: 1px solid var(--control); }
+  .cols::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; border-left: 1px solid var(--control); }
+  .col { display: contents; }
+  .vibe > * { grid-column: 1; } .agentic > * { grid-column: 2; }
+  .ch { grid-row: 1; } .r1 { grid-row: 2; } .coin { grid-row: 3; } .r2 { grid-row: 4; } .verdict { grid-row: 5; }
   .ch { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
   .ch h3 { margin: 0; font-size: clamp(26px, 4vw, 52px); }
   .vibe .ch h3 { color: var(--fg-muted); }
@@ -60,7 +63,7 @@ const runs = {
   @media (max-width: 720px) {
     .pin { gap: 14px; padding-block: 18px 16px; }
     .req { font-size: 17px; }
-    .col { gap: 9px; padding: 12px 8px 14px 0; } .col + .col { padding-left: 8px; }
+    .cols { column-gap: 16px; row-gap: 9px; padding-block: 12px 14px; }
     .ch .nb-micro { display: none; }
     .ch h3 { font-size: 24px; }
     .run { padding: 8px 9px; gap: 5px; }
@@ -70,6 +73,7 @@ const runs = {
     .face { width: 34px; height: 34px; font-size: 17px; }
     .moral { font-size: 21px; }
   }
+  @media (max-width: 360px) { .ch h3 { font-size: 21px; letter-spacing: -.02em; } .cols { column-gap: 12px; } } /* 'Agentic' is the longer word and the column is 138px wide at 320px; not below 21px, so 500% zoom still grows it 2× (WCAG 1.4.4) */
 </style>
 
 <script>

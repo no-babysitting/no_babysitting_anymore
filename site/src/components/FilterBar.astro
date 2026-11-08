@@ -35,7 +35,7 @@
   .count .n{font-size:64px;color:var(--fg)}
   .count small{font:500 13px/1.3 var(--font-mono);color:var(--fg-subtle);max-width:13ch}
   details.filters{border-top:1px solid var(--control);border-bottom:1px solid var(--control)}
-  details.filters > summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:10px 0}
+  details.filters > summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:10px 0;min-height:44px;box-sizing:border-box}
   details.filters > summary::-webkit-details-marker{display:none}
   details.filters > summary::after{content:"[ + ]";font:600 12px/1 var(--font-mono);color:var(--fg-muted)}
   details.filters[open] > summary::after{content:"[ − ]"}

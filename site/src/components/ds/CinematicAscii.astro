@@ -48,11 +48,17 @@
   function pad(v) { return (v < 10 ? '0' : '') + v; }
   A.ready.then(function () {
     if (NB.reduce() || !window.gsap) { A.state.order = 1; A.redraw(); n.textContent = '14 / 14'; col.set('verified', true); return; }
-    var tl = gsap.timeline({ delay: 0.3 });
-    tl.to(A.state, { order: 1, duration: 3.4, ease: 'power2.inOut', onUpdate: A.redraw })
-      .to(cnt, { v: 14, duration: 2.2, ease: 'none', snap: { v: 1 }, onUpdate: function () { n.textContent = pad(cnt.v) + ' / 14'; } }, 0.8)
-      .call(function () { col.set('verified'); })
-      .from('#cinematicascii-ct', { yPercent: 30, autoAlpha: 0, duration: 0.9, ease: 'power3.out' }, 0.2);
+    /* the picture starts as noise and settles when the scene is first on screen (NB.seen), slowly: about seven seconds */
+    var cin = document.getElementById('cinematicascii-cin'); cin.dataset.demo = 'idle';
+    gsap.set('#cinematicascii-ct', { opacity: 0, yPercent: 30 });
+    NB.seen(cin, function () {
+      cin.dataset.demo = 'playing';
+      var tl = gsap.timeline({ delay: 0.4, onComplete: function () { cin.dataset.demo = 'done'; } });
+      tl.to(A.state, { order: 1, duration: 5.6, ease: 'power2.inOut', onUpdate: A.redraw })
+        .to(cnt, { v: 14, duration: 3.6, ease: 'none', snap: { v: 1 }, onUpdate: function () { n.textContent = pad(cnt.v) + ' / 14'; } }, 1.4)
+        .call(function () { col.set('verified'); })
+        .to('#cinematicascii-ct', { yPercent: 0, opacity: 1, duration: 1.4, ease: 'power3.out' }, 0.4);
+    });
   });
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });

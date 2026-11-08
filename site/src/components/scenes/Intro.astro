@@ -6,8 +6,6 @@
 <section class="intro" id="intro" aria-labelledby="intro-h">
   <div class="stage" id="intro-stage">
     <canvas class="nb-canvas cv" id="intro-cv" aria-hidden="true"></canvas>
-    <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>NO BABYSITTING · AN UNOFFICIAL GUIDE</span>
-    <span class="nb-corner tr nb-micro"><b id="intro-clk" class="nb-tabular">--:--:--</b></span>
     <span class="nb-corner bl nb-micro"><span class="long">Dự án cộng đồng độc lập · không phải trang chính thức của Anthropic</span><span class="short">Dự án độc lập · không chính thức</span></span>
     <span class="nb-corner br nb-micro" id="intro-cue"><span class="long">cuộn để biên dịch ↓</span><span class="short">cuộn ↓</span></span>
     <div class="code" id="intro-code" aria-hidden="true"><span class="t" id="intro-t"></span><span class="caret">▍</span></div>
@@ -28,13 +26,15 @@
   .caret { color: var(--fg); }
   .mark { position: absolute; color: var(--accent); }
   .mark :global(svg) { display: block; width: 100%; height: auto; }
-  .tag { position: absolute; left: 50%; bottom: 9%; transform: translateX(-50%); width: min(92%, 860px); text-align: center; display: grid; gap: 10px; }
-  .l1 { margin: 0; font-size: clamp(26px, 3.6vw, 44px); color: var(--fg); }
-  .l2 { margin: 0 auto; font-size: clamp(15px, 1.4vw, 18px); line-height: 1.5; color: var(--fg-muted); max-width: 52ch; }
+  /* the promise is left aligned with the mark and sits right under it; place() sets top, left and width */
+  .tag { position: absolute; left: 6%; top: 52%; width: 88%; text-align: left; display: grid; gap: 12px; }
+  .l1 { margin: 0; font-size: clamp(30px, 4vw, 50px); color: var(--fg); text-wrap: balance; }
+  .l2 { margin: 0; font-size: clamp(17px, 1.5vw, 19px); line-height: 1.5; color: var(--fg-muted); max-width: 46ch; }
   .nb-corner { z-index: 4; }
   .stage .nb-corner { background: transparent; }
   .short { display: none; }
   @media (max-width: 520px) { .stage .nb-corner.bl, .stage .nb-corner.br { display: block; } .long { display: none; } .short { display: inline; } }
+  @media (max-width: 350px) { .stage .nb-corner.br { display: none; } } /* at 320px the disclaimer and the scroll cue would print over each other; the disclaimer stays */
 </style>
 
 <script>
@@ -43,11 +43,10 @@
     const reduce = NB.reduce();
     const $ = (id: string) => document.getElementById(id)!;
     const caret = document.querySelector<HTMLElement>('#intro-code .caret')!;
-    const stage = $('intro-stage'), cv = $('intro-cv') as HTMLCanvasElement, code = $('intro-code'), t = $('intro-t'), mark = $('intro-mark');
+    const stage = $('intro-stage'), cv = $('intro-cv') as HTMLCanvasElement, code = $('intro-code'), t = $('intro-t'), mark = $('intro-mark'), tag = stage.querySelector<HTMLElement>('.tag')!;
     const small = innerWidth < 640;
     /* tall screens get the stacked lockup so the compiled mark is large enough to read */
-    const L = small ? NB.LOGO.st : NB.LOGO.lg, TEXT = 'No babysitting', FILL = small ? 0.9 : 0.86, VFILL = small ? 0.4 : 0.34, CY = 0.42;
-    NB.clock($('intro-clk'));
+    const L = small ? NB.LOGO.st : NB.LOGO.lg, TEXT = 'No babysitting', FILL = small ? 0.88 : 0.86, VFILL = small ? 0.3 : 0.34, CY = small ? 0.24 : 0.34;
     mark.innerHTML = NB.logoSVG(L);
     const A = NB.ascii(cv, {
       /* phones: cells close to one logo pixel, otherwise the letters break into noise */
@@ -65,23 +64,28 @@
       Object.assign(mark.style, { width: w + 'px', left: left + 'px', top: top + 'px' });
       const fs = Math.min(w / (TEXT.length * 0.6), W * 0.92 / (TEXT.length * 0.6));
       Object.assign(code.style, { fontSize: fs + 'px', left: (W - fs * 0.6 * TEXT.length) / 2 + 'px', top: top + h / 2 - fs * 0.5 + 'px' });
+      /* the promise: left edge on the mark's left edge, one gap under it, as wide as the mark */
+      Object.assign(tag.style, { left: left + 'px', top: top + h + (small ? 26 : 30) + 'px', width: w + 'px' });
+      A.recalm();
     }
     place(); addEventListener('resize', place);
     if (reduce || !gsap) { t.textContent = TEXT; code.style.display = 'none'; return; }
 
     gsap.set(mark, { autoAlpha: 0 });
-    gsap.set(['#intro-l1', '#intro-l2'], { opacity: 0, y: 24 });
+    gsap.set(['#intro-l1', '#intro-l2'], { opacity: 0, y: 14 });
     /* load: the line is typed, the caret blinks three times (M7) */
     const o = { n: 0 };
     gsap.timeline({ delay: 0.3 })
       .to(o, { n: TEXT.length, duration: TEXT.length * 0.06, ease: `steps(${TEXT.length})`, onUpdate: () => { t.textContent = TEXT.slice(0, o.n); } })
-      .to('#intro-code .caret', { autoAlpha: 0, duration: 0.35, repeat: 5, yoyo: true, ease: 'steps(1)' });
+      .to('#intro-code .caret', { autoAlpha: 0, duration: 0.35, repeat: 5, yoyo: true, ease: 'steps(1)' }, '>')
+      .to('#intro-l1', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, TEXT.length * 0.06 - 0.1)
+      .to('#intro-l2', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, TEXT.length * 0.06 + 0.25);
 
     /* scroll: compile */
     const S = A.state;
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
-      scrollTrigger: { trigger: '#intro', start: 'top top+=' + 48, end: '+=220%', pin: true, scrub: 0.6, anticipatePin: 1 },
+      scrollTrigger: { trigger: '#intro', start: 'top top+=' + 48, end: small ? '+=140%' : '+=180%', pin: true, scrub: 0.6, anticipatePin: 1 },
     });
     tl.to(S, { order: 1, duration: 0.62, onUpdate: () => {
         A.redraw();
@@ -93,8 +97,6 @@
       .to('#intro-cue', { autoAlpha: 0, duration: 0.05 }, 0)
       .to(mark, { autoAlpha: 1, duration: 0.1 }, 0.66)
       .to(cv, { opacity: 0.32, duration: 0.14 }, 0.66)
-      .to('#intro-l1', { opacity: 1, y: 0, duration: 0.12, ease: 'power2.out' }, 0.74)
-      .to('#intro-l2', { opacity: 1, y: 0, duration: 0.12, ease: 'power2.out' }, 0.82)
       .to({}, { duration: 0.1 });
     ST.addEventListener('refresh', place);
   }

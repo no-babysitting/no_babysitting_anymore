@@ -63,15 +63,23 @@
   if (!window.gsap || (NB && NB.reduce())) { document.getElementById('line').style.transform = 'scaleX(1)'; arw.textContent = FULL; document.getElementById('then').classList.add('is-past'); return; }
   gsap.registerPlugin(CustomEase);
   CustomEase.create('nb-settle', '0.22,1,0.36,1');
-  var o = { n: 0 };
-  var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.to('#line', { scaleX: 1, duration: 0.32 }, 0.2)
-    .call(function () { document.getElementById('then').classList.remove('is-past'); }, null, 0)
-    .call(function () { document.getElementById('then').classList.add('is-past'); }, null, 0.5)
-    .to(o, { n: FULL.length, duration: 0.42, ease: 'steps(' + FULL.length + ')', onUpdate: function () { arw.textContent = FULL.slice(0, Math.round(o.n)); } }, 0.6)
-    .from('#now', { x: -24, autoAlpha: 0, duration: 0.6, ease: 'nb-settle' }, 1.0)
-    .from('#now .ghost', { xPercent: -8, duration: 1.2, ease: 'power2.out' }, 1.0);
-  document.getElementById('replay').addEventListener('click', function () { arw.textContent = ''; tl.restart(); });
+  var o = { n: 0 }, tl, then = document.getElementById('then'), card = document.querySelector('.tn');
+  /* The old rule is shown first; the strike, the arrow and the new rule play when the card is first on screen (NB.seen), unhurried:
+     about four seconds, so the order "this was the rule, this replaces it" can be read. "Phát lại" plays it again. */
+  function prime() { gsap.set('#line', { scaleX: 0 }); gsap.set('#now', { opacity: 0, x: -24 }); arw.textContent = ''; then.classList.remove('is-past'); card.dataset.demo = 'idle'; }
+  function play() {
+    if (tl) tl.kill();
+    prime(); o.n = 0; card.dataset.demo = 'playing';
+    tl = gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: function () { card.dataset.demo = 'done'; } });
+    tl.to('#line', { scaleX: 1, duration: 0.9, ease: 'power2.inOut' }, 1.0)
+      .call(function () { then.classList.add('is-past'); }, null, 2.0)
+      .to(o, { n: FULL.length, duration: 1.1, ease: 'steps(' + FULL.length + ')', onUpdate: function () { arw.textContent = FULL.slice(0, Math.round(o.n)); } }, 2.2)
+      .to('#now', { x: 0, opacity: 1, duration: 1.1, ease: 'nb-settle' }, 3.5)
+      .from('#now .ghost', { xPercent: -8, duration: 2, ease: 'power2.out' }, 3.5);
+  }
+  prime();
+  NB.seen(document.querySelector('.tn'), play);
+  document.getElementById('replay').addEventListener('click', play);
 })();
 </script>
 </body>
