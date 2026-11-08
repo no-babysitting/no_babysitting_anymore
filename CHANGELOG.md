@@ -15,7 +15,7 @@ Chỉ đổi cách trình bày và chuyển động; **không đổi câu chữ*
 7. **Điểm kiểm bấm được.** Mỗi tiêu chí của StatusBoard là một nút (`aria-pressed`), bấm bất kỳ thứ tự. *Chữ của nút lớn "Hoàn thành chương kế tiếp" chưa đổi (đợt C).*
 8. **Nút chương kế và mục lục.** Nút có dải khối ASCII đổi màu quét chậm từ trái sang phải (`NB.sweep`, dừng khi tắt chuyển động); dấu cam của chương hiện tại ở mục lục (cuối chương và menu) nháy như con trỏ terminal (`nb-blink`, 1,1 s, chỉ khi bật chuyển động).
 
-Kèm theo: mọi nút và chip cao tối thiểu 44px trên màn chạm hoặc hẹp (DS); `ScrollTrigger.sort()` để các lớp ghim làm mới từ trên xuống (một đoạn giữ nằm dưới hero từng bị tính vị trí trước hero); `check.cjs` thêm khổ 320px.
+Kèm theo: **số đếm thống nhất** (M1 của bản đánh giá): mọi nơi đếm *vị trí trong lộ trình* trên 12 phần (HUD `c03 · 4/12`, góc phải dưới của phần mở chương `04 / 12`, Hành trình, Finale, cảnh kết ở c10 `12 / 12`), thay cho lẫn số chương với số thứ tự (`03 / 12`, `10 / 10`); mọi nút và chip cao tối thiểu 44px trên màn chạm hoặc hẹp (DS); `ScrollTrigger.sort()` để các lớp ghim làm mới từ trên xuống (một đoạn giữ nằm dưới hero từng bị tính vị trí trước hero); `check.cjs` thêm khổ 320px.
 
 **Công cụ mới.** `scripts/shots.cjs` + `sheet.py` (chụp dải khung hình, ghép tờ có số thứ tự, vị trí cuộn) và `scripts/design-check.cjs` (đo đè chữ, chữ bị cắt, dải trống, nút nhỏ, hai cột lệch, câu cần đọc có được giữ không, mô phỏng có chờ được thấy không; ở 390, 375×667, 320 và 1440). Chạy thử vào bản trước đợt này: 3 chỗ lệch hàng, 4 chỗ thiếu giữ, 4 mô phỏng chạy trước khi ai thấy, 2 chỗ thiếu quét/nháy, 192 nút nhỏ ở 390px; ở 320px còn chữ đè nhau ở hero và cột Agentic bị cắt. Bản này qua cả bốn khổ, không vi phạm nào.
 
