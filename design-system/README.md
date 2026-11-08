@@ -51,6 +51,7 @@ No Babysitting (*An unofficial guide to Claude Code best practices*) là trang h
   - Mask của SplitText có thêm padding dọc 0.12em để dấu chồng ("Ữ Ỗ Ẫ Ậ") không bị cắt.
   - Không dùng `text-wrap: balance` trên phần tử có SplitText.
 - Số liệu và cột số dùng `font-variant-numeric: tabular-nums`.
+- **Kiểm tự động:** `site/scripts/type-check.cjs` đo chữ đã render theo `type-rules.json` (ngưỡng và bảng vai chữ); luật, nguồn và cách chạy ở `docs/11-typography.md`. Đổi bảng vai chữ ở `SOURCE-OF-TRUTH.md` §2 thì đổi luôn `roles` trong `type-rules.json`, nếu không `role` sẽ báo lệch.
 
 ## Không gian và bố cục
 
