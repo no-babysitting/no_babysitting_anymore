@@ -2,6 +2,13 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Sửa v4 và kế hoạch track Nhập môn (08/11/2026)
+
+Chỉ là tài liệu. Theo ý chủ dự án:
+- "Một lần giao việc" ở lại trang chủ, thêm 3 nhóm việc (Thiết kế · Bán hàng & khách hàng · Phân tích & yêu cầu). Kính đổi theo 9 nhóm việc này, thay cho 5 kính theo vai; phần 01 viết lại đủ 10 biến thể (`docs/14`).
+- Chỗ nào nhắc tới grill me thì có thẻ giả lập câu 1/3 kèm đề xuất (`docs/15` §11; ví dụ ở phần 01 và 04).
+- Outline track **Nhập môn Claude** (13 bài, hai tab Claude app / Claude Code, mỗi bài kết bằng một việc làm thật), sau một vòng hỏi 10 câu: `docs/18-intro-track-plan.md`. Quyết định D43–D54 ở `docs/08` §1c.
+
 ## Kịch bản v4: Trước, Trong, Sau, xoay quanh six shifts (08/11/2026, đã duyệt)
 
 Chủ dự án duyệt ngày 08/11: giữ câu hero của chủ dự án kèm dòng trả lời; studio hư cấu đổi tên thành “1 tỷ gói mè”.

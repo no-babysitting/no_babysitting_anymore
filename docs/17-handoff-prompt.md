@@ -102,7 +102,8 @@ Prompt cũng dùng các mẫu làm việc của bài *Finding your unknowns*:
 | `docs/14-content-script-v4.md` | Kịch bản nội dung |
 | `docs/15-typography-motion-v4.md` | Typography và hiệu ứng |
 | `docs/16-writing-guide.md` | Văn phong |
-| `docs/08-kaizen-go-live.md` §1b | Quyết định D21–D42 |
+| `docs/08-kaizen-go-live.md` §1b, §1c | Quyết định D21–D54 (§1c: giữ Một lần giao việc, kính theo 9 nhóm việc, giả lập grill me) |
+| `docs/18-intro-track-plan.md` | Track Nhập môn: chỉ là outline, làm sau six shifts |
 | `design-system/SOURCE-OF-TRUTH.md`, `design-system/components/*/preview.html`, `bundle.js` | Vai chữ, component, runtime ASCII (`NB.ascii`, `NB.sources.*`, `NB.colleague`, `NB.seen`) |
 | `docs/09-motion-script.md`, `docs/11-typography.md`, `docs/13-design-taste.md` | Tầng chuyển động, luật đo chữ, luật đo trình bày, cách chạy bộ kiểm (nhớ đặt `NB_BASE=/no_babysitting_anymore/`) |
 | `site/src/pages/c02/index.astro`, `site/src/scripts/motion.ts` | Chương đã viết; điểm dừng, các kiểu reveal |

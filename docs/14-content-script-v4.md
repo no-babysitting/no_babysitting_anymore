@@ -19,7 +19,7 @@
   - 02: *Bớt luật, tin phán đoán* và *Bớt nhắc, nói một lần*;
   - 03: *Bớt nhồi, để nó mở dần* và *Để Claude tự nhớ*.
 - **Phương pháp xuyên suốt** lấy từ bài *Finding your unknowns*: tìm điều chưa biết trước, trong và sau khi làm. Có hai chiều hỏi. Claude hỏi bạn qua phỏng vấn. Bạn hỏi Claude: nhờ nó rà điểm mù, hỏi vặn nó, bắt nó ra câu đố cho mình.
-- **Một lõi chung, năm kính theo vai.** Kính chỉ đổi ví dụ và prompt mang đi thử, nguyên lý giữ nguyên. Mọi ví dụ nằm trong một câu chuyện chung: một studio nhỏ ra mắt khoá học online (hư cấu, §4).
+- **Một lõi chung, chín kính theo nhóm việc** (lấy đúng các nhóm việc của "Một lần giao việc" ở trang chủ, D44). Kính chỉ đổi ví dụ và prompt mang đi thử, nguyên lý giữ nguyên. Mọi ví dụ nằm trong một câu chuyện chung: một studio nhỏ ra mắt khoá học online (hư cấu, §4).
 - **Mỗi chương gồm ba hồi gọn**: Hook → Lõi → Kết, đọc trong 4–6 phút. Mỗi chương có ba điểm dừng, tối đa năm golden word, một hình ASCII mở chương và mascot ở bên lề.
 - **Đợt này chưa làm mô phỏng.** Phần "thấy" tạm là chữ, typography và ASCII. Mô phỏng sẽ tinh chỉnh sau khi chữ đã chốt (§9).
 
@@ -90,33 +90,43 @@ later[]     chỗ chờ mô phỏng (§9), không render
 
 **Câu chuyện chung** (hư cấu; nói rõ ngay ở khối kính đầu tiên của phần 00). Studio **“1 tỷ gói mè”** ra mắt khoá học online *Chụp đẹp bằng điện thoại*: 12 bài video ngắn, dạy người bán hàng online chụp ảnh sản phẩm bằng điện thoại. Khoá học bán trên trang web của studio, và cả nhóm có bốn tuần. Người đọc nhận một phần việc trong đó, tuỳ kính đã chọn.
 
-| id | Kính | Phần việc của bạn trong câu chuyện |
-|---|---|---|
-| `chung` | Chung *(mặc định)* | Chủ studio: lo trang giới thiệu khoá học, giữ cho cả nhóm ra mắt đúng hẹn |
-| `dev` | Dev & engineer | Trang thanh toán, mở khoá bài học ngay sau khi học viên trả tiền |
-| `ba` | BA & PM | Spec cho phần học: tiến độ, bài kiểm tra cuối khoá, điều kiện cấp chứng nhận |
-| `design` | Designer & sáng tạo | Video giới thiệu, bộ ảnh bìa cho 12 bài |
-| `mkt` | Marketing & sales | Email cho danh sách chờ, bài đăng ra mắt, gói bán cho các shop online |
-| `ops` | Quản lý & vận hành | Kế hoạch bốn tuần, báo cáo tiến độ mỗi thứ Hai, hộp thư hỏi đáp của học viên |
+Kính lấy theo **nhóm việc** của "Một lần giao việc" (D44): sáu nhóm đang có, thêm ba nhóm từ các vai đã bàn (thiết kế, bán hàng, BA/PM). Một người chọn theo việc mình làm, không theo chức danh.
 
-**Chọn kính** (D27). Người đọc chỉ chọn kính trong khối ví dụ. Lần đầu gặp khối kính (thường ở phần 00), khối hiện hàng chip "Bạn làm việc gì?". Bỏ qua thì dùng kính Chung. Sau đó đổi kính bằng nút trên header. Trang chủ không hỏi gì về kính.
+| id | Kính (nhóm việc) | Vai hay chọn | Phần việc của bạn trong câu chuyện |
+|---|---|---|---|
+| `chung` | Chung *(mặc định)* | mọi vai | Chủ studio: lo trang giới thiệu khoá học, giữ cho cả nhóm ra mắt đúng hẹn |
+| `ops` | Vận hành | quản lý, vận hành | Kế hoạch bốn tuần, báo cáo tiến độ mỗi thứ Hai, hộp thư hỏi đáp của học viên |
+| `content` | Marketing | marketing, nội dung | Email cho danh sách chờ, bài đăng ra mắt |
+| `research` | Nghiên cứu | mọi vai cần tìm hiểu | Tìm hiểu thị trường khoá học chụp ảnh sản phẩm: giá, đối thủ, người học vướng gì |
+| `data` | Dữ liệu | phân tích, tài chính | Đặt giá từ dữ liệu danh sách chờ và khảo sát |
+| `build` | Dựng sản phẩm | dev, engineer | Trang thanh toán, mở khoá bài học ngay sau khi học viên trả tiền |
+| `media` | Sáng tạo | người làm video, nghệ sĩ | Video giới thiệu khoá học |
+| `design` *(mới)* | Thiết kế | designer UI/UX | Giao diện trang bán khoá học, bộ ảnh bìa cho 12 bài |
+| `sales` *(mới)* | Bán hàng & khách hàng | sales, chăm sóc khách | Gói bán cho các shop online, trả lời khách hỏi trước khi mua |
+| `spec` *(mới)* | Phân tích & yêu cầu | BA, PM | Spec cho phần học: tiến độ, bài kiểm tra cuối khoá, điều kiện cấp chứng nhận |
+
+**Chọn kính** (D27, D44). Người đọc chọn kính trong khối ví dụ. Lần đầu gặp khối kính (thường ở phần 00), khối hiện hàng chip "Bạn làm việc gì?". Bỏ qua thì dùng kính Chung. Sau đó đổi kính bằng nút trên header. Bộ chọn nhóm việc của "Một lần giao việc" ở trang chủ dùng **chung trạng thái** với kính: chọn nhóm việc ở đó cũng là chọn kính, và ngược lại.
 
 **Mạch của mỗi kính qua năm phần:**
 
 | Kính | 01 · Trước: làm rõ | 02 · Trước: giao | 03 · Trong | 04 · Sau |
 |---|---|---|---|---|
 | Chung | Chưa biết trang bán khoá học cần gì → rà điểm mù, phỏng vấn | Brief 3 dòng thay cho 14 lời dặn | Claude hỏi lại: học thử mấy bài? | Mỗi khối của trang có trong SPEC, quiz trước khi đăng |
-| Dev | Chưa từng tích hợp cổng thanh toán → rà điểm mù trên codebase | CLAUDE.md: lệnh chạy test và một gotcha thay cho các dòng "LUÔN/KHÔNG BAO GIỜ" | Cổng không hỗ trợ hoàn tiền một phần → chọn hướng an toàn, ghi lệch #1 | Test và webhook test xanh, reviewer mới đối chiếu SPEC, quiz trước khi merge |
-| BA & PM | Để Claude phỏng vấn tới khi đủ viết SPEC | "Be ambitious": gồm cả trạng thái lỗi, trạng thái trống | Hai yêu cầu chỏi nhau → Claude hỏi | Reviewer đối chiếu SPEC với ghi chú phỏng vấn |
-| Designer & sáng tạo | Video trông nhạt, chưa biết color grading → nhờ Claude dạy unknown unknowns, xin 4 hướng ảnh bìa | "Giống bộ ảnh bìa đang có" thay cho 20 luật | Phụ đề theo lời nói hay đã biên tập → Claude hỏi | Mỗi clip ≤ 60 giây, dọc 9:16, phụ đề khớp giờ; ảnh chụp so với bản nháp |
-| Marketing & sales | Giọng của studio khó tả → xin 3 giọng để phản ứng, gom thành thang chấm | Viết theo giọng fanpage hiện tại; nói một lần trong hướng dẫn dự án | Một con số trong email chưa có nguồn → Claude hỏi | Số nào cũng có nguồn; bài đăng chờ bạn duyệt |
-| Quản lý & vận hành | Chưa từng ra mắt khoá học → rà điểm mù, phỏng vấn về nguồn lực | Báo cáo tuần: "xong là khi mỗi mục có link nguồn" | Slack và bảng việc lệch nhau về hạn → ghi lại rồi hỏi | 5 câu hỏi trước khi cho báo cáo tự chạy 08:00 thứ Hai; vài lần đầu bạn đọc trước khi gửi |
+| Vận hành | Chưa từng ra mắt khoá học → rà điểm mù, phỏng vấn về nguồn lực | Báo cáo tuần: "xong là khi mỗi mục có link nguồn" | Slack và bảng việc lệch nhau về hạn → ghi lại rồi hỏi | 5 câu hỏi trước khi cho báo cáo tự chạy 08:00 thứ Hai; vài lần đầu bạn đọc trước khi gửi |
+| Marketing | Giọng của studio khó tả → xin 3 giọng để phản ứng, gom thành thang chấm | Viết theo giọng fanpage hiện tại; nói một lần trong hướng dẫn dự án | Một con số trong email chưa có nguồn → Claude hỏi | Số nào cũng có nguồn; bài đăng chờ bạn duyệt |
+| Nghiên cứu | Chưa biết nên hỏi gì về thị trường → rà điểm mù, chốt câu hỏi nghiên cứu | Brief: 3 câu hỏi, nguồn tin được, hạn | Hai nguồn nói khác nhau về giá → Claude ghi cả hai rồi hỏi | Số nào cũng có link còn sống; reviewer mới kiểm từng khẳng định |
+| Dữ liệu | Chưa biết nhìn số nào để đặt giá → rà điểm mù, phỏng vấn về quyết định | "Xong là khi tổng khớp file nguồn" | Có dòng trùng trong khảo sát → chọn cách an toàn, ghi lệch | Script chạy lại được; tổng khớp; quiz về cách tính |
+| Dựng sản phẩm | Chưa từng tích hợp cổng thanh toán → rà điểm mù trên codebase | CLAUDE.md: lệnh chạy test và một gotcha thay cho các dòng "LUÔN/KHÔNG BAO GIỜ" | Cổng không hỗ trợ hoàn tiền một phần → chọn hướng an toàn, ghi lệch #1 | Test và webhook test xanh, reviewer mới đối chiếu SPEC, quiz trước khi merge |
+| Sáng tạo | Video trông nhạt, chưa biết color grading → nhờ Claude dạy unknown unknowns | Thông số đầu ra nói một lần | Phụ đề theo lời nói hay đã biên tập → Claude hỏi | Mỗi clip ≤ 60 giây, dọc 9:16, phụ đề khớp giờ |
+| Thiết kế | Biết khi thấy nhưng không tả được → xin 4 hướng HTML | "Giống design system đang có" thay cho 20 luật | Màn thanh toán thiếu trạng thái lỗi → Claude hỏi | Ảnh chụp trình duyệt so với bản nháp đã chọn |
+| Bán hàng & khách hàng | Chưa biết shop hỏi gì, vì sao từ chối → rà điểm mù, phỏng vấn về khách hiện có | Gói 4 phần: dành cho ai · gồm gì · giá · điều kiện | Khách hỏi giảm giá ngoài chính sách → Claude hỏi, không tự hứa | Mọi câu trả lời khớp chính sách; email gửi khách chờ bạn duyệt |
+| Phân tích & yêu cầu | Để Claude phỏng vấn tới khi đủ viết SPEC | "Be ambitious": gồm cả trạng thái lỗi, trạng thái trống | Hai yêu cầu chỏi nhau → Claude hỏi | Reviewer đối chiếu SPEC với ghi chú phỏng vấn |
 
 **Bề mặt** (D29). Claude Code là bề mặt chính: ứng dụng desktop (tab Code) hay claude.ai/code đều không cần biết code, còn terminal thì tuỳ người [S10]. Kỹ thuật nào chỉ là prompt (rà điểm mù, phỏng vấn, xin bản nháp, quiz) thì gắn nhãn *Dùng được cả ở Claude app và Cowork*. Tính năng chỉ Claude Code có (auto memory, `/memory`, `/clear`, Esc, `/goal`, hook) thì ghi rõ và kèm ngày kiểm chứng.
 
 ## 5. Trang chủ: chữ hoàn chỉnh (đã duyệt)
 
-Thứ tự trên trang (D34): **Hero → Kim tự tháp (trên nền mặt nước) → Lộ trình 5 phần → Finale**. Bỏ: Hai lần tung đồng xu, Vòng giao việc 7 bước, 6 loại việc, tuyên ngôn 3 câu hỏi (§9).
+Thứ tự trên trang (D34, sửa theo D43): **Hero → Kim tự tháp (trên nền mặt nước) → Một lần giao việc (7 bước, 9 nhóm việc) → Lộ trình 5 phần → Finale**. Bỏ: Hai lần tung đồng xu, tuyên ngôn 3 câu hỏi (§9). Hero có thêm một dòng cửa vào cho người mới: `Mới dùng AI? Bắt đầu ở Nhập môn →` (D45, `18-intro-track-plan.md`).
 
 ### Hero
 
@@ -144,6 +154,12 @@ Câu lớn là câu của chủ dự án. "Trông trẻ" là nghĩa đen của *
 | Trước | Làm rõ cùng Claude, rồi giao gọn. | 01 Tìm điều chưa biết · 02 Giao việc |
 | Trong | Để nó tự tìm, tự nhớ. Bạn chỉ lái khi nó lệch. | 03 Để nó làm |
 | Sau | Cho nó một phép kiểm, hỏi vặn kết quả, rồi mới buông. | 04 No Babysitting |
+
+### Một lần giao việc (giữ, D43)
+
+- Giữ cảnh 7 bước đang chạy và 6 nhóm việc đã có chữ (Vận hành, Marketing, Nghiên cứu, Dữ liệu, Dựng sản phẩm, Sáng tạo).
+- **Thêm 3 nhóm** theo đúng khuôn dữ liệu của `work-types.ts` (kết quả giao, 7 bước, công cụ có nhãn sẵn có, bề mặt hợp nhất, chương liên quan): **Thiết kế** (giao diện trang bán khoá học từ brief 1 trang, 3 hướng, chọn một, dựng HTML), **Bán hàng & khách hàng** (bộ trả lời 20 câu khách hay hỏi + 3 gói bán, khớp chính sách), **Phân tích & yêu cầu** (SPEC cho một tính năng từ ghi chú họp và phản hồi người dùng). Chữ của 3 nhóm mới cần chủ dự án duyệt.
+- Bộ chọn nhóm việc dùng chung trạng thái với kính (§4). Chữ "chương liên quan" trỏ về 5 phần mới.
 
 ### Lộ trình (Journey, 5 panel)
 
@@ -190,22 +206,27 @@ Câu lớn là câu của chủ dự án. "Trông trẻ" là nghĩa đen của *
   - **Khối kính đầu tiên** (hiện hàng chip chọn kính), giới thiệu câu chuyện:
     - Chung với mọi kính: *Từ đây tới cuối, mọi ví dụ đi theo một việc: studio “1 tỷ gói mè” (hư cấu) ra mắt khoá học online "Chụp đẹp bằng điện thoại", 12 bài video ngắn dạy người bán hàng online chụp ảnh sản phẩm bằng điện thoại. Cả nhóm có bốn tuần.*
     - Chung: *Bạn là chủ studio. Bạn lo trang giới thiệu khoá học, và giữ cho cả nhóm ra mắt đúng hẹn.*
-    - Dev: *Bạn lo trang thanh toán và việc mở khoá bài học ngay sau khi học viên trả tiền.*
-    - BA & PM: *Bạn viết spec cho phần học: tiến độ, bài kiểm tra cuối khoá, điều kiện cấp chứng nhận.*
-    - Designer & sáng tạo: *Bạn lo video giới thiệu và bộ ảnh bìa cho 12 bài.*
-    - Marketing & sales: *Bạn lo email cho danh sách chờ, bài đăng ra mắt và gói bán cho các shop online.*
-    - Quản lý & vận hành: *Bạn lo kế hoạch bốn tuần, báo cáo tiến độ mỗi thứ Hai và hộp thư hỏi đáp của học viên.*
+    - Vận hành: *Bạn lo kế hoạch bốn tuần, báo cáo tiến độ mỗi thứ Hai và hộp thư hỏi đáp của học viên.*
+    - Marketing: *Bạn lo email cho danh sách chờ và các bài đăng ra mắt.*
+    - Nghiên cứu: *Bạn tìm hiểu thị trường: khoá tương tự giá bao nhiêu, người bán hàng online vướng gì khi chụp.*
+    - Dữ liệu: *Bạn đặt giá khoá học từ dữ liệu danh sách chờ và khảo sát.*
+    - Dựng sản phẩm: *Bạn lo trang thanh toán và việc mở khoá bài học ngay sau khi học viên trả tiền.*
+    - Sáng tạo: *Bạn dựng video giới thiệu khoá học.*
+    - Thiết kế: *Bạn thiết kế giao diện trang bán khoá học và bộ ảnh bìa cho 12 bài.*
+    - Bán hàng & khách hàng: *Bạn soạn gói bán cho các shop online và trả lời khách hỏi trước khi mua.*
+    - Phân tích & yêu cầu: *Bạn viết spec cho phần học: tiến độ, bài kiểm tra cuối khoá, điều kiện cấp chứng nhận.*
     - Dòng cuối: *Ở mỗi phần, bạn sẽ thấy việc của mình đi qua đúng chặng đó.*
   - Ghi chú nối sang 04: *No babysitting không có nghĩa là bỏ mặc.* Phần 04 nói rõ bạn giữ lại những gì.
 - **Kết ③**
   - Câu chốt: **Thôi cầm tay chỉ việc không có nghĩa là buông tay. Bạn đặt tay đúng hai chỗ: lúc làm rõ việc, và lúc duyệt kết quả.**
   - Prompt (Chung): *Đây là cách tôi hay giao việc cho bạn: [dán một yêu cầu bạn hay gửi]. Hãy chỉ ra: dòng nào bạn tự làm đúng mà không cần dặn, dòng nào chỏi nhau, và những điều chỉ tôi biết mà tôi chưa nói.*
   - Biến thể theo kính:
-    - Dev dán CLAUDE.md;
-    - BA & PM dán mẫu spec đang dùng;
-    - Designer & sáng tạo dán brief thiết kế;
-    - Marketing & sales dán brief nội dung;
-    - Quản lý & vận hành dán mẫu báo cáo.
+    - Dựng sản phẩm dán CLAUDE.md;
+    - Phân tích & yêu cầu dán mẫu spec đang dùng;
+    - Thiết kế và Sáng tạo dán brief thiết kế hoặc brief video;
+    - Marketing dán brief nội dung; Bán hàng & khách hàng dán kịch bản chào hàng;
+    - Nghiên cứu và Dữ liệu dán câu hỏi nghiên cứu hoặc yêu cầu phân tích hay gửi;
+    - Vận hành dán mẫu báo cáo.
   - Nút: `01 · THE UNKNOWNS →`
 - **Mascot**
   - Nhật ký: *Đọc 47 lời dặn… 3 dòng chỏi nhau*.
@@ -266,7 +287,16 @@ Mascot nói vui: *Mình đọc nhanh thật, nhưng chưa đọc được suy ng
 3. **Biết còn chỗ mơ hồ? Để Claude phỏng vấn bạn.**
    Khi đã có hướng mà vẫn còn chỗ chưa chốt, hãy để Claude **phỏng vấn** bạn. Nó hỏi từng câu, mỗi câu kèm vài lựa chọn, tới khi đủ để viết thành một bản đặc tả (*spec*). Có spec rồi thì mở một phiên mới để làm: phiên đó bắt đầu với context sạch và một định nghĩa "xong" đã được viết ra. [S3, S2]
    `Phỏng vấn tôi từng câu một về mọi chỗ còn mơ hồ. Hỏi trước những câu mà câu trả lời làm đổi cách làm. Khi đủ, viết lại thành SPEC.md.`
-   Mascot (hỏi, minh hoạ một câu phỏng vấn): *Câu 1/6: trang này bán cho ai?*
+   **Giả lập "grill me"** (D46, 15 §11): một thẻ tĩnh cho thấy câu đầu tiên của buổi phỏng vấn.
+
+   > `Câu 1/3` · **Trang này bán cho ai trước tiên?**
+   > ○ Người mới mở shop online, tự chụp bằng điện thoại · **Đề xuất**
+   > ○ Shop đã có thợ chụp riêng
+   > ○ Người chụp ảnh nghiệp dư muốn lên tay nghề
+   >
+   > *Đề xuất:* nhóm đầu, vì khoá học dạy bằng điện thoại. *Vì sao hỏi câu này trước:* câu trả lời làm đổi giọng văn, giá và bài học thử.
+
+   Mascot (hỏi): *Câu 1/3: trang này bán cho ai?*
 
 Nhãn bề mặt: `Dùng được cả ở Claude app và Cowork`. Ba cách này chỉ là prompt, nên ở đâu có Claude là dùng được.
 
@@ -291,26 +321,42 @@ Nhãn bề mặt: `Dùng được cả ở Claude app và Cowork`. Ba cách này
   - *Điều chưa biết:* Bạn chưa từng bán khoá học online, nên không biết trang bán khoá học thường cần gì: chính sách hoàn tiền, bài học thử, câu hỏi thường gặp.
   - *Cách tìm:* Nhờ Claude rà điểm mù trước, rồi để nó phỏng vấn bạn về người học.
   - *Đưa cho Claude:* Trang của một khoá học bạn từng mua và thích, lưu thành file HTML. Kèm khuôn: lời hứa · dành cho ai · 12 bài · học thử · câu hỏi thường gặp.
-- **Dev & engineer.** Trang thanh toán và mở khoá bài học.
-  - *Điều chưa biết:* Bạn chưa từng tích hợp cổng thanh toán này. Webhook đến trễ thì sao? Hoàn tiền thì sao? Hoá đơn xuất lúc nào?
-  - *Cách tìm:* Rà điểm mù trên chính codebase và tài liệu của cổng thanh toán.
-  - *Đưa cho Claude:* Code mẫu của cổng thanh toán. Kèm khuôn trạng thái đơn hàng: chờ thanh toán · đã thanh toán · đã hoàn tiền, và mỗi đơn chỉ ở một trạng thái tại một thời điểm.
-- **BA & PM.** Spec cho phần học.
-  - *Điều chưa biết:* Học viên được xem lại bài trong bao lâu? Bỏ dở giữa chừng thì tiến độ tính sao? Rớt bài kiểm tra thì có được thi lại không?
-  - *Cách tìm:* Để Claude phỏng vấn bạn từng câu, hỏi trước những câu làm đổi phạm vi.
-  - *Đưa cho Claude:* File câu hỏi của học viên khoá trước. Kèm khuôn của một yêu cầu: mã · mô tả · tiêu chí chấp nhận · ngoài phạm vi.
-- **Designer & sáng tạo.** Video giới thiệu và bộ ảnh bìa.
-  - *Điều chưa biết:* Video quay xong trông hơi nhạt. Bạn đoán là do màu, nhưng chưa biết color grading là gì, nên cũng chưa biết thế nào là "đẹp".
-  - *Cách tìm:* Nhờ Claude dạy bạn những unknown unknowns về color grading trước, rồi xin 4 hướng ảnh bìa thật khác nhau trên một trang HTML. (Tác giả bài gốc cũng gặp đúng chuyện này khi dựng video ra mắt Claude Fable bằng Claude Code: thử xin vài biến thể trước, rồi nhận ra mình không biết thế nào là đẹp, nên nhờ Claude dạy về color grading. [S2])
-  - *Đưa cho Claude:* File HTML nhận diện của studio. Kèm thông số đầu ra: dọc 9:16 · tối đa 60 giây · có phụ đề.
-- **Marketing & sales.** Email cho danh sách chờ.
-  - *Điều chưa biết:* Giọng của studio. Bạn nhận ra ngay khi đọc thấy, nhưng không tả ra được.
-  - *Cách tìm:* Xin 3 bản email theo 3 giọng thật khác nhau, chọn một, rồi để Claude hỏi bạn vì sao chọn.
-  - *Đưa cho Claude:* Một thang chấm cho email tốt của studio (một lợi ích rõ, một lời mời, không hứa quá), thay cho ba email cũ để chép. Kèm khuôn: tiêu đề tối đa 50 ký tự · lợi ích · lời mời.
-- **Quản lý & vận hành.** Kế hoạch ra mắt bốn tuần.
+- **Vận hành.** Kế hoạch ra mắt bốn tuần.
   - *Điều chưa biết:* Bạn chưa từng ra mắt khoá học. Duyệt video mất mấy ngày? Tuần đầu ai trả lời học viên? Việc nào phải xong trước việc nào?
   - *Cách tìm:* Rà điểm mù trước, rồi để Claude phỏng vấn bạn về nguồn lực và hạn chót.
   - *Đưa cho Claude:* Bảng kế hoạch của dự án trước. Kèm khuôn của một đầu việc: người làm · hạn · trạng thái (chưa làm, đang làm, xong).
+- **Marketing.** Email cho danh sách chờ.
+  - *Điều chưa biết:* Giọng của studio. Bạn nhận ra ngay khi đọc thấy, nhưng không tả ra được.
+  - *Cách tìm:* Xin 3 bản email theo 3 giọng thật khác nhau, chọn một, rồi để Claude hỏi bạn vì sao chọn.
+  - *Đưa cho Claude:* Một thang chấm cho email tốt của studio (một lợi ích rõ, một lời mời, không hứa quá), thay cho ba email cũ để chép. Kèm khuôn: tiêu đề tối đa 50 ký tự · lợi ích · lời mời.
+- **Nghiên cứu.** Thị trường khoá học chụp ảnh sản phẩm.
+  - *Điều chưa biết:* Bạn chưa biết nên hỏi gì: khoá tương tự giá bao nhiêu, người học bỏ dở vì đâu, nguồn nào đáng tin.
+  - *Cách tìm:* Rà điểm mù về nghiên cứu thị trường khoá học, rồi để Claude phỏng vấn bạn để chốt 3 câu hỏi nghiên cứu.
+  - *Đưa cho Claude:* Danh sách nguồn bạn tin. Kèm khuôn của bản brief: câu hỏi · phát hiện · nguồn · mức chắc chắn.
+- **Dữ liệu.** Đặt giá từ danh sách chờ và khảo sát.
+  - *Điều chưa biết:* Bạn chưa biết nên nhìn số nào: tỉ lệ đăng ký, mức giá người ta chọn trong khảo sát, hay nhóm nào hay mở email.
+  - *Cách tìm:* Rà điểm mù về cách định giá từ khảo sát, rồi để Claude phỏng vấn bạn về quyết định cần đưa ra trước khi tính gì.
+  - *Đưa cho Claude:* File CSV khảo sát. Kèm khuôn của một kết luận: chỉ số · cách tính · kết luận · mức tin cậy.
+- **Dựng sản phẩm.** Trang thanh toán và mở khoá bài học.
+  - *Điều chưa biết:* Bạn chưa từng tích hợp cổng thanh toán này. Webhook đến trễ thì sao? Hoàn tiền thì sao? Hoá đơn xuất lúc nào?
+  - *Cách tìm:* Rà điểm mù trên chính codebase và tài liệu của cổng thanh toán.
+  - *Đưa cho Claude:* Code mẫu của cổng thanh toán. Kèm khuôn trạng thái đơn hàng: chờ thanh toán · đã thanh toán · đã hoàn tiền, và mỗi đơn chỉ ở một trạng thái tại một thời điểm.
+- **Sáng tạo.** Video giới thiệu khoá học.
+  - *Điều chưa biết:* Video quay xong trông hơi nhạt. Bạn đoán là do màu, nhưng chưa biết color grading là gì, nên cũng chưa biết thế nào là "đẹp".
+  - *Cách tìm:* Nhờ Claude dạy bạn những unknown unknowns về color grading trước. (Tác giả bài gốc cũng gặp đúng chuyện này khi dựng video ra mắt Claude Fable bằng Claude Code: thử xin vài biến thể trước, rồi nhận ra mình không biết thế nào là đẹp, nên nhờ Claude dạy về color grading. [S2])
+  - *Đưa cho Claude:* Thông số đầu ra: dọc 9:16 · tối đa 60 giây · có phụ đề.
+- **Thiết kế.** Giao diện trang bán khoá học và bộ ảnh bìa.
+  - *Điều chưa biết:* Bạn biết mình thích gì khi thấy, nhưng không tả ra được.
+  - *Cách tìm:* Xin 4 hướng thật khác nhau trên cùng một trang HTML, chọn một, rồi để Claude hỏi bạn vì sao.
+  - *Đưa cho Claude:* File HTML của design system hoặc bộ nhận diện của studio (bài gốc nói bản HTML cho kết quả tốt hơn lời tả hay ảnh chụp [S1]). Kèm khuôn các màn: trang bán · thanh toán · cảm ơn.
+- **Bán hàng & khách hàng.** Gói bán cho các shop online.
+  - *Điều chưa biết:* Bạn chưa biết shop hỏi gì nhiều nhất, và họ từ chối vì đâu.
+  - *Cách tìm:* Rà điểm mù về bán khoá học cho doanh nghiệp nhỏ, rồi để Claude phỏng vấn bạn về những khách đang có.
+  - *Đưa cho Claude:* Lịch sử tin nhắn hỏi đáp (đã bỏ thông tin cá nhân). Kèm khuôn của một gói: dành cho ai · gồm gì · giá · điều kiện.
+- **Phân tích & yêu cầu.** Spec cho phần học.
+  - *Điều chưa biết:* Học viên được xem lại bài trong bao lâu? Bỏ dở giữa chừng thì tiến độ tính sao? Rớt bài kiểm tra thì có được thi lại không?
+  - *Cách tìm:* Để Claude phỏng vấn bạn từng câu, hỏi trước những câu làm đổi phạm vi.
+  - *Đưa cho Claude:* File câu hỏi của học viên khoá trước. Kèm khuôn của một yêu cầu: mã · mô tả · tiêu chí chấp nhận · ngoài phạm vi.
 
 **Hồi 3 · Kết** (điểm dừng ③)
 
@@ -325,11 +371,15 @@ Prompt mang đi thử (gõ dần, có nút Chép):
 | Kính | Prompt |
 |---|---|
 | Chung | Tôi sắp làm [việc]. Tôi đã biết [điều bạn biết] nhưng chưa từng làm [phần còn lạ]. Hãy làm một blind spot pass: chỉ ra những unknown unknowns của tôi. Sau đó phỏng vấn tôi từng câu một về những chỗ còn mơ hồ, hỏi trước câu nào làm đổi cách làm. Khi đủ, viết lại thành SPEC.md. |
-| Dev & engineer | Tôi cần tích hợp [cổng thanh toán] vào repo này nhưng chưa biết gì về phần thanh toán của codebase. Hãy làm một blind spot pass để chỉ ra những unknown unknowns của tôi, rồi giúp tôi viết prompt cho bạn tốt hơn. |
-| BA & PM | Tôi muốn viết spec cho [tính năng] nhưng chưa nghĩ kỹ. Phỏng vấn tôi từng câu một cho tới khi bạn đủ thông tin để viết spec, ưu tiên những câu làm đổi phạm vi. Xong thì ghi vào SPEC.md. |
-| Designer & sáng tạo | Tôi không biết [kỹ thuật] là gì nhưng cần [làm việc này]. Hãy dạy tôi những unknown unknowns về nó để tôi biết cách nhờ bạn cho đúng. Sau đó làm một trang HTML với 4 hướng thật khác nhau để tôi chọn. |
-| Marketing & sales | Viết 3 bản [email] theo 3 giọng thật khác nhau, cùng một nội dung. Tôi sẽ chọn một bản. Sau đó hỏi tôi vì sao chọn nó, rồi gom các câu trả lời thành một thang chấm giọng văn để dùng cho lần sau. |
-| Quản lý & vận hành | Tôi chưa từng [làm việc này]. Hãy làm một blind spot pass: những việc người làm lần đầu hay quên, những chỗ hay trễ. Sau đó phỏng vấn tôi từng câu một về nguồn lực và hạn chót. |
+| Vận hành | Tôi chưa từng [làm việc này]. Hãy làm một blind spot pass: những việc người làm lần đầu hay quên, những chỗ hay trễ. Sau đó phỏng vấn tôi từng câu một về nguồn lực và hạn chót. |
+| Marketing | Viết 3 bản [email] theo 3 giọng thật khác nhau, cùng một nội dung. Tôi sẽ chọn một bản. Sau đó hỏi tôi vì sao chọn nó, rồi gom các câu trả lời thành một thang chấm giọng văn để dùng cho lần sau. |
+| Nghiên cứu | Tôi cần tìm hiểu [thị trường] nhưng chưa biết nên hỏi gì. Hãy làm một blind spot pass: những câu hỏi người nghiên cứu hay bỏ sót, những nguồn hay sai. Sau đó phỏng vấn tôi từng câu một để chốt câu hỏi nghiên cứu, rồi ghi vào SPEC.md. |
+| Dữ liệu | Đây là [file dữ liệu]. Tôi cần quyết [việc] nhưng chưa biết nên nhìn số nào. Hãy làm một blind spot pass về cách đọc loại dữ liệu này, rồi hỏi tôi từng câu về quyết định cần đưa ra trước khi tính gì. |
+| Dựng sản phẩm | Tôi cần tích hợp [cổng thanh toán] vào repo này nhưng chưa biết gì về phần thanh toán của codebase. Hãy làm một blind spot pass để chỉ ra những unknown unknowns của tôi, rồi giúp tôi viết prompt cho bạn tốt hơn. |
+| Sáng tạo | Tôi không biết [kỹ thuật] là gì nhưng cần [làm việc này]. Hãy dạy tôi những unknown unknowns về nó để tôi biết cách nhờ bạn cho đúng. |
+| Thiết kế | Tôi biết mình thích gì khi thấy nhưng không tả được. Làm một trang HTML với 4 hướng thiết kế thật khác nhau cho [màn hình], dùng design system trong [thư mục]. Tôi chọn xong thì hỏi tôi vì sao. |
+| Bán hàng & khách hàng | Tôi sắp chào [sản phẩm] cho [nhóm khách]. Hãy làm một blind spot pass: khách loại này hay hỏi gì, hay từ chối vì sao. Sau đó phỏng vấn tôi từng câu về khách đang có trước khi soạn gói. |
+| Phân tích & yêu cầu | Tôi muốn viết spec cho [tính năng] nhưng chưa nghĩ kỹ. Phỏng vấn tôi từng câu một cho tới khi bạn đủ thông tin để viết spec, ưu tiên những câu làm đổi phạm vi. Xong thì ghi vào SPEC.md. |
 
 Nút: `02 · THE HANDOFF →`
 
@@ -427,6 +477,13 @@ Nút: `02 · THE HANDOFF →`
     - Bắt Claude làm một báo cáo HTML về những gì đã đổi, cuối báo cáo có câu đố. Tác giả bài field guide chỉ merge khi trả lời đúng hết.
     - Mẹo của Boris Cherny trong repo cộng đồng: "grill me on these changes and don't make a PR until I pass your test", "prove to me this works".
     - Mascot đổi vai: bạn hỏi, mascot trả lời; câu vui *Câu 3 khó thế…*
+    - **Giả lập "grill me"** (D46): thẻ tĩnh, lần này Claude đố bạn về thay đổi vừa làm.
+      > `Câu 1/3` · **Webhook báo thanh toán đến hai lần cho cùng một đơn. Trang làm gì?**
+      > ○ Mở khoá bài học hai lần
+      > ○ Bỏ qua lần thứ hai nhờ mã đơn · **Đề xuất**
+      > ○ Báo lỗi cho học viên
+      >
+      > *Đề xuất:* lần thứ hai bị bỏ qua vì đơn đã ở trạng thái "đã thanh toán". *Vì sao đố câu này:* nếu bạn trả lời sai, bạn chưa hiểu thay đổi đủ để duyệt.
   - *Trước khi để nó chạy một mình: 5 câu hỏi* [S3], danh sách đánh số, mascot hỏi lần lượt:
     1. Nó có biết thế nào là xong không?
     2. Nó tự kiểm được không?
@@ -478,7 +535,7 @@ Phần c00, c01 và c10 của v3 đã nhập vào lộ trình chính (00 và 04)
 | Thứ | Xử lý |
 |---|---|
 | Hai lần tung đồng xu (`TwoFlips`) | Bỏ khỏi trang (D34) |
-| Vòng giao việc 7 bước (`Run`) và 6 loại việc (`work-types.ts`) | Bỏ khỏi trang; 6 loại việc **viết lại sau** (việc tồn) |
+| Vòng giao việc 7 bước (`Run`) và 6 loại việc (`work-types.ts`) | **Giữ trên trang chủ** (D43, thay quyết định bỏ ở D34); thêm 3 nhóm việc (§5) |
 | Tuyên ngôn 3 câu hỏi + 4 con số | Thay bằng kim tự tháp; giữ nền mặt nước |
 | Journey 12 phần, bộ đếm `/ 12` | Thành 5 phần, `/ 05` |
 | `StatusBoard` (báo cáo tuần) · `PredictPrompt` · `GrillCard` | Không dùng ở lộ trình chính |
@@ -511,7 +568,7 @@ Nguồn về cách dạy và cách viết (cho người viết, không hiện tr
 
 1. Trang chủ và năm phần có chữ đúng §5–§6, theo văn phong ở `16-writing-guide.md`. Chủ dự án đã duyệt từng PR nội dung (D13).
 2. Con số, tên tính năng và câu trích nào cũng có nguồn bấm được. Chỗ nào là diễn giải của trang thì có nhãn. Nguồn nói khác kịch bản thì theo nguồn và ghi lại trong `implementation-notes.md`.
-3. Mỗi phần có đủ ba hồi, ba điểm dừng, tối đa năm golden word, đủ sáu biến thể kính cho khối ví dụ và prompt, cùng một hình mở chương. Tất cả theo `15-typography-motion-v4.md`.
+3. Mỗi phần có đủ ba hồi, ba điểm dừng, tối đa năm golden word, đủ mười biến thể kính (Chung + 9 nhóm việc) cho khối ví dụ và prompt, cùng một hình mở chương. Tất cả theo `15-typography-motion-v4.md`.
 4. `<title>` có tiếng Việt trước (mục M8 của bản đánh giá độc lập).
 5. Các bộ kiểm đang có đều xanh: `check.cjs`, `type-check.cjs` (kèm `--selftest`), `design-check.cjs`, ở mọi khổ đang đo. Có thêm phép đo cho các luật mới ở 15 §9.
 6. Tắt chuyển động, hoặc bật reduced motion: mọi chữ hiện đủ, không ghim, không gõ dần.
