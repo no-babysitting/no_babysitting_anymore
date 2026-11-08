@@ -44,13 +44,14 @@ No Babysitting (*An unofficial guide to Claude Code best practices*) là trang h
 
 - Câu hỏi mở chương dùng `question` (fluid 40–72px), H2 dùng `heading`, trích dẫn và câu hỏi dẫn dùng `quote` (italic).
 - Tên chương dùng `wordmark` (Archivo 125%, 800, viết hoa, line-height 0.92). Logo không gõ bằng font: dùng `NB.logoSVG()` hoặc file trong `assets/Logo/`. Số chương, bộ đếm, phần trăm lớn dùng `index-cond` (Archivo 62%, 800), được phép tràn khỏi khung. Metadata dùng nhãn micro (`.nb-micro`): mono 12px, giãn 0.06em, **không** `text-transform`.
-- Thân bài dùng `body` (17px / 1.65), rộng tối đa `measure` (66ch).
+- Thân bài dùng `body` (17px / 1.65), rộng tối đa `measure` (50ch ≈ 66–68 ký tự tiếng Việt; `ch` là bề rộng chữ số 0, rộng hơn chữ thường khoảng 1,3 lần, nên 66ch cho tới 90 ký tự mỗi dòng).
 - Eyebrow, nhãn micro, nút, tag: mono ≥ 12px, giãn 0.04–0.06em. **Tiếng Việt viết thường** (hoa chữ đầu câu); tiếng Anh, mã và số viết hoa sẵn trong nguồn hoặc bọc `.nb-caps`. Ví dụ: `Phần II · MEDIUM · 11 phút`. Tên component và mã định danh (`SourceButton`, `c04:b3`) giữ nguyên cách viết.
 - **Tiếng Việt:**
   - Line-height của display ≥ 1.12. Letter-spacing không âm quá −0.01em.
   - Mask của SplitText có thêm padding dọc 0.12em để dấu chồng ("Ữ Ỗ Ẫ Ậ") không bị cắt.
   - Không dùng `text-wrap: balance` trên phần tử có SplitText.
 - Số liệu và cột số dùng `font-variant-numeric: tabular-nums`.
+- **Kiểm tự động:** `site/scripts/type-check.cjs` đo chữ đã render theo `type-rules.json` (ngưỡng và bảng vai chữ); luật, nguồn và cách chạy ở `docs/11-typography.md`. Đổi bảng vai chữ ở `SOURCE-OF-TRUTH.md` §2 thì đổi luôn `roles` trong `type-rules.json`, nếu không `role` sẽ báo lệch.
 
 ## Không gian và bố cục
 

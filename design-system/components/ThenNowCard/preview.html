@@ -17,12 +17,14 @@
   .card > *{position:relative;z-index:1}
   .card > .ghost{position:absolute;z-index:0;left:-2%;bottom:-14%;font-size:170px}
   .then{border-right:1px solid var(--control)}
+  /* the old rule steps back in colour, not opacity: fg-subtle keeps 4.7:1 on bg (WCAG 1.4.3) */
+  .then.is-past > :not(.ghost){color:var(--fg-subtle);transition:color .24s}
   .now{border-left:1px solid var(--control);background:var(--bg-raised)}
-  .txt{margin:0;font:600 clamp(17px,2.2vw,21px)/1.35 var(--font-text);color:var(--fg)}
+  .txt{margin:0;font:600 clamp(17px,2vw,19px)/1.4 var(--font-text);color:var(--fg)}
   .strike{position:relative}
   .line{position:absolute;left:0;right:0;top:52%;height:2px;background:var(--danger);transform:scaleX(0);transform-origin:left}
   .why{margin:0;color:var(--fg-muted);line-height:1.5;font-size:14px}
-  .guide{margin:0;font-size:19px;color:var(--fg);font-style:italic}
+  .guide{margin:0;font-size:19px;line-height:1.4;color:var(--fg);font-style:italic}
   .arrow{display:flex;align-items:center;justify-content:center;font:600 14px/1 var(--font-mono);color:var(--accent);letter-spacing:-.02em;white-space:pre}
   .arrow{color:var(--fg-muted)}
   .foot{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--control);padding:12px 14px}
@@ -58,13 +60,14 @@
 (function () {
   var NB = window.NoBabysitting;
   var arw = document.getElementById('arw'), FULL = '─────▶';
-  if (!window.gsap || (NB && NB.reduce())) { document.getElementById('line').style.transform = 'scaleX(1)'; arw.textContent = FULL; document.querySelectorAll('#then > :not(.ghost)').forEach(function (e) { e.style.opacity = .5; }); return; }
+  if (!window.gsap || (NB && NB.reduce())) { document.getElementById('line').style.transform = 'scaleX(1)'; arw.textContent = FULL; document.getElementById('then').classList.add('is-past'); return; }
   gsap.registerPlugin(CustomEase);
   CustomEase.create('nb-settle', '0.22,1,0.36,1');
   var o = { n: 0 };
   var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
   tl.to('#line', { scaleX: 1, duration: 0.32 }, 0.2)
-    .to('#then > :not(.ghost)', { autoAlpha: 0.5, duration: 0.24 }, 0.5)
+    .call(function () { document.getElementById('then').classList.remove('is-past'); }, null, 0)
+    .call(function () { document.getElementById('then').classList.add('is-past'); }, null, 0.5)
     .to(o, { n: FULL.length, duration: 0.42, ease: 'steps(' + FULL.length + ')', onUpdate: function () { arw.textContent = FULL.slice(0, Math.round(o.n)); } }, 0.6)
     .from('#now', { x: -24, autoAlpha: 0, duration: 0.6, ease: 'nb-settle' }, 1.0)
     .from('#now .ghost', { xPercent: -8, duration: 1.2, ease: 'power2.out' }, 1.0);

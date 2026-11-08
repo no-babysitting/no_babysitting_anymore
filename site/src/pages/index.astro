@@ -4,7 +4,8 @@ import Hud from '../components/Hud.astro';
 import Intro from '../components/scenes/Intro.astro';
 import TwoFlips from '../components/scenes/TwoFlips.astro';
 import Journey from '../components/scenes/Journey.astro';
-import Harness from '../components/scenes/Harness.astro';
+import Run from '../components/scenes/Run.astro';
+import { url } from '../lib/url';
 import Finale from '../components/scenes/Finale.astro';
 import { chapters } from '../lib/chapters';
 import { LIVE } from '../lib/status';
@@ -19,6 +20,11 @@ import { LIVE } from '../lib/status';
     <span class="nb-micro" data-reveal="up">Vì sao có trang này</span>
     <p class="nb-q big" data-reveal="fill">Claude không cần bạn canh từng bước. Nó cần một bản brief rõ, một bộ hướng dẫn gọn, quyền đặt đúng chỗ và một cách tự kiểm chứng. Phần còn lại, nó tự làm.</p>
     <hr class="nb-rule" data-reveal="rule" />
+    <div class="three">
+      <div><h2 class="nb-q tq" data-reveal="words">Giao được gì?</h2><p data-reveal="up">Những việc số có kết quả kiểm được: báo cáo, phân tích, nội dung, nghiên cứu, một bản dựng. Thứ Claude không tự thấy thì bạn cho nó thấy.</p><a class="nb-micro go" href="#run" data-reveal="up">Xem một lần giao việc ↓</a></div>
+      <div><h2 class="nb-q tq" data-reveal="words">Làm sao để nó tự chạy?</h2><p data-reveal="up">Nói rõ thế nào là xong, ghi lại điều nó không tự tìm ra, kết nối đúng công cụ. Dựng dần khi có tín hiệu, không dựng hết từ đầu.</p><a class="nb-micro go" href={url('c03/')} data-reveal="up">Chương 03 · The Brief →</a></div>
+      <div><h2 class="nb-q tq" data-reveal="words">Làm sao tin kết quả?</h2><p data-reveal="up">Cho nó một phép kiểm trả về đạt hay không đạt, đòi bằng chứng, và tự tay duyệt mọi việc không hoàn tác được.</p><a class="nb-micro go" href={url('c07/')} data-reveal="up">Chương 07 · Review Before Handoff →</a></div>
+    </div>
     <span class="nb-micro beta" data-reveal="up"><span class="nb-mk is-info" aria-hidden="true"></span>Bản beta · số liệu dưới đây là những gì đã có thật, tăng dần theo từng đợt</span>
     <div class="facts">
       <div data-reveal="up"><p class="nb-cond n" data-reveal="count">{String(chapters.length)}</p><span class="nb-micro">phần trong lộ trình</span></div>
@@ -30,8 +36,8 @@ import { LIVE } from '../lib/status';
   </section>
 
   <div class="wrap"><TwoFlips /></div>
+  <div class="wrap"><Run /></div>
   <Journey />
-  <div class="wrap"><Harness /></div>
 
   <Finale />
 </Base>
@@ -42,11 +48,16 @@ import { LIVE } from '../lib/status';
   .manifesto { position: relative; display: grid; gap: 28px; padding-block: 120px 96px; }
   .facts > div { background: color-mix(in srgb, var(--bg) 70%, transparent); }
   .beta { color: var(--fg-muted); display: inline-flex; gap: 8px; align-items: center; }
+  .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 8px 24px; }
+  .three > div { display: grid; gap: 12px; align-content: start; background: color-mix(in srgb, var(--bg) 78%, transparent); }
+  .tq { margin: 0; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.15; }
+  .three p { margin: 0; font-size: 17px; line-height: 1.6; color: var(--fg-muted); max-width: 40ch; }
+  .three .go { color: var(--fg); text-underline-offset: 3px; }
   .big { margin: 0; font-size: clamp(30px, 4.6vw, 64px); line-height: 1.16; max-width: 22ch; }
   .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .facts > div { display: grid; gap: 6px; }
   .n { margin: 0; font-size: clamp(64px, 9vw, 128px); line-height: .85; color: var(--fg); font-variant-numeric: tabular-nums; }
-  @media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr; } .manifesto { padding-block: 72px; } }
+  @media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr; } .manifesto { padding-block: 72px; } .three { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
 </style>
 
 <script>

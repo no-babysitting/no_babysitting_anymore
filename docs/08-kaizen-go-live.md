@@ -54,7 +54,8 @@
   - 0 lỗi JS;
   - không cuộn ngang ở 1440px và 390px;
   - không chữ nào bị ẩn khi reduced motion;
-  - CPU lúc đứng yên dưới ngân sách (`09-motion-script.md` §5).
+  - CPU lúc đứng yên dưới ngân sách (`09-motion-script.md` §5);
+  - typography đạt luật lỗi của `design-system/type-rules.json` (`site/scripts/type-check.cjs`, giải thích ở `11-typography.md`): tương phản, cỡ chữ tối thiểu, dấu tiếng Việt không chạm nhau, giãn chữ WCAG 1.4.12, phóng to 200%.
 - **Không đoán.** Mọi khẳng định về Claude Code phải có nguồn bấm được và ngày kiểm chứng. Phân biệt rõ cái có sẵn (native) với cái cần connector, MCP, plugin, CLI ngoài, hoặc một sản phẩm khác (Cowork).
 
 ## 4. Các đợt

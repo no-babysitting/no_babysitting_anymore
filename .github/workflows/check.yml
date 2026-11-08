@@ -31,6 +31,17 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Checks (links, JS errors, overflow, reduced motion, idle cost)
         run: node scripts/check.cjs
+      - name: Typography self-test (the checker still catches what it should)
+        run: node scripts/type-check.cjs --selftest
+      - name: Typography (contrast, sizes, Vietnamese marks, text spacing, zoom, fonts)
+        run: node scripts/type-check.cjs
+      - name: Typography report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-report
+          path: site/type-report
+          if-no-files-found: ignore
       - name: Contrast of the design tokens
         working-directory: .
         run: python3 tools/contrast.py design-system/tokens.json --fail

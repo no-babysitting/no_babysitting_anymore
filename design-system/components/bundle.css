@@ -20,6 +20,10 @@
 .nb-micro { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; color: var(--fg-muted); line-height: 1.4; }
 .nb-caps { text-transform: uppercase; letter-spacing: .1em; }
 .nb-micro b, .nb-micro strong { color: var(--fg); font-weight: 600; }
+/* Bold is 600, the heaviest text face loaded (the default `bolder` asks for 700/900 and gets a substitute);
+   code is always the mono face. Zero specificity, so any component rule wins. */
+:where(.nb) :is(b, strong) { font-weight: 600; }
+:where(.nb) :is(code, kbd, samp) { font-family: var(--font-mono); }
 .nb-sq::before { content: ""; display: inline-block; width: 7px; height: 7px; background: var(--accent); margin-right: 9px; vertical-align: 1px; }
 .nb-sq.is-signal::before { background: var(--signal); } .nb-sq.is-warn::before { background: var(--warn); } .nb-sq.is-danger::before { background: var(--danger); }
 .nb-wide { font-family: var(--font-wide); font-stretch: 125%; font-weight: 800; text-transform: uppercase; letter-spacing: -.012em; line-height: .92; }
@@ -80,7 +84,7 @@
 /* ---------- form controls: search input & filter chips ---------- */
 .nb-input { appearance: none; width: 100%; background: var(--bg-sunken); color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 11px 12px; font: 400 15px/1.3 var(--font-text); }
 .nb-input::placeholder { color: var(--fg-muted); }
-.nb-chip { appearance: none; display: inline-flex; align-items: center; gap: .4em; background: transparent; color: var(--fg-muted); border: 1px solid var(--control); border-radius: 0; padding: 6px 9px; font: 500 12.5px/1.1 var(--font-mono); letter-spacing: .02em; cursor: pointer; white-space: nowrap; }
+.nb-chip { appearance: none; display: inline-flex; align-items: center; gap: .4em; background: transparent; color: var(--fg-muted); border: 1px solid var(--control); border-radius: 0; padding: 6px 9px; font: 600 12.5px/1.1 var(--font-mono); letter-spacing: .04em; cursor: pointer; white-space: nowrap; }
 .nb-chip:hover { color: var(--fg); border-color: var(--fg); }
 .nb-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .nb-chip .n { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }

@@ -3,7 +3,7 @@
 only admits a few CDNs), site-absolute links become relative ('/c03/' -> '../c03/index.html'), and
 the entry page loses its <html>/<head>/<body> wrapper because the artifact host adds its own.
 usage: python3 scripts/build-artifact.py <outdir>"""
-import os, re, sys
+import base64, os, re, sys
 DIST = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dist'))
 OUT = sys.argv[1]
 
@@ -15,6 +15,8 @@ def convert(rel):
     html = read(rel)
     # analytics never runs inside an artifact (its CSP blocks the script, and framed pages are not counted)
     html = re.sub(r'<script[^>]*data-goatcounter[^>]*></script>', '', html)
+    # the 5 KB symbols font rides along as a data: URI; the artifact has no site root to serve it from
+    html = re.sub(r"url\('(/fonts/[^']+\.woff2)'\)", lambda m: "url('data:font/woff2;base64," + base64.b64encode(open(os.path.join(DIST, m.group(1).lstrip('/')), 'rb').read()).decode() + "')", html)
     html = re.sub(r'<link rel="stylesheet" href="(/[^"]+\.css)"\s*/?>', lambda m: '<style>' + read(m.group(1)) + '</style>', html)
     html = re.sub(r'<script type="module" src="(/[^"]+\.js)"></script>', lambda m: '<script type="module">' + read(m.group(1)).replace('</script', '<\\/script') + '</script>', html)
     html = re.sub(r'<script src="(/[^"]+\.js)"></script>', lambda m: '<script>' + read(m.group(1)).replace('</script', '<\\/script') + '</script>', html)

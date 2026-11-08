@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typography fixture · bad</title>
+<!-- Self-test of scripts/type-check.cjs (--selftest). Every block breaks one rule on purpose; the rule it must
+     trigger is in the data-rule attribute and in EXPECT_BAD. System fonts only, so it runs the same everywhere. -->
+<style>
+  @font-face { font-family: Fx; src: url(/fonts/jetbrains-mono-symbols.woff2) format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+  body { margin: 16px; font: 16px/1.6 sans-serif; color: #111; background: #fff; }
+  body > * { margin: 0 0 20px; }
+</style>
+</head>
+<body>
+<h1 data-rule="headings">Fixture</h1>
+<h1>Hai h1 trên một trang</h1>
+<h4>Nhảy từ h1 xuống h4</h4>
+<h2></h2>
+
+<p data-rule="contrast" style="color:#8a8a8a;background:#9a9a9a">Chữ xám trên nền xám, gần như không đọc được.</p>
+<p data-rule="min-size" style="font-size:10px">Chữ mười pixel.</p>
+<p data-rule="light-weight" style="font-weight:300">Nét mảnh ở cỡ nhỏ khó đọc.</p>
+<p data-rule="caps-tracking" style="font-size:13px;text-transform:uppercase">Section label</p>
+<p data-rule="caps-vi" style="text-transform:uppercase">Tiếng Việt có dấu viết hoa bằng CSS</p>
+<p data-rule="justify" style="text-align:justify;width:280px">Đoạn văn căn đều hai bên với bề rộng hẹp, nên khoảng trắng giữa các từ bị kéo giãn không đều và tạo thành những dòng loang.</p>
+<p data-rule="leading" style="width:300px;line-height:1.1">Đoạn văn có khoảng dòng quá chặt: ba dòng trở lên, mỗi dòng sát dòng trên, mắt khó tìm lại đầu dòng kế tiếp khi đọc lâu.</p>
+<p data-rule="measure" style="width:900px">Đoạn văn này rộng tới chín trăm pixel nên mỗi dòng chứa hơn tám mươi ký tự. Người đọc phải đưa mắt đi rất xa rồi mới quay lại đầu dòng kế tiếp, và dễ đọc trùng hoặc bỏ sót dòng. Đoạn dài thế này cần một giới hạn bề rộng, khoảng sáu mươi sáu ký tự mỗi dòng, để mắt di chuyển thoải mái hơn nhiều.</p>
+<h2 data-rule="display-leading" style="font-size:40px;line-height:1">Tiếng Việt Ệ Ế Ổ</h2>
+<h3 data-rule="orphan" style="font-size:24px;line-height:1.3">Tiêu đề có hai dòng<br>kết</h3>
+<p data-rule="collision" style="font:40px/0.8 monospace;width:6ch;overflow-wrap:anywhere">ỆỆỆỆỆỆỆỆỆỆỆỆ</p>
+<div data-rule="ink-clip" style="overflow:hidden;height:40px;font:40px/1 monospace">Ế</div>
+<div data-rule="text-spacing" id="ts" style="overflow:hidden;white-space:nowrap"><span>Hộp vừa khít chữ, giãn chữ là tràn.</span></div>
+<p data-rule="zoom" style="font-size:3vw">Cỡ chữ theo vw</p>
+<p data-rule="faux-style" style="font-family:Fx;font-style:italic">Chữ nghiêng giả bằng một font không có chữ</p>
+<p data-rule="stray-markup">Chữ có *dấu sao* thừa của markdown</p>
+<p data-rule="punctuation">Anh nói "xin chào" rồi đi...</p>
+<p data-rule="role" style="font:400 30px/1.4 'Be Vietnam Pro', sans-serif">Cỡ ngoài vai chữ của DS</p>
+<script>
+  /* a box exactly as wide as its text: widening the letters makes the text spill (WCAG 1.4.12) */
+  var t = document.getElementById('ts'); t.style.width = Math.ceil(t.firstElementChild.getBoundingClientRect().width) + 'px';
+</script>
+</body>
+</html>

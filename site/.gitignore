@@ -1,4 +1,5 @@
 node_modules/
 dist/
+type-report/
 .astro/
 public/ds/
