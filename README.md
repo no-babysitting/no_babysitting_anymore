@@ -21,8 +21,9 @@ No Babysitting là dự án cộng đồng độc lập, không liên kết, kh�
 ## Go live và kaizen (07/11/2026): đọc phần này trước
 
 - **Kế hoạch:** `docs/08-kaizen-go-live.md`, gồm 16 quyết định của chủ dự án, quan sát có số đo, các đợt K0–K6, quy tắc phát hành và thước đo. **Kịch bản chuyển động:** `docs/09-motion-script.md`, chia ba tầng chính / phụ / nền và giữ ngữ pháp M1–M14.
-- **Phát hành:** mỗi đợt là một PR. Workflow `Check site` build và chạy `site/scripts/check.cjs` (liên kết, lỗi JS, cuộn ngang, reduced motion, chi phí lúc đứng yên). Merge vào `main` thì workflow `Deploy site` đưa lên GitHub Pages. Riêng nội dung mới phải được chủ dự án duyệt trước khi merge.
-- **Chạy local:** `cd site && npm ci && npm run build && node scripts/check.cjs`. Để build giống production: `NB_BASE=/no_babysitting_anymore/ npm run build`.
+- **Phát hành:** mỗi đợt là một PR. Workflow `Check site` build và chạy `site/scripts/check.cjs` (liên kết, lỗi JS, cuộn ngang, reduced motion, chi phí lúc đứng yên) và `site/scripts/type-check.cjs` (typography, xem `docs/11-typography.md`). Merge vào `main` thì workflow `Deploy site` đưa lên GitHub Pages. Riêng nội dung mới phải được chủ dự án duyệt trước khi merge.
+- **Chạy local:** `cd site && npm ci && npm run build && node scripts/check.cjs && node scripts/type-check.cjs`. Để build giống production: `NB_BASE=/no_babysitting_anymore/ npm run build`.
+- **Kiểm typography:** `node scripts/type-check.cjs` đo chữ đã render ở 1440px và 390px, ghi `site/type-report/`. `--url <địa chỉ>` kiểm một trang bất kỳ; `--selftest` kiểm chính bộ kiểm. Luật và ngưỡng: `design-system/type-rules.json`; giải thích và nguồn: `docs/11-typography.md`.
 - **Thay đổi:** `CHANGELOG.md`.
 - **Giấy phép:** code MIT (`LICENSE`), nội dung CC BY-NC-SA 4.0 (`LICENSE-CONTENT.md`), ghi công bên thứ ba ở `THIRD_PARTY_NOTICES.md`.
 

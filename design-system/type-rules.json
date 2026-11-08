@@ -1,0 +1,162 @@
+{
+  "$doc": "Luật typography mà site/scripts/type-check.cjs đo trên trang đã render. Giải thích và nguồn của từng luật: docs/11-typography.md. Đổi ngưỡng ở đây, kèm lý do trong commit; không nới ngưỡng chỉ để CI xanh.",
+  "version": 1,
+  "viewports": {
+    "desktop": {
+      "width": 1440,
+      "height": 900
+    },
+    "phone": {
+      "width": 390,
+      "height": 844,
+      "isMobile": true
+    }
+  },
+  "decor": [
+    ".nb-ghost",
+    "[aria-hidden=\"true\"].nb-cond",
+    "[data-type-decor]"
+  ],
+  "fonts": {
+    "allowed": [
+      "Be Vietnam Pro",
+      "Newsreader",
+      "JetBrains Mono",
+      "Archivo"
+    ]
+  },
+  "thresholds": {
+    "minSize": 12,
+    "lightWeight": 400,
+    "contrast": {
+      "normal": 4.5,
+      "large": 3,
+      "largePx": 24,
+      "largeBoldPx": 18.5,
+      "percentile": 10
+    },
+    "body": {
+      "maxPx": 20,
+      "minLines": 3,
+      "leading": 1.4,
+      "measureMax": 80
+    },
+    "displayLeadingVi": 1.12,
+    "caps": {
+      "maxPx": 18,
+      "tracking": 0.04
+    },
+    "collisionTolerance": 1,
+    "zoom": {
+      "target": 2,
+      "levels": [
+        1.5,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "textSizeSetting": {
+      "ratio": 1.5
+    }
+  },
+  "roles": [
+    {
+      "role": "Tên chương tiếng Anh",
+      "family": "Archivo",
+      "stretch": 125,
+      "weights": [
+        800
+      ],
+      "min": 15,
+      "max": 64
+    },
+    {
+      "role": "Số lớn",
+      "family": "Archivo",
+      "stretch": 62,
+      "weights": [
+        800
+      ],
+      "min": 48,
+      "max": 300
+    },
+    {
+      "role": "Câu hỏi Socratic, trích dẫn",
+      "family": "Newsreader",
+      "min": 19,
+      "max": 72
+    },
+    {
+      "role": "Thân bài, UI",
+      "family": "Be Vietnam Pro",
+      "min": 14,
+      "max": 19
+    },
+    {
+      "role": "Nhãn micro, eyebrow, nút, tag, chip",
+      "family": "JetBrains Mono",
+      "weights": [
+        600
+      ],
+      "min": 12,
+      "max": 14
+    },
+    {
+      "role": "Hành động agent, code",
+      "family": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "min": 12,
+      "max": 16
+    },
+    {
+      "role": "title-mono",
+      "family": "JetBrains Mono",
+      "weights": [
+        600
+      ],
+      "min": 40,
+      "max": 40
+    },
+    {
+      "role": "Dòng prompt (câu giao việc mẫu)",
+      "family": "JetBrains Mono",
+      "weights": [
+        500
+      ],
+      "min": 16,
+      "max": 32
+    }
+  ],
+  "severity": {
+    "contrast": "error",
+    "min-size": "error",
+    "collision": "error",
+    "ink-clip": "error",
+    "glyph-fallback": "error",
+    "text-spacing": "error",
+    "zoom": "error",
+    "symbol-fallback": "warn",
+    "text-size-setting": "warn",
+    "leading": "warn",
+    "display-leading": "warn",
+    "measure": "warn",
+    "caps-tracking": "warn",
+    "caps-vi": "warn",
+    "faux-style": "warn",
+    "orphan": "warn",
+    "justify": "warn",
+    "light-weight": "warn",
+    "headings": "warn",
+    "role": "warn",
+    "font-family": "warn",
+    "font-load": "warn",
+    "stray-markup": "error",
+    "punctuation": "warn"
+  },
+  "exceptions": []
+}

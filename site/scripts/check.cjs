@@ -4,34 +4,13 @@
 //   3. reduced motion: no readable text left hidden
 //   4. idle cost: with nobody scrolling, the home page barely paints (docs/09-motion-script.md §5)
 // usage (from site/): NB_BASE=/no_babysitting_anymore/ node scripts/check.cjs
-const http = require('http'), fs = require('fs'), path = require('path');
+const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
+const { BASE, DIST, file, serve, htmlFiles } = require('./serve-dist.cjs');
 
-const BASE = (process.env.NB_BASE || '/').replace(/\/?$/, '/');
-const DIST = path.join(__dirname, '..', 'dist');
 const PAGES = ['', 'c00/', 'c02/', 'c03/', 'c10/', 'library/'];
 const IDLE_DRAWS_PER_S = 600; /* breathing hero: tens per second; the old renderer: ~80k */
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json', '.txt': 'text/plain' };
 const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.push(m); console.log('  ✕ ' + m); };
-
-function file(u) {
-  let f = path.join(DIST, decodeURIComponent(u).slice(BASE.length));
-  if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
-  return fs.existsSync(f) ? f : null;
-}
-function serve() {
-  return new Promise((ok) => {
-    const s = http.createServer((req, res) => {
-      const u = req.url.split('?')[0].split('#')[0], f = u.startsWith(BASE) ? file(u) : null;
-      if (!f) { res.writeHead(404); return res.end('404'); }
-      res.writeHead(200, { 'content-type': TYPES[path.extname(f)] || 'application/octet-stream' });
-      fs.createReadStream(f).pipe(res);
-    }).listen(0, '127.0.0.1', () => ok(s));
-  });
-}
-function htmlFiles(dir) {
-  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((d) => d.isDirectory() ? htmlFiles(path.join(dir, d.name)) : d.name.endsWith('.html') ? [path.join(dir, d.name)] : []);
-}
 
 (async () => {
   if (!fs.existsSync(DIST)) { console.error('no dist/: run the build first'); process.exit(1); }

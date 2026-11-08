@@ -41,6 +41,10 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Checks (links, JS errors, overflow, reduced motion, idle cost)
         run: node scripts/check.cjs
+      - name: Typography self-test (the checker still catches what it should)
+        run: node scripts/type-check.cjs --selftest
+      - name: Typography (contrast, sizes, Vietnamese marks, text spacing, zoom, fonts)
+        run: node scripts/type-check.cjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist
