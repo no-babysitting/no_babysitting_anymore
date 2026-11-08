@@ -30,6 +30,35 @@
 | D18 | Màu nhấn (08/11) | **Giữ nguyên** cam `#d97a4a`, không thêm nhãn cố định. Chấp nhận rủi ro nhầm thương hiệu; disclaimer vẫn ở hero, ảnh chia sẻ và chân trang. Nên có ý kiến luật sư trước khi đăng rộng | đề xuất đổi sắc hoặc thêm nhãn của bên đánh giá (M2) |
 | D19 | Cửa vào (08/11) | Soft launch ngay sau khi sửa cửa vào: hai nút CTA trỏ về chương có thật, ghi "c03, c07 đang viết", thêm đoạn tóm tắt ngắn trên trang chủ. c03 và c07 viết sau | cổng "c03, c07 phải xong" chỉ áp dụng cho đăng rộng |
 | D20 | Kiểm thử thật (08/11) | **Chưa làm**: thiết bị thật (đã có iPhone Safari của chủ dự án), trình đọc màn hình, 5 buổi quan sát. Rủi ro chấp nhận cho soft launch; **không đăng rộng** cho tới khi làm | cổng đăng rộng của bên đánh giá |
+| D21 | Icon menu (08/11) | Chủ dự án xác nhận: nút menu là icon hamburger khi đóng, X khi mở; hình xe đẩy gạch chéo chỉ là tranh ASCII bên trong menu | "phần phác thảo có hai cách hiểu" (CHANGELOG, đợt B) |
+
+## 1b. Quyết định cho kịch bản v4 (phiên hỏi đáp 08/11/2026)
+
+Hỏi theo ba vòng: 5 câu tổng quan, 15 câu chi tiết, 4 câu bổ sung. Chi tiết và chữ cụ thể ở `14-content-script-v4.md` (nội dung), `15-typography-motion-v4.md` (chữ và hiệu ứng), `16-writing-guide.md` (văn phong), `17-handoff-prompt.md` (prompt giao việc). Câu chữ trên site vẫn duyệt ở từng PR (D13).
+
+| # | Chủ đề | Quyết định | Thay cho |
+|---|---|---|---|
+| D22 | Ý định | Học xong, người đọc tự giao trọn được một việc cho Claude mà không phải trông. Câu đỉnh: *Thôi cầm tay chỉ việc: cùng Claude làm rõ việc, rồi giao trọn cho nó.* | trục 3 câu hỏi (D4) |
+| D23 | Xương sống | Theo vòng đời một việc giao: Trước, Trong, Sau. **5 phần**: 00 Mở đầu · 01 Tìm điều chưa biết · 02 Giao việc · 03 Để nó làm · 04 No Babysitting. Mỗi chặng mang một cặp shift | 12 phần v3 cho lộ trình chính (D4) |
+| D24 | Nội dung chính | **Six shifts** (Thariq, 24/07/2026), với phương pháp của bài *Finding your unknowns* (06/07/2026) và trang Best practices | điểm 5 ở §8 của v3: "c10 dùng bảng 7 dòng thay cho six shifts" |
+| D25 | 12 phần v3 | Thành phần **Nâng cao**, gộp lại còn 8 mục, viết sau. Đợt này chỉ có dàn ý. c02 giữ nguyên làm mục A1. Trang khung chưa viết thì gỡ khỏi menu | giữ 12 phần trên lộ trình chính |
+| D26 | Đối tượng | Một lõi chung + **5 kính**: Dev & engineer · BA & PM · Designer & sáng tạo · Marketing & sales · Quản lý & vận hành. Mặc định là Chung. Kính chỉ đổi ví dụ và prompt mang đi thử | "không cá nhân hoá theo vai" (PRD) |
+| D27 | Chọn kính | Chỉ chọn trong khối ví dụ, ở lần đầu gặp khối kính; đổi bằng nút trên header. Trang chủ không hỏi | — |
+| D28 | Câu chuyện chung | Một studio nhỏ ra mắt khoá học online (hư cấu). Mỗi kính là phần việc của một vai trong đó | 6 loại việc xoay vòng (D3) |
+| D29 | Bề mặt | Claude Code là chính; ghi chú khi bề mặt khác. Kỹ thuật dùng được ở mọi nơi thì gắn nhãn | 3 tab bề mặt ở mọi khối |
+| D30 | Khuôn chương | **3 hồi gọn**: Hook → Lõi → Kết, 4–6 phút, có ASCII art và mascot. Bỏ nhịp Đoán và nhịp tự kiểm | vòng 6 nhịp Hỏi → Đoán → Thấy → Hiểu → Làm → Nhớ |
+| D31 | Kết chương | Câu chốt + 1 prompt mang đi thử (đổi theo kính) + nút sang phần sau. Không có quiz | GrillCard |
+| D32 | Giọng | Gọi người đọc là "bạn", người kể không xưng | — |
+| D33 | Tiếng Anh | Giữ tên riêng và vài từ dân nghề vẫn nói; lần đầu in nghiêng kèm giải nghĩa. Six shifts: tên Việt làm tiêu đề, tên gốc ở dưới | — |
+| D34 | Trang chủ | Hero → Kim tự tháp (trên nền mặt nước) → Lộ trình 5 phần → Finale. **Bỏ** Hai lần tung đồng xu và Vòng giao việc 7 bước; bỏ 6 loại việc (viết lại sau) | D5 |
+| D35 | Hero | Câu lớn của chủ dự án: *Claude khôn hơn rồi, sao bạn vẫn phải trông trẻ?* Dòng nhỏ phía trên: *Từ vibe đến agentic.* Thêm một dòng trả lời. Dòng thông tin: thời lượng, số phần, không cần biết code, miễn phí, có ví dụ theo nghề | *Từ vibe đến agentic.* làm câu lớn |
+| D36 | Golden word | Gạch chân tự vẽ; chữ cam trong lúc đang được đọc rồi về màu chữ. Tối đa 5 mỗi phần. Đúng D18 | — |
+| D37 | Mascot | The Colleague thường trực bên lề (desktop), nằm trong header (điện thoại). Nói bằng câu hỏi và nhật ký, thêm vài câu vui. Vẫn cấm hình con vật hay khối pixel | "không có lời thoại riêng" (DS §3.5) |
+| D38 | Art mở chương | Mỗi phần một hình ASCII. Hình chạy ngay khi mở trang, không chờ cuộn, rồi thở nhẹ. Màu theo cảnh hoàng hôn ở Finale | số chương khổng lồ + nền địa hình |
+| D39 | Điểm dừng | 3 điểm mỗi phần: hook, thẻ Then → Now chính, câu chốt | — |
+| D40 | Hiệu ứng chữ | Giữ M1–M14, thêm M15 (Hồi đó rã thành Bây giờ), M16 (gạch chân tự vẽ), M17 (gõ prompt) | "không có chuyển động ngoài M1–M14" |
+| D41 | Phần "thấy" | Chưa làm mô phỏng mới; mỗi phần ghi chỗ chờ. Mô phỏng tinh chỉnh sau khi chữ đã chốt | 11 simulator (PRD) |
+| D42 | Đầu ra đợt này | Dàn ý toàn bộ, chữ hoàn chỉnh cho trang chủ và chương 01 (bài mẫu), đặc tả typography và hiệu ứng, văn phong, prompt giao cho coding agent | — |
 
 ## 2. Quan sát site ngày 07/11/2026
 
