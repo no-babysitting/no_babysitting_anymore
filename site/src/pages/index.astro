@@ -66,12 +66,15 @@ import { LIVE } from '../lib/status';
 </style>
 
 <script>
-  /* manifesto: a low-key ASCII terrain (ChapterOpener's source) rises out of noise as the statement is read */
+  /* manifesto: a low-key ASCII field rises out of noise as the statement is read, then keeps moving like a calm water surface
+     (ambient tier N: eight repaints of the changed cells per second, only while it is on screen; still with motion off) */
   function start(w: any) {
     const NB = w.NoBabysitting, gsap = w.gsap, reduce = NB.reduce();
+    const field = NB.sources.terrain({ scale: 0.055, threshold: 0.56, slope: 0.45, seed: 7,
+      flow: { x1: 0.04, w: 0.3, sway: 0.28, x2: 0.07, y2: 0.025, x3: 0.075, y3: 0.03, ripple: 0.06 } });
     const A = NB.ascii(document.getElementById('man-cv'), {
       cell: [9, 16], order: reduce ? 1 : 0, sweep: 0.3, noiseFill: 0.25, pointer: false,
-      ramp: ' .·:/\\+*', tone: 'fg-muted', frontColor: 'fg', source: NB.sources.terrain({ scale: 0.055, threshold: 0.56, slope: 0.45, seed: 7 }),
+      ramp: ' .·:/\\+*', tone: 'fg-muted', frontColor: 'fg', source: field, flow: field.at, flowFps: 7, flowShare: 0.55,
     });
     if (reduce || !gsap) return;
     gsap.to(A.state, { order: 1, ease: 'none', onUpdate: A.redraw, scrollTrigger: { trigger: '.manifesto-wrap', start: 'top 70%', end: 'bottom 60%', scrub: true } });

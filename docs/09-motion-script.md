@@ -8,7 +8,7 @@
 |---|---|---|---|---|---|
 | **C · Chính** (Primary) | Hero, vòng giao việc, simulator, chuyển chương, finale | Mỗi cảnh một khoảnh khắc chính; mỗi lúc chỉ một cảnh C chạy trên màn | Scrub: `none`. Chạy theo thời gian: `power3.out` khi vào, `power2.inOut` khi đổi bố cục, `nb-settle` khi đậu vào chỗ | Pin ≤ 220% vh mỗi cảnh. Riêng vòng giao việc: ≤ 100% vh mỗi bước | Hiện trạng thái cuối, không pin |
 | **P · Phụ** (Secondary) | Reveal chữ, thẻ, điều hướng, metadata, hover, phản hồi khi bấm | Stagger chỉ khi thứ tự có nghĩa (danh sách bước, câu hỏi) | `power2.out` cho reveal, `power1.out` cho UI nhỏ | 0,12–0,48s; dịch chuyển ≤ 24px | Hiện thẳng |
-| **N · Nền** (Ambient) | ASCII nền ở hero và finale | ≤ 2 canvas thở cùng lúc; mọi canvas khác đứng yên khi không cuộn | `sine.inOut` | Chu kỳ 6–12s; ≤ 4% số ô đổi mỗi giây | Đứng yên ở frame cuối |
+| **N · Nền** (Ambient) | ASCII nền ở hero và finale; **mặt nước ở phần tuyên ngôn** (từ 08/11) | ≤ 2 canvas thở cùng lúc; mọi canvas khác đứng yên khi không cuộn | `sine.inOut` | Chu kỳ 6–12s; ≤ 4% số ô đổi mỗi giây (hero, finale); mặt nước trôi liên tục, chỉ vẽ ô đổi glyph, ≈ 3k ô/giây ở desktop | Đứng yên ở frame cuối |
 
 Không dùng `back.out` (bản review gợi ý cho kiểu "playful"): độ nảy không hợp giọng brutalist điềm tĩnh, và chỗ "tới lượt bạn" đã có M7.
 
@@ -17,7 +17,9 @@ Luật cũ "không có gì lặp vô hạn" đổi thành: **chỉ tầng N đư
 - dừng khi canvas ra khỏi màn hình;
 - dừng khi tab bị ẩn.
 
-Hai thứ lặp mới (08/11, đợt B), cả hai thuộc tầng N và theo ba điều kiện trên: **dải khối ASCII quét qua nút "chương kế"** (`NB.sweep`, `data-sweep`: 4,6 giây quét, 1,8 giây nghỉ, chỉ vẽ khi nút trên màn hình, không có canvas nào khi tắt chuyển động) và **dấu cam của chương hiện tại ở mục lục nháy như con trỏ terminal** (`nb-blink`, 1,1 giây, `steps(1)`, chỉ khi `html.motion`).
+Ba thứ lặp mới (08/11), tất cả thuộc tầng N và theo ba điều kiện trên: **dải khối ASCII quét qua nút "chương kế"** (`NB.sweep`, `data-sweep`: 4,6 giây quét, 1,8 giây nghỉ, chỉ vẽ khi nút trên màn hình, không có canvas nào khi tắt chuyển động) và **dấu cam của chương hiện tại ở mục lục nháy như con trỏ terminal** (`nb-blink`, 1,1 giây, `steps(1)`, chỉ khi `html.motion`).
+
+**Mặt nước ở phần tuyên ngôn** (chủ dự án yêu cầu 08/11): lớp địa hình ASCII sau đoạn tuyên ngôn và bốn con số, trước đây chỉ mọc lên theo cuộn rồi đứng yên, nay trôi chậm như mặt nước. Mỗi tầng nhiễu trôi một hướng riêng, các hình lớn đưa nhẹ theo một sóng sin chậm, có gợn mờ chạy chéo ở nửa dưới. Làm bằng `NB.sources.terrain({ flow })` và tuỳ chọn `flow` của `NB.ascii`: mỗi 1/7 giây tính lại độ phủ bằng bảng nhiễu (không dùng `sin` cho mỗi điểm), chỉ vẽ lại những ô đổi glyph, và chỉ 55% số ô đổi được vẽ ở mỗi bước, phần còn lại chờ bước sau nên mặt nước lấp lánh thay vì nhảy từng nấc. Dừng khi canvas ra khỏi màn hình, khi tab ẩn, khi tắt chuyển động. Đo ở Chromium không có GPU: ≈ 3.300 lần vẽ ô mỗi giây và +5% luồng chính ở desktop, ≈ 900 lần và +3% ở điện thoại, 0 khi ra khỏi màn hình. `check.cjs` mục 4 giữ hai đầu: dưới 300 lần/giây là nước đứng yên (hỏng), trên 6.000 là quá đắt.
 
 ## 2. Mật độ ASCII và vùng yên
 
@@ -69,7 +71,7 @@ Chọn loại việc thuộc tầng P: nội dung bước đổi ngay (Flip M3 c
 | Chỉ số | Ngân sách | Đo bằng |
 |---|---|---|
 | CPU luồng chính khi đứng yên (desktop, đầu trang) | ≤ 8% | `site/scripts/check.mjs` (CDP `TaskDuration` trong 3 giây) |
-| Ô canvas đổi mỗi giây khi đứng yên | ≤ 4% số ô ở hero và finale; 0 ở các cảnh khác | đếm `drawImage` |
+| Ô canvas đổi mỗi giây khi đứng yên | ≤ 4% số ô ở hero và finale; mặt nước ở tuyên ngôn 300–6.000 lần vẽ/giây khi đang hiện; 0 ở các cảnh khác | đếm `drawImage` và `fillText` (`check.cjs` mục 4) |
 | Canvas đang sống cùng lúc | ≤ 2 | |
 | Lỗi JS / cuộn ngang | 0 / không có, ở 1440px, 390px và 320px | `check.cjs` |
 | Reduced motion | Không chữ nào bị ẩn; mọi cảnh ở trạng thái cuối | |

@@ -2,7 +2,7 @@
 //   1. every internal link and asset in dist/ resolves (and respects the base path)
 //   2. key pages, desktop 1440, phone 390 and the narrowest phone 320: no JS errors, no horizontal scroll
 //   3. reduced motion: no readable text left hidden
-//   4. idle cost: with nobody scrolling, the home page barely paints (docs/09-motion-script.md §5)
+//   4. idle cost: with nobody scrolling, the home page barely paints, except the water behind the manifesto, which must move but stay cheap (docs/09-motion-script.md §5)
 //   5. accessibility with the motion ON, every page: axe-core, text that is hidden until scrolled must still be in the
 //      accessibility tree (a split paragraph once exposed nothing), and no link without a destination (href="#")
 // usage (from site/): NB_BASE=/no_babysitting_anymore/ node scripts/check.cjs
@@ -14,6 +14,7 @@ const PAGES = ['', 'c00/', 'c02/', 'c03/', 'c10/', 'library/'];
 /* every page that was built: index.html of each folder, plus loose files such as 404.html */
 const ALL = [...new Set(htmlFiles().map((f) => { const r = path.relative(DIST, f).split(path.sep).join('/'); return path.basename(r) === 'index.html' ? r.slice(0, -'index.html'.length) : r; }))].filter((d) => !/^ds\//.test(d)).sort();
 const IDLE_DRAWS_PER_S = 600; /* breathing hero: tens per second; the old renderer: ~80k */
+const FLOW_DRAWS_PER_S = [300, 6000]; /* the water behind the manifesto must move (min) and stay far below the old renderer (max); measured ~3k */
 const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.push(m); console.log('  ✕ ' + m); };
 
 (async () => {
@@ -76,7 +77,11 @@ const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.pus
     const p = await ctx.newPage(); await p.goto(origin + BASE, { waitUntil: 'networkidle' }); await p.waitForTimeout(2500);
     const cdp = await ctx.newCDPSession(p); await cdp.send('Performance.enable');
     const busy = async () => (await cdp.send('Performance.getMetrics')).metrics.find((m) => m.name === 'TaskDuration').value;
-    for (const spot of ['top', 'finale']) {
+    for (const spot of ['top', 'manifesto', 'finale']) {
+      if (spot === 'manifesto') {
+        await p.evaluate(() => { const e = document.querySelector('.manifesto-wrap'), r = e.getBoundingClientRect(); const y = r.top + scrollY + r.height - innerHeight * 0.85; window.lenis ? window.lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y); });
+        await p.waitForTimeout(2500);
+      }
       if (spot === 'finale') {
         await p.evaluate(() => { const e = document.getElementById('finale'); const y = e.getBoundingClientRect().top + scrollY + innerHeight * 2; window.lenis ? window.lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y); });
         await p.waitForTimeout(2500);
@@ -86,7 +91,10 @@ const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.pus
       const t1 = await busy(), d1 = await p.evaluate(() => window.__d);
       const draws = Math.round((d1 - d0) / 3), cpu = ((t1 - t0) / 3 * 100).toFixed(1);
       note(`${spot}: ${draws} glyph draws/s, main thread busy ${cpu}%`);
-      if (draws > IDLE_DRAWS_PER_S) fail(`${spot}: ${draws} glyph draws/s while idle (budget ${IDLE_DRAWS_PER_S})`);
+      if (spot === 'manifesto') {
+        if (draws < FLOW_DRAWS_PER_S[0]) fail(`manifesto: the field is not moving (${draws} glyph draws/s, expected at least ${FLOW_DRAWS_PER_S[0]})`);
+        if (draws > FLOW_DRAWS_PER_S[1]) fail(`manifesto: ${draws} glyph draws/s while moving (budget ${FLOW_DRAWS_PER_S[1]})`);
+      } else if (draws > IDLE_DRAWS_PER_S) fail(`${spot}: ${draws} glyph draws/s while idle (budget ${IDLE_DRAWS_PER_S})`);
     }
     await ctx.close();
   }

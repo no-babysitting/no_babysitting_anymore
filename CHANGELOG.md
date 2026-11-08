@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Mặt nước chuyển động ở phần tuyên ngôn (08/11/2026)
+
+Chủ dự án hỏi lớp ASCII phía sau đoạn tuyên ngôn và bốn con số có đúng ý không, và muốn nó chuyển động. Đó là lớp địa hình ASCII (đường đồng mức, cùng nguồn với phần mở chương), trước đây chỉ mọc lên theo cuộn rồi đứng yên; nhìn giống mặt nước vì nửa dưới dày dần thành các dải ngang. Nay nó **trôi chậm như mặt nước** (tầng N: mỗi tầng nhiễu một hướng, hình lớn đưa nhẹ theo sóng sin, gợn mờ ở nửa dưới), tắt cùng công tắc chuyển động, dừng khi ra khỏi màn hình hoặc tab ẩn. Chi phí đo được: ≈ 3.300 lần vẽ ô mỗi giây và +5% luồng chính ở desktop (≈ 900 và +3% ở điện thoại), 0 khi không hiện. `check.cjs` mục 4 thêm điểm đo thứ ba: dưới 300 lần/giây nghĩa là nước đứng yên (hỏng), trên 6.000 là quá đắt. Chi tiết kỹ thuật: `docs/09` §1.
+
 ## Đợt B · trình bày, theo tám nhận xét của chủ dự án trên iPhone (08/11/2026)
 
 Chỉ đổi cách trình bày và chuyển động; **không đổi câu chữ** (phần câu chữ nằm ở đợt C, chờ duyệt theo D13). Luật rút ra và công cụ đo: `docs/13-design-taste.md`.
