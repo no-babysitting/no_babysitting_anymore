@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## README mới (08/11/2026)
+
+README chỉ còn phần cốt lõi: ảnh đầu (logo khối trên cảnh thành phố hoàng hôn ASCII), câu hứa, ba track, GIF mặt nước, thiết kế, tài liệu chính, cách chạy, giấy phép. Ảnh dựng bằng chính runtime ASCII của trang (`tools/readme-art.cjs`, ảnh ở `.github/readme/`). Phần README cũ chuyển sang `docs/README.md`, kèm mục lục tài liệu.
+
 ## Nhập môn: `/deep-research`, lệnh hay dùng và thuật ngữ (08/11/2026)
 
 `docs/18`: bài N10 dùng lệnh `/deep-research` của Claude Code; thêm bài N13 và §2b, gồm bảng 20 lệnh hay dùng (`/init`, `/plan`, `/clear`, `/compact`, `/context`, `/rewind`, `/memory`, `/model`, `/effort`, `/advisor`, `/goal`, `/loop`, `/deep-research`, `/code-review`, `/doctor`…; đối chiếu trang Commands ngày 08/11) và bảng thuật ngữ AI/Claude hay gặp.
