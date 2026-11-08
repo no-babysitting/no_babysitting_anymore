@@ -49,9 +49,8 @@
   ol.res{list-style:none;margin:0;padding:0;border-top:1px solid var(--control)}
   ol.res li{display:grid;grid-template-columns:13ch minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:11px 2px;border-bottom:1px solid var(--control)}
   ol.res .ty{font:600 12px/1.3 var(--font-mono);color:var(--fg-muted);letter-spacing:.04em}
-  ol.res a{color:var(--fg);text-decoration:none;font:500 15px/1.4 var(--font-text)}
-  ol.res a:hover{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--control)}
-  ol.res li.is-superseded a{color:var(--fg-muted)}
+  ol.res .ttl{color:var(--fg);font:500 15px/1.4 var(--font-text)}
+  ol.res li.is-superseded .ttl{color:var(--fg-muted)}
   ol.res .lv{font:600 12px/1 var(--font-mono);color:var(--fg-subtle);letter-spacing:.06em;min-width:7ch;text-align:right}
   mark{background:transparent;color:var(--fg);text-decoration:underline 2px var(--fg-muted);text-underline-offset:3px}
   .empty{padding:22px 2px;color:var(--fg-muted);font-size:15px}
@@ -141,7 +140,7 @@
       var li = document.createElement('li'); if (it.du === 'superseded') li.className = 'is-superseded';
       li.setAttribute('data-flip-id', it.t);
       var ty = document.createElement('span'); ty.className = 'ty'; ty.textContent = it.ty;
-      var a = document.createElement('a'); a.href = '#'; a.appendChild(hl(it.t, q));
+      var a = document.createElement('span'); a.className = 'ttl'; a.appendChild(hl(it.t, q)); /* not a link until each entry has a page */
       var du = document.createElement('span'); du.className = 'du nb-tag ' + DUR[it.du][1];
       if (it.du === 'superseded') { var st = document.createElement('s'); st.textContent = DUR[it.du][0]; du.appendChild(st); } else du.textContent = DUR[it.du][0];
       var lv = document.createElement('span'); lv.className = 'lv'; lv.textContent = it.lv.toUpperCase();

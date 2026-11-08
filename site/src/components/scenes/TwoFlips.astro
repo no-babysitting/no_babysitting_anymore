@@ -12,7 +12,7 @@ const runs = {
     <header class="hd">
       <span class="nb-micro"><span class="nb-sq"></span>Mở đầu · hai lần tung đồng xu</span>
       <h2 class="nb-sr" id="flips-h">Cùng một yêu cầu, chạy hai lần</h2>
-      <p class="req"><span class="pr" aria-hidden="true">›</span><span id="flips-req">Làm báo cáo thị trường tuần này</span><span class="caret" aria-hidden="true">▍</span></p>
+      <p class="req"><span class="pr" aria-hidden="true">›</span><span class="nb-sr">Làm báo cáo thị trường tuần này</span><span id="flips-req" aria-hidden="true">Làm báo cáo thị trường tuần này</span><span class="caret" aria-hidden="true">▍</span></p>
     </header>
     <div class="cols">
       {(['vibe', 'agentic'] as const).map((k) => (
@@ -79,23 +79,23 @@ const runs = {
     const req = document.getElementById('flips-req')!, TEXT = req.textContent!, o = { n: 0 };
     const q = (s: string) => gsap.utils.toArray(`#flips ${s}`);
     /* the two columns are named from the first frame, so the scene never opens on empty boxes */
-    gsap.set(q('.run, .verdict'), { autoAlpha: 0, y: 26 });
-    gsap.set(q('.coin'), { autoAlpha: 0 });
-    gsap.set('#flips-moral', { autoAlpha: 0, y: 20 });
+    gsap.set(q('.run, .verdict'), { opacity: 0, y: 26 });
+    gsap.set(q('.coin'), { opacity: 0 });
+    gsap.set('#flips-moral', { opacity: 0, y: 20 });
     req.textContent = '';
     const tl = gsap.timeline({
       defaults: { ease: 'power2.out', duration: 0.6 },
       scrollTrigger: { trigger: '#flips', start: 'top top+=48', end: '+=230%', pin: '#flips-pin', scrub: 0.7 },
     });
     tl.to(o, { n: TEXT.length, duration: 0.7, ease: `steps(${TEXT.length})`, onUpdate: () => { req.textContent = TEXT.slice(0, o.n); } })
-      .to(q('.r1'), { autoAlpha: 1, y: 0, stagger: 0.15 }, 0.35)
-      .to(q('.coin'), { autoAlpha: 1 })
+      .to(q('.r1'), { opacity: 1, y: 0, stagger: 0.15 }, 0.35)
+      .to(q('.coin'), { opacity: 1 })
       .fromTo(q('.vibe .face'), { rotationY: 0 }, { rotationY: 1080, duration: 1.4, ease: 'power3.inOut' }, '<')
       .fromTo(q('.agentic .face'), { rotationY: 0 }, { rotationY: 720, duration: 1.4, ease: 'power3.inOut' }, '<')
-      .to(q('.r2'), { autoAlpha: 1, y: 0, stagger: 0.15 })
+      .to(q('.r2'), { opacity: 1, y: 0, stagger: 0.15 })
       .fromTo(q('.vibe .r2'), { x: 0 }, { x: 10, duration: 0.12, repeat: 3, yoyo: true, ease: 'steps(1)' }, '<0.4')
-      .to(q('.verdict'), { autoAlpha: 1, y: 0, stagger: 0.12 })
-      .to('#flips-moral', { autoAlpha: 1, y: 0, duration: 0.8 })
+      .to(q('.verdict'), { opacity: 1, y: 0, stagger: 0.12 })
+      .to('#flips-moral', { opacity: 1, y: 0, duration: 0.8 })
       .to({}, { duration: 0.6 });
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });

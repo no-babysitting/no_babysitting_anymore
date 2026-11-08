@@ -58,14 +58,19 @@ const symbolsCss = Object.entries(LOADED).flatMap(([f, vs]) => vs.map(([st, w]) 
     :root { color-scheme: dark; } :root[data-theme='light'] { color-scheme: light; }
     html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-text); }
     .wrap { max-width: var(--page-max); margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
-    html.motion:not(.motion-ready) [data-reveal='up'], html.motion:not(.motion-ready) [data-reveal='rule'] { visibility: hidden; }
+    html.motion:not(.motion-ready) [data-reveal='up'] { opacity: 0; }
+    html.motion:not(.motion-ready) [data-reveal='rule'] { visibility: hidden; }
+    .nb-split { display: block; }
+    .skip { position: absolute; left: 12px; top: 8px; z-index: 100; padding: 10px 14px; background: var(--fg); color: var(--bg); font: 600 13px/1.2 var(--font-mono); letter-spacing: .04em; text-decoration: none; transform: translateY(-200%); }
+    .skip:focus { transform: none; }
+    main:focus { outline: none; }
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
     .lenis.lenis-stopped { overflow: hidden; }
     ::selection { background: var(--fg); color: var(--bg); }
   </style>
 </head>
-<body class="nb"><slot />
+<body class="nb"><a class="skip" href="#main">Bỏ qua tới nội dung</a><slot />
 <SiteFooter title={title} />
 <script>
   import '../scripts/motion';

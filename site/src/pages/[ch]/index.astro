@@ -25,7 +25,7 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
 ---
 <Base title={`${c.no} · ${c.en} · No Babysitting`}>
   <Hud current={c.id} />
-  <main class="wrap ch">
+  <main id="main" tabindex="-1" class="wrap ch">
     <div data-ch-opener><ChapterOpener {...openerProps(c)} /></div>
 
     <section class="beat ask" data-ask aria-labelledby="q"><span class="nb-micro" data-reveal="up">b1 · hỏi</span><h2 class="nb-q q" id="q" data-reveal="words" set:html={inline(bindLast(c.question))}></h2><span class="nb-micro cue" data-reveal="up">Trả lời trong đầu trước khi cuộn · không có đáp án sai</span></section>

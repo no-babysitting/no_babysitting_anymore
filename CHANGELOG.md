@@ -2,6 +2,19 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Đánh giá độc lập lần 1 · đợt A: tiếp cận và hạ tầng (08/11/2026)
+
+- **Trình đọc màn hình đọc được các đoạn tách chữ.** Bản đánh giá độc lập báo hiệu ứng tách chữ làm đoạn tuyên ngôn và đoạn giải thích của c02 biến mất. Đã kiểm lại: đúng (ảnh chụp ARIA chỉ có `- paragraph`). Chữ thật nay nằm trong bản chỉ dành cho trình đọc màn hình, phần hình tách chữ bị ẩn khỏi cây truy cập (`splitText` trong `motion.ts`).
+- **Nội dung hiện khi cuộn không còn bị ẩn khỏi cây truy cập.** Trước đây GSAP đặt `visibility: hidden` tới khi cuộn tới (16 phần tử ở trang chủ). Nay chỉ giảm `opacity`; các cảnh ghim (Vòng giao việc, Finale) tắt `pointer-events` cho phần chưa hiện và dời pin theo focus bàn phím.
+- **Library:** 14 mục không còn là link chết.
+- **`<main>` ở trang chủ, skip link ở mọi trang, hai vùng trùng tên ở c10 đã đổi tên**, `role="img"` cho dải luồng song song.
+- **Bỏ `aria-live` ở các phần tự chạy** (AgentWindow, FloatingOps, mặt của Vòng giao việc); giữ ở phần người dùng bấm.
+- **Cảnh báo GSAP `target not found` ở 13/14 trang:** nguyên nhân là `gsap.set` trên danh sách rỗng; đã chặn.
+- **`sitemap.xml` và `404.html`.**
+- **Đo:** hai sự kiện GoatCounter không cookie ở c02 (`event-c02-predict` hoặc `event-c02-skip`, và `event-c02-sim-done`).
+- **Kiểm tự động mới (`check.cjs`, mục 5):** axe-core với chuyển động bật trên 15 trang; mọi chữ có hiệu ứng hiện dần phải nằm trong cây truy cập (64 đoạn; trên site cũ bắt được 6/8 ở trang chủ); cấm link không có đích. `type-check.cjs` thêm 404.
+- Bản phản hồi từng phát hiện: `docs/12-independent-evaluation-1.md`. Quyết định D17–D20: `docs/08`.
+
 ## Typography · bộ kiểm và đợt sửa đầu (chờ chủ dự án duyệt cùng K2)
 
 - **Bộ kiểm** `site/scripts/type-check.cjs` đo chữ *đã render* ở 14 trang × 2 khổ (1440, 390): tương phản bằng điểm ảnh, cỡ tối thiểu, dấu tiếng Việt chạm nhau hoặc bị cắt, giãn chữ WCAG 1.4.12, phóng to 200%, nghiêng/đậm giả, ký hiệu rơi sang font khác, độ dài dòng, khoảng dòng, dấu markdown lộ ra, và vài luật nữa. 8 luật lỗi chặn merge, 16 luật cảnh báo. Luật ở `design-system/type-rules.json`; nguồn và cách đo ở `docs/11-typography.md`. Chạy trong `Check site` và `Deploy site`. `--selftest` kiểm chính bộ kiểm bằng hai trang mẫu (một trang sai cố ý, một trang đúng). Skill `typography-check` hướng dẫn phần phải rà bằng mắt.
