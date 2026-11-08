@@ -51,6 +51,21 @@
   }
   function fbm(x, y, s) { return 0.55 * vnoise(x, y, s) + 0.3 * vnoise(x * 2.1, y * 2.1, s + 3) + 0.15 * vnoise(x * 4.3, y * 4.3, s + 7); }
 
+  /* the moving field is refilled several times a second, so its noise reads a table instead of hashing with sin():
+     a 256x256 lattice of seeded random values, wrapped (the field spans a handful of noise units, never 256) */
+  var LAT = (function () {
+    var t = new Float32Array(65536), a = 0x9e3779b9;
+    for (var i = 0; i < 65536; i++) { a = (a + 0x6d2b79f5) | 0; var r = Math.imul(a ^ (a >>> 15), 1 | a); r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r; t[i] = ((r ^ (r >>> 14)) >>> 0) / 4294967296; }
+    return t;
+  })();
+  function lnoise(x, y, s) {
+    var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+    var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf), o = s * 7919;
+    var x0 = (xi + o) & 255, x1 = (xi + o + 1) & 255, y0 = ((yi + o * 3) & 255) << 8, y1 = ((yi + o * 3 + 1) & 255) << 8;
+    var a = LAT[y0 | x0], b = LAT[y0 | x1], c = LAT[y1 | x0], d = LAT[y1 | x1];
+    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+  }
+
   NB.sources = {
     /* wordmark in Archivo (expanded by default). Latin caps without diacritics. opt.align: 'left' puts the text on the left edge (opt.padX = share of width). */
     text: function (lines, opt) {
@@ -96,18 +111,31 @@
         return { cov: cov, chars: chars, color: color };
       };
     },
-    /* WRDLSS-style terrain / cloud field, low key */
+    /* WRDLSS-style terrain / cloud field, low key.
+       opt.flow = { x1, w, x2, y2, x3, y3, ripple } makes the field alive: each noise octave drifts on its own (units of noise per second),
+       the big shapes sway on a slow sine, and a faint ripple runs across the lower part, so it reads as a calm water surface.
+       The returned function is the still picture; its .at(t, cols, rows, cov) fills cov for time t (seconds) and is what opt.flow of NB.ascii calls. */
     terrain: function (opt) {
       opt = opt || {};
-      return function (cols, rows) {
-        var n = cols * rows, cov = new Float32Array(n), sc = opt.scale || 0.06, seed = opt.seed || 3, th = opt.threshold || 0.48;
+      var sc = opt.scale || 0.06, seed = opt.seed || 3, th = opt.threshold || 0.48, sl = opt.slope || 0, fl = opt.flow || null;
+      function field(cols, rows, t, cov) {
+        var n = cols * rows, X, Y, f;
         for (var i = 0; i < n; i++) {
           var x = i % cols, y = (i / cols) | 0;
-          var f = fbm(x * sc, y * sc * 1.8, seed) + (opt.slope || 0) * (y / rows - 0.5);
+          X = x * sc; Y = y * sc * 1.8;
+          if (fl) {
+            f = 0.55 * lnoise(X + t * fl.x1, Y + (fl.sway || 0.3) * Math.sin(t * fl.w + X * 2.2), seed)
+              + 0.3 * lnoise(X * 2.1 - t * fl.x2, Y * 2.1 + t * fl.y2, seed + 3)
+              + 0.15 * lnoise(X * 4.3 + t * fl.x3, Y * 4.3 - t * fl.y3, seed + 7);
+            if (fl.ripple) f += fl.ripple * (0.25 + 0.75 * (y / rows)) * Math.sin(x * 0.52 + y * 0.21 - t * 1.1 + 1.6 * Math.sin(y * 0.33 + t * 0.4));
+          } else f = fbm(X, Y, seed);
+          f += sl * (y / rows - 0.5);
           cov[i] = f > th ? Math.min(1, (f - th) / (1 - th) * 1.6) : 0;
         }
-        return { cov: cov };
-      };
+      }
+      var fn = function (cols, rows) { var cov = new Float32Array(cols * rows); field(cols, rows, 0, cov); return { cov: cov }; };
+      fn.at = function (t, cols, rows, cov) { field(cols, rows, t, cov); };
+      return fn;
     },
     /* a 1-bit bitmap (rows of '#'/'.', e.g. NB.LOGO.lg) fitted into the grid, square pixels.
        opt.fill: share of width it may take; opt.vfill: share of height; opt.cy: vertical centre (0..1). */
@@ -178,7 +206,11 @@
        breathe   fraction of cells per second that drift (noise glyph swaps, or a source glyph moving one
                  step along the ramp), painted cell by cell, its rate rising and falling on a slow sine
        calm      elements whose boxes stay free of noise (+1 cell), with a faint, sparse ring around them,
-                 so text never sits on dense characters and detail grows towards the edges */
+                 so text never sits on dense characters and detail grows towards the edges
+     And one that moves the picture itself (ambient tier N, only while the canvas is on screen, the tab is visible and motion is on):
+       flow      function (t, cols, rows, cov) that fills cov for time t (NB.sources.terrain(...).at); every opt.flowFps (8) per second the
+                 cells whose glyph changed are repainted one by one, nothing else; opt.flowShare (1) lets only that share of them change
+                 at each step, the rest wait for the next */
   NB.ascii = function (canvas, opt) {
     opt = opt || {};
     var CW = (opt.cell || [9, 16])[0], CH = (opt.cell || [9, 16])[1];
@@ -188,7 +220,7 @@
     var ctx = canvas.getContext('2d'), DPR = Math.min(2, window.devicePixelRatio || 1);
     var font = opt.font || '500 13px "JetBrains Mono", ui-monospace, monospace';
     var atlas, cols = 0, rows = 0, n = 0, src = { cov: new Float32Array(0) }, noiseG, thr, glyphOf, zone, rgbStr = null;
-    var dirty = true, visible = true, last = 0, lastB = 0, reduce = NB.reduce();
+    var dirty = true, visible = true, last = 0, lastB = 0, lastF = 0, t0 = null, flowCov = null, reduce = NB.reduce();
     var FRONT = CI[opt.frontColor || 'accent'];
     var S = { order: opt.order != null ? opt.order : 1, px: -1e4, py: -1e4, lens: 0, lensPx: opt.lensPx || 96, noiseFill: opt.noiseFill != null ? opt.noiseFill : 1 };
 
@@ -235,6 +267,7 @@
         var ch = src.chars && src.chars[i];
         glyphOf[i] = ch && (ch in gi) ? gi[ch] : rampIdx(src.cov[i]);
       }
+      flowCov = opt.flow ? new Float32Array(n) : null;
       rgbStr = null;
       if (src.rgb && opt.mode === 'color') {
         rgbStr = new Array(n);
@@ -306,11 +339,25 @@
         if (cellwise) drawCell(j);
       }
     }
+    /* the field moves: refill the coverage for this moment and repaint only the cells whose glyph changed */
+    function flowStep(time) {
+      if (t0 === null) t0 = time;
+      opt.flow(time - t0, cols, rows, flowCov);
+      var full = dirty, ord = S.order, sc = src.cov, share = opt.flowShare || 1;
+      for (var i = 0; i < n; i++) {
+        var c = flowCov[i], was = sc[i] <= 0.02 ? -1 : glyphOf[i], now = c <= 0.02 ? -1 : rampIdx(c);
+        if (now === was) continue;
+        if (share < 1 && Math.random() > share) continue;          /* a changed cell may wait for the next step: the surface shimmers instead of stepping */
+        sc[i] = c; if (now >= 0) glyphOf[i] = now;
+        if (!full && ord >= thr[i]) drawCell(i);
+      }
+    }
     function tick(time) {
       if (!visible || document.hidden || !n) return;
       if (time - last < 1 / (opt.fps || 30)) return;
       last = time;
       if (opt.onTick) opt.onTick(S, time, api);
+      if (flowCov && S.order > 0.02 && time - lastF >= 1 / (opt.flowFps || 8)) { lastF = time; flowStep(time); }
       if (dirty) {
         /* while the state is moving (scrub), a few noise glyphs swap so the field reads as alive */
         if (!reduce && S.order < 0.999) shimmer(Math.max(4, (n * 0.01) | 0), false);
