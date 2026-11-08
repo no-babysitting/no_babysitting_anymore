@@ -1,5 +1,7 @@
 # 10 · Kịch bản v3 (đã duyệt 07/11/2026)
 
+> **Từ 08/11/2026:** lộ trình chính chuyển sang kịch bản v4 (`14-content-script-v4.md`; quyết định D22–D42 ở `08-kaizen-go-live.md` §1b). Mười hai phần dưới đây thành phần **Nâng cao**, gộp còn 8 mục và viết sau (`14` §8). Các nguồn và kiểm chứng ở §1, §2, §6, §7 vẫn dùng được.
+
 > **Trạng thái: đã duyệt ngày 07/11/2026** (chủ dự án duyệt nguyên bản, gồm cả 6 điểm ở §8). Từ đây K2 (trang chủ mới) và K4 (viết lại chương) làm theo tài liệu này. Câu chữ hiển thị trên site vẫn được duyệt ở từng PR (D13). Mọi khẳng định về sản phẩm đều có nguồn ở §1; kết quả reviewer độc lập ở §7.
 
 ## 0. Tóm tắt

@@ -2,6 +2,18 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Kịch bản v4: Trước, Trong, Sau, xoay quanh six shifts (08/11/2026, đã duyệt)
+
+Chủ dự án duyệt ngày 08/11: giữ câu hero của chủ dự án kèm dòng trả lời; studio hư cấu đổi tên thành “1 tỷ gói mè”.
+
+Chỉ là tài liệu, chưa đổi gì trên site. Chủ dự án muốn viết lại nội dung cho mọi người học. Sau ba vòng hỏi đáp (5 câu tổng quan, 15 câu chi tiết, 4 câu bổ sung), có thêm bốn tài liệu:
+- `docs/14-content-script-v4.md`: kịch bản nội dung. Gồm kim tự tháp Minto, trang chủ, năm phần, một câu chuyện chung và năm kính theo vai. Chương 01 đã viết đủ chữ để làm bài mẫu.
+- `docs/15-typography-motion-v4.md`: vai chữ, golden word, ba điểm dừng mỗi phần, hiệu ứng M15–M17, art ASCII mở chương theo màu hoàng hôn của Finale, mascot có lời, kính, cách đo.
+- `docs/16-writing-guide.md`: văn phong tiếng Việt và tiếng Anh. Gồm hư từ chỉ thời, thể, mức độ, phạm vi; *bị*/*được* và chủ thể; dấu hiệu chữ máy viết; cách trình bày tiếng Anh.
+- `docs/17-handoff-prompt.md`: prompt giao cho coding agent, viết theo six shifts, kèm danh sách tham chiếu chính thức.
+
+Quyết định ghi ở `docs/08` §1b (D21–D42). Mười hai phần của v3 thành phần Nâng cao, viết sau. Hai lần tung đồng xu, Vòng giao việc 7 bước và 6 loại việc sẽ bị gỡ khỏi trang. Kiểm lại link bài six shifts: `claude.com/blog/…` nay chuyển hướng (308) sang `claude.dev/blog/…`.
+
 ## Mặt nước chuyển động ở phần tuyên ngôn (08/11/2026)
 
 Chủ dự án hỏi lớp ASCII phía sau đoạn tuyên ngôn và bốn con số có đúng ý không, và muốn nó chuyển động. Đó là lớp địa hình ASCII (đường đồng mức, cùng nguồn với phần mở chương), trước đây chỉ mọc lên theo cuộn rồi đứng yên; nhìn giống mặt nước vì nửa dưới dày dần thành các dải ngang. Nay nó **trôi chậm như mặt nước** (tầng N: mỗi tầng nhiễu một hướng, hình lớn đưa nhẹ theo sóng sin, gợn mờ ở nửa dưới), tắt cùng công tắc chuyển động, dừng khi ra khỏi màn hình hoặc tab ẩn. Chi phí đo được: ≈ 3.300 lần vẽ ô mỗi giây và +5% luồng chính ở desktop (≈ 900 và +3% ở điện thoại), 0 khi không hiện. `check.cjs` mục 4 thêm điểm đo thứ ba: dưới 300 lần/giây nghĩa là nước đứng yên (hỏng), trên 6.000 là quá đắt. Chi tiết kỹ thuật: `docs/09` §1.
@@ -10,7 +22,7 @@ Chủ dự án hỏi lớp ASCII phía sau đoạn tuyên ngôn và bốn con s�
 
 Chỉ đổi cách trình bày và chuyển động; **không đổi câu chữ** (phần câu chữ nằm ở đợt C, chờ duyệt theo D13). Luật rút ra và công cụ đo: `docs/13-design-taste.md`.
 
-1. **Hero trên điện thoại.** Bỏ nhãn góc và đồng hồ; logo và câu hứa lên cao, căn trái theo logo; tuyên bố miễn trừ xuống đáy (ở 320px bỏ "cuộn ↓" vì hai dòng in đè nhau). **Header:** nút chuyển động thành icon pixel (tạm dừng / phát) và có nút menu mới; menu phủ cả trang, hình ASCII hội tụ khi mở và tan khi đóng. *Phần phác thảo của chủ dự án có hai cách hiểu; mình chọn: icon hamburger trên nút, hình xe đẩy gạch chéo là tranh ASCII trong menu. Đổi ngược lại là một dòng.* Menu khoá phần còn lại của trang (`inert`), Esc đóng, tiêu điểm quay về nút.
+1. **Hero trên điện thoại.** Bỏ nhãn góc và đồng hồ; logo và câu hứa lên cao, căn trái theo logo; tuyên bố miễn trừ xuống đáy (ở 320px bỏ "cuộn ↓" vì hai dòng in đè nhau). **Header:** nút chuyển động thành icon pixel (tạm dừng / phát) và có nút menu mới; menu phủ cả trang, hình ASCII hội tụ khi mở và tan khi đóng. *Phần phác thảo của chủ dự án có hai cách hiểu. Chủ dự án đã xác nhận cách đang dùng (08/11, D21): icon hamburger trên nút, hình xe đẩy gạch chéo là tranh ASCII trong menu.* Menu khoá phần còn lại của trang (`inert`), Esc đóng, tiêu điểm quay về nút.
 2. **Hành trình.** Số lớn căn trái, ghép từ ô nhỏ hơn (4×7 trên điện thoại); bỏ dòng "Hành trình · 12 phần" (chỉ còn bản cho trình đọc màn hình); đếm `01 / 12` theo panel; chương 10 tách khỏi Finale (nội dung ghim không còn bị chính khung ghim cắt).
 3. **Vòng giao việc.** Ghim ở cả điện thoại: cuộn là chuyển bước, người đọc giữ nhịp; rail thành hàng 7 số. Bước *Khám phá* bỏ hiệu ứng địa hình vô nghĩa, thay bằng danh sách nguồn sáng lên lần lượt (đang đọc, đã đọc). *Thực thi* và *Kiểm chứng* chữ to hơn, dòng đang chạy và phép kiểm hỏng nổi bật. Co cỡ cho máy ngắn (iPhone SE 375×667, 320×640).
 4. **Hai lần tung đồng xu.** Hai cột dùng chung năm hàng, mỗi cặp nằm trên một dòng dù chữ dài ngắn.
