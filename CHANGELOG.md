@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Nhập môn: `/deep-research`, lệnh hay dùng và thuật ngữ (08/11/2026)
+
+`docs/18`: bài N10 dùng lệnh `/deep-research` của Claude Code; thêm bài N13 và §2b, gồm bảng 20 lệnh hay dùng (`/init`, `/plan`, `/clear`, `/compact`, `/context`, `/rewind`, `/memory`, `/model`, `/effort`, `/advisor`, `/goal`, `/loop`, `/deep-research`, `/code-review`, `/doctor`…; đối chiếu trang Commands ngày 08/11) và bảng thuật ngữ AI/Claude hay gặp.
+
 ## Sửa v4 và kế hoạch track Nhập môn (08/11/2026)
 
 Chỉ là tài liệu. Theo ý chủ dự án:

@@ -24,7 +24,7 @@ Chủ dự án thấy rất nhiều người chưa biết setup AI để dùng: 
 
 ## 2. Outline các bài
 
-Mã `N0`–`N12` tạm thời; thứ tự là thứ tự học. Mỗi bài 4–6 phút. Cột "Việc làm thật" là phần Kết.
+Mã `N0`–`N13` tạm thời; thứ tự là thứ tự học. Mỗi bài 4–6 phút. Cột "Việc làm thật" là phần Kết.
 
 | Mã | Bài | Ý chính (câu đỉnh của bài) | Nội dung | Việc làm thật |
 |---|---|---|---|---|
@@ -38,11 +38,74 @@ Mã `N0`–`N12` tạm thời; thứ tự là thứ tự học. Mỗi bài 4–6
 | N7 | **Model và effort** | Effort là nút chính; model là chọn ai làm. | Các model hiện có và effort; việc nào dùng mức nào (lấy từ docs và bài *Spending your effort*); không viết cứng tên model trong chữ, đọc từ `models.yml` | Thử cùng một việc ở hai mức effort |
 | N8 | **Vòng làm việc với đồng nghiệp AI** | Sáu điều chỉ bạn quyết được trước khi giao; phần thực thi để Claude lo. | **Bản "chỉ có Now" của six shifts**: tin phán đoán · thiết kế khuôn · để nó mở dần · nói một lần · để nó tự nhớ · đưa tham chiếu. Mỗi điểm: lợi ích, ý nghĩa, một ví dụ theo kính. Dẫn sang lộ trình six shifts để hiểu "vì sao" | Viết khuôn và một tham chiếu cho việc ở N0 |
 | N9 | **Artifacts và docs** | Đầu ra không chỉ là đoạn chat; nó là thứ bạn mở, sửa, chia sẻ. | Artifact là trang sống, chia sẻ được; tài liệu cộng tác (docs) để nhiều người cùng sửa; khi nào xin HTML, khi nào xin file Office | **Tạo một artifact** đầu ra của việc ở N0 |
-| N10 | **Nghiên cứu sâu và workflow** | Việc lớn thì để Claude tự chia việc cho nhiều agent. | *Deep research* trên Claude app; dynamic workflows trong Claude Code (từ khoá `ultracode`, xem tiến độ bằng `/workflows`); khi nào đáng dùng, tốn hơn bao nhiêu | Chạy một nghiên cứu sâu nhỏ |
+| N10 | **Nghiên cứu sâu và workflow** | Việc lớn thì để Claude tự chia việc cho nhiều agent. | *Deep research* trên Claude app; trong Claude Code là lệnh `/deep-research <câu hỏi>` (workflow có sẵn: tra web theo nhiều hướng, đối chiếu nguồn, trả về báo cáo có trích dẫn, bỏ những khẳng định không qua được đối chiếu). Nhắc thêm: việc lớn thì nhờ Claude tự dựng workflow (từ khoá `ultracode`). Khi nào đáng dùng, tốn hơn bao nhiêu | Chạy `/deep-research` cho một câu hỏi nhỏ của việc ở N0 |
 | N11 | **Đồ nghề, mỗi thứ một thẻ** | Đừng cài hết từ đầu; thêm khi có tín hiệu. | Thẻ: CLAUDE.md · skill · plugin · connector/MCP · GitHub · Hugging Face · hook · loop (`/loop`, `/goal`). Mỗi thẻ: là gì, để làm gì, dấu hiệu bạn cần (theo bảng *Build your setup over time* của docs), prompt nhờ Claude tự cài, `Đào sâu →` | Đánh dấu thứ bạn cần lúc này (thường là 0–1 thứ) |
 | N12 | **Kiểm lại đầu ra, và gu của bạn** | AI làm nhanh; thế nào là đúng và đẹp vẫn do bạn quyết. | Kiểm đầu ra: AI có thể sai mà vẫn tự tin, đòi nguồn và bằng chứng (cầu sang phần 04). Gu: biến gu thành tham chiếu (design system, thang chấm, bản nháp nhiều hướng); chính trang này dùng bộ kiểm gu làm ví dụ | Viết thang chấm 3 dòng cho đầu ra của việc ở N0, rồi vào six shifts |
 
+| N13 | **Lệnh hay dùng và thuật ngữ** | Biết khoảng mười lệnh và hai chục từ là đọc được mọi hướng dẫn về Claude. | Hai bảng tra cứu ở §2b, mỗi dòng nói nghĩa và *khi nào dùng*; lệnh đánh dấu bề mặt (chỉ Claude Code hay dùng được cả ở Claude app). Bảng thuật ngữ dùng chung Glossary của site, có tooltip ở mọi trang | Ghim 3 lệnh bạn sẽ dùng nhiều nhất |
+
 **Hết track:** checklist tổng (dự án · hướng dẫn · prompt đầu tiên · artifact · thứ đồ nghề cần thêm) và nút `Vào lộ trình six shifts →`.
+
+## 2b. Bảng tra cứu cho N13
+
+### Lệnh hay dùng trong Claude Code
+
+Đối chiếu với trang *Commands* chính thức (<https://code.claude.com/docs/en/commands>) ngày 08/11/2026. Khi viết chữ, ghi ngày kiểm chứng; tham số và phiên bản có thể đổi.
+
+| Lệnh | Làm gì | Khi nào dùng |
+|---|---|---|
+| `/init` | Tạo `CLAUDE.md` đầu tiên cho dự án | Lần đầu mở một dự án (N4) |
+| `/plan [mô tả]` | Vào plan mode: Claude lên kế hoạch, chưa sửa gì | Việc nhiều bước, muốn duyệt hướng làm trước |
+| `/clear` | Mở hội thoại mới, context trống | Chuyển sang việc khác; sửa hai lần vẫn sai thì `/clear` rồi viết prompt mới |
+| `/compact [hướng dẫn]` | Tóm tắt hội thoại để giải phóng context, có thể dặn tóm tắt tập trung vào đâu | Phiên dài mà vẫn muốn làm tiếp cùng việc |
+| `/context` | Vẽ lưới cho thấy context đang dùng vào đâu, kèm gợi ý | Thấy Claude chậm hoặc lạc đề, muốn biết thứ gì chiếm chỗ |
+| `/rewind` | Tua hội thoại và/hoặc code về một điểm trước (có checkpoint) | Thử hướng táo bạo, sai thì quay lại |
+| `/resume`, `/rename` | Mở lại phiên cũ; đặt tên phiên | Việc kéo dài nhiều ngày |
+| `/memory` | Sửa `CLAUDE.md`, bật/tắt và xem auto memory | Kiểm Claude đã nhớ gì về bạn (N6) |
+| `/model`, `/effort` | Đổi model; đổi mức effort (`low` → `xhigh`, `max`, `auto`) | Việc khó nhiều ngóc ngách thì tăng effort trước khi đổi model (N7) |
+| `/advisor [model\|off]` | Bật công cụ *advisor*: Claude hỏi ý kiến một model thứ hai vào những lúc quan trọng trong lúc làm | Việc dài, nhiều quyết định khó, muốn có thêm một góc nhìn (cần kiểm gói và quyền dùng model) |
+| `/fast` | Bật/tắt fast mode | Cần trả lời nhanh hơn (xem điều kiện gói) |
+| `/goal [điều kiện]` | Đặt điều kiện "xong"; Claude làm tiếp qua nhiều lượt tới khi đạt | Việc dài chạy khi bạn không xem (phần 04) |
+| `/loop [khoảng] [prompt]` | Chạy một prompt lặp lại khi phiên còn mở | Theo dõi, tổng hợp định kỳ |
+| `/deep-research <câu hỏi>` | Workflow có sẵn: nghiên cứu nhiều nguồn, đối chiếu, báo cáo có trích dẫn | Câu hỏi cần nhiều nguồn (N10) |
+| `/code-review`, `/verify` | Rà diff bằng một agent chưa thấy cách làm; dựng và chạy app để xem kết quả | Trước khi duyệt một thay đổi (phần 04) |
+| `/doctor` | Kiểm setup, tỉa CLAUDE.md và skill | Thấy Claude làm trái hướng dẫn, hoặc mỗi tháng một lần (six shifts) |
+| `/btw [câu hỏi]` | Hỏi bên lề, không thêm vào hội thoại | Thắc mắc nhỏ giữa chừng |
+| `/usage` | Chi phí phiên, hạn mức của gói | N3 |
+| `/skills`, `/mcp`, `/plugin`, `/hooks`, `/permissions` | Xem và quản lý skill, kết nối MCP, plugin, hook, quyền | N11 |
+| Phím `Esc` | Dừng Claude ngay, giữ những gì đã làm | Thấy Claude bắt đầu lệch hướng |
+
+Trên Claude app (chat, Cowork) không có các lệnh này; chỗ nào có cách tương đương (Projects, nút nghiên cứu, cài đặt bộ nhớ) thì tab Claude app ghi cách đó.
+
+### Thuật ngữ hay gặp
+
+Định nghĩa một câu, giọng của site; khi viết phải đối chiếu từng dòng với docs hoặc Glossary chính thức (<https://code.claude.com/docs/en/glossary>) và ghi nguồn.
+
+| Thuật ngữ | Nghĩa ngắn |
+|---|---|
+| Model, LLM | "Bộ não": mô hình ngôn ngữ đọc chữ vào và viết chữ ra |
+| Harness | Phần mềm bao quanh model (Claude Code, Cowork): cho nó công cụ, quyền, trí nhớ |
+| Agent, agentic | Model tự chọn bước tiếp theo và tự dùng công cụ để làm xong việc, thay vì chỉ trả lời |
+| Vibe coding / vibe work | Giao việc theo cảm hứng, mỗi lần một kiểu, phải trông từng bước |
+| Prompt | Thứ bạn gõ cho Claude |
+| Context, context window | Mọi thứ Claude đang thấy trong phiên; cửa sổ là giới hạn bao nhiêu nó thấy được cùng lúc |
+| Token | Đơn vị đo chữ mà model đọc và viết; tính chi phí và giới hạn |
+| Prompt engineering / context engineering | Viết prompt cho tốt / sắp xếp mọi thứ đi vào context (hướng dẫn, skill, file, bộ nhớ) |
+| Compaction | Tự tóm tắt hội thoại khi context gần đầy |
+| Memory, auto memory | Ghi chú mang sang phiên sau; auto memory là ghi chú Claude tự viết |
+| Hallucination | Model nói sai mà vẫn tự tin |
+| Effort, thinking | Mức Claude nghĩ trước khi làm |
+| Plan mode, auto mode | Chế độ lên kế hoạch trước; chế độ để Claude tự chạy lệnh, có bộ phân loại kiểm việc rủi ro |
+| Skill | Một thư mục hướng dẫn và file mà Claude mở khi cần |
+| Subagent | Một agent phụ có context riêng, làm một phần việc rồi báo lại |
+| Workflow (dynamic workflow) | Kịch bản điều phối nhiều agent cho một việc lớn |
+| MCP, connector | Chuẩn để nối Claude với dịch vụ ngoài (Drive, Slack, GitHub, Hugging Face…); connector là bản đã đóng gói sẵn |
+| Plugin | Gói gồm skill, hook, kết nối, dùng chung cho nhóm |
+| Hook | Đoạn lệnh Claude Code tự chạy ở một thời điểm (trước khi dùng công cụ, khi kết thúc lượt); dùng cho luật không có ngoại lệ |
+| Artifact | Trang hoặc tài liệu sống Claude tạo ra, mở và chia sẻ được |
+| Rubric, eval | Thang chấm thế nào là tốt; bộ bài thử để đo |
+| Prompt injection | Chữ trong nội dung Claude đọc tìm cách sai khiến nó |
+| Multimodal | Đọc được cả ảnh, PDF, không chỉ chữ |
 
 ## 3. Nâng cao thêm một mục
 
