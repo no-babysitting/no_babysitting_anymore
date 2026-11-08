@@ -15,6 +15,7 @@ import TwoFlips from '../../components/scenes/TwoFlips.astro';
 import { openerProps } from '../../lib/opener';
 import { chapters, PARTS } from '../../lib/chapters';
 import { inline } from '../../lib/matrix';
+import { bindLast } from '../../lib/typo';
 export function getStaticPaths() {
   return chapters.filter((c) => c.id !== 'c02').map((c) => ({ params: { ch: c.id }, props: { c } }));
 }
@@ -27,7 +28,7 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
   <main class="wrap ch">
     <div data-ch-opener><ChapterOpener {...openerProps(c)} /></div>
 
-    <section class="beat ask" data-ask aria-labelledby="q"><span class="nb-micro" data-reveal="up">b1 · hỏi</span><h2 class="nb-q q" id="q" data-reveal="words">{c.question}</h2><span class="nb-micro cue" data-reveal="up">Trả lời trong đầu trước khi cuộn · không có đáp án sai</span></section>
+    <section class="beat ask" data-ask aria-labelledby="q"><span class="nb-micro" data-reveal="up">b1 · hỏi</span><h2 class="nb-q q" id="q" data-reveal="words" set:html={inline(bindLast(c.question))}></h2><span class="nb-micro cue" data-reveal="up">Trả lời trong đầu trước khi cuộn · không có đáp án sai</span></section>
 
     <section class="facts">
       {c.goals && <div><span class="nb-micro" data-reveal="up">Mục tiêu</span><p data-reveal="lines" set:html={inline(c.goals)} /></div>}
@@ -74,11 +75,11 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
   .sub { margin: 0; color: var(--fg-muted); font-size: 17px; max-width: 44ch; }
   .beat { display: grid; gap: 16px; }
   .ask { min-height: calc(100svh - var(--hud-height) - 64px); align-content: center; gap: 22px; }
-  .ask .q { font-size: clamp(34px, 5.6vw, 76px) !important; max-width: 20ch !important; }
+  .ask .q { font-size: clamp(34px, 5.6vw, 72px) !important; max-width: 20ch !important; }
   .cue { color: var(--fg-subtle); }
   .bwrap { display: grid; grid-template-columns: 52px 1fr; gap: 0 18px; }
   .beats .prog { border-top: 0; list-style: none; margin: 0; padding: 0; position: sticky; top: 72px; align-self: start; display: grid; gap: 6px; }
-  .beats .prog li { border-bottom: 0; font: 600 11.5px/1 var(--font-mono); color: var(--fg-subtle); padding: 4px 0 4px 10px; border-left: 2px solid var(--control); transition: color .24s, border-color .24s; }
+  .beats .prog li { border-bottom: 0; font: 600 12px/1 var(--font-mono); color: var(--fg-subtle); padding: 4px 0 4px 10px; border-left: 2px solid var(--control); transition: color .24s, border-color .24s; }
   .beats .prog li.on { color: var(--fg-muted); border-color: var(--fg-muted); }
   .beats .prog li.cur { color: var(--fg); border-color: var(--accent); border-left-width: 4px; padding-left: 8px; background: var(--bg-raised); }
   .scene { display: grid; gap: 12px; }
@@ -86,7 +87,7 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
   .facts { display: grid; grid-template-columns: 1fr 1fr; border-block: 1px solid var(--control); }
   .facts > div { padding: 18px 18px 18px 0; display: grid; gap: 8px; align-content: start; }
   .facts > div + div { border-left: 1px solid var(--control); padding-left: 18px; }
-  .facts p { margin: 0; line-height: 1.6; max-width: 62ch; }
+  .facts p { margin: 0; line-height: 1.6; max-width: var(--measure); }
   .beats { display: grid; gap: 12px; }
   .bhd { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .beats ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--control); }
@@ -98,9 +99,10 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
   .ph { font: 600 12px/1.4 var(--font-mono); color: var(--fg-muted); }
   .tx { line-height: 1.5; }
   details[open] summary .tx { color: var(--fg-muted); }
-  details p { margin: 0; padding: 0 4px 16px calc(15ch + 24px); line-height: 1.65; max-width: 90ch; }
-  .beats :global(code) { font: 500 .9em var(--font-mono); background: var(--bg-sunken); border: 1px solid var(--control); padding: 1px 4px; }
-  .src { color: var(--fg-subtle); line-height: 1.6; }
+  /* ch is the width of "0": Be Vietnam Pro sets about 1.4 Vietnamese characters per ch, so 48ch of text ≈ 66 characters */
+  details p { margin: 0; padding: 0 4px 16px calc(15ch + 24px); line-height: 1.65; max-width: calc(15ch + 24px + 48ch); }
+  .beats :global(code) { font: 500 max(12px, .9em) var(--font-mono); background: var(--bg-sunken); border: 1px solid var(--control); padding: 1px 4px; }
+  .src { color: var(--fg-subtle); line-height: 1.6; max-width: var(--measure); }
   @media (max-width: 640px) {
     .opener, .facts { grid-template-columns: 1fr; }
     .facts > div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--control); }

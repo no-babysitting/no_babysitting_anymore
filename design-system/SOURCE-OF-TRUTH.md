@@ -30,9 +30,10 @@ Giá trị gốc ở `tokens.json`; CSS sinh ra bằng `python3 tools/tokens2css
 | Tên chương tiếng Anh | Archivo 125%, 800 | 15–64px | Viết hoa |
 | Số lớn (chương, bộ đếm, điểm) | Archivo 62%, 800 | 48–300px | `tabular-nums`; số lớn **không** dùng accent |
 | Câu hỏi Socratic, trích dẫn | Newsreader | 19–72px | Serif chỉ ở đây. Ngoặc kép + nghiêng **chỉ** cho lời nguyên văn đã đối chiếu |
-| Thân bài, UI | Be Vietnam Pro | 14,5–19px | 17px / 1,65 cho thân bài, tối đa 66ch |
+| Thân bài, UI | Be Vietnam Pro | 14–19px | 17px / 1,65 cho thân bài; dòng tối đa `measure` = 50ch ≈ 66–68 ký tự (docs/11) |
 | Nhãn micro, eyebrow, nút, tag, chip | JetBrains Mono 600 | **≥ 12px** | Giãn 0,04–0,06em, **không `text-transform`**. Tiếng Việt viết thường; tiếng Anh, mã, số viết hoa sẵn hoặc `.nb-caps`. Tên component (`SourceButton`) và mã (`c04:b3`) giữ nguyên |
-| Hành động agent, code | JetBrains Mono 400–500 | 12,5–14px | Tiếng Việt viết thường ("Đọc", "Tra web") |
+| Hành động agent, code | JetBrains Mono 400–500 | 12,5–14px | Tiếng Việt viết thường ("Đọc", "Tra web"). Mã nằm trong đoạn văn: 0,9em của đoạn, tối đa 16px |
+| Dòng prompt (câu giao việc mẫu) | JetBrains Mono 500 | 16–32px | Chỉ cho câu người dùng gõ vào Claude; không dùng cho chữ giải thích |
 
 ## 3. Quy tắc đã chốt (07/11/2026)
 
