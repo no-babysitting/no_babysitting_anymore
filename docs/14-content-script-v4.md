@@ -1,6 +1,6 @@
 # 14 · Kịch bản nội dung v4: Trước, Trong, Sau (08/11/2026)
 
-> **Trạng thái: chờ chủ dự án duyệt** (D13). Bản này thay *lộ trình chính* của kịch bản v3 (`10-script-v3-proposal.md`). Mười hai phần của v3 thành phần **Nâng cao**, viết sau (§8). Các quyết định của phiên hỏi đáp ngày 08/11/2026 ghi ở `08-kaizen-go-live.md` §1b (D21–D42).
+> **Trạng thái: đã duyệt ngày 08/11/2026** (D13). Bản này thay *lộ trình chính* của kịch bản v3 (`10-script-v3-proposal.md`). Mười hai phần của v3 thành phần **Nâng cao**, viết sau (§8). Các quyết định của phiên hỏi đáp ngày 08/11/2026 ghi ở `08-kaizen-go-live.md` §1b (D21–D42).
 >
 > Dấu nháy trong tài liệu này viết thẳng cho dễ sửa. Khi đưa chữ lên site, đổi thành “ ” (`16-writing-guide.md` §6).
 >
@@ -88,7 +88,7 @@ later[]     chỗ chờ mô phỏng (§9), không render
 
 ## 4. Kính theo vai và câu chuyện chung
 
-**Câu chuyện chung** (hư cấu; nói rõ ngay ở khối kính đầu tiên của phần 00). Studio **Nắng Sớm** ra mắt khoá học online *Chụp đẹp bằng điện thoại*: 12 bài video ngắn, dạy người bán hàng online chụp ảnh sản phẩm bằng điện thoại. Khoá học bán trên trang web của studio, và cả nhóm có bốn tuần. Người đọc nhận một phần việc trong đó, tuỳ kính đã chọn.
+**Câu chuyện chung** (hư cấu; nói rõ ngay ở khối kính đầu tiên của phần 00). Studio **“1 tỷ gói mè”** ra mắt khoá học online *Chụp đẹp bằng điện thoại*: 12 bài video ngắn, dạy người bán hàng online chụp ảnh sản phẩm bằng điện thoại. Khoá học bán trên trang web của studio, và cả nhóm có bốn tuần. Người đọc nhận một phần việc trong đó, tuỳ kính đã chọn.
 
 | id | Kính | Phần việc của bạn trong câu chuyện |
 |---|---|---|
@@ -114,7 +114,7 @@ later[]     chỗ chờ mô phỏng (§9), không render
 
 **Bề mặt** (D29). Claude Code là bề mặt chính: ứng dụng desktop (tab Code) hay claude.ai/code đều không cần biết code, còn terminal thì tuỳ người [S10]. Kỹ thuật nào chỉ là prompt (rà điểm mù, phỏng vấn, xin bản nháp, quiz) thì gắn nhãn *Dùng được cả ở Claude app và Cowork*. Tính năng chỉ Claude Code có (auto memory, `/memory`, `/clear`, Esc, `/goal`, hook) thì ghi rõ và kèm ngày kiểm chứng.
 
-## 5. Trang chủ: chữ hoàn chỉnh, chờ duyệt
+## 5. Trang chủ: chữ hoàn chỉnh (đã duyệt)
 
 Thứ tự trên trang (D34): **Hero → Kim tự tháp (trên nền mặt nước) → Lộ trình 5 phần → Finale**. Bỏ: Hai lần tung đồng xu, Vòng giao việc 7 bước, 6 loại việc, tuyên ngôn 3 câu hỏi (§9).
 
@@ -188,7 +188,7 @@ Câu lớn là câu của chủ dự án. "Trông trẻ" là nghĩa đen của *
   - *Điều chỉ bạn biết* [S3]: một quy trình chỉ nằm trong đầu một người · một file không bao giờ được mở · một phép kiểm phải qua thì mới tính là xong · một ngân sách không được vượt. Không mặc định nào biết những điều đó. Đây là chỗ bạn bỏ chút công.
   - *Ba chặng* (rail chữ, dẫn tới 01–04): Trước · Trong · Sau, mỗi chặng một dòng như ở trang chủ.
   - **Khối kính đầu tiên** (hiện hàng chip chọn kính), giới thiệu câu chuyện:
-    - Chung với mọi kính: *Từ đây tới cuối, mọi ví dụ đi theo một việc: studio Nắng Sớm (hư cấu) ra mắt khoá học online "Chụp đẹp bằng điện thoại", 12 bài video ngắn dạy người bán hàng online chụp ảnh sản phẩm bằng điện thoại. Cả nhóm có bốn tuần.*
+    - Chung với mọi kính: *Từ đây tới cuối, mọi ví dụ đi theo một việc: studio “1 tỷ gói mè” (hư cấu) ra mắt khoá học online "Chụp đẹp bằng điện thoại", 12 bài video ngắn dạy người bán hàng online chụp ảnh sản phẩm bằng điện thoại. Cả nhóm có bốn tuần.*
     - Chung: *Bạn là chủ studio. Bạn lo trang giới thiệu khoá học, và giữ cho cả nhóm ra mắt đúng hẹn.*
     - Dev: *Bạn lo trang thanh toán và việc mở khoá bài học ngay sau khi học viên trả tiền.*
     - BA & PM: *Bạn viết spec cho phần học: tiến độ, bài kiểm tra cuối khoá, điều kiện cấp chứng nhận.*

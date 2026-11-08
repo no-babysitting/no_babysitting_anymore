@@ -1,6 +1,6 @@
 # 15 · Typography và hiệu ứng cho kịch bản v4 (08/11/2026)
 
-> **Trạng thái: chờ chủ dự án duyệt** cùng `14-content-script-v4.md`. Tài liệu này *bổ sung* các luật đang có, không thay chúng:
+> **Trạng thái: đã duyệt ngày 08/11/2026** cùng `14-content-script-v4.md`. Tài liệu này *bổ sung* các luật đang có, không thay chúng:
 > - vai chữ: `design-system/SOURCE-OF-TRUTH.md` §2;
 > - ba tầng chuyển động C/P/N và ngân sách: `09-motion-script.md`;
 > - luật đo chữ: `11-typography.md`;

@@ -2,7 +2,9 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
-## Kịch bản v4: Trước, Trong, Sau, xoay quanh six shifts (08/11/2026, chờ duyệt)
+## Kịch bản v4: Trước, Trong, Sau, xoay quanh six shifts (08/11/2026, đã duyệt)
+
+Chủ dự án duyệt ngày 08/11: giữ câu hero của chủ dự án kèm dòng trả lời; studio hư cấu đổi tên thành “1 tỷ gói mè”.
 
 Chỉ là tài liệu, chưa đổi gì trên site. Chủ dự án muốn viết lại nội dung cho mọi người học. Sau ba vòng hỏi đáp (5 câu tổng quan, 15 câu chi tiết, 4 câu bổ sung), có thêm bốn tài liệu:
 - `docs/14-content-script-v4.md`: kịch bản nội dung. Gồm kim tự tháp Minto, trang chủ, năm phần, một câu chuyện chung và năm kính theo vai. Chương 01 đã viết đủ chữ để làm bài mẫu.
