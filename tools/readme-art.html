@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components/bundle.css">
+<style>html,body{margin:0;background:#14120f}
+#hero{position:relative;width:1280px;height:520px;overflow:hidden}
+#hero canvas{position:absolute;inset:0;width:100%;height:100%}
+.shade{position:absolute;left:0;right:0;top:0;height:42%;background:linear-gradient(#14120f 30%,rgba(20,18,15,0));z-index:2}
+.logo{position:absolute;left:56px;top:56px;width:620px;color:#d97a4a;z-index:3}
+.logo svg{width:100%;height:auto;display:block}
+#water{position:relative;width:1280px;height:220px;overflow:hidden}
+#water canvas{position:absolute;inset:0;width:100%;height:100%}
+</style></head><body>
+<div id="hero"><canvas id="hcv"></canvas><div class="shade"></div><div class="logo" id="logo"></div></div>
+<div id="water"><canvas id="wcv"></canvas></div>
+<script src="../design-system/components/bundle.js"></script>
+<script>
+const NB=window.NoBabysitting;
+document.getElementById('logo').innerHTML=NB.logoSVG();
+const H=NB.ascii(document.getElementById('hcv'),{host:document.getElementById('hero'),cell:[8,14],mode:'color',order:1,sweep:0.4,noiseFill:0.05,pointer:false,font:'500 12px "JetBrains Mono", monospace',source:NB.sources.scene({sunX:0.72})});
+const field=NB.sources.terrain({scale:0.055,threshold:0.56,slope:0.45,seed:7,flow:{x1:0.04,w:0.3,sway:0.28,x2:0.07,y2:0.025,x3:0.075,y3:0.03,ripple:0.06}});
+const W=NB.ascii(document.getElementById('wcv'),{host:document.getElementById('water'),cell:[9,16],order:1,sweep:0.3,noiseFill:0.25,pointer:false,ramp:' .·:/\\+*',tone:'fg-muted',frontColor:'fg',font:'500 13px "JetBrains Mono", monospace',source:field,flow:field.at,flowFps:12,flowShare:0.55});
+window.__ready=Promise.all([H.ready,W.ready].filter(Boolean)).then(()=>{H.redraw&&H.redraw();W.redraw&&W.redraw();return true;});
+</script></body></html>
