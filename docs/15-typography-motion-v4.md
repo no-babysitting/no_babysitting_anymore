@@ -162,14 +162,14 @@ Chữ tiếng Việt in hoa bên trong canvas (hình 02) là chữ trang trí `a
 
 - **Nút trên header:**
   - Nhãn `Kính: Chung`, kèm icon pixel hình cặp kính (hai ô vuông nối nhau), cùng kiểu các icon trong `icons.ts`.
-  - Bấm vào thì mở một popover có 6 lựa chọn (`radiogroup`).
+  - Bấm vào thì mở một popover có 10 lựa chọn (Chung + 9 nhóm việc, `radiogroup`), cùng tên và thứ tự với bộ chọn nhóm việc của "Một lần giao việc".
   - Ở khổ ≤ 360px chỉ còn icon, kèm `aria-label`.
 - **Lần đầu:**
-  - Khối kính đầu tiên trên trang, khi chưa có lựa chọn nào được lưu, hiện hàng chip "Bạn làm việc gì?" với 6 chip. Chip Chung đứng đầu.
+  - Khối kính đầu tiên trên trang, khi chưa có lựa chọn nào được lưu, hiện hàng chip "Bạn làm việc gì?" với 10 chip. Chip Chung đứng đầu. Trên điện thoại hàng chip cuộn ngang được (như chip của "Một lần giao việc").
   - Chọn một chip thì lưu `nb-lens` (bọc `try/catch`), cập nhật mọi khối kính trên trang và nhãn trên header.
   - Không chọn mà cuộn qua thì khối hiện nội dung kính Chung, kèm link nhỏ `Đổi kính`.
 - **Khối kính:**
-  - Đủ 6 biến thể có sẵn trong DOM; các biến thể đang ẩn có `hidden`.
+  - Đủ 10 biến thể có sẵn trong DOM; các biến thể đang ẩn có `hidden`.
   - Đổi kính thì chữ đổi bằng `NB.say` (mờ nhanh). Chiều cao đổi bằng Flip (M3), để không có cú nhảy.
   - Prompt mang đi thử đổi theo cùng kính.
 - **Không bắt chọn.** Không có màn chặn trước khi học. Trang chủ không hỏi gì về kính.
@@ -191,9 +191,8 @@ Chữ tiếng Việt in hoa bên trong canvas (hình 02) là chữ trang trí `a
 - **Journey:** 5 panel, giữ cơ chế; bộ đếm `01 / 05`.
 - **Finale:** cảnh thành phố, bộ đếm `05 / 05`, các nút theo 14 §5.
 - **Gỡ khỏi trang và khỏi bộ kiểm:**
-  - `TwoFlips` và `Run`, cùng CSS của chúng;
-  - `work-types.ts`;
-  - các mục `#flips`, `#run` trong `SCENES` của `design-check.cjs`.
+  - `TwoFlips` cùng CSS của nó, và mục `#flips` trong `SCENES` của `design-check.cjs`.
+  - **Giữ** `Run` ("Một lần giao việc") và `#run` trong `SCENES` (D43). Thêm 3 nhóm việc vào `work-types.ts`; bộ chọn nhóm việc đọc và ghi cùng khoá `nb-lens` với kính.
 
 ## 9. Đo và kiểm (thêm vào bộ kiểm đang có)
 
@@ -220,3 +219,15 @@ Không dựng mô phỏng mới ở đợt này. Mỗi phần ghi chỗ chờ tr
 | 04 | `sim:check`, `sim:quiz` | Vòng làm → kiểm → sửa → kiểm; báo cáo HTML có câu đố |
 
 Những mô phỏng đang có (AgentWindow, FloatingOps, ContextMeter…) vẫn ở c02 và Library, không đổi.
+
+## 11. Giả lập "grill me" (D46)
+
+Mọi chỗ nhắc tới việc Claude phỏng vấn bạn hay đố bạn (*grill me*, *interview me*, *quiz me*) đều có một thẻ giả lập **câu 1/3** để người đọc thấy ngay cách làm này lợi ở đâu. Đây là thẻ chữ, không phải mô phỏng chạy thật.
+
+- **Nội dung thẻ:** nhãn `Câu 1/3` · câu hỏi · 3 lựa chọn (ô tròn ○), một lựa chọn gắn nhãn **Đề xuất** · một dòng *Đề xuất:* nói vì sao · một dòng *Vì sao hỏi câu này trước:* nói câu trả lời làm đổi điều gì. Hai câu còn lại không hiện; dòng cuối ghi `2 câu nữa, hỏi từng câu một`.
+- **Chữ:** câu hỏi Be Vietnam Pro 600, 17–19px; lựa chọn Be Vietnam Pro 400, 15–17px; nhãn `Câu 1/3` và **Đề xuất** dùng `.nb-tag` (ô đặc cho đề xuất); hai dòng giải thích 15px `fg-muted`.
+- **Chuyển động (tầng P):** khi lên 40% khung nhìn, câu hỏi hiện (M5), ba lựa chọn hiện lần lượt (0,12s mỗi dòng), rồi nhãn Đề xuất sáng lên cùng dòng giải thích. Mascot ở trạng thái `asking`. Reduced motion: hiện đủ ngay.
+- **Tương tác:** người đọc bấm được một lựa chọn để xem dòng giải thích đổi theo (lựa chọn khác đề xuất thì hiện vì sao đề xuất tốt hơn). Không lưu, không chấm điểm.
+- **Chỗ dùng:** 01 (cách 3, phỏng vấn), 04 (Claude đố bạn về thay đổi), Nhập môn (prompt đầu tiên có grill me, `18-intro-track-plan.md`). Nội dung từng thẻ ở `14` và `18`.
+- **Đo:** thẻ nằm trọn trong cột chữ ở 320px; mỗi lựa chọn là nút ≥ 44px.
+

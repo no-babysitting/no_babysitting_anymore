@@ -60,6 +60,25 @@ Hỏi theo ba vòng: 5 câu tổng quan, 15 câu chi tiết, 4 câu bổ sung. C
 | D41 | Phần "thấy" | Chưa làm mô phỏng mới; mỗi phần ghi chỗ chờ. Mô phỏng tinh chỉnh sau khi chữ đã chốt | 11 simulator (PRD) |
 | D42 | Đầu ra đợt này | Dàn ý toàn bộ, chữ hoàn chỉnh cho trang chủ và chương 01 (bài mẫu), đặc tả typography và hiệu ứng, văn phong, prompt giao cho coding agent | — |
 
+## 1c. Quyết định bổ sung (08/11/2026, sau khi duyệt v4)
+
+| # | Chủ đề | Quyết định | Thay cho |
+|---|---|---|---|
+| D43 | Một lần giao việc | **Giữ trên trang chủ**, sau kim tự tháp. Thêm 3 nhóm việc: Thiết kế · Bán hàng & khách hàng · Phân tích & yêu cầu (tổng 9) | D34 (bỏ Vòng giao việc và 6 loại việc) |
+| D44 | Kính | Kính theo **nhóm việc** của "Một lần giao việc": Chung + 9 nhóm. Bộ chọn nhóm việc ở trang chủ dùng chung trạng thái với kính | D26 (5 kính theo vai), một phần D27 |
+| D45 | Nhập môn: vị trí | Track riêng, viết ngay sau six shifts; cửa vào từ hero; menu ba nhóm Nhập môn · Lộ trình chính · Nâng cao | — |
+| D46 | Giả lập grill me | Chỗ nào nhắc tới grill me / phỏng vấn / quiz thì có thẻ câu 1/3: câu hỏi, 3 lựa chọn, đề xuất ngắn, vì sao hỏi trước (`15` §11) | — |
+| D47 | Nhập môn: người đọc | Đã chat với AI, chưa từng setup | — |
+| D48 | Nhập môn: bề mặt | Hai tab song song: Claude app (Projects) và Claude Code | — |
+| D49 | Nhập môn: khuôn | 3 hồi gọn; Kết là một việc làm thật có checklist | — |
+| D50 | Nhập môn: độ sâu | Đồ nghề kỹ thuật: là gì, để làm gì, khi nào cần, prompt nhờ Claude tự cài | — |
+| D51 | Nhập môn và Nâng cao | Nhập môn nói "là gì"; Nâng cao làm sâu; link `Đào sâu →` | — |
+| D52 | Gu và design system | Một bài chung cho mọi vai + mục Nâng cao A9 về design system UI/UX | — |
+| D53 | Nhập môn: xong là | Người đọc có một dự án thật đã setup (hướng dẫn, prompt đầu tiên có grill me, artifact) rồi vào six shifts | — |
+| D54 | Nhập môn: chủ đề thêm | Deep research (Claude app) và dynamic workflows (Claude Code); gói, giới hạn, chi phí; kiểm lại đầu ra của AI; chọn đúng sản phẩm | — |
+
+Outline: `18-intro-track-plan.md`.
+
 ## 2. Quan sát site ngày 07/11/2026
 
 Đo trên bản build bằng Chromium headless, ở 1440×900 và ở chế độ giả lập iPhone 13 Pro Max (428×926). Số CPU chỉ mang tính tương đối (đo trên máy container), dùng để so trước và sau mỗi đợt.
