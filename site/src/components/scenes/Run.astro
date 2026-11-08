@@ -59,7 +59,6 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
 
         <article class="step" data-step="2" aria-labelledby="run-s2">
           <h3 class="sh" id="run-s2"><span class="nb-micro">03 · {STEPS[2][0]}</span><span class="sd">{STEPS[2][1]}</span></h3>
-          <canvas class="nb-canvas tcv" data-cv="terrain" aria-hidden="true"></canvas>
           <ul class="tools" data-f="tools">
             {w.tools.map((t) => <li><span class={`nb-tag ${AVAIL[t.avail].mark}`}>{AVAIL[t.avail].label}</span><b>{t.name}</b>{t.note && <span class="note">{t.note}</span>}</li>)}
           </ul>
@@ -146,9 +145,11 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
   .ask > span:last-child { font: 400 clamp(19px, 2vw, 24px)/1.35 var(--font-display); }
   .caret { color: var(--accent); margin-left: 2px; }
 
-  .tcv { display: block; width: 100%; height: clamp(120px, 20vh, 190px); }
   .tools { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-  .tools :global(li) { display: grid; grid-template-columns: minmax(150px, auto) minmax(0, 1fr); gap: 4px 16px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+  .tools :global(li) { position: relative; padding-left: 26px; display: grid; grid-template-columns: minmax(150px, auto) minmax(0, 1fr); gap: 4px 16px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 10px; transition: opacity .3s; }
+  .tools :global(li)::before { content: '◇'; position: absolute; left: 0; top: 1px; font: 600 15px/1.4 var(--font-mono); color: var(--fg-subtle); }
+  .tools :global(li.seen)::before { content: '◆'; color: var(--signal); }
+  .tools :global(li.now)::before { content: '◆'; color: var(--accent); }
   .tools :global(b) { font: 600 16px/1.4 var(--font-text); }
   .tools :global(.note) { grid-column: 2; color: var(--fg-muted); font-size: 14.5px; }
 
@@ -160,13 +161,15 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
   .lanes :global(b) { position: absolute; inset: 0 auto 0 0; width: 100%; background: var(--fg-muted); transform-origin: left; }
 
   .log { list-style: none; margin: 0; padding: 14px 16px; display: grid; gap: 8px; background: var(--bg-sunken); border: 1px solid var(--control); font: 500 14.5px/1.45 var(--font-mono); max-width: 640px; }
-  .log :global(li) { display: grid; grid-template-columns: 2ch minmax(0, 1fr); gap: 10px; color: var(--fg); }
+  .log :global(li) { display: grid; grid-template-columns: 2ch minmax(0, 1fr); gap: 10px; color: var(--fg); padding: 3px 6px; margin-inline: -6px; }
   .log :global(.st) { color: var(--signal); }
   .log :global(li.wait) { color: var(--fg-subtle); } .log :global(li.wait .st) { color: var(--fg-subtle); }
   .log :global(li.doing .st) { color: var(--accent); }
+  .log :global(li.doing) { background: var(--bg-raised); box-shadow: inset 3px 0 var(--accent); font-weight: 600; }
 
   .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; max-width: 640px; }
-  .checks :global(li) { display: grid; grid-template-columns: 4ch minmax(0, 1fr); gap: 4px 10px; font-size: 17px; line-height: 1.45; padding: 6px 8px; }
+  .checks :global(li) { display: grid; grid-template-columns: 4ch minmax(0, 1fr); gap: 4px 10px; font-size: 18px; line-height: 1.45; padding: 10px 12px; border: 1px solid var(--line); }
+  .checks :global(li.bad) { border-color: var(--danger); background: var(--bg-raised); }
   .checks :global(.mk) { font: 600 14px/1.6 var(--font-mono); color: var(--fg-subtle); }
   .checks :global(li.ok .mk) { color: var(--signal); }
   .checks :global(li.bad .mk) { color: var(--danger); }
@@ -182,17 +185,65 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
   .meta dd { margin: 0; font-size: 15px; color: var(--fg-muted); }
   .meta :global(a) { color: var(--fg); text-underline-offset: 3px; }
 
-  /* desktop with motion: one step on stage at a time, the scroll scrubs between them */
+  /* the stage is wide on a desktop and a step is short: the content takes the room (type stays inside the DS roles: body 19px at most) */
   @media (min-width: 900px) {
-    :global(html.motion) .pin { height: calc(100svh - var(--hud-height)); box-sizing: border-box; overflow: hidden; }
-    :global(html.motion) .stage .step { position: absolute; inset: 0 0 auto 0; }
+    .sd { font-size: clamp(26px, 2.6vw, 38px); }
+    .prompt { font-size: clamp(18px, 1.7vw, 24px); max-width: 70ch; }
+    .said p { font-size: 19px; max-width: 60ch; }
+    .tools { gap: 16px; max-width: 900px; } .tools :global(li) { padding-bottom: 16px; } .tools :global(b) { font-size: 19px; } .tools :global(.note) { font-size: 16px; }
+    .plan { gap: 20px; padding-left: 20px; } .plan :global(li) { font-size: 19px; }
+    .lanes { max-width: 560px; gap: 12px; } .lanes :global(i) { height: 12px; }
+    .log { font-size: 16px; max-width: 820px; padding: 22px 24px; gap: 12px; } .log :global(li) { padding: 8px 10px; margin-inline: -10px; }
+    .checks { max-width: 820px; gap: 14px; } .checks :global(li) { font-size: 19px; padding: 18px 20px; } .checks :global(.fx) { font-size: 15.5px; }
+    .hand { max-width: 780px; gap: 18px; } .deliv { font-size: clamp(26px, 2.6vw, 38px); } .appr { font-size: 19px; }
+    .meta dd { font-size: 16px; }
   }
+  /* with motion, at every width: one step on stage at a time, the scroll (a swipe on a phone) scrubs between them,
+     so the reader sets the pace; without motion the seven steps are simply stacked */
+  :global(html.motion) .pin { height: calc(100svh - var(--hud-height)); box-sizing: border-box; overflow: hidden; }
+  :global(html.motion) .stage .step { position: absolute; inset: 0 0 auto 0; }
   @media (max-width: 899px) {
-    .body { grid-template-columns: minmax(0, 1fr); }
-    .side { display: none; }
-    .step { border-top: 1px solid var(--line); padding-top: 18px; }
+    .body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 10px; } /* rail row hugs its content, the stage takes the rest (with auto rows the free space was split between them and pushed the step to the bottom) */
     .think { grid-template-columns: minmax(0, 1fr); gap: 12px; }
     .tools :global(li) { grid-template-columns: minmax(0, 1fr); } .tools :global(.note) { grid-column: 1; }
+    /* the rail becomes a row of seven numbers, the colleague's state sits beside it */
+    .side { grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
+    :global(html:not(.motion)) .side { display: none; }
+    .rail { display: flex; border-left: 0; gap: 0; }
+    .rail li { flex: 1; justify-content: center; padding: 10px 0 8px; border-left: 0; border-bottom: 3px solid transparent; margin-left: 0; }
+    .rail .nm { display: none; }
+    .rail li.cur { border-bottom-color: var(--accent); background: transparent; }
+    .pin { gap: 10px; padding-block: 14px 10px; }
+    .hd { gap: 8px; }
+    .hd h2 { font-size: clamp(22px, 6vw, 30px); }
+    .pick { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding-inline: 16px; scrollbar-width: none; }
+    .pick .ex { display: none; }
+    .chip span { white-space: nowrap; padding: 14px 12px; }
+    .step { padding-bottom: 12px; gap: 14px; }
+    /* one step fills the stage on a phone: larger type, roomier rows, so the content is what the eye lands on */
+    .sd { font-size: clamp(25px, 7vw, 30px); }
+    .said p { font-size: 18px; }
+    .tools { gap: 14px; } .tools :global(li) { padding-bottom: 14px; } .tools :global(b) { font-size: 19px; }
+    .plan { gap: 18px; padding-left: 16px; } .plan :global(li) { font-size: 19px; }
+    .lanes { gap: 10px; } .lanes :global(i) { height: 12px; }
+    .log { padding: 16px 14px; gap: 10px; font-size: 16px; } .log :global(li) { padding: 7px 8px; margin-inline: -8px; }
+    .checks { gap: 14px; } .checks :global(li) { font-size: 19px; padding: 14px; } .checks :global(.mk) { font-size: 16px; } .checks :global(.t) { text-wrap: balance; }
+    :global(html:not(.motion)) .step { border-top: 1px solid var(--line); padding-top: 18px; }
+  }
+  /* a short phone (iPhone SE 375×667, 320×640): the seven steps still have to fit one stage, so type and spacing step down */
+  @media (max-width: 899px) and (max-height: 720px) {
+    .pin { gap: 6px; padding-block: 8px 6px; }
+    .hd { gap: 5px; } .hd h2 { font-size: 21px; line-height: 1.12; }
+    .wf { font-size: 22px; } .side { gap: 8px; }
+    .step { gap: 8px; } .sd { font-size: 21px; line-height: 1.2; }
+    .prompt { font-size: 14.5px; line-height: 1.4; } .ncv { height: 84px; }
+    .face { font-size: 34px; } .said { gap: 10px; } .said p { font-size: 16px; line-height: 1.45; }
+    .tools { gap: 8px; } .tools :global(li) { padding-bottom: 8px; gap: 2px 12px; } .tools :global(b) { font-size: 17px; } .tools :global(.note) { font-size: 13px; line-height: 1.35; }
+    .plan { gap: 12px; } .plan :global(li) { font-size: 17px; }
+    .log { padding: 10px 12px; gap: 6px; font-size: 14.5px; } .log :global(li) { padding: 5px 8px; }
+    .checks { gap: 9px; } .checks :global(li) { font-size: 17px; padding: 10px 12px; }
+    .hand { gap: 10px; } .deliv { font-size: 19px; } .appr { font-size: 15px; line-height: 1.45; }
+    .meta { padding-top: 8px; gap: 4px 12px; margin-top: 0; } .meta dd { font-size: 14px; line-height: 1.4; }
   }
 </style>
 
@@ -206,7 +257,7 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
     const rail = [...root.querySelectorAll<HTMLElement>('.rail li')];
     const f = (k: string) => root.querySelector<HTMLElement>(`[data-f="${k}"]`)!;
     const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
-    const reduce = NB.reduce(), wide = matchMedia('(min-width: 900px)').matches, scrub = !!gsap && !reduce && wide;
+    const reduce = NB.reduce(), wide = matchMedia('(min-width: 900px)').matches, scrub = !!gsap && !reduce;
     const col = NB.colleague(root.querySelector('[data-face]'), 'thinking');
     const side = NB.colleague(root.querySelector('[data-railface]'), 'idle'), sideTxt = root.querySelector<HTMLElement>('[data-railstate]')!;
     const SIDE: [string, string][] = [['idle', 'đang chờ việc'], ['thinking', 'đang đọc yêu cầu'], ['thinking', 'đang khám phá'], ['thinking', 'đang lập kế hoạch'], ['working', 'đang làm việc'], ['working', 'đang kiểm chứng'], ['verified', 'chờ bạn duyệt']];
@@ -214,12 +265,10 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
     const sideAt = (i: number) => { if (i === lastSide) return; lastSide = i; side.set(SIDE[i][0]); NB.say(sideTxt, SIDE[i][1]); };
     let kind = D.work[0];
 
-    /* ASCII: the brief's numbers converge (M11); the workspace terrain is swept as Claude explores (M11) */
-    const numSource = (k: any) => NB.sources.text([k.brief.map((b: string[]) => b[0]).join('  ')], { family: '"Archivo", "Arial Black", sans-serif', weight: 900, stretch: 'ultra-condensed', fill: 0.94, vfill: 0.86, cy: 0.52 });
-    const A1 = NB.ascii(root.querySelector('[data-cv="numbers"]'), { cell: wide ? [8, 14] : [6, 10], font: wide ? '600 12px "JetBrains Mono", monospace' : '600 9px "JetBrains Mono", monospace',
+    /* ASCII: the brief's numbers converge (M11), left aligned and made of many small characters */
+    const numSource = (k: any) => NB.sources.text([k.brief.map((b: string[]) => b[0]).join('  ')], { family: '"Archivo", "Arial Black", sans-serif', weight: 900, stretch: 'ultra-condensed', fill: 0.8, vfill: 0.9, cy: 0.52, align: 'left', padX: 0 });
+    const A1 = NB.ascii(root.querySelector('[data-cv="numbers"]'), { cell: wide ? [5, 9] : [4, 7], font: wide ? '600 8.2px "JetBrains Mono", monospace' : '600 6.6px "JetBrains Mono", monospace',
       ramp: ' .:-=+*#%@', order: scrub ? 0 : 1, sweep: 0.5, noiseFill: 0.22, pointer: false, tone: 'fg', frontColor: 'accent', fontLoad: '900 100px Archivo', source: numSource(kind) });
-    const A2 = NB.ascii(root.querySelector('[data-cv="terrain"]'), { cell: [9, 16], order: scrub ? 0 : 1, sweep: 0.85, noiseFill: 0.3, pointer: false,
-      ramp: ' .·:/\\+*', tone: 'fg-muted', frontColor: 'accent', source: NB.sources.terrain({ scale: 0.06, threshold: 0.5, slope: 0.4, seed: 11 }) });
 
     /* the picker swaps every step's content at once (P tier: NB.say for words, no replay of the scene) */
     function render(k: any, animate: boolean) {
@@ -267,7 +316,12 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
     }
     function laneState(p: number) { q('[data-f="lanes"] b').forEach((b, i) => { b.style.transform = `scaleX(${Math.max(0, Math.min(1, p * 1.25 - i * 0.12))})`; }); }
     function planState(p: number) { q('[data-f="plan"] li').forEach((li, i, a) => { li.style.opacity = String(p >= i / a.length ? 1 : 0.25); }); }
-    function endStates() { A1.state.order = 1; A2.state.order = 1; A1.redraw(); A2.redraw(); logState(1); checkState(1); laneState(1); planState(1); }
+    /* step 3: the tools Claude reaches are read one after another; the row being read is lit, the ones already read are marked */
+    function toolsState(p: number) {
+      const rows = q('[data-f="tools"] li'), n = rows.length, k = Math.floor(p * (n + 0.6));
+      rows.forEach((li, i) => { li.style.opacity = i < k ? '1' : i === k ? '0.7' : '0.3'; li.classList.toggle('seen', i < k); li.classList.toggle('now', i === k); });
+    }
+    function endStates() { A1.state.order = 1; A1.redraw(); toolsState(1); logState(1); checkState(1); laneState(1); planState(1); }
 
     let tl: any = null, fixedOnce = false, focusBound = false;
     const SEG = 1 / steps.length, FNS: ((p: number) => void)[] = [];
@@ -277,7 +331,7 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
       if (tl) { tl.scrollTrigger && tl.scrollTrigger.kill(); tl.kill(); }
       const N = steps.length, seg = 1 / N;
       gsap.set(steps, { opacity: 0, pointerEvents: 'none', y: 24 });
-      tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#run', start: 'top top+=48', end: '+=' + N * 85 + '%', pin: '#run-pin', scrub: 0.6, invalidateOnRefresh: true,
+      tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#run', start: 'top top+=48', end: '+=' + N * (wide ? 90 : 100) + '%', pin: '#run-pin', scrub: 0.6, invalidateOnRefresh: true,
         onUpdate: (s: any) => { const i = Math.min(N - 1, Math.floor(s.progress * N)); rail.forEach((r, j) => { r.classList.toggle('cur', j === i); r.classList.toggle('on', j < i); }); sideAt(i); } } });
       steps.forEach((st, i) => {
         const t0 = i * seg;
@@ -287,7 +341,7 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
       const inner = (i: number, fn: (p: number) => void) => { FNS[i] = fn; const o = { p: 0 }; tl.to(o, { p: 1, duration: seg * 0.6, onUpdate: () => fn(o.p) }, i * seg + seg * 0.15); };
       inner(0, (p) => { A1.state.order = p; A1.redraw(); });
       inner(1, (p) => col.set(p < 0.5 ? 'thinking' : 'asking'));
-      inner(2, (p) => { A2.state.order = p; A2.redraw(); });
+      inner(2, toolsState);
       inner(3, (p) => { planState(p); laneState(p); });
       inner(4, logState);
       inner(5, checkState);
@@ -302,15 +356,7 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
     }
 
     if (scrub) { build(); return; }
-    if (!gsap || reduce) { endStates(); return; }
-    /* phone with motion: each step plays once as it enters */
-    const play = (i: number, fn: (p: number) => void, d = 1.2) => ST.create({ trigger: steps[i], start: 'top 75%', once: true, onEnter: () => { const o = { p: 0 }; gsap.to(o, { p: 1, duration: d, ease: 'power2.out', onUpdate: () => fn(o.p) }); } });
-    A1.state.order = 0; A2.state.order = 0; logState(0); checkState(0); laneState(0); planState(0);
-    play(0, (p) => { A1.state.order = p; A1.redraw(); }, 1.6);
-    play(2, (p) => { A2.state.order = p; A2.redraw(); }, 1.6);
-    play(3, (p) => { planState(p); laneState(p); });
-    play(4, logState, 1.6);
-    play(5, checkState, 1.8);
+    endStates(); /* reduced motion or no GSAP: every step shows its end state, stacked */
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
 </script>

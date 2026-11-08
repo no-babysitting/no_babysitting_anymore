@@ -68,6 +68,8 @@ const symbolsCss = Object.entries(LOADED).flatMap(([f, vs]) => vs.map(([st, w]) 
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
     .lenis.lenis-stopped { overflow: hidden; }
     ::selection { background: var(--fg); color: var(--bg); }
+    /* the terminal cursor: on for half a period, nearly off for the other half, no easing. Only ever applied under html.motion. */
+    @keyframes nb-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: .08; } }
   </style>
 </head>
 <body class="nb"><a class="skip" href="#main">Bỏ qua tới nội dung</a><slot />

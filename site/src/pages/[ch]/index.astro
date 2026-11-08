@@ -28,7 +28,7 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
   <main id="main" tabindex="-1" class="wrap ch">
     <div data-ch-opener><ChapterOpener {...openerProps(c)} /></div>
 
-    <section class="beat ask" data-ask aria-labelledby="q"><span class="nb-micro" data-reveal="up">b1 · hỏi</span><h2 class="nb-q q" id="q" data-reveal="words" set:html={inline(bindLast(c.question))}></h2><span class="nb-micro cue" data-reveal="up">Trả lời trong đầu trước khi cuộn · không có đáp án sai</span></section>
+    <section class="beat ask" data-ask data-hold="0.6" aria-labelledby="q"><span class="nb-micro" data-reveal="up">b1 · hỏi</span><h2 class="nb-q q" id="q" data-reveal="words" set:html={inline(bindLast(c.question))}></h2><span class="nb-micro cue" data-reveal="up">Trả lời trong đầu trước khi cuộn · không có đáp án sai</span></section>
 
     <section class="facts">
       {c.goals && <div><span class="nb-micro" data-reveal="up">Mục tiêu</span><p data-reveal="lines" set:html={inline(c.goals)} /></div>}
@@ -74,7 +74,7 @@ const short = (s: string) => { const t = s.replace(/[*`]/g, ''); return t.length
   .name { margin: 8px 0 10px; font-size: clamp(28px, 5vw, 60px); }
   .sub { margin: 0; color: var(--fg-muted); font-size: 17px; max-width: 44ch; }
   .beat { display: grid; gap: 16px; }
-  .ask { min-height: calc(100svh - var(--hud-height) - 64px); align-content: center; gap: 22px; }
+  .ask { align-content: center; gap: 22px; padding-block: clamp(36px, 9svh, 88px); } /* as tall as the question needs; the hold keeps it on screen while it is read */
   .ask .q { font-size: clamp(34px, 5.6vw, 72px) !important; max-width: 20ch !important; }
   .cue { color: var(--fg-subtle); }
   .bwrap { display: grid; grid-template-columns: 52px 1fr; gap: 0 18px; }

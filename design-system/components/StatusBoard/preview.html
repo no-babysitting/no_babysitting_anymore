@@ -12,33 +12,36 @@
   body{background:var(--bg);padding:20px}
   .sb{padding:44px 0 0}
   ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--control)}
-  li{position:relative;display:grid;grid-template-columns:4ch 4ch 1fr auto;gap:12px;align-items:center;padding:12px 18px;border-bottom:1px solid var(--control);font-size:15px}
+  li{position:relative;border-bottom:1px solid var(--control);font-size:15px}
+  .row{appearance:none;background:transparent;border:0;border-radius:0;color:inherit;font:inherit;text-align:left;width:100%;min-height:48px;cursor:pointer;display:grid;grid-template-columns:4ch 4ch 1fr auto;gap:12px;align-items:center;padding:12px 18px}
+  .row:hover{background:var(--bg-raised)}
+  .row:focus-visible{outline:2px solid var(--focus-ring);outline-offset:-2px}
   .i{font:600 12px/1 var(--font-mono);color:var(--fg-subtle);letter-spacing:.08em}
   .mk{font:600 13px/1 var(--font-mono);color:var(--fg-subtle)}
   li.ok .mk{color:var(--signal)}
-  li .nb-tag{min-width:10ch}
+  .row .nb-tag{min-width:10ch}
   .flash{position:absolute;inset:0;background:var(--fg);opacity:0;pointer-events:none}
   .foot{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:end;padding:14px 18px 16px}
   .count{margin:0;font-size:84px;color:var(--fg)}
   .count small{font-size:.42em;color:var(--fg-subtle)}
   .msg{margin:0;color:var(--fg-muted);line-height:1.45;font-size:14px;padding-bottom:10px;max-width:36ch}
   .hud{letter-spacing:.3em}
-  @media (max-width:640px){.foot{grid-template-columns:auto 1fr}.foot .nb-btn{grid-column:1/-1}li{grid-template-columns:3ch 1fr auto}.i{display:none}}
+  @media (max-width:640px){.foot{grid-template-columns:auto 1fr}.foot .nb-btn{grid-column:1/-1}.row{grid-template-columns:3ch 1fr auto;padding-inline:14px}.i{display:none}}
 </style>
 </head>
 <body>
 <section class="nb nb-frame sb" aria-labelledby="sbt">
   <span class="nb-corner tl nb-micro" id="sbt"><span class="nb-sq"></span>Báo cáo tuần · trạng thái</span>
   <span class="nb-corner tr nb-micro">HUD <b class="hud" id="hud" aria-hidden="true">□□□□</b></span>
-  <ul id="list" aria-live="polite">
-    <li><span class="i">01</span><span class="mk">[ ]</span><span>Hiểu đúng yêu cầu</span><span class="nb-tag is-muted">Chưa đạt</span></li>
-    <li><span class="i">02</span><span class="mk">[ ]</span><span>Đúng chuẩn trình bày của team</span><span class="nb-tag is-muted">Chưa đạt</span></li>
-    <li><span class="i">03</span><span class="mk">[ ]</span><span>Số liệu được kiểm chứng</span><span class="nb-tag is-muted">Chưa đạt</span></li>
-    <li><span class="i">04</span><span class="mk">[ ]</span><span>Lặp lại được &amp; tự chạy</span><span class="nb-tag is-muted">Chưa đạt</span></li>
+  <ul id="list">
+    <li><button class="row" type="button" aria-pressed="false"><span class="i" aria-hidden="true">01</span><span class="mk" aria-hidden="true">[ ]</span><span>Hiểu đúng yêu cầu</span><span class="nb-tag is-muted">Chưa đạt</span></button></li>
+    <li><button class="row" type="button" aria-pressed="false"><span class="i" aria-hidden="true">02</span><span class="mk" aria-hidden="true">[ ]</span><span>Đúng chuẩn trình bày của team</span><span class="nb-tag is-muted">Chưa đạt</span></button></li>
+    <li><button class="row" type="button" aria-pressed="false"><span class="i" aria-hidden="true">03</span><span class="mk" aria-hidden="true">[ ]</span><span>Số liệu được kiểm chứng</span><span class="nb-tag is-muted">Chưa đạt</span></button></li>
+    <li><button class="row" type="button" aria-pressed="false"><span class="i" aria-hidden="true">04</span><span class="mk" aria-hidden="true">[ ]</span><span>Lặp lại được &amp; tự chạy</span><span class="nb-tag is-muted">Chưa đạt</span></button></li>
   </ul>
   <div class="foot">
     <p class="nb-cond count nb-tabular" aria-hidden="true"><span id="cnt">0</span><small> / 4</small></p>
-    <p class="msg" id="msg">Chưa tiêu chí nào đạt. Mỗi chương mở khoá một tiêu chí.</p>
+    <p class="msg" id="msg" aria-live="polite">Chưa tiêu chí nào đạt. Mỗi chương mở khoá một tiêu chí.</p>
     <button class="nb-btn" type="button" id="next">Hoàn thành chương kế tiếp</button>
   </div>
 </section>
@@ -46,27 +49,40 @@
 (function () {
   var NB = window.NoBabysitting; if (!NB) return;
   if (window.gsap && window.ScrambleTextPlugin) gsap.registerPlugin(ScrambleTextPlugin);
-  var items = document.querySelectorAll('#list li'), i = 0, anim = window.gsap && !NB.reduce();
+  var items = document.querySelectorAll('#list li'), anim = window.gsap && !NB.reduce();
   var btn = document.getElementById('next'), msg = document.getElementById('msg'), cnt = document.getElementById('cnt'), hud = document.getElementById('hud');
   var MSG = ['Chưa tiêu chí nào đạt. Mỗi chương mở khoá một tiêu chí.', 'Claude hiểu đúng việc nhờ brief + plan.', 'Đúng văn phong nhờ skill report-style.', 'Số liệu có subagent kiểm chứng.', 'Báo cáo tự chạy mỗi thứ Hai, đã kiểm chứng.'];
-  function sync() { cnt.textContent = i; hud.textContent = '■■■■'.slice(0, i) + '□□□□'.slice(i); msg.textContent = MSG[i]; }
+  var LABEL = 'Hoàn thành chương kế tiếp';
+  function isOk(li) { return li.classList.contains('ok'); }
+  function count() { var n = 0; items.forEach(function (li) { if (isOk(li)) n++; }); return n; }
+  /* every checkpoint is a button: tap one to pass or fail it, in any order. The big button passes the next open one. */
+  function sync(shown) {
+    var n = count(); cnt.textContent = n; hud.textContent = '■■■■'.slice(0, n) + '□□□□'.slice(n);
+    msg.textContent = n === 0 ? MSG[0] : MSG[shown + 1];
+    btn.textContent = n === items.length ? 'Làm lại' : LABEL;
+  }
+  function lastOk() { var k = -1; items.forEach(function (li, x) { if (isOk(li)) k = x; }); return k; }
   function setRow(li, ok) {
     li.className = ok ? 'ok' : ''; li.querySelector('.mk').textContent = ok ? '[✓]' : '[ ]';
+    li.querySelector('.row').setAttribute('aria-pressed', String(ok));
     var t = li.querySelector('.nb-tag'); t.className = 'nb-tag ' + (ok ? 'is-signal' : 'is-muted');
     if (ok) NB.say(t, 'Đã đạt'); else t.textContent = 'Chưa đạt';
   }
-  btn.addEventListener('click', function () {
-    if (i >= items.length) { items.forEach(function (li) { setRow(li, false); }); i = 0; sync(); btn.textContent = 'Hoàn thành chương kế tiếp'; return; }
-    var li = items[i++]; setRow(li, true); sync();
-    if (anim) {
+  function toggle(x, ok) {
+    var li = items[x]; setRow(li, ok); sync(ok ? x : lastOk());
+    if (anim && ok) {
       var f = li.querySelector('.flash');
       if (!f) { f = document.createElement('span'); f.className = 'flash'; f.setAttribute('aria-hidden', 'true'); li.prepend(f); }
       gsap.fromTo(f, { opacity: 0.16 }, { opacity: 0, duration: 0.6, ease: 'power2.out' });
       gsap.from(cnt, { yPercent: 40, autoAlpha: 0, duration: 0.4, ease: 'power3.out' });
     }
-    if (i === 4) btn.textContent = 'Làm lại';
+  }
+  items.forEach(function (li, x) { li.querySelector('.row').addEventListener('click', function () { toggle(x, !isOk(li)); }); });
+  btn.addEventListener('click', function () {
+    if (count() === items.length) { items.forEach(function (li) { setRow(li, false); }); sync(-1); return; }
+    for (var x = 0; x < items.length; x++) if (!isOk(items[x])) { toggle(x, true); return; }
   });
-  sync();
+  sync(-1);
 })();
 </script>
 </body>

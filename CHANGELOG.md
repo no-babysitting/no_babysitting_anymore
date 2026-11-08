@@ -2,6 +2,23 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Đợt B · trình bày, theo tám nhận xét của chủ dự án trên iPhone (08/11/2026)
+
+Chỉ đổi cách trình bày và chuyển động; **không đổi câu chữ** (phần câu chữ nằm ở đợt C, chờ duyệt theo D13). Luật rút ra và công cụ đo: `docs/13-design-taste.md`.
+
+1. **Hero trên điện thoại.** Bỏ nhãn góc và đồng hồ; logo và câu hứa lên cao, căn trái theo logo; tuyên bố miễn trừ xuống đáy (ở 320px bỏ "cuộn ↓" vì hai dòng in đè nhau). **Header:** nút chuyển động thành icon pixel (tạm dừng / phát) và có nút menu mới; menu phủ cả trang, hình ASCII hội tụ khi mở và tan khi đóng. *Phần phác thảo của chủ dự án có hai cách hiểu; mình chọn: icon hamburger trên nút, hình xe đẩy gạch chéo là tranh ASCII trong menu. Đổi ngược lại là một dòng.* Menu khoá phần còn lại của trang (`inert`), Esc đóng, tiêu điểm quay về nút.
+2. **Hành trình.** Số lớn căn trái, ghép từ ô nhỏ hơn (4×7 trên điện thoại); bỏ dòng "Hành trình · 12 phần" (chỉ còn bản cho trình đọc màn hình); đếm `01 / 12` theo panel; chương 10 tách khỏi Finale (nội dung ghim không còn bị chính khung ghim cắt).
+3. **Vòng giao việc.** Ghim ở cả điện thoại: cuộn là chuyển bước, người đọc giữ nhịp; rail thành hàng 7 số. Bước *Khám phá* bỏ hiệu ứng địa hình vô nghĩa, thay bằng danh sách nguồn sáng lên lần lượt (đang đọc, đã đọc). *Thực thi* và *Kiểm chứng* chữ to hơn, dòng đang chạy và phép kiểm hỏng nổi bật. Co cỡ cho máy ngắn (iPhone SE 375×667, 320×640).
+4. **Hai lần tung đồng xu.** Hai cột dùng chung năm hàng, mỗi cặp nằm trên một dòng dù chữ dài ngắn.
+5. **Dừng lại để đọc.** `data-hold`: câu hỏi của chương và đoạn tuyên ngôn đứng yên ở giữa màn hình trong 0,6–0,8 màn hình cuộn (chữ của tuyên ngôn sáng dần trong lúc đó); khối cao hơn màn hình thì bỏ qua. Trang câu hỏi không còn là một màn hình trống.
+6. **Mô phỏng chạy khi được thấy.** `NB.seen`: AgentWindow, FloatingOps, ThenNowCard, CinematicAscii chờ ở trạng thái `idle` tới khi lên màn hình, rồi chạy chậm hơn (khoảng 9 s, 12 s, 5,5 s, 6 s). "Phát lại" vẫn có. Tab CLI trên điện thoại hết vỡ cột.
+7. **Điểm kiểm bấm được.** Mỗi tiêu chí của StatusBoard là một nút (`aria-pressed`), bấm bất kỳ thứ tự. *Chữ của nút lớn "Hoàn thành chương kế tiếp" chưa đổi (đợt C).*
+8. **Nút chương kế và mục lục.** Nút có dải khối ASCII đổi màu quét chậm từ trái sang phải (`NB.sweep`, dừng khi tắt chuyển động); dấu cam của chương hiện tại ở mục lục (cuối chương và menu) nháy như con trỏ terminal (`nb-blink`, 1,1 s, chỉ khi bật chuyển động).
+
+Kèm theo: **số đếm thống nhất** (M1 của bản đánh giá): mọi nơi đếm *vị trí trong lộ trình* trên 12 phần (HUD `c03 · 4/12`, góc phải dưới của phần mở chương `04 / 12`, Hành trình, Finale, cảnh kết ở c10 `12 / 12`), thay cho lẫn số chương với số thứ tự (`03 / 12`, `10 / 10`); mọi nút và chip cao tối thiểu 44px trên màn chạm hoặc hẹp (DS); `ScrollTrigger.sort()` để các lớp ghim làm mới từ trên xuống (một đoạn giữ nằm dưới hero từng bị tính vị trí trước hero); `check.cjs` thêm khổ 320px.
+
+**Công cụ mới.** `scripts/shots.cjs` + `sheet.py` (chụp dải khung hình, ghép tờ có số thứ tự, vị trí cuộn) và `scripts/design-check.cjs` (đo đè chữ, chữ bị cắt, dải trống, nút nhỏ, hai cột lệch, câu cần đọc có được giữ không, mô phỏng có chờ được thấy không; ở 390, 375×667, 320 và 1440). Chạy thử vào bản trước đợt này: 3 chỗ lệch hàng, 4 chỗ thiếu giữ, 4 mô phỏng chạy trước khi ai thấy, 2 chỗ thiếu quét/nháy, 192 nút nhỏ ở 390px; ở 320px còn chữ đè nhau ở hero và cột Agentic bị cắt. Bản này qua cả bốn khổ, không vi phạm nào.
+
 ## Đánh giá độc lập lần 1 · đợt A: tiếp cận và hạ tầng (08/11/2026)
 
 - **Trình đọc màn hình đọc được các đoạn tách chữ.** Bản đánh giá độc lập báo hiệu ứng tách chữ làm đoạn tuyên ngôn và đoạn giải thích của c02 biến mất. Đã kiểm lại: đúng (ảnh chụp ARIA chỉ có `- paragraph`). Chữ thật nay nằm trong bản chỉ dành cho trình đọc màn hình, phần hình tách chữ bị ẩn khỏi cây truy cập (`splitText` trong `motion.ts`).

@@ -1,6 +1,6 @@
 // Pre-merge checks for the built site (docs/08-kaizen-go-live.md §3). Same script locally and in CI.
 //   1. every internal link and asset in dist/ resolves (and respects the base path)
-//   2. key pages, desktop 1440 and phone 390: no JS errors, no horizontal scroll
+//   2. key pages, desktop 1440, phone 390 and the narrowest phone 320: no JS errors, no horizontal scroll
 //   3. reduced motion: no readable text left hidden
 //   4. idle cost: with nobody scrolling, the home page barely paints (docs/09-motion-script.md §5)
 //   5. accessibility with the motion ON, every page: axe-core, text that is hidden until scrolled must still be in the
@@ -35,7 +35,7 @@ const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.pus
 
   const server = await serve(), origin = `http://127.0.0.1:${server.address().port}`;
   const browser = await chromium.launch();
-  const sizes = { desktop: { viewport: { width: 1440, height: 900 } }, phone: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 } };
+  const sizes = { desktop: { viewport: { width: 1440, height: 900 } }, phone: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 }, tiny: { viewport: { width: 320, height: 640 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 } };
 
   console.log('2 · pages: errors and horizontal scroll');
   for (const [kind, opt] of Object.entries(sizes)) {

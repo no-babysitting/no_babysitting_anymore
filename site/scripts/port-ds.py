@@ -12,12 +12,12 @@ PLUGINS = ['ScrambleTextPlugin', 'SplitText', 'Flip', 'DrawSVGPlugin', 'MorphSVG
 # literal markup -> Astro expression, and frontmatter props, per component
 PROPS = {
   'ChapterOpener': {
-    'front': "const { id, no, en, vi, part, ghost, total = 12, beats = 8, mins = '' } = Astro.props;",
+    'front': "const { id, no, en, vi, part, ghost, total = 12, pos = no, beats = 8, mins = '' } = Astro.props;",
     'body': [
       ('<span class="nb-ghost gh" aria-hidden="true">Budget</span>', '<span class="nb-ghost gh" aria-hidden="true">{ghost}</span>'),
       ('<span class="nb-sq"></span>Phần I · LOW</span>', '<span class="nb-sq"></span>{part}</span>'),
       ('c02 &nbsp;·&nbsp; <b id="clk"', '{id} &nbsp;·&nbsp; <b id="clk"'),
-      ('<b>02</b> / 10 &nbsp;·&nbsp; 8 beat · 10′', '<b>{no}</b> / {total} &nbsp;·&nbsp; {beats} beat{mins && ` · ${mins}′`}'),
+      ('<b>03</b> / 12 &nbsp;·&nbsp; 8 beat · 10′', '<b>{pos}</b> / {total} &nbsp;·&nbsp; {beats} beat{mins && ` · ${mins}′`}'),
       ('id="idx" aria-hidden="true">02</p>', 'id="idx" aria-hidden="true">{no}</p>'),
       ('<span class="nb-sq"></span>Chương 02</p>', '<span class="nb-sq"></span>{no === "00" ? "Mở đầu" : `Chương ${no}`}</p>'),
       ('<h2 class="nb-wide" id="t">The Briefing Budget</h2>', '<h1 class="nb-wide" id="t">{en}</h1>'),

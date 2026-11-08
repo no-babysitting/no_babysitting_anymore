@@ -52,20 +52,21 @@
   function fbm(x, y, s) { return 0.55 * vnoise(x, y, s) + 0.3 * vnoise(x * 2.1, y * 2.1, s + 3) + 0.15 * vnoise(x * 4.3, y * 4.3, s + 7); }
 
   NB.sources = {
-    /* wordmark in Archivo (expanded by default). Latin caps without diacritics. */
+    /* wordmark in Archivo (expanded by default). Latin caps without diacritics. opt.align: 'left' puts the text on the left edge (opt.padX = share of width). */
     text: function (lines, opt) {
       opt = opt || {};
       return function (cols, rows, cw, ch) {
         return sample(cols, rows, cw, ch, function (g, W, H) {
           var fam = opt.family || '"Archivo", "Arial Black", sans-serif', wt = opt.weight || 800, lh = opt.lh || 1.02;
           try { g.fontStretch = opt.stretch || 'expanded'; } catch (e) { /* older engines */ }
-          g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+          var left = opt.align === 'left', x0 = left ? W * (opt.padX != null ? opt.padX : 0.02) : W / 2;
+          g.fillStyle = '#fff'; g.textAlign = left ? 'left' : 'center'; g.textBaseline = 'middle';
           g.font = wt + ' 100px ' + fam;
           var widest = Math.max.apply(null, lines.map(function (l) { return g.measureText(l).width; }));
           var size = Math.min((W * (opt.fill || 0.86) / widest) * 100, H * (opt.vfill || 0.78) / (lines.length * lh));
           g.font = wt + ' ' + size + 'px ' + fam;
           var cy = H * (opt.cy || 0.5);
-          lines.forEach(function (l, i) { g.fillText(l, W / 2, cy + (i - (lines.length - 1) / 2) * size * lh); });
+          lines.forEach(function (l, i) { g.fillText(l, x0, cy + (i - (lines.length - 1) / 2) * size * lh); });
         });
       };
     },
@@ -507,6 +508,69 @@
     el.textContent = text;
     if (window.gsap && !NB.reduce()) return window.gsap.fromTo(el, { autoAlpha: 0.35 }, { autoAlpha: 1, duration: 0.24, ease: 'power2.out', overwrite: true });
     return null;
+  };
+  /* Run fn once, the first time `el` is about 40% on screen (at once when the page cannot tell). A demo that starts at load has
+     finished before anyone scrolls to it; with this the first sight of it is the show. Taller than the screen: 40% of the screen. */
+  NB.seen = function (el, fn, opt) {
+    var share = opt && opt.share != null ? opt.share : 0.4, done = false;
+    function go() { if (!done) { done = true; fn(); } }
+    if (!el || !('IntersectionObserver' in window)) { go(); return; }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var need = Math.min(e.boundingClientRect.height, window.innerHeight) * share;
+        if (e.isIntersecting && e.intersectionRect.height >= need - 1) { io.disconnect(); go(); }
+      });
+    }, { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] });
+    io.observe(el);
+  };
+  /* The sweep (ambient tier N: it loops, so it stops with the Motion switch, in a hidden tab and off screen).
+     A slow band of block characters crosses a button from left to right and the blocks it passes change colour, then it rests.
+     Sits under the label (z-index -1 inside an isolated host), never takes a click, never changes the layout. */
+  NB.sweep = function (host, opt) {
+    if (!host || NB.reduce() || !window.IntersectionObserver) return null;
+    var o = opt || {}, cw = o.cell ? o.cell[0] : 7, chh = o.cell ? o.cell[1] : 12, period = (o.period || 4.6) * 1000, rest = (o.rest == null ? 1.8 : o.rest) * 1000, band = o.band || 0.42;
+    var cv = document.createElement('canvas'); cv.className = 'nb-sweep'; cv.setAttribute('aria-hidden', 'true');
+    cv.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;z-index:-1;pointer-events:none';
+    host.style.position = host.style.position || 'relative'; host.style.isolation = 'isolate'; host.style.overflow = 'hidden';
+    host.insertBefore(cv, host.firstChild);
+    var ctx = cv.getContext('2d'), DPR = Math.min(2, window.devicePixelRatio || 1), cols = 0, rows = 0, jit = [], raf = 0, timer = 0, t0 = 0, on = false, lastDraw = 0;
+    var RAMP = ' ░▒▓█', light = o.color || (o.solid === false ? 'accent' : 'fg');
+    function size() {
+      var r = host.getBoundingClientRect(); if (!r.width) return;
+      cv.width = Math.round(r.width * DPR); cv.height = Math.round(r.height * DPR);
+      cols = Math.max(1, Math.floor(r.width / cw)); rows = Math.max(1, Math.floor(r.height / chh));
+      jit = []; for (var i = 0; i < cols * rows; i++) jit.push(Math.random());
+    }
+    function draw(p) {
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
+      if (p <= 0 || p >= 1) return;
+      var front = -band * 0.2 + p * (1 + band * 1.2), ox = (host.clientWidth - cols * cw) / 2, oy = (host.clientHeight - rows * chh) / 2;
+      ctx.font = '600 ' + Math.round(chh * 0.92) + 'px "JetBrains Mono", ui-monospace, monospace'; ctx.textBaseline = 'middle'; ctx.fillStyle = NB.tok(light);
+      for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+        var u = (c + 0.5) / cols, d = front - u;                 /* d > 0: the band has passed this column */
+        if (d < -0.02 || d > band) continue;
+        var h = 1 - Math.max(0, d) / band;                        /* 1 at the front, 0 at the tail */
+        h = Math.max(0, Math.min(1, h * (0.7 + 0.6 * jit[r * cols + c]) + (jit[r * cols + c] - 0.5) * 0.18));
+        var g = RAMP.charAt(Math.min(4, Math.max(0, Math.round(h * 4)))); if (g === ' ') continue;
+        ctx.globalAlpha = 0.2 + 0.46 * h; ctx.fillText(g, ox + c * cw, oy + (r + 0.5) * chh);
+      }
+      ctx.globalAlpha = 1;
+    }
+    function frame(now) {
+      raf = 0; if (!on) return;
+      var p = (now - t0) / period;
+      if (p >= 1) { draw(0); timer = setTimeout(go, rest); return; }
+      if (now - lastDraw > 40) { lastDraw = now; draw(p); }
+      raf = requestAnimationFrame(frame);
+    }
+    function go() { timer = 0; if (!on || document.hidden) return; t0 = performance.now(); raf = requestAnimationFrame(frame); }
+    function stop() { on = false; if (raf) cancelAnimationFrame(raf); if (timer) clearTimeout(timer); raf = timer = 0; if (cv.width) draw(0); }
+    function run() { if (on) return; on = true; size(); go(); }
+    var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting && !document.hidden) run(); else stop(); }, { threshold: 0.2 });
+    io.observe(host);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (host.getBoundingClientRect().bottom > 0) run(); });
+    if (window.ResizeObserver) new ResizeObserver(function () { if (on) size(); }).observe(host);
+    return { stop: stop, run: run };
   };
   NB.clock = function (el) {
     function f() { var d = new Date(); el.textContent = d.toLocaleTimeString('vi-VN', { hour12: false }); }

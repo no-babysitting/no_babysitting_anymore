@@ -35,6 +35,15 @@ jobs:
         run: node scripts/type-check.cjs --selftest
       - name: Typography (contrast, sizes, Vietnamese marks, text spacing, zoom, fonts)
         run: node scripts/type-check.cjs
+      - name: Design lint (overlap, clipping, tap size, holds, demos start when seen)
+        run: node scripts/design-check.cjs --shots design-report
+      - name: Design report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-report
+          path: site/design-report
+          if-no-files-found: ignore
       - name: Typography report
         if: always()
         uses: actions/upload-artifact@v4
