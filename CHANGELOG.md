@@ -2,6 +2,14 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Cảnh Spark, sửa theo góp ý (09/11/2026)
+
+- Vào cảnh: bức tranh hiện dần từng ký tự ngay lúc hero cuộn đi, không còn khoảng đen.
+- Điện thoại: bắt đầu thấy trọn bức tranh rồi mới zoom vào hai ngón tay; mật độ ký tự như máy tính (khoảng 150 cột trên mọi màn hình).
+- Ánh sáng khi chạm và khi nổ dựng hoàn toàn bằng ký tự trên lưới ASCII (lõi có nhiễu, tia đứt quãng `- \ | /`, vòng ký tự lan ra), bỏ gradient và nét vẽ trơn. Sửa lỗi tính góc khiến nửa trên thành mảng '@' phẳng.
+- Điểm chạm dời về 94% quãng ghim, ghim ngắn lại còn 220%: cú nổ diễn ra lúc sân khấu cuộn đi, bớt dải tối sau cảnh.
+- Đã chạy `check.cjs`, `type-check.cjs`, `design-check.cjs`: không lỗi.
+
 ## Cảnh Spark: hai bàn tay chạm nhau rồi nổ (09/11/2026)
 
 Theo yêu cầu của chủ dự án, ngay sau hero có thêm cảnh mới. Hai bàn tay lấy từ ảnh chủ dự án gửi (bích hoạ *Sáng tạo ra Adam* của Michelangelo, phạm vi công cộng), nền vữa được tách bỏ, phần còn lại dựng thành ASCII nhiều màu. Cuộn xuống: toàn cảnh bức bích hoạ zoom dần vào hai ngón tay, ký tự tan sang ảnh cận cảnh, rồi hai bàn tay xích lại; chạm nhau thì nổ (chớp cam, vòng sóng ký tự, các ký tự văng ra), rồi về nền tối và trang hiện phần tiếp theo. Chi tiết ở `docs/09` §1, ghi công ở `THIRD_PARTY_NOTICES.md`. Đã chạy `check.cjs`, `type-check.cjs`, `design-check.cjs`: không lỗi; lúc đứng yên cảnh không tốn gì.
