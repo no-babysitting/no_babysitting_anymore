@@ -13,7 +13,7 @@ JourneyHUD là thanh trên cao 48px, dính ở đầu trang Story (FR-08). Nó t
 ## Quy tắc
 
 - Thứ tự từ trái sang phải: wordmark · cấp độ · harness · báo cáo tuần · vị trí chương · `[ Chi tiết ]`. Ngăn cách bằng hairline `control`, không có khe.
-- **Cấp độ:** 4 ô `level-1…4` (ordinal, một tông màu) + nhãn chữ `LOW / MEDIUM / HIGH / PRO`. Cấp độ theo *phần* của chương hiện tại (Phần I Low, II Medium, III High, IV và Kết Pro). Lên cấp không có chuyển động riêng (không có mục nào trong M1–M14 mang nghĩa này); ô mới đổi màu tức thì và được đọc qua `aria-live`.
+- **Cấp độ:** 4 ô `level-1…4` (ordinal, một tông màu) + nhãn chữ `LOW / MEDIUM / HIGH / PRO`. Cấp độ theo *phần* của chương hiện tại (Phần I Low, II Medium, III High, IV và Kết Pro). Lên cấp không có chuyển động riêng (không có mục nào trong M1–M17 mang nghĩa này); ô mới đổi màu tức thì và được đọc qua `aria-live`.
 - **Harness:** 6 ô vuông 11px; ô đã mở đặc `fg`, chưa mở chỉ có viền. Không dùng accent.
 - **Báo cáo tuần:** `■■□□` bằng mono, giống dạng thu gọn của StatusBoard.
 - **Vị trí:** `c03 · 4/12`. Không có thanh phần trăm cho cả khoá.

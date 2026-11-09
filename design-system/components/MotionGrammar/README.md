@@ -1,4 +1,4 @@
-MotionGrammar là trang trình diễn mười chuyển động M1–M10 của No Babysitting. Mỗi chuyển động mang đúng một nghĩa, có dạng tĩnh tương đương khi giảm chuyển động.
+MotionGrammar là trang trình diễn mười chuyển động M1–M10 của No Babysitting. Mỗi chuyển động mang đúng một nghĩa, có dạng tĩnh tương đương khi giảm chuyển động. Bảy mã còn lại (M11–M17) chạy ở `design-system/studies/index.html`; bảng đầy đủ, kèm mục đích, ở `design-system/motion.md`.
 
 ## Dùng khi
 

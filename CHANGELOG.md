@@ -2,6 +2,14 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## UX1 · Một nơi gốc cho ngữ pháp chuyển động (09/11/2026)
+
+- `design-system/motion.md` thành nơi gốc duy nhất của ngữ pháp: bảng M1–M17 có thêm cột **mục đích** (bảy mục đích của `docs/19` §4), M15–M17 vào bảng, bảng ba tầng C/P/N chuyển về đây kèm toàn bộ ngân sách (pin ≤ 220% vh mỗi cảnh, vòng giao việc ≤ 100% vh mỗi bước, mặt nước ≈ 3k ô/giây).
+- Luật đã lệch được dọn về một câu: "chỉ tầng N được lặp" kèm ba điều kiện của `docs/09` §1, thay cho "không gì lặp vô hạn". Con số ngữ pháp M1–M10/M1–M14 nay là M1–M17 ở `SOURCE-OF-TRUTH.md`, `design-system/README.md`, `MotionGrammar/README.md`, `JourneyHUD/README.md` và `tokens.json`.
+- `design-system/studies/index.html` (mới): trang tham chiếu sống, 17 hàng M1–M17 chạy cạnh nhau; M11 dựng chữ từ bitmap logo qua `NB.ascii`, M12 sculpture + lens, M15 rã chữ bằng canvas phụ `aria-hidden`, M17 gõ chữ với chữ đầy đủ luôn trong DOM. Reduced motion: mọi hàng ở dạng tĩnh.
+- `docs/` **không bị sửa** (luật chủ dự án 09/11/2026). Chỗ nào trong `docs/` còn ghi M1–M10, M1–M14 hay "không gì lặp vô hạn" thì `motion.md` là bản đúng; danh sách từng chỗ ở `docs/omp/01-ux1-motion-source-of-truth.md`.
+- Đo: trang studies ở 1000, 1440, 390 và 360px — 17 hàng, không lỗi JS, không cuộn ngang. Site không đổi pixel nào: `check.cjs`, `type-check.cjs`, `design-check.cjs`, `art-check.cjs` giữ kết quả như trước đợt này.
+
 ## Khoá ASCII art, kế hoạch kaizen UI/UX, prompt cho agent mới (09/11/2026)
 
 - `site/scripts/art-check.cjs` + `design-system/art-lock.json`: khoá 8 mảnh art ở 1440 và 390 (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark ở 4 thời điểm), ảnh nguồn của Spark và mặt mascot. Chạy trong CI ở chế độ chỉ báo, không chặn merge (bước *Art lock*, artifact `art-report`). Đo ba thứ: bố cục, bảng màu, lượng art; ngưỡng đặt trên mức lệch giữa máy làm việc và CI. Thử: bỏ hệ số làm sáng màu của Spark thì cả 8 mảnh Spark bị bắt (D55).

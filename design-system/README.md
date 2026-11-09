@@ -27,7 +27,7 @@ No Babysitting (*An unofficial guide to Claude Code best practices*) là trang h
 
 ## Màu
 
-- Dùng `accent` (cam đất) **chỉ cho hành động và hiện tại**: CTA và nút chính, viền focus (`focus-ring`), vị trí hiện tại (tab, mốc chương, beat), agent đang làm, con trỏ ▍ tới lượt bạn, và ô ■ ở nhãn góc. **Không** dùng cho số lớn, mã M1–M14, mũi tên, gạch ngang, nhãn tiêu đề, chip lọc hay HUD. Chữ trên nền `accent` là `on-accent`, không bao giờ dùng trắng tinh.
+- Dùng `accent` (cam đất) **chỉ cho hành động và hiện tại**: CTA và nút chính, viền focus (`focus-ring`), vị trí hiện tại (tab, mốc chương, beat), agent đang làm, con trỏ ▍ tới lượt bạn, và ô ■ ở nhãn góc. **Không** dùng cho số lớn, mã M1–M17, mũi tên, gạch ngang, nhãn tiêu đề, chip lọc hay HUD. Chữ trên nền `accent` là `on-accent`, không bao giờ dùng trắng tinh.
 - Dùng `signal`, `warn`, `danger` **chỉ cho trạng thái**, và luôn kèm icon + chữ:
   - `signal` (ô đặc): đã kiểm chứng, đạt, "Bây giờ", *Bền vững*.
   - `warn` (nửa ô): cần cân nhắc, *Phụ thuộc model*.
@@ -79,8 +79,8 @@ No Babysitting (*An unofficial guide to Claude Code best practices*) là trang h
 
 Chi tiết ở mục **Chuyển động**. Tóm tắt:
 
-- **Một chuyển động mang một nghĩa** (ngữ pháp M1–M10). Không gọi tên được nó giải thích điều gì thì bỏ.
-- Mỗi chương tối đa một "khoảnh khắc lớn". Không parallax nền. Không gì lặp vô hạn; con trỏ chỉ nhấp nháy 3 chu kỳ rồi đứng yên.
+- **Một chuyển động mang một nghĩa** (ngữ pháp M1–M17, nơi gốc: `motion.md`). Không gọi tên được nó giải thích điều gì — hoặc không chỉ ra được mục đích của nó — thì bỏ. Các câu cũ trong `docs/` còn ghi M1–M10 hoặc M1–M14: bản đúng là `motion.md`, và `docs/omp/01-ux1-motion-source-of-truth.md` liệt kê từng chỗ.
+- Mỗi chương tối đa một "khoảnh khắc lớn". Không parallax nền. **Chỉ tầng N được lặp**, với ba điều kiện ở `motion.md` §Luật và `docs/09` §1; ngoài tầng N, con trỏ chỉ nhấp nháy 3 chu kỳ rồi đứng yên.
 - Thời lượng theo `dur-*`, ease theo `ease-*`. Tween scrub luôn dùng `ease-scrub` (none).
 - Reduced motion (theo OS hoặc nút Motion trong trang): mỗi mục ngữ pháp có dạng tĩnh tương đương; nội dung không mất đi.
 
@@ -99,7 +99,7 @@ Chi tiết ở mục **Chuyển động**. Tóm tắt:
 | SourceButton | Nút "Nguồn" luôn nhìn thấy: mở bảng nguồn (loại, người, ngày, verifiedAt, trích nguyên văn, mở bản gốc, sao chép link) để người học tự đối chiếu |
 | GrillCard | Câu hỏi nhớ lại cuối chương |
 | StatusBoard | Bảng trạng thái BÁO CÁO TUẦN |
-| MotionGrammar | Trang trình diễn M1–M10 |
+| MotionGrammar | Trang trình diễn M1–M10; M1–M17 chạy cạnh nhau ở `design-system/studies/index.html` |
 | AsciiHero | Hero: tượng ký tự kiểu Aino, từ khoá nhúng trong hàng; noise → order (M11), lens (M12) |
 | ChapterOpener | Màn mở chương: số condensed tràn khung, tên expanded, địa hình ASCII, metadata bốn góc |
 | CinematicAscii | Cảnh full-color duy nhất (finale, tuỳ chọn Mở đầu): ký tự mang màu ảnh tự dựng |
@@ -118,7 +118,7 @@ Mọi preview dùng chung `components/bundle.css` (khung, vai chữ, nút, nhãn
 
 ## Học từ reference
 
-Đã mở trực tiếp từng site và rút thành quy tắc, không chép: **Aino** → tượng ký tự + chữ nhúng + nhãn con trỏ · **WRDLSS** → chữ condensed tràn khung, địa hình ASCII, nút `[ ]`, đồng hồ sống · **DEIFIED** → expanded lớn, nhãn micro, một ■ accent, ghost text (giãn chữ rộng kiểu DEIFIED không dùng cho tiếng Việt có dấu) · **Asciify** → ký tự mang màu ảnh nguồn · **Artefakt** → metadata bốn góc, nền chấm, bộ đếm `02 / 10` · **Polsia** → panel nổi kể "hệ thống đang làm gì". Không dùng font thương hiệu của các site, không WebGL, không chuyển động lặp vô hạn.
+Đã mở trực tiếp từng site và rút thành quy tắc, không chép: **Aino** → tượng ký tự + chữ nhúng + nhãn con trỏ · **WRDLSS** → chữ condensed tràn khung, địa hình ASCII, nút `[ ]`, đồng hồ sống · **DEIFIED** → expanded lớn, nhãn micro, một ■ accent, ghost text (giãn chữ rộng kiểu DEIFIED không dùng cho tiếng Việt có dấu) · **Asciify** → ký tự mang màu ảnh nguồn · **Artefakt** → metadata bốn góc, nền chấm, bộ đếm `02 / 10` · **Polsia** → panel nổi kể "hệ thống đang làm gì". Không dùng font thương hiệu của các site, không WebGL, không chuyển động lặp vô hạn mà không có mục đích (chỗ lặp hợp lệ: `motion.md` §Luật).
 
 ## Accessibility
 

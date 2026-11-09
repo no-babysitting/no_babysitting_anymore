@@ -40,7 +40,7 @@ Giá trị gốc ở `tokens.json`; CSS sinh ra bằng `python3 tools/tokens2css
 1. **Accent = hành động + hiện tại.** CTA và nút chính, focus, tab/mốc/beat hiện tại, agent đang làm (`working`), con trỏ ▍, ô ■ ở nhãn góc. Không cho số lớn, mã M, mũi tên, gạch ngang, tiêu đề, chip lọc, HUD. **Ngoại lệ duy nhất: logo** (nhận diện), và không đặt logo accent sát một nút accent.
 2. **Nhãn (`.nb-tag`) = ô đánh dấu 9px + chữ mono `fg`**, không khung, không chữ màu. Hình của ô mang nghĩa: đặc (có, đã chắc) · nửa (một phần, còn tuỳ) · gạch chéo (bị thay, bị chặn) · chấm (chưa rõ, chưa ngã ngũ) · rỗng (chưa có). Chữ phải tự đủ nghĩa.
 3. **M4 (decode) chỉ cho hành động của agent**: động từ và dòng nhật ký agent, tên lệnh trong tab CLI. Mọi đổi chữ khác dùng `NB.say` (fade `dur-quick`). Bộ ký tự xáo trộn `NB.SCRAMBLE` không có dấu.
-4. **Không có chuyển động ngoài M1–M14.** Thứ gì không có nghĩa trong ngữ pháp (ví dụ lên cấp ở HUD) thì đổi tức thì.
+4. **Không có chuyển động ngoài M1–M17** (`design-system/motion.md`). Thứ gì không có nghĩa trong ngữ pháp (ví dụ lên cấp ở HUD) thì đổi tức thì.
 5. **The Colleague:** cấm *hình* kiểu mascot (con vật, nhân vật khối pixel), không cấm *màu*. Logo Blocks là *chữ*, không phải nhân vật. Lưu ý: chữ khối màu cam trong khung terminal gợi tới banner của chính Claude Code; ổn khi dùng nội bộ, nhưng nếu công khai thì xem lại cùng việc đổi accent (todo P0 số 5). `working` dùng accent. `overloaded` không gắn với ngưỡng context.
 6. **Context (S1):** hai chỉ số *độ tập trung* và *chi phí mỗi lượt*, không có vùng đỏ hay ngưỡng cố định; ngưỡng của từng nguồn nằm trong ContradictionNote.
 7. **Harness có 6 phần** theo PRD G1: context · kế hoạch · trí nhớ · khối xây dựng · rào chắn · kiểm chứng. Không dùng "10 trụ".
@@ -73,7 +73,7 @@ Kiểm tra tự động (`tools/check.js … all 1000,360`): **27/27 không lỗ
 | FilterBar (+ SearchBox) | Library | ✓ **mới** | tìm không dấu · lọc 5 chiều · rỗng | Chưa có chip nguồn, chương, nguyên lý |
 | SimulatorFrame | Simulator | ✓ **mới** | chờ ▍ · đang làm · hoàn tất | Ví dụ S4 |
 | ContextMeter | Simulator | ✓ **làm lại** | 2 chỉ số · tua lại · nén · phiên mới | Khung S1 mới |
-| MotionGrammar | Chuyển động | ✓ | M1–M10 | |
+| MotionGrammar | Chuyển động | ✓ | M1–M10 (M11–M17: xem `motion.md`, trang `studies/`) | |
 | AsciiHero | ASCII | ✓ | noise → order · lens | Tượng chưa nói lên ý gì (việc kế) |
 | ChapterOpener | ASCII | ✓ | vào cảnh | |
 | CinematicAscii | ASCII | ✓ | — | Nên dựng từ ảnh thật lúc build (việc kế) |
