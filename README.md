@@ -57,6 +57,8 @@ Mỗi ví dụ đổi theo **nhóm việc** của bạn: vận hành, marketing,
 | [`16-writing-guide.md`](docs/16-writing-guide.md) | Văn phong tiếng Việt và tiếng Anh |
 | [`17-handoff-prompt.md`](docs/17-handoff-prompt.md) | Prompt giao cho coding agent, kèm nguồn chính thức |
 | [`18-intro-track-plan.md`](docs/18-intro-track-plan.md) | Kế hoạch track Nhập môn |
+| [`19-uiux-kaizen-plan.md`](docs/19-uiux-kaizen-plan.md) | Kaizen UI/UX, khoá ASCII art |
+| [`20-handoff-prompt-deepseek.md`](docs/20-handoff-prompt-deepseek.md) | Prompt cho coding agent DeepSeek |
 | [`08-kaizen-go-live.md`](docs/08-kaizen-go-live.md) | Quyết định của chủ dự án, quy tắc phát hành |
 
 Mục lục đầy đủ và README cũ: [`docs/README.md`](docs/README.md).
@@ -70,6 +72,7 @@ NB_BASE=/no_babysitting_anymore/ npm run build
 NB_BASE=/no_babysitting_anymore/ node scripts/check.cjs        # link, lỗi JS, cuộn ngang, reduced motion
 NB_BASE=/no_babysitting_anymore/ node scripts/type-check.cjs   # typography
 NB_BASE=/no_babysitting_anymore/ node scripts/design-check.cjs # gu trình bày
+NB_BASE=/no_babysitting_anymore/ node scripts/art-check.cjs    # ASCII art đã duyệt không bị đổi
 ```
 
 Mỗi thay đổi là một PR. Merge vào `main` thì GitHub Pages tự cập nhật. Câu chữ mới trên trang cần chủ dự án duyệt trước khi merge.

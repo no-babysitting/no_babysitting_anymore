@@ -22,6 +22,8 @@
 - [`16-writing-guide.md`](16-writing-guide.md): 16 · Văn phong tiếng Việt và tiếng Anh (08/11/2026)
 - [`17-handoff-prompt.md`](17-handoff-prompt.md): 17 · Prompt giao cho coding agent: dựng nội dung v4 (08/11/2026)
 - [`18-intro-track-plan.md`](18-intro-track-plan.md): 18 · Kế hoạch track Nhập môn Claude (outline, 08/11/2026)
+- [`19-uiux-kaizen-plan.md`](19-uiux-kaizen-plan.md): 19 · Kaizen UI/UX: cho người đọc thấy hệ thống (09/11/2026)
+- [`20-handoff-prompt-deepseek.md`](20-handoff-prompt-deepseek.md): 20 · Prompt giao cho coding agent (DeepSeek v4.1 Flash) (09/11/2026)
 
 ## README cũ (tư liệu)
 
