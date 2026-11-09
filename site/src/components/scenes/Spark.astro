@@ -1,0 +1,183 @@
+---
+import { url } from '../../lib/url';
+/* Scene · Spark (right after the hero). Two hands from the owner's image of Michelangelo's "The Creation of Adam"
+   (fresco, public domain; see THIRD_PARTY_NOTICES.md) drawn as ASCII by a small renderer of their own. Scrolling
+   closes the gap (pinned, scrubbed); at contact the glyphs burst outward with a flash and a ring (time-based,
+   about 1.5 s), then the stage is plain dark and the page moves on. Scrolling back above contact restores the hands.
+   Reduced motion / motion off: one still frame, fingertips almost touching, no pin. Idle cost: nothing is painted
+   unless the scroll position changes or the burst is running. */
+---
+<section class="spark" id="spark" aria-label="Hai bàn tay">
+  <div class="stage" id="spark-stage" data-fresco={url('art/fresco.jpg')} data-left={url('art/hand-left.png')} data-right={url('art/hand-right.png')}>
+    <canvas class="cv" id="spark-cv" aria-hidden="true"></canvas>
+    <p class="nb-sr">Hình ASCII: toàn cảnh bức tranh theo bích hoạ “Sáng tạo ra Adam” của Michelangelo, rồi cận cảnh hai bàn tay vươn tới nhau. Khi hai ngón tay chạm nhau, hình vỡ tung thành ký tự rồi tắt.</p>
+  </div>
+</section>
+
+<style>
+  .spark { position: relative; background: var(--bg); }
+  .stage { position: relative; height: calc(100svh - var(--hud-height)); min-height: 480px; overflow: hidden; background: var(--bg); }
+  .cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  /* cinema: the header fades out as the hands meet and comes back with the next words; it always returns on keyboard focus */
+  :global(.hud.nb-cinema-fade:focus-within) { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+</style>
+
+<script>
+  const CH = ' .:-=+*#%@';
+  const hash = (x: number, y: number) => { let h = (x * 374761393 + y * 668265263) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967295; };
+  const load = (src: string) => new Promise<HTMLImageElement>((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+  type Cell = { x: number; y: number; c: string; r: number; g: number; b: number; a: number };
+
+  async function spark(canvas: HTMLCanvasElement, frescoSrc: string, leftSrc: string, rightSrc: string) {
+    const [F, L, R] = await Promise.all([load(frescoSrc), load(leftSrc), load(rightSrc)]);
+    const g = canvas.getContext('2d')!, off = document.createElement('canvas'), og = off.getContext('2d', { willReadFrequently: true })!;
+    const css = getComputedStyle(document.documentElement), tok = (n: string, f: string) => css.getPropertyValue(n).trim() || f;
+    const GOLD = '#ffd27a', WARM = '#f6a058', WHITE = '#fff6e0';
+    const BG = tok('--bg', '#14120f'), ACC = tok('--accent', '#d97a4a'), INFO = tok('--info', '#8fb3d9'), DANGER = tok('--danger', '#ee7a66');
+    let W = 0, H = 0, cw = 8, ch = 14, cols = 0, rows = 0, lay = { w: 0, h: 0, x: 0, y: 0, s: 1 }, gap = 0.3, zoom = 0, mix = 0;
+    let glyphs: Cell[] = [], burst: any = null, raf = 0;
+    const tip = () => ({ x: W / 2, y: lay.y + lay.h * 0.4 });
+    function size() {
+      const r = canvas.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+      const small = W < 640; cw = small ? 7 : 8; ch = small ? 12 : 14;
+      cols = Math.ceil(W / cw); rows = Math.ceil(H / ch); off.width = cols; off.height = rows;
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.font = `500 ${small ? 10.5 : 12}px "JetBrains Mono", ui-monospace, monospace`; g.textBaseline = 'top';
+      const lw = small ? W * 2.5 : Math.min(W * 1.1, H * 1.7 * 199 / 109), lh = lw * 109 / 199;
+      lay = { w: lw, h: lh, x: (W - lw) / 2, y: H / 2 - lh * 0.4, s: lw / 199 };   // fingertips (40% down the image) on the middle line
+    }
+    const smooth = (t: number) => t * t * (3 - 2 * t);
+    function tone(r: number, gg: number, b: number, a: number, x: number, y: number): Cell {
+      let l = (0.299 * r + 0.587 * gg + 0.114 * b) / 255; l = Math.pow(Math.max(0, (l - 0.1) / 0.9), 1 / 1.35);
+      const m = (r + gg + b) / 3;
+      r = Math.min(255, (m + (r - m) * 1.45) * 1.35); gg = Math.min(255, (m + (gg - m) * 1.45) * 1.35); b = Math.min(255, (m + (b - m) * 1.45) * 1.35);
+      const k = Math.max(1, Math.min(CH.length - 1, Math.round((0.25 + 0.75 * l) * a * (CH.length - 1))));
+      return { x, y, c: CH[k], r, g: gg, b, a: Math.min(1, 0.45 + 0.6 * a) };
+    }
+    /* the whole fresco (owner's first image), zoomed toward the fingertips as you scroll */
+    function frescoData() {
+      const fw = Math.max(W, H * 1000 / 545) * 1.02, z = 1 + 5.4 * smooth(zoom), w = fw * z, h = w * 545 / 1000;
+      const fx = 0.44, fy = 0.5, k = smooth(zoom);                          // fingertips in the fresco
+      const cx = W / 2 - (fx - 0.5) * w * k, cy = H / 2 - (fy - 0.5) * h * k;
+      og.setTransform(1, 0, 0, 1, 0, 0); og.clearRect(0, 0, cols, rows);
+      og.setTransform(1 / cw, 0, 0, 1 / ch, 0, 0); og.imageSmoothingQuality = 'high';
+      og.drawImage(F, cx - w / 2, cy - h / 2, w, h);
+      return og.getImageData(0, 0, cols, rows).data;
+    }
+    /* the close-up hands (owner's second image), background removed; gap closes as you scroll */
+    function handsData() {
+      og.setTransform(1, 0, 0, 1, 0, 0); og.clearRect(0, 0, cols, rows);
+      og.setTransform(1 / cw, 0, 0, 1 / ch, 0, 0); og.imageSmoothingQuality = 'high';
+      const travel = W * 0.42 * gap, touch = 2.6 * lay.s * (1 - gap);
+      og.drawImage(L, lay.x - travel + touch, lay.y, 98 * lay.s, lay.h);
+      og.drawImage(R, lay.x + 98 * lay.s + travel - touch, lay.y, 101 * lay.s, lay.h);
+      return og.getImageData(0, 0, cols, rows).data;
+    }
+    function cells(): Cell[] {
+      const hd = mix > 0 ? handsData() : null, fd = mix < 1 ? frescoData() : null, out: Cell[] = [];
+      for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+        const o = (y * cols + x) * 4, useH = !fd || (hd && hash(x, y) < mix);   // glyph-by-glyph dissolve from fresco to hands
+        if (useH) {
+          const d = hd!, a = d[o + 3] / 255;
+          if (a < 0.1) { if (hash(x, y) > 0.986) out.push({ x, y, c: '.', r: 74, g: 69, b: 62, a: 0.6 }); continue; }
+          out.push(tone(d[o] / a, d[o + 1] / a, d[o + 2] / a, a, x, y));
+        } else {
+          const d = fd!, a = d[o + 3] / 255; if (a < 0.1) continue;
+          const r = d[o], gg = d[o + 1], bb = d[o + 2], mx = Math.max(r, gg, bb), sat = mx ? (mx - Math.min(r, gg, bb)) / mx : 0;
+          const lum = (0.299 * r + 0.587 * gg + 0.114 * bb) / 255, glare = smooth(Math.max(0, Math.min(1, (lum - 0.78) / 0.2)));
+          const wall = Math.max(1 - smooth(Math.max(0, Math.min(1, (sat - 0.1) / 0.22))), 0.75 * glare);   // pale plaster and the painted glare recede, the figures stay
+          if (wall > 0.6 && hash(x, y) > 0.55) continue;
+          const q = tone(r, gg, bb, 1 - 0.55 * wall, x, y); q.a *= 1 - 0.7 * wall; out.push(q);
+        }
+      }
+      return out;
+    }
+    function draw() {
+      glyphs = cells(); g.fillStyle = BG; g.fillRect(0, 0, W, H);
+      for (const q of glyphs) { g.globalAlpha = q.a; g.fillStyle = `rgb(${q.r | 0},${q.g | 0},${q.b | 0})`; g.fillText(q.c, q.x * cw, q.y * ch); }
+      if (gap < 0.25 && mix >= 1) {   // light gathers between the fingertips just before they touch (as in the owner's reference)
+        const t = tip(), k = 1 - gap / 0.25;
+        const gl = g.createRadialGradient(t.x, t.y, 0, t.x, t.y, 40 + 120 * k); gl.addColorStop(0, GOLD); gl.addColorStop(1, 'rgba(255,210,122,0)');
+        g.globalAlpha = 0.55 * k; g.fillStyle = gl; g.fillRect(t.x - 200, t.y - 200, 400, 400);
+        rays(t.x, t.y, 20 + 70 * k, 0.8 * k, 16);
+      }
+      g.globalAlpha = 1;
+    }
+    /* radial rays drawn with the glyph whose stroke follows the ray: - \ | / */
+    function rays(cx: number, cy: number, len: number, alpha: number, n: number) {
+      const step = 9;
+      for (let i = 0; i < n; i++) {
+        const an = i / n * 6.283 + 0.13, l = len * (0.55 + 0.45 * hash(i, 5)), ca = Math.cos(an), sa = Math.sin(an);
+        const deg = ((an * 180 / Math.PI) % 180 + 180) % 180, c = deg < 22.5 || deg >= 157.5 ? '-' : deg < 67.5 ? '\\' : deg < 112.5 ? '|' : '/';
+        for (let r = 8; r < l; r += step) { g.globalAlpha = alpha * (1 - r / l); g.fillStyle = r < l * 0.35 ? WHITE : GOLD; g.fillText(c, cx + ca * r, cy + sa * r * 0.8); }
+      }
+    }
+    function dark() { g.globalAlpha = 1; g.fillStyle = BG; g.fillRect(0, 0, W, H); }
+    function boom() {
+      if (burst) return;
+      const c = tip(), T = 1.5;
+      const parts = glyphs.filter(q => q.c !== '.').map(q => {
+        const px = q.x * cw, py = q.y * ch, dx = px - c.x, dy = py - c.y, d = Math.hypot(dx, dy) + 1, sp = (380 + 900 * Math.exp(-d / 260)) * (0.5 + hash(q.x, q.y));
+        return { ...q, px, py, vx: dx / d * sp, vy: dy / d * sp - 60 * hash(q.y, q.x) };
+      });
+      burst = { t0: performance.now(), done: false };
+      const step = (now: number) => {
+        const t = (now - burst.t0) / 1000; dark();
+        if (t < 0.6) { const gl = g.createRadialGradient(c.x, c.y, 0, c.x, c.y, Math.max(W, H) * (0.3 + 0.5 * t)); gl.addColorStop(0, WHITE); gl.addColorStop(0.25, GOLD); gl.addColorStop(0.6, 'rgba(246,160,88,0.35)'); gl.addColorStop(1, 'rgba(246,160,88,0)'); g.globalAlpha = 0.85 * (1 - t / 0.6); g.fillStyle = gl; g.fillRect(0, 0, W, H); }   // golden bloom
+        if (t < 1.0) rays(c.x, c.y, Math.max(W, H) * (0.25 + 0.6 * t), 1 - t, 28);   // sun rays shoot out
+        const ring = t * Math.max(W, H) * 0.9;
+        if (t < 0.9) for (const [dx, colr] of [[-3, INFO], [3, DANGER], [0, GOLD]] as [number, string][]) {   // shock ring, RGB split in the first 0.3 s (M13)
+          if (dx && t > 0.3) continue; g.fillStyle = colr; g.globalAlpha = (dx ? 0.35 : 0.9) * (1 - t / 0.9);
+          for (let i = 0; i < 90; i++) { const an = i / 90 * 6.283; g.fillText('@#*+'[i % 4], c.x + dx + Math.cos(an) * ring, c.y + Math.sin(an) * ring * 0.62); }
+        }
+        const fade = Math.max(0, 1 - Math.pow(t / T, 1.4)), hot = Math.max(0, 1 - t * 2.5);
+        for (const p of parts) {
+          const x = p.px + p.vx * t, y = p.py + p.vy * t + 120 * t * t; if (x < -20 || x > W + 20 || y < -20 || y > H + 20) continue;
+          g.globalAlpha = p.a * fade; g.fillStyle = `rgb(${(p.r + (255 - p.r) * hot) | 0},${(p.g + (210 - p.g) * hot) | 0},${(p.b + (122 - p.b) * hot) | 0})`; g.fillText(p.c, x, y);
+        }
+        g.globalAlpha = 1;
+        if (t < T) raf = requestAnimationFrame(step); else { raf = 0; burst.done = true; dark(); }
+      };
+      raf = requestAnimationFrame(step);
+    }
+    size(); draw();
+    return {
+      set(v: { zoom: number; mix: number; gap: number }) { zoom = v.zoom; mix = v.mix; gap = Math.max(0, Math.min(1, v.gap)); if (!burst) draw(); },
+      boom, get exploded() { return !!burst; },
+      reset() { if (raf) cancelAnimationFrame(raf); raf = 0; burst = null; draw(); },
+      resize() { size(); if (!burst) draw(); else if (burst.done) dark(); },
+    };
+  }
+
+  async function start(w: any) {
+    const NB = w.NoBabysitting, gsap = w.gsap, ST = w.ScrollTrigger;
+    const stage = document.getElementById('spark-stage')!, cv = document.getElementById('spark-cv') as HTMLCanvasElement;
+    const S = await spark(cv, stage.dataset.fresco!, stage.dataset.left!, stage.dataset.right!);
+    addEventListener('resize', () => S.resize());
+    if ((NB && NB.reduce()) || !gsap || !ST) { S.set({ zoom: 1, mix: 1, gap: 0.04 }); return; }
+    /* 0–0.40 zoom into the fresco · 0.32–0.48 glyphs dissolve into the close-up · 0.48–0.80 the hands close · 0.80 contact */
+    const CONTACT = 0.8, clamp = (v: number) => Math.max(0, Math.min(1, v));
+    const hud = document.querySelector<HTMLElement>('.hud');
+    /* the header fades out from 0.55 (hands about to meet) to 0.75, stays hidden through the burst, comes back at 0.97 */
+    const cinema = (p: number) => {
+      if (!hud) return;
+      const k = p >= 0.97 ? 0 : clamp((p - 0.55) / 0.2);
+      hud.classList.toggle('nb-cinema-fade', k > 0);
+      hud.style.opacity = k > 0 ? String(1 - k) : '';
+      hud.style.transform = k > 0 ? `translateY(${-100 * k}%)` : '';
+      hud.style.pointerEvents = k > 0.5 ? 'none' : '';
+    };
+    ST.create({
+      trigger: '#spark', start: 'top top+=48', end: '+=260%', pin: true, scrub: 0.5,
+      onLeave: () => cinema(1), onLeaveBack: () => cinema(0),
+      onUpdate: (s: any) => {
+        const p = s.progress; cinema(p);
+        if (p >= CONTACT) { if (!S.exploded) { S.set({ zoom: 1, mix: 1, gap: 0 }); S.boom(); } return; }
+        if (S.exploded) S.reset();
+        S.set({ zoom: clamp(p / 0.4), mix: clamp((p - 0.32) / 0.16), gap: 0.3 * (1 - clamp((p - 0.48) / (CONTACT - 0.48))) });
+      },
+    });
+    ST.sort(); ST.refresh();
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>
