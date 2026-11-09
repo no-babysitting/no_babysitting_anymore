@@ -79,6 +79,13 @@ Hỏi theo ba vòng: 5 câu tổng quan, 15 câu chi tiết, 4 câu bổ sung. C
 
 Outline: `18-intro-track-plan.md`.
 
+## 1d. Quyết định ngày 09/11/2026
+
+| # | Chủ đề | Quyết định | Thay cho |
+|---|---|---|---|
+| D55 | Khoá ASCII art | Art đã duyệt (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark, mặt mascot) được khoá bằng `site/scripts/art-check.cjs` + `design-system/art-lock.json`, chạy trong CI. PR đổi `art-lock.json` cần chủ dự án duyệt, như D13 (`19` §2) | — |
+| D56 | Kaizen UI/UX | Nhận xét *ASCII & Motion Design Direction* (ChatGPT, 09/11) được đối chiếu và chuyển thành các đợt UX0–UX6 (`19-uiux-kaizen-plan.md`). Prompt cho coding agent mới (DeepSeek v4.1 Flash): `20-handoff-prompt-deepseek.md`. *Đề xuất, chờ chủ dự án duyệt* | — |
+
 ## 2. Quan sát site ngày 07/11/2026
 
 Đo trên bản build bằng Chromium headless, ở 1440×900 và ở chế độ giả lập iPhone 13 Pro Max (428×926). Số CPU chỉ mang tính tương đối (đo trên máy container), dùng để so trước và sau mỗi đợt.
