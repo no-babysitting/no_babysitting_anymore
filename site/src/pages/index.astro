@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Hud from '../components/Hud.astro';
 import Intro from '../components/scenes/Intro.astro';
+import Spark from '../components/scenes/Spark.astro';
 import TwoFlips from '../components/scenes/TwoFlips.astro';
 import Journey from '../components/scenes/Journey.astro';
 import Run from '../components/scenes/Run.astro';
@@ -14,6 +15,7 @@ import { LIVE } from '../lib/status';
   <Hud />
   <main id="main" tabindex="-1">
   <Intro />
+  <Spark />
 
   <section class="manifesto-wrap" aria-label="Tuyên ngôn">
   <canvas class="nb-canvas terrain" id="man-cv" aria-hidden="true"></canvas>

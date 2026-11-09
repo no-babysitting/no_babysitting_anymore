@@ -1,0 +1,129 @@
+---
+import { url } from '../../lib/url';
+/* Scene · Spark (right after the hero). Two hands from the owner's image of Michelangelo's "The Creation of Adam"
+   (fresco, public domain; see THIRD_PARTY_NOTICES.md) drawn as ASCII by a small renderer of their own. Scrolling
+   closes the gap (pinned, scrubbed); at contact the glyphs burst outward with a flash and a ring (time-based,
+   about 1.5 s), then the stage is plain dark and the page moves on. Scrolling back above contact restores the hands.
+   Reduced motion / motion off: one still frame, fingertips almost touching, no pin. Idle cost: nothing is painted
+   unless the scroll position changes or the burst is running. */
+---
+<section class="spark" id="spark" aria-label="Hai bàn tay">
+  <div class="stage" id="spark-stage" data-left={url('art/hand-left.png')} data-right={url('art/hand-right.png')}>
+    <canvas class="cv" id="spark-cv" aria-hidden="true"></canvas>
+    <p class="nb-sr">Hình ASCII: hai bàn tay vươn tới nhau theo bức bích hoạ “Sáng tạo ra Adam” của Michelangelo. Khi hai ngón tay chạm nhau, hình vỡ tung thành ký tự rồi tắt.</p>
+  </div>
+</section>
+
+<style>
+  .spark { position: relative; background: var(--bg); }
+  .stage { position: relative; height: calc(100svh - var(--hud-height)); min-height: 480px; overflow: hidden; background: var(--bg); }
+  .cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+</style>
+
+<script>
+  const CH = ' .:-=+*#%@';
+  const hash = (x: number, y: number) => { let h = (x * 374761393 + y * 668265263) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967295; };
+  const load = (src: string) => new Promise<HTMLImageElement>((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+  type Cell = { x: number; y: number; c: string; r: number; g: number; b: number; a: number };
+
+  async function spark(canvas: HTMLCanvasElement, leftSrc: string, rightSrc: string) {
+    const [L, R] = await Promise.all([load(leftSrc), load(rightSrc)]);
+    const g = canvas.getContext('2d')!, off = document.createElement('canvas'), og = off.getContext('2d', { willReadFrequently: true })!;
+    const css = getComputedStyle(document.documentElement), tok = (n: string, f: string) => css.getPropertyValue(n).trim() || f;
+    const BG = tok('--bg', '#14120f'), ACC = tok('--accent', '#d97a4a'), INFO = tok('--info', '#8fb3d9'), DANGER = tok('--danger', '#ee7a66');
+    let W = 0, H = 0, cw = 8, ch = 14, cols = 0, rows = 0, lay = { w: 0, h: 0, x: 0, y: 0, s: 1 }, gap = 0.8;
+    let glyphs: Cell[] = [], burst: any = null, raf = 0;
+    const tip = () => ({ x: W / 2, y: lay.y + lay.h * 0.4 });
+    function size() {
+      const r = canvas.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
+      const small = W < 640; cw = small ? 7 : 8; ch = small ? 12 : 14;
+      cols = Math.ceil(W / cw); rows = Math.ceil(H / ch); off.width = cols; off.height = rows;
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.font = `500 ${small ? 10.5 : 12}px "JetBrains Mono", ui-monospace, monospace`; g.textBaseline = 'top';
+      const lw = small ? W * 2.5 : Math.min(W * 1.1, H * 1.7 * 199 / 109), lh = lw * 109 / 199;
+      lay = { w: lw, h: lh, x: (W - lw) / 2, y: H / 2 - lh * 0.4, s: lw / 199 };   // fingertips (40% down the image) on the middle line
+    }
+    function cells(): Cell[] {
+      og.setTransform(1, 0, 0, 1, 0, 0); og.clearRect(0, 0, cols, rows);
+      og.setTransform(1 / cw, 0, 0, 1 / ch, 0, 0); og.imageSmoothingQuality = 'high';
+      const travel = W * 0.42 * gap, touch = 2.6 * lay.s * (1 - gap);
+      og.drawImage(L, lay.x - travel + touch, lay.y, 98 * lay.s, lay.h);
+      og.drawImage(R, lay.x + 98 * lay.s + travel - touch, lay.y, 101 * lay.s, lay.h);
+      const d = og.getImageData(0, 0, cols, rows).data, out: Cell[] = [];
+      for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+        const o = (y * cols + x) * 4, a = d[o + 3] / 255;
+        if (a < 0.1) { if (hash(x, y) > 0.986) out.push({ x, y, c: '.', r: 74, g: 69, b: 62, a: 0.6 }); continue; }   // dust
+        let r = d[o] / a, gg = d[o + 1] / a, b = d[o + 2] / a;
+        let l = (0.299 * r + 0.587 * gg + 0.114 * b) / 255; l = Math.pow(Math.max(0, (l - 0.1) / 0.9), 1 / 1.35);
+        const m = (r + gg + b) / 3;
+        r = Math.min(255, (m + (r - m) * 1.45) * 1.35); gg = Math.min(255, (m + (gg - m) * 1.45) * 1.35); b = Math.min(255, (m + (b - m) * 1.45) * 1.35);
+        const k = Math.max(1, Math.min(CH.length - 1, Math.round((0.25 + 0.75 * l) * a * (CH.length - 1))));
+        out.push({ x, y, c: CH[k], r, g: gg, b, a: Math.min(1, 0.45 + 0.6 * a) });
+      }
+      return out;
+    }
+    function draw() {
+      glyphs = cells(); g.fillStyle = BG; g.fillRect(0, 0, W, H);
+      for (const q of glyphs) { g.globalAlpha = q.a; g.fillStyle = `rgb(${q.r | 0},${q.g | 0},${q.b | 0})`; g.fillText(q.c, q.x * cw, q.y * ch); }
+      if (gap < 0.25) {   // a spark grows between the fingertips just before they touch
+        const t = tip(), k = 1 - gap / 0.25, n = Math.round(4 + 26 * k); g.fillStyle = ACC;
+        for (let i = 0; i < n; i++) { const an = hash(i, 7) * 6.283, rr = (hash(i, 9) * 26 + 4) * k; g.globalAlpha = 0.3 + 0.7 * k * hash(i, 3); g.fillText('·*+'[i % 3], t.x + Math.cos(an) * rr * 1.6, t.y + Math.sin(an) * rr * 0.8); }
+      }
+      g.globalAlpha = 1;
+    }
+    function dark() { g.globalAlpha = 1; g.fillStyle = BG; g.fillRect(0, 0, W, H); }
+    function boom() {
+      if (burst) return;
+      const c = tip(), T = 1.5;
+      const parts = glyphs.filter(q => q.c !== '.').map(q => {
+        const px = q.x * cw, py = q.y * ch, dx = px - c.x, dy = py - c.y, d = Math.hypot(dx, dy) + 1, sp = (380 + 900 * Math.exp(-d / 260)) * (0.5 + hash(q.x, q.y));
+        return { ...q, px, py, vx: dx / d * sp, vy: dy / d * sp - 60 * hash(q.y, q.x) };
+      });
+      burst = { t0: performance.now(), done: false };
+      const step = (now: number) => {
+        const t = (now - burst.t0) / 1000; dark();
+        if (t < 0.3) { const gl = g.createRadialGradient(c.x, c.y, 0, c.x, c.y, Math.max(W, H) * 0.6); gl.addColorStop(0, ACC); gl.addColorStop(1, 'transparent'); g.globalAlpha = 0.55 * (1 - t / 0.3); g.fillStyle = gl; g.fillRect(0, 0, W, H); }
+        const ring = t * Math.max(W, H) * 0.9;
+        if (t < 0.9) for (const [dx, colr] of [[-3, INFO], [3, DANGER], [0, ACC]] as [number, string][]) {   // shock ring, RGB split in the first 0.3 s (M13)
+          if (dx && t > 0.3) continue; g.fillStyle = colr; g.globalAlpha = (dx ? 0.35 : 0.9) * (1 - t / 0.9);
+          for (let i = 0; i < 90; i++) { const an = i / 90 * 6.283; g.fillText('@#*+'[i % 4], c.x + dx + Math.cos(an) * ring, c.y + Math.sin(an) * ring * 0.62); }
+        }
+        const fade = Math.max(0, 1 - Math.pow(t / T, 1.4)), hot = Math.max(0, 1 - t * 2.5);
+        for (const p of parts) {
+          const x = p.px + p.vx * t, y = p.py + p.vy * t + 120 * t * t; if (x < -20 || x > W + 20 || y < -20 || y > H + 20) continue;
+          g.globalAlpha = p.a * fade; g.fillStyle = `rgb(${(p.r + (217 - p.r) * hot) | 0},${(p.g + (122 - p.g) * hot) | 0},${(p.b + (74 - p.b) * hot) | 0})`; g.fillText(p.c, x, y);
+        }
+        g.globalAlpha = 1;
+        if (t < T) raf = requestAnimationFrame(step); else { raf = 0; burst.done = true; dark(); }
+      };
+      raf = requestAnimationFrame(step);
+    }
+    size(); draw();
+    return {
+      set(v: number) { gap = Math.max(0, Math.min(1, v)); if (!burst) draw(); },
+      boom, get exploded() { return !!burst; },
+      reset() { if (raf) cancelAnimationFrame(raf); raf = 0; burst = null; draw(); },
+      resize() { size(); if (!burst) draw(); else if (burst.done) dark(); },
+    };
+  }
+
+  async function start(w: any) {
+    const NB = w.NoBabysitting, gsap = w.gsap, ST = w.ScrollTrigger;
+    const stage = document.getElementById('spark-stage')!, cv = document.getElementById('spark-cv') as HTMLCanvasElement;
+    const S = await spark(cv, stage.dataset.left!, stage.dataset.right!);
+    addEventListener('resize', () => S.resize());
+    if ((NB && NB.reduce()) || !gsap || !ST) { S.set(0.04); return; }
+    const CONTACT = 0.62;
+    ST.create({
+      trigger: '#spark', start: 'top top+=48', end: '+=150%', pin: true, scrub: 0.5,
+      onUpdate: (s: any) => {
+        const p = s.progress;
+        if (p >= CONTACT) { if (!S.exploded) { S.set(0); S.boom(); } return; }
+        if (S.exploded) S.reset();
+        S.set(0.8 * (1 - p / CONTACT));
+      },
+    });
+    ST.sort(); ST.refresh();
+  }
+  if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
+</script>

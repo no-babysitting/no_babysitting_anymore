@@ -143,3 +143,7 @@ DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER
 DEALINGS IN THE FONT SOFTWARE.
 ```
+
+## Ảnh hai bàn tay ở cảnh Spark (trang chủ)
+
+`site/public/art/hand-left.png`, `hand-right.png`: tách từ ảnh do chủ dự án cung cấp (08/11/2026), chụp chi tiết bức bích hoạ *Sáng tạo ra Adam* (*The Creation of Adam*) của Michelangelo, khoảng 1508–1512, nhà nguyện Sistine. Tác phẩm thuộc phạm vi công cộng. Nền vữa đã được tách bỏ; hai bàn tay được dựng lại thành ký tự ASCII khi chạy.
