@@ -38,7 +38,12 @@
 
 ## 2. Khoá ASCII art (D55)
 
-**Art đã duyệt được khoá.** `site/scripts/art-check.cjs` dựng site, đọc lại từng canvas thành một dấu vân tay thô: lưới 24×14 màu trung bình, cộng tỉ lệ điểm sáng. Rồi nó so với `design-system/art-lock.json`. Dấu vân tay thô là có chủ ý: nhiễu ngẫu nhiên và khác biệt khử răng cưa của font nằm dưới ngưỡng, còn đổi bảng màu, dời bố cục, mất cảnh hay đổi cú nổ thì vượt ngưỡng. Ảnh nguồn của Spark và mặt mascot được so bằng hash. Bộ kiểm chạy trong CI ở bước *Art lock*, ảnh từng mảnh nằm trong artifact `art-report`.
+**Art đã duyệt được khoá.** `site/scripts/art-check.cjs` dựng site, đọc lại từng canvas và so với `design-system/art-lock.json` theo ba phép đo:
+- *bố cục*: tỉ lệ điểm sáng trong từng ô của lưới 12×7, so bằng hệ số tương quan;
+- *bảng màu*: màu trung bình của các điểm sáng trong 6 vùng;
+- *lượng art*: tỉ lệ điểm sáng trên cả canvas.
+
+Ba phép đo này bỏ qua những gì khác nhau giữa hai máy (khử răng cưa của font, bản trình duyệt, ký tự nhiễu ngẫu nhiên), nhưng bắt được việc đổi bảng màu, dời bố cục, mất cảnh hay đổi cú nổ. Ảnh nguồn của Spark và mặt mascot được so bằng hash. Bộ kiểm chạy trong CI ở bước *Art lock*, ảnh từng mảnh nằm trong artifact `art-report`.
 
 | Mảnh | Ở đâu | Khoá ở trạng thái |
 |---|---|---|
@@ -49,7 +54,10 @@
 | Spark: bích hoạ, hai bàn tay, chùm sáng ASCII | `Spark.astro`, `public/art/*` | Khung tĩnh, và ở 20%, 80%, 92% quãng ghim |
 | Mặt mascot | `NB.FACES` trong `bundle.js` | Hash |
 
-Mỗi mảnh đo ở 1440×900 và 390×844. Ngưỡng hiện tại: màu lệch ≤ 8% so với độ nổi của art trên nền, tỉ lệ điểm sáng lệch ≤ 12%. Lần thử ngày 09/11: hai lần chạy liền nhau lệch 0%. Bỏ hệ số làm sáng màu của Spark thì cả 8 mảnh Spark đều bị bắt.
+Mỗi mảnh đo ở 1440×900 và 390×844. Ngưỡng: bố cục tương quan ≥ 0,88; bảng màu lệch ≤ 6 (trên thang 0–255 mỗi kênh); lượng art lệch ≤ 15%. Đo ngày 09/11:
+- giữa máy làm việc và CI, lệch nhiều nhất là bố cục 0,94, bảng màu 3,9, lượng art 3%;
+- bỏ hệ số làm sáng màu của Spark: cả 8 mảnh Spark bị bắt (bảng màu lệch 7–12);
+- dời một hình sang ngang 10%: tương quan bố cục rơi xuống 0,74–0,85.
 
 **Muốn đổi art** thì chạy `node scripts/art-check.cjs --update --shots art-report`, đưa ảnh trước và sau vào trang giải thích của PR, rồi chờ chủ dự án duyệt. Luật này đi cùng D13: PR nào đổi `art-lock.json` thì phải có chủ dự án duyệt.
 

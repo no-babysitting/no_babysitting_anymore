@@ -1,8 +1,11 @@
 // Art lock: the ASCII art the owner has signed off must not drift while other work goes on (docs/19 §2, D55).
-// For each locked piece it renders the built site, reads the canvas back as a coarse fingerprint (a 24×14 grid of mean
-// colours plus the share of lit pixels) and compares it with design-system/art-lock.json. Coarse on purpose: the random
-// noise glyphs of a converged frame and font anti-aliasing stay under the tolerance; a new palette, a moved composition,
-// a missing scene or a different burst do not. The art's source images and the mascot's faces are compared by hash.
+// For each locked piece it renders the built site, reads the canvas back as a fingerprint in three parts and compares it
+// with design-system/art-lock.json:
+//   layout   share of lit pixels in each cell of a 12×7 grid, compared by correlation (a moved or missing composition)
+//   palette  mean colour of the lit pixels in 3×2 regions (a new palette, a dimmer or greyer picture)
+//   lit      share of lit pixels over the whole canvas (more or less art)
+// Measured on purpose so that what differs between two machines (font anti-aliasing, browser build, random noise glyphs)
+// stays well under the tolerance: across this machine and CI the worst case was layout 0.94, palette Δ 3.9, lit ±3%. The art's source images and the mascot's faces are compared by hash.
 //
 // usage (from site/, after npm run build):
 //   NB_BASE=/no_babysitting_anymore/ node scripts/art-check.cjs            compare with the lock, exit 1 on drift
@@ -14,7 +17,7 @@ const { BASE, serve } = require('./serve-dist.cjs');
 
 const ROOT = path.join(__dirname, '..', '..'), LOCK = path.join(ROOT, 'design-system', 'art-lock.json');
 const args = process.argv.slice(2), UPDATE = args.includes('--update'), SHOTS = args.includes('--shots') ? args[args.indexOf('--shots') + 1] : null;
-const TOL = { colour: 0.08, ink: 0.12 };   // colour change relative to how far the locked art stands out from its background · relative change of the lit share
+const TOL = { layout: 0.88, palette: 6, lit: 0.15 };   // min correlation · max mean |Δ| per channel (0–255) · max relative change
 
 const VIEWS = { desktop: { viewport: { width: 1440, height: 900 } }, phone: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } };
 /* what is locked. still = reduced motion (every scene shows its last frame); at = scroll the Spark pin to that progress, motion on */
@@ -40,19 +43,25 @@ async function fingerprint(page, sel) {
   return page.evaluate((sel) => {
     const c = document.querySelector(sel);
     if (!c || !c.width || !c.height) return null;
-    const GX = 24, GY = 14, d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data, w = c.width, h = c.height;
-    const sum = Array.from({ length: GX * GY }, () => [0, 0, 0, 0]);
-    let lit = 0, n = 0;
-    /* background = the darkest common colour: sample the corners */
-    const bg = [0, 1, 2].map((k) => Math.min(d[k], d[(w - 1) * 4 + k], d[((h - 1) * w) * 4 + k], d[((h - 1) * w + w - 1) * 4 + k]));
+    const GX = 12, GY = 7, RX = 3, RY = 2, w = c.width, h = c.height, d = c.getContext('2d').getImageData(0, 0, w, h).data;
+    const px = (x, y, k) => d[(y * w + x) * 4 + k] * d[(y * w + x) * 4 + 3] / 255;
+    const bg = [0, 1, 2].map((k) => Math.min(px(0, 0, k), px(w - 1, 0, k), px(0, h - 1, k), px(w - 1, h - 1, k)));
+    const cells = new Array(GX * GY).fill(0), count = new Array(GX * GY).fill(0), reg = Array.from({ length: RX * RY }, () => [0, 0, 0, 0]), all = [0, 0, 0, 0];
+    let n = 0;
     for (let y = 0; y < h; y += 2) for (let x = 0; x < w; x += 2) {
-      const o = (y * w + x) * 4, a = d[o + 3] / 255, r = d[o] * a, g = d[o + 1] * a, b = d[o + 2] * a;
-      const cell = sum[Math.min(GY - 1, (y * GY / h) | 0) * GX + Math.min(GX - 1, (x * GX / w) | 0)];
-      cell[0] += r; cell[1] += g; cell[2] += b; cell[3]++;
-      if (Math.max(r - bg[0], g - bg[1], b - bg[2]) > 24) lit++;
-      n++;
+      const r = px(x, y, 0), g = px(x, y, 1), b = px(x, y, 2), ci = Math.min(GY - 1, (y * GY / h) | 0) * GX + Math.min(GX - 1, (x * GX / w) | 0);
+      count[ci]++; n++;
+      if (Math.max(r - bg[0], g - bg[1], b - bg[2]) <= 24) continue;
+      cells[ci]++;
+      const q = reg[Math.min(RY - 1, (y * RY / h) | 0) * RX + Math.min(RX - 1, (x * RX / w) | 0)];
+      q[0] += r; q[1] += g; q[2] += b; q[3]++; all[0] += r; all[1] += g; all[2] += b; all[3]++;
     }
-    return { size: [w, h], bg, ink: +(lit / n).toFixed(4), grid: sum.map((s) => [0, 1, 2].map((k) => Math.round(s[k] / Math.max(1, s[3])))) };
+    const mean = (q) => [0, 1, 2].map((k) => Math.round(q[k] / Math.max(1, q[3])));
+    return {
+      size: [w, h], lit: +(all[3] / n).toFixed(4),
+      layout: cells.map((v, i) => +(v / Math.max(1, count[i])).toFixed(4)),
+      palette: reg.map((q) => (q[3] > 50 ? mean(q) : mean(all))),
+    };
   }, sel);
 }
 
@@ -87,13 +96,18 @@ async function shoot(browser, origin, view, p) {
 function compare(a, b) {
   if (!a || !b) return { ok: false, why: !a ? 'canvas missing or empty' : 'not in the lock' };
   if (a.size[0] !== b.size[0] || a.size[1] !== b.size[1]) return { ok: false, why: `canvas size ${a.size.join('×')} ≠ locked ${b.size.join('×')}` };
-  /* relative: a sparse logo on a dark stage counts as much as a full-screen city */
-  let diff = 0, stand = 0;
-  for (let i = 0; i < a.grid.length; i++) for (let k = 0; k < 3; k++) { diff += Math.abs(a.grid[i][k] - b.grid[i][k]); stand += Math.abs(b.grid[i][k] - b.bg[k]); }
-  diff /= Math.max(1, stand);
-  const inkRel = Math.abs(a.ink - b.ink) / Math.max(0.01, b.ink);
-  const ok = diff <= TOL.colour && inkRel <= TOL.ink;
-  return { ok, why: `colour Δ ${(diff * 100).toFixed(1)}% (≤ ${TOL.colour * 100}%) · lit ${(a.ink * 100).toFixed(1)}% vs ${(b.ink * 100).toFixed(1)}% (±${TOL.ink * 100}%)` };
+  const corr = (u, v) => {
+    const mu = u.reduce((s, x) => s + x, 0) / u.length, mv = v.reduce((s, x) => s + x, 0) / v.length;
+    let num = 0, du = 0, dv = 0;
+    for (let i = 0; i < u.length; i++) { num += (u[i] - mu) * (v[i] - mv); du += (u[i] - mu) ** 2; dv += (v[i] - mv) ** 2; }
+    return du && dv ? num / Math.sqrt(du * dv) : du === dv ? 1 : 0;
+  };
+  const layout = corr(a.layout, b.layout);
+  let pal = 0; for (let i = 0; i < a.palette.length; i++) for (let k = 0; k < 3; k++) pal += Math.abs(a.palette[i][k] - b.palette[i][k]);
+  pal /= a.palette.length * 3;
+  const lit = Math.abs(a.lit - b.lit) / Math.max(0.005, b.lit);
+  const ok = layout >= TOL.layout && pal <= TOL.palette && lit <= TOL.lit;
+  return { ok, why: `layout ${layout.toFixed(3)} (≥ ${TOL.layout}) · palette Δ ${pal.toFixed(1)} (≤ ${TOL.palette}) · lit ${(a.lit * 100).toFixed(1)}% vs ${(b.lit * 100).toFixed(1)}% (±${TOL.lit * 100}%)` };
 }
 
 (async () => {
