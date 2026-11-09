@@ -10,7 +10,7 @@ import { url } from '../../lib/url';
 <section class="spark" id="spark" aria-label="Hai bàn tay">
   <div class="stage" id="spark-stage" data-fresco={url('art/fresco.jpg')} data-left={url('art/hand-left.png')} data-right={url('art/hand-right.png')}>
     <canvas class="cv" id="spark-cv" aria-hidden="true"></canvas>
-    <p class="nb-sr">Hình ASCII: toàn cảnh bức bích hoạ “Sáng tạo ra Adam” của Michelangelo, rồi cận cảnh hai bàn tay vươn tới nhau. Khi hai ngón tay chạm nhau, hình vỡ tung thành ký tự rồi tắt.</p>
+    <p class="nb-sr">Hình ASCII: toàn cảnh bức tranh theo bích hoạ “Sáng tạo ra Adam” của Michelangelo, rồi cận cảnh hai bàn tay vươn tới nhau. Khi hai ngón tay chạm nhau, hình vỡ tung thành ký tự rồi tắt.</p>
   </div>
 </section>
 
@@ -30,6 +30,7 @@ import { url } from '../../lib/url';
     const [F, L, R] = await Promise.all([load(frescoSrc), load(leftSrc), load(rightSrc)]);
     const g = canvas.getContext('2d')!, off = document.createElement('canvas'), og = off.getContext('2d', { willReadFrequently: true })!;
     const css = getComputedStyle(document.documentElement), tok = (n: string, f: string) => css.getPropertyValue(n).trim() || f;
+    const GOLD = '#ffd27a', WARM = '#f6a058', WHITE = '#fff6e0';
     const BG = tok('--bg', '#14120f'), ACC = tok('--accent', '#d97a4a'), INFO = tok('--info', '#8fb3d9'), DANGER = tok('--danger', '#ee7a66');
     let W = 0, H = 0, cw = 8, ch = 14, cols = 0, rows = 0, lay = { w: 0, h: 0, x: 0, y: 0, s: 1 }, gap = 0.3, zoom = 0, mix = 0;
     let glyphs: Cell[] = [], burst: any = null, raf = 0;
@@ -53,8 +54,8 @@ import { url } from '../../lib/url';
     }
     /* the whole fresco (owner's first image), zoomed toward the fingertips as you scroll */
     function frescoData() {
-      const fw = Math.max(W, H * 199 / 110) * 1.02, z = 1 + 5.2 * smooth(zoom), w = fw * z, h = w * 110 / 199;
-      const fx = 0.466, fy = 0.455, k = smooth(zoom);                       // fingertips in the fresco
+      const fw = Math.max(W, H * 1000 / 545) * 1.02, z = 1 + 5.4 * smooth(zoom), w = fw * z, h = w * 545 / 1000;
+      const fx = 0.44, fy = 0.5, k = smooth(zoom);                          // fingertips in the fresco
       const cx = W / 2 - (fx - 0.5) * w * k, cy = H / 2 - (fy - 0.5) * h * k;
       og.setTransform(1, 0, 0, 1, 0, 0); og.clearRect(0, 0, cols, rows);
       og.setTransform(1 / cw, 0, 0, 1 / ch, 0, 0); og.imageSmoothingQuality = 'high';
@@ -81,7 +82,8 @@ import { url } from '../../lib/url';
         } else {
           const d = fd!, a = d[o + 3] / 255; if (a < 0.1) continue;
           const r = d[o], gg = d[o + 1], bb = d[o + 2], mx = Math.max(r, gg, bb), sat = mx ? (mx - Math.min(r, gg, bb)) / mx : 0;
-          const wall = 1 - smooth(Math.max(0, Math.min(1, (sat - 0.1) / 0.22)));   // pale plaster recedes, the figures stay
+          const lum = (0.299 * r + 0.587 * gg + 0.114 * bb) / 255, glare = smooth(Math.max(0, Math.min(1, (lum - 0.78) / 0.2)));
+          const wall = Math.max(1 - smooth(Math.max(0, Math.min(1, (sat - 0.1) / 0.22))), 0.75 * glare);   // pale plaster and the painted glare recede, the figures stay
           if (wall > 0.6 && hash(x, y) > 0.55) continue;
           const q = tone(r, gg, bb, 1 - 0.55 * wall, x, y); q.a *= 1 - 0.7 * wall; out.push(q);
         }
@@ -91,11 +93,22 @@ import { url } from '../../lib/url';
     function draw() {
       glyphs = cells(); g.fillStyle = BG; g.fillRect(0, 0, W, H);
       for (const q of glyphs) { g.globalAlpha = q.a; g.fillStyle = `rgb(${q.r | 0},${q.g | 0},${q.b | 0})`; g.fillText(q.c, q.x * cw, q.y * ch); }
-      if (gap < 0.25 && mix >= 1) {   // a spark grows between the fingertips just before they touch
-        const t = tip(), k = 1 - gap / 0.25, n = Math.round(4 + 26 * k); g.fillStyle = ACC;
-        for (let i = 0; i < n; i++) { const an = hash(i, 7) * 6.283, rr = (hash(i, 9) * 26 + 4) * k; g.globalAlpha = 0.3 + 0.7 * k * hash(i, 3); g.fillText('·*+'[i % 3], t.x + Math.cos(an) * rr * 1.6, t.y + Math.sin(an) * rr * 0.8); }
+      if (gap < 0.25 && mix >= 1) {   // light gathers between the fingertips just before they touch (as in the owner's reference)
+        const t = tip(), k = 1 - gap / 0.25;
+        const gl = g.createRadialGradient(t.x, t.y, 0, t.x, t.y, 40 + 120 * k); gl.addColorStop(0, GOLD); gl.addColorStop(1, 'rgba(255,210,122,0)');
+        g.globalAlpha = 0.55 * k; g.fillStyle = gl; g.fillRect(t.x - 200, t.y - 200, 400, 400);
+        rays(t.x, t.y, 20 + 70 * k, 0.8 * k, 16);
       }
       g.globalAlpha = 1;
+    }
+    /* radial rays drawn with the glyph whose stroke follows the ray: - \ | / */
+    function rays(cx: number, cy: number, len: number, alpha: number, n: number) {
+      const step = 9;
+      for (let i = 0; i < n; i++) {
+        const an = i / n * 6.283 + 0.13, l = len * (0.55 + 0.45 * hash(i, 5)), ca = Math.cos(an), sa = Math.sin(an);
+        const deg = ((an * 180 / Math.PI) % 180 + 180) % 180, c = deg < 22.5 || deg >= 157.5 ? '-' : deg < 67.5 ? '\\' : deg < 112.5 ? '|' : '/';
+        for (let r = 8; r < l; r += step) { g.globalAlpha = alpha * (1 - r / l); g.fillStyle = r < l * 0.35 ? WHITE : GOLD; g.fillText(c, cx + ca * r, cy + sa * r * 0.8); }
+      }
     }
     function dark() { g.globalAlpha = 1; g.fillStyle = BG; g.fillRect(0, 0, W, H); }
     function boom() {
@@ -108,16 +121,17 @@ import { url } from '../../lib/url';
       burst = { t0: performance.now(), done: false };
       const step = (now: number) => {
         const t = (now - burst.t0) / 1000; dark();
-        if (t < 0.3) { const gl = g.createRadialGradient(c.x, c.y, 0, c.x, c.y, Math.max(W, H) * 0.6); gl.addColorStop(0, ACC); gl.addColorStop(1, 'transparent'); g.globalAlpha = 0.55 * (1 - t / 0.3); g.fillStyle = gl; g.fillRect(0, 0, W, H); }
+        if (t < 0.6) { const gl = g.createRadialGradient(c.x, c.y, 0, c.x, c.y, Math.max(W, H) * (0.3 + 0.5 * t)); gl.addColorStop(0, WHITE); gl.addColorStop(0.25, GOLD); gl.addColorStop(0.6, 'rgba(246,160,88,0.35)'); gl.addColorStop(1, 'rgba(246,160,88,0)'); g.globalAlpha = 0.85 * (1 - t / 0.6); g.fillStyle = gl; g.fillRect(0, 0, W, H); }   // golden bloom
+        if (t < 1.0) rays(c.x, c.y, Math.max(W, H) * (0.25 + 0.6 * t), 1 - t, 28);   // sun rays shoot out
         const ring = t * Math.max(W, H) * 0.9;
-        if (t < 0.9) for (const [dx, colr] of [[-3, INFO], [3, DANGER], [0, ACC]] as [number, string][]) {   // shock ring, RGB split in the first 0.3 s (M13)
+        if (t < 0.9) for (const [dx, colr] of [[-3, INFO], [3, DANGER], [0, GOLD]] as [number, string][]) {   // shock ring, RGB split in the first 0.3 s (M13)
           if (dx && t > 0.3) continue; g.fillStyle = colr; g.globalAlpha = (dx ? 0.35 : 0.9) * (1 - t / 0.9);
           for (let i = 0; i < 90; i++) { const an = i / 90 * 6.283; g.fillText('@#*+'[i % 4], c.x + dx + Math.cos(an) * ring, c.y + Math.sin(an) * ring * 0.62); }
         }
         const fade = Math.max(0, 1 - Math.pow(t / T, 1.4)), hot = Math.max(0, 1 - t * 2.5);
         for (const p of parts) {
           const x = p.px + p.vx * t, y = p.py + p.vy * t + 120 * t * t; if (x < -20 || x > W + 20 || y < -20 || y > H + 20) continue;
-          g.globalAlpha = p.a * fade; g.fillStyle = `rgb(${(p.r + (217 - p.r) * hot) | 0},${(p.g + (122 - p.g) * hot) | 0},${(p.b + (74 - p.b) * hot) | 0})`; g.fillText(p.c, x, y);
+          g.globalAlpha = p.a * fade; g.fillStyle = `rgb(${(p.r + (255 - p.r) * hot) | 0},${(p.g + (210 - p.g) * hot) | 0},${(p.b + (122 - p.b) * hot) | 0})`; g.fillText(p.c, x, y);
         }
         g.globalAlpha = 1;
         if (t < T) raf = requestAnimationFrame(step); else { raf = 0; burst.done = true; dark(); }
