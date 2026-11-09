@@ -4,7 +4,7 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 
 ## Cảnh Spark: hai bàn tay chạm nhau rồi nổ (09/11/2026)
 
-Theo yêu cầu của chủ dự án, ngay sau hero có thêm cảnh mới. Hai bàn tay lấy từ ảnh chủ dự án gửi (bích hoạ *Sáng tạo ra Adam* của Michelangelo, phạm vi công cộng), nền vữa được tách bỏ, phần còn lại dựng thành ASCII nhiều màu. Cuộn xuống thì hai bàn tay xích lại; chạm nhau thì nổ (chớp cam, vòng sóng ký tự, các ký tự văng ra), rồi về nền tối và trang hiện phần tiếp theo. Chi tiết ở `docs/09` §1, ghi công ở `THIRD_PARTY_NOTICES.md`. Đã chạy `check.cjs`, `type-check.cjs`, `design-check.cjs`: không lỗi; lúc đứng yên cảnh không tốn gì.
+Theo yêu cầu của chủ dự án, ngay sau hero có thêm cảnh mới. Hai bàn tay lấy từ ảnh chủ dự án gửi (bích hoạ *Sáng tạo ra Adam* của Michelangelo, phạm vi công cộng), nền vữa được tách bỏ, phần còn lại dựng thành ASCII nhiều màu. Cuộn xuống: toàn cảnh bức bích hoạ zoom dần vào hai ngón tay, ký tự tan sang ảnh cận cảnh, rồi hai bàn tay xích lại; chạm nhau thì nổ (chớp cam, vòng sóng ký tự, các ký tự văng ra), rồi về nền tối và trang hiện phần tiếp theo. Chi tiết ở `docs/09` §1, ghi công ở `THIRD_PARTY_NOTICES.md`. Đã chạy `check.cjs`, `type-check.cjs`, `design-check.cjs`: không lỗi; lúc đứng yên cảnh không tốn gì.
 
 ## README mới (08/11/2026)
 
