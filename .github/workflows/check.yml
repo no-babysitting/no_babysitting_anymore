@@ -37,7 +37,8 @@ jobs:
         run: node scripts/type-check.cjs
       - name: Design lint (overlap, clipping, tap size, holds, demos start when seen)
         run: node scripts/design-check.cjs --shots design-report
-      - name: Art lock (the signed-off ASCII art has not drifted; docs/19 §2, D55)
+      - name: Art lock, advisory (reports drift of the signed-off ASCII art, never blocks; docs/19 §2, D55)
+        continue-on-error: true
         run: node scripts/art-check.cjs --shots art-report
       - name: Art report
         if: always()

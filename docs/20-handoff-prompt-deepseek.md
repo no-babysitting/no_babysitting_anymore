@@ -36,7 +36,7 @@ Mỗi thay đổi là một PR nhỏ, làm theo năm bước:
    NB_BASE=/no_babysitting_anymore/ node scripts/type-check.cjs
    NB_BASE=/no_babysitting_anymore/ node scripts/design-check.cjs
    NB_BASE=/no_babysitting_anymore/ node scripts/art-check.cjs
-   Bộ nào đỏ thì sửa tới khi xanh. Không tắt, không nới, không bỏ qua một phép kiểm để cho xanh. Phép kiểm sai thật thì dừng và báo.
+   art-check chỉ để báo: nếu nó báo lệch một mảnh art mà bạn không đụng tới, ghi vào PR và đính ảnh art-report; nếu bạn có đụng tới, hoàn lại thay đổi đó. Các bộ còn lại đỏ thì sửa tới khi xanh. Không tắt, không nới, không bỏ qua một phép kiểm để cho xanh. Phép kiểm sai thật thì dừng và báo.
 4. Ghi một dòng vào CHANGELOG.md: đổi gì, đo được gì (số trước và sau nếu có).
 5. Mở PR (hoặc push nhánh và báo, nếu bạn không mở được PR). Không tự merge. Chủ dự án duyệt và merge.
 
@@ -74,7 +74,7 @@ Prompt cũ (`17`) viết cho Claude theo six shifts: nói mục tiêu, tin agent
 
 | Đổi | Vì sao |
 |---|---|
-| **Rào bằng phép kiểm, không chỉ bằng lời.** "Giữ art" thành `art-check.cjs` chạy trong CI; "đừng ghim quá nhiều" thành luật `pins` (đợt UX2) | Một model không phải Claude 5 dễ bỏ sót một câu dặn trong tài liệu dài. Phép kiểm đỏ thì không bỏ sót được |
+| **Rào bằng phép kiểm, không chỉ bằng lời.** "Giữ art" thành `art-check.cjs` chạy trong CI (hiện chỉ báo, không chặn); "đừng ghim quá nhiều" thành luật `pins` (đợt UX2) | Một model không phải Claude 5 dễ bỏ sót một câu dặn trong tài liệu dài. Phép kiểm đỏ thì không bỏ sót được |
 | **Thứ tự cố định, mỗi PR một việc** | Việc nhỏ dễ kiểm và dễ revert. Chủ dự án duyệt từng bước thay vì một PR lớn |
 | **Đọc theo việc**, mỗi việc chỉ vài file | Giữ context gọn; tài liệu của repo đã hơn 4.000 dòng |
 | **Khuôn PR cố định và danh sách điểm dừng** | Chủ dự án đọc nhanh; agent biết lúc nào phải hỏi thay vì tự đoán |

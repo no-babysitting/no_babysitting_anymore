@@ -43,7 +43,7 @@
 - *bảng màu*: màu trung bình của các điểm sáng trong 6 vùng;
 - *lượng art*: tỉ lệ điểm sáng trên cả canvas.
 
-Ba phép đo này bỏ qua những gì khác nhau giữa hai máy (khử răng cưa của font, bản trình duyệt, ký tự nhiễu ngẫu nhiên), nhưng bắt được việc đổi bảng màu, dời bố cục, mất cảnh hay đổi cú nổ. Ảnh nguồn của Spark và mặt mascot được so bằng hash. Bộ kiểm chạy trong CI ở bước *Art lock*, ảnh từng mảnh nằm trong artifact `art-report`.
+Ba phép đo này bỏ qua những gì khác nhau giữa hai máy (khử răng cưa của font, bản trình duyệt, ký tự nhiễu ngẫu nhiên), nhưng bắt được việc đổi bảng màu, dời bố cục, mất cảnh hay đổi cú nổ. Ảnh nguồn của Spark và mặt mascot được so bằng hash. Bộ kiểm chạy trong CI ở bước *Art lock* **chỉ để báo, không chặn merge** (chủ dự án chọn ngày 09/11: ưu tiên GTM, CI chưa cần phức tạp). Lý do: máy CI vẽ nét chữ hơi khác máy làm việc, nên một vài mảnh có thể báo lệch dù ảnh giống hệt. Ảnh từng mảnh nằm trong artifact `art-report`; khi bước này báo lệch, mở ảnh ra so bằng mắt.
 
 | Mảnh | Ở đâu | Khoá ở trạng thái |
 |---|---|---|

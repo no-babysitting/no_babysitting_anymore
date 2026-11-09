@@ -4,7 +4,7 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 
 ## Khoá ASCII art, kế hoạch kaizen UI/UX, prompt cho agent mới (09/11/2026)
 
-- `site/scripts/art-check.cjs` + `design-system/art-lock.json`: khoá 8 mảnh art ở 1440 và 390 (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark ở 4 thời điểm), ảnh nguồn của Spark và mặt mascot. Chạy trong CI (bước *Art lock*, artifact `art-report`). Đo ba thứ: bố cục, bảng màu, lượng art; ngưỡng đặt trên mức lệch giữa máy làm việc và CI. Thử: bỏ hệ số làm sáng màu của Spark thì cả 8 mảnh Spark bị bắt (D55).
+- `site/scripts/art-check.cjs` + `design-system/art-lock.json`: khoá 8 mảnh art ở 1440 và 390 (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark ở 4 thời điểm), ảnh nguồn của Spark và mặt mascot. Chạy trong CI ở chế độ chỉ báo, không chặn merge (bước *Art lock*, artifact `art-report`). Đo ba thứ: bố cục, bảng màu, lượng art; ngưỡng đặt trên mức lệch giữa máy làm việc và CI. Thử: bỏ hệ số làm sáng màu của Spark thì cả 8 mảnh Spark bị bắt (D55).
 - `docs/19-uiux-kaizen-plan.md`: đối chiếu nhận xét *ASCII & Motion Design Direction* với site; đo được trang chủ đang ghim 21,8/29,2 màn ở desktop (75%), đề xuất ngân sách ≤ 12 màn; các đợt UX0–UX6.
 - `docs/20-handoff-prompt-deepseek.md`: prompt cho coding agent DeepSeek v4.1 Flash. Chờ chủ dự án duyệt.
 

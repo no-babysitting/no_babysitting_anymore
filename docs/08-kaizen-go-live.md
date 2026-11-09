@@ -83,7 +83,7 @@ Outline: `18-intro-track-plan.md`.
 
 | # | Chủ đề | Quyết định | Thay cho |
 |---|---|---|---|
-| D55 | Khoá ASCII art | Art đã duyệt (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark, mặt mascot) được khoá bằng `site/scripts/art-check.cjs` + `design-system/art-lock.json`, chạy trong CI. PR đổi `art-lock.json` cần chủ dự án duyệt, như D13 (`19` §2) | — |
+| D55 | Khoá ASCII art | Art đã duyệt (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark, mặt mascot) được khoá bằng `site/scripts/art-check.cjs` + `design-system/art-lock.json`, chạy trong CI ở chế độ chỉ báo, không chặn merge (09/11: ưu tiên GTM). PR đổi `art-lock.json` cần chủ dự án duyệt, như D13 (`19` §2) | — |
 | D56 | Kaizen UI/UX | Nhận xét *ASCII & Motion Design Direction* (ChatGPT, 09/11) được đối chiếu và chuyển thành các đợt UX0–UX6 (`19-uiux-kaizen-plan.md`). Prompt cho coding agent mới (DeepSeek v4.1 Flash): `20-handoff-prompt-deepseek.md`. *Đề xuất, chờ chủ dự án duyệt* | — |
 
 ## 2. Quan sát site ngày 07/11/2026
