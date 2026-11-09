@@ -18,6 +18,8 @@ import { url } from '../../lib/url';
   .spark { position: relative; background: var(--bg); }
   .stage { position: relative; height: calc(100svh - var(--hud-height)); min-height: 480px; overflow: hidden; background: var(--bg); }
   .cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  /* cinema: the header fades out as the hands meet and comes back with the next words; it always returns on keyboard focus */
+  :global(.hud.nb-cinema-fade:focus-within) { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
 </style>
 
 <script>
@@ -155,10 +157,21 @@ import { url } from '../../lib/url';
     if ((NB && NB.reduce()) || !gsap || !ST) { S.set({ zoom: 1, mix: 1, gap: 0.04 }); return; }
     /* 0–0.40 zoom into the fresco · 0.32–0.48 glyphs dissolve into the close-up · 0.48–0.80 the hands close · 0.80 contact */
     const CONTACT = 0.8, clamp = (v: number) => Math.max(0, Math.min(1, v));
+    const hud = document.querySelector<HTMLElement>('.hud');
+    /* the header fades out from 0.55 (hands about to meet) to 0.75, stays hidden through the burst, comes back at 0.97 */
+    const cinema = (p: number) => {
+      if (!hud) return;
+      const k = p >= 0.97 ? 0 : clamp((p - 0.55) / 0.2);
+      hud.classList.toggle('nb-cinema-fade', k > 0);
+      hud.style.opacity = k > 0 ? String(1 - k) : '';
+      hud.style.transform = k > 0 ? `translateY(${-100 * k}%)` : '';
+      hud.style.pointerEvents = k > 0.5 ? 'none' : '';
+    };
     ST.create({
       trigger: '#spark', start: 'top top+=48', end: '+=260%', pin: true, scrub: 0.5,
+      onLeave: () => cinema(1), onLeaveBack: () => cinema(0),
       onUpdate: (s: any) => {
-        const p = s.progress;
+        const p = s.progress; cinema(p);
         if (p >= CONTACT) { if (!S.exploded) { S.set({ zoom: 1, mix: 1, gap: 0 }); S.boom(); } return; }
         if (S.exploded) S.reset();
         S.set({ zoom: clamp(p / 0.4), mix: clamp((p - 0.32) / 0.16), gap: 0.3 * (1 - clamp((p - 0.48) / (CONTACT - 0.48))) });
