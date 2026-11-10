@@ -150,7 +150,7 @@ async function report(p, tag, found, snap) {
       if (pg === '' && name === 'desktop') {
         /* the three branches of the pyramid share their rows: label, sentence and links line up across the columns (docs/15 §8) */
         const bad = await p.evaluate(() => {
-          const cols = [...document.querySelectorAll('#pyramid .three > div')]; if (cols.length !== 3) return ['no #pyramid .three with three branches'];
+          const cols = [...document.querySelectorAll('#pyramid .three > li')]; if (cols.length !== 3) return ['no #pyramid .three with three branches'];
           const out = [];
           for (let k = 0; k < cols[0].children.length; k++) {
             const tops = cols.map((c) => c.children[k].getBoundingClientRect().top);
