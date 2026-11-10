@@ -2,6 +2,19 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Lộ trình chính v4 lên site: 5 phần, kính, trang Thực hành (10/11/2026, chờ duyệt chữ)
+
+Đợt UX3 của `docs/19`, theo thứ tự ở `docs/17` §1. Chữ mới chờ chủ dự án duyệt (D13); bản xem trước nằm trên artifact, chưa merge.
+
+- **Trang chủ** theo `docs/14` §5: chữ hero mới, kim tự tháp thay phần tuyên ngôn (giữ mặt nước), bỏ "Hai lần tung đồng xu", Lộ trình còn 5 panel, finale `05 / 05`.
+- **Năm phần 00–04** (`site/src/content/parts.ts`, trang `[part]`): Hook, Lõi, Kết; ba điểm dừng mỗi phần; tối đa 5 golden word; khối kính đủ 10 biến thể; prompt mang đi thử có nút Chép; giả lập grill me ở 01 và 04; danh sách nguồn bấm được ở cuối mỗi phần.
+- **Kính:** nút trên header và hàng chip ở phần 00, lưu `nb-lens`, dùng chung lựa chọn với bộ chọn nhóm việc của "Một lần giao việc".
+- **Trang Thực hành** (`/thuc-hanh/`): ba bài tự làm từ `docs/23` §6, phần tự soát đóng sẵn.
+- **Menu:** Lộ trình chính · Thực hành · Nâng cao (A1 = c02). Mười một trang khung v3 thành trang ngắn "đang được viết lại", `noindex`, không còn trong sitemap; nội dung v3 vẫn ở `docs/02` và `chapters.json`.
+- **Bộ kiểm:** `check.cjs` và `design-check.cjs` đo các trang mới; thêm luật `gold` và `hold-count` (`docs/15` §9), luật thẳng hàng cho ba nhánh kim tự tháp; bỏ cảnh `#flips`. Luật demo tạm không có trang nào để đo.
+- **Đo được:** `check.cjs`, `type-check.cjs` (kèm `--selftest`), `design-check.cjs` đều xanh trên máy làm việc. `art-check.cjs` báo 2 mảnh: canvas mặt nước đổi kích thước (1440×616 so với 1440×747; 390×723 so với 390×880) vì phần chữ phía trên nó ngắn lại; cách vẽ không đổi. Chưa cập nhật `art-lock.json`, chờ chủ dự án xem.
+- **Chưa làm ở đợt này** (chủ dự án chọn test chữ trước): 5 hình ASCII mở chương, mascot bên lề, hiệu ứng M15 và M17, 3 nhóm việc mới của "Một lần giao việc", luật `pins` (UX2), dọn luật lặp (UX1).
+
 ## Khoá ASCII art, kế hoạch kaizen UI/UX, prompt cho agent mới (09/11/2026)
 
 - `site/scripts/art-check.cjs` + `design-system/art-lock.json`: khoá 8 mảnh art ở 1440 và 390 (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark ở 4 thời điểm), ảnh nguồn của Spark và mặt mascot. Chạy trong CI ở chế độ chỉ báo, không chặn merge (bước *Art lock*, artifact `art-report`). Đo ba thứ: bố cục, bảng màu, lượng art; ngưỡng đặt trên mức lệch giữa máy làm việc và CI. Thử: bỏ hệ số làm sáng màu của Spark thì cả 8 mảnh Spark bị bắt (D55).

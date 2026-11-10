@@ -72,8 +72,10 @@ import { url } from '../../lib/url';
       source: NB.sources.bitmap(L, { fill: FILL, vfill: VFILL, cy: CY }),
     });
     /* geometry shared by the ASCII logo, the crisp mark and the code line */
+    /* the logo is placed against the screen, not the stage, so the stage can grow under longer words without moving the art */
+    const baseH = () => Math.max(520, innerHeight - 48);
     function place() {
-      const W = stage.clientWidth, H = stage.clientHeight;
+      const W = stage.clientWidth, H = baseH();
       const px = Math.min((W * FILL) / L.w, (H * VFILL) / L.h), w = L.w * px, h = L.h * px;
       const left = (W - w) / 2, top = H * CY - h / 2;
       Object.assign(mark.style, { width: w + 'px', left: left + 'px', top: top + 'px' });
@@ -84,6 +86,10 @@ import { url } from '../../lib/url';
       A.recalm();
     }
     place(); addEventListener('resize', place);
+    /* words that outgrow the stage (larger text, wider spacing: WCAG 1.4.12) push it taller instead of being cut off or
+       running into the corner labels; at the default sizes the words fit and the stage keeps the height of the screen */
+    const fit = () => { const need = tag.offsetTop + tag.offsetHeight + 64; stage.style.minHeight = need > baseH() ? need + 'px' : ''; };
+    fit(); new ResizeObserver(fit).observe(tag);
     if (reduce || !gsap) { t.textContent = TEXT; code.style.display = 'none'; return; }
 
     gsap.set(mark, { autoAlpha: 0 });
