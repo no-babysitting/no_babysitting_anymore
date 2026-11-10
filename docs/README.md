@@ -6,7 +6,7 @@
 
 - [`21-learning-product-methodology.md`](21-learning-product-methodology.md): Transfer-first methodology, competency framework, ECD, validation and Six Shifts governance.
 - [`22-handoff-prompt-claude-learning-methodology.md`](22-handoff-prompt-claude-learning-methodology.md): Handoff prompt for Claude to build the Learning Evidence Blueprint.
-- [`23-learning-evidence-blueprint.md`](23-learning-evidence-blueprint.md): Learning Evidence Blueprint: bản đồ năng lực trên curriculum thực tế, lát cắt thử nghiệm, bài đánh giá Transfer, gói gửi AI Council. Bản nháp chờ duyệt.
+- [`23-learning-evidence-blueprint.md`](23-learning-evidence-blueprint.md): Learning Evidence Blueprint: bản đồ năng lực trên curriculum thực tế, ba bài thực hành kèm thang tự soát, kế hoạch tới go live. Bản nháp chờ duyệt.
 - [`independent-evaluation-council/README.md`](independent-evaluation-council/README.md): Independent Evaluation Council workspace charter.
 - [`independent-evaluation-council/review-protocol.md`](independent-evaluation-council/review-protocol.md): Review commissioning, evidence, severity, response and closure protocol.
 
