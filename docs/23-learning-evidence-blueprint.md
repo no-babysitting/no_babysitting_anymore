@@ -37,7 +37,7 @@ Cách làm theo chuỗi của `review-protocol.md` §10: *Competency → Learnin
 
 | Lớp | Nội dung | Trạng thái | Căn cứ |
 |---|---|---|---|
-| **L1 · Đang chạy trên site** | Trang chủ (Intro, Spark, tuyên ngôn, Hai lần tung đồng xu, Một lần giao việc với 6 nhóm việc, Journey 12 phần, Finale) · c02 · 11 trang khung · Library 14 mục mẫu | c02 dựng beat b1–b4 (câu hỏi, đoán, mô phỏng S1, một đoạn giải thích). Chưa có b5–b8: Cách làm, S2, Grill me. Trang khung hiện nhãn "Khung · nội dung chưa viết" | `[Quan sát]` `site/src/pages/c02/index.astro` dòng 11–12, 19–51 · `site/src/lib/status.ts` (`LIVE.chapters = ['c02']`, `simulators = ['S1']`) · `site/src/pages/[ch]/index.astro` dòng 41 |
+| **L1 · Đang chạy trên site** | Trang chủ (Intro, Spark, tuyên ngôn, Hai lần tung đồng xu, Một lần giao việc với 6 nhóm việc, Journey 12 phần, Finale) · c02 · 11 trang khung · Library 14 mục mẫu | c02 dựng beat b1–b4 (câu hỏi, đoán, mô phỏng S1, một đoạn giải thích). Chưa có b5–b8: Cách làm, S2, Grill me. Trang khung hiện nhãn "Khung · nội dung chưa viết" | `[Quan sát]` `site/src/pages/c02/index.astro` dòng 11–12, 19–51 · `site/src/lib/status.ts` (`LIVE.chapters = ['c02']`, `simulators = ['S1']`) · `site/src/pages/[ch]/index.astro` dòng 39 |
 | **L2 · Lộ trình chính v4** | 5 phần: 00, 01, 02, 03, 04 | Đã duyệt (D13). Phần 01 viết đủ chữ; 00, 02, 03, 04 là dàn ý và câu chính. Chưa có gì trên site | `[Quan sát]` `14` dòng 3, §6.0–§6.4 · `CHANGELOG.md` mục v4: "Chỉ là tài liệu, chưa đổi gì trên site" |
 | **L3 · Nâng cao** | A1–A8 (từ 12 chương v3), A9 | A1 = c02 (đang chạy một phần). A2–A9 là dàn ý. Mô phỏng S2–S11 chưa dựng | `[Quan sát]` `14` §8 · `18` §3 · `01-PRD.md` §8 |
 | **L4 · Nhập môn** | N0–N13 | Outline đã chốt hướng, chưa viết kịch bản | `[Quan sát]` `18` dòng 3 |
