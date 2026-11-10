@@ -297,7 +297,8 @@ export const PARTS: Part[] = [
         why: 'Bốn điều cần biết về <em lang="en">auto memory</em>: nó bật sẵn ở các phiên chạy trên máy; bộ nhớ nằm trên chính máy đó, không theo bạn sang máy khác hay lên cloud; Claude không ghi những gì đọc lại được từ code; muốn chắc thì nói thẳng “nhớ giúp tôi rằng…”.' },
       { t: 'note', tag: 'Chỉ Claude Code', html: 'Auto memory và <code>/memory</code> là của Claude Code. Cowork có bộ nhớ riêng, là một hệ thống khác.' },
       { t: 'h', text: 'Bạn lái thế nào' },
-      { t: 'p', src: ['S3'], html: `Xem ${G('phút đầu')}. Thấy lệch thì bấm Esc: Claude dừng ngay và giữ những gì đã làm. Sửa hai lần vẫn sai thì <code>/clear</code> rồi viết một prompt mới gom điều vừa học, đừng sửa lần thứ ba. Muốn hiểu sâu hơn, đọc <a data-href="c02/">Nâng cao A1 · Ngân sách ngữ cảnh</a>.` },
+      { t: 'p', src: ['S3'], html: `Xem ${G('phút đầu')}. Thấy lệch thì bấm Esc: Claude dừng ngay và giữ những gì đã làm. Sửa hai lần vẫn sai thì <code>/clear</code> rồi viết một prompt mới gom điều vừa học, đừng sửa lần thứ ba.` },
+      { t: 'p', html: 'Muốn hiểu vì sao phiên dài làm kết quả kém đi, đọc <a data-href="c02/">Nâng cao A1 · Ngân sách ngữ cảnh</a>.' },
       { t: 'lens', title: 'Giữa chừng, ở phần việc của bạn', rows: {
         chung: [['Chuyện xảy ra', 'Trang hứa cho học thử, nhưng SPEC không nói mấy bài. Claude dừng lại hỏi: học thử mấy bài?']],
         ops: [['Chuyện xảy ra', 'Slack và bảng việc ghi hai hạn khác nhau cho cùng một đầu việc. Claude ghi lại chỗ lệch rồi hỏi bạn.']],

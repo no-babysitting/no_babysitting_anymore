@@ -27,9 +27,10 @@ const VP = {
   se: { viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 },   /* iPhone SE: the shortest common screen */
   desktop: { viewport: { width: 1440, height: 900 } },
 };
-const PAGES = { phone: ['', 'c00/', 'c02/', 'c03/', 'c10/', 'library/'], tiny: ['', 'c03/', 'library/'], se: ['', 'c00/'], desktop: ['', 'c00/', 'c03/'] };
-/* [selector, stops, where]: 'mid' = the middle of each step; the journey snaps to its panels, so it is read at the snap points (k/11) */
-const SCENES = [['#flips', 4, 'mid'], ['#run', 7, 'mid'], ['#journey', 12, 'snap'], ['#finale', 3, 'mid']];
+const PAGES = { phone: ['', '00/', '01/', '04/', 'thuc-hanh/', 'c02/', 'library/'], tiny: ['', '01/', 'thuc-hanh/', 'library/'], se: ['', '00/'], desktop: ['', '00/', '01/'] };
+const PARTS = ['00/', '01/', '02/', '03/', '04/']; /* the main path (docs/14): rules gold and hold-count of docs/15 §9 */
+/* [selector, stops, where]: 'mid' = the middle of each step; the journey snaps to its panels, so it is read at the snap points (k/4) */
+const SCENES = [['#run', 7, 'mid'], ['#journey', 5, 'snap'], ['#finale', 3, 'mid']];
 
 const fails = [], notes = [];
 const fail = (m) => { fails.push(m); console.log('  ✕ ' + m); }, note = (m) => { notes.push(m); console.log('  · ' + m); };
@@ -146,13 +147,18 @@ async function report(p, tag, found, snap) {
         await scrollTo(p, y); await p.waitForTimeout(120); stops++;
         await report(p, `${name} /${pg} y=${Math.round(y)}`, await p.evaluate(lint, { hud, rules }), `static-${name}-${pg || 'home'}-${Math.round(y)}`);
       }
-      if (pg === '') {
+      if (pg === '' && name === 'desktop') {
+        /* the three branches of the pyramid share their rows: label, sentence and links line up across the columns (docs/15 §8) */
         const bad = await p.evaluate(() => {
-          const cols = document.querySelector('#flips .cols'); if (!cols) return ['no #flips .cols'];
-          const top = (s) => { const e = cols.querySelector(s); return e ? e.getBoundingClientRect().top : NaN; };
-          return [['.ch'], ['.r1'], ['.coin'], ['.r2'], ['.verdict']].filter(([s]) => Math.abs(top('.vibe ' + s) - top('.agentic ' + s)) > 1.5).map(([s]) => `${s} differs by ${Math.round(Math.abs(top('.vibe ' + s) - top('.agentic ' + s)))}px`);
+          const cols = [...document.querySelectorAll('#pyramid .three > div')]; if (cols.length !== 3) return ['no #pyramid .three with three branches'];
+          const out = [];
+          for (let k = 0; k < cols[0].children.length; k++) {
+            const tops = cols.map((c) => c.children[k].getBoundingClientRect().top);
+            if (Math.max(...tops) - Math.min(...tops) > 1.5) out.push(`row ${k + 1} differs by ${Math.round(Math.max(...tops) - Math.min(...tops))}px`);
+          }
+          return out;
         });
-        bad.forEach((m) => fail(`${name} /: align · vibe and agentic ${m}`));
+        bad.forEach((m) => fail(`${name} /: align · the three branches: ${m}`));
       }
       if (errs.length) fail(`${name} /${pg}: page errors ${errs.join(' | ')}`);
       await ctx.close();
@@ -185,13 +191,21 @@ async function report(p, tag, found, snap) {
 
   console.log('3 · holds, demos and the call to action (motion on, phone)');
   if (SEC.includes('3') && names.includes('phone')) {
-    for (const pg of ['', 'c00/', 'c02/', 'c03/']) {
+    for (const pg of ['', '00/', '01/', 'c02/']) {
       const { ctx, p } = await openPage(browser, 'phone', {}, pg, { origin });
       const bad = await p.evaluate(() => [...document.querySelectorAll('[data-ask], [data-reveal="fill"]')].filter((e) => !e.closest('[data-held]')).map((e) => (e.textContent || '').trim().slice(0, 30)));
       bad.forEach((t) => fail(`phone /${pg}: hold · "${t}" is not held while it is read (data-hold missing, or the block is taller than the screen)`));
       await ctx.close();
     }
-    for (const [pg, sel] of [['c00/', '.ds-AgentWindow'], ['c00/', '.ds-FloatingOps'], ['c10/', '.ds-ThenNowCard'], ['c10/', '.ds-CinematicAscii']]) {
+    for (const pg of PARTS) {
+      const { ctx, p } = await openPage(browser, 'phone', { reducedMotion: 'reduce' }, pg, { origin });
+      const r = await p.evaluate(() => ({ gold: document.querySelectorAll('[data-gold]').length, hold: document.querySelectorAll('[data-hold]').length }));
+      if (r.gold > 5) fail(`phone /${pg}: gold · ${r.gold} golden words, at most 5 per part`);
+      if (r.hold !== 3) fail(`phone /${pg}: hold-count · ${r.hold} holds, a part has exactly 3 (hook, main Then → Now, closing line)`);
+      await ctx.close();
+    }
+    /* the design-system demos lived on the v3 skeleton pages (c00, c10), which are now short stubs (docs/14 §9); the demo rule returns with the page that shows one */
+    for (const [pg, sel] of []) {
       const { ctx, p } = await openPage(browser, 'phone', {}, pg, { origin });
       const dom = (s) => p.evaluate((s) => { const e = document.querySelector(s + ' [data-demo]'); return e ? e.dataset.demo : null; }, sel);
       const before = await dom(sel);
@@ -211,14 +225,14 @@ async function report(p, tag, found, snap) {
       await ctx.close();
     }
     {
-      const { ctx, p } = await openPage(browser, 'phone', {}, 'c03/', { origin });
+      const { ctx, p } = await openPage(browser, 'phone', {}, '01/', { origin });
       const r = await p.evaluate(() => ({ sweep: !!document.querySelector('.cn .nx canvas.nb-sweep'), blink: getComputedStyle(document.querySelector('.cn .rail a[aria-current="step"] .g')).animationName }));
-      if (!r.sweep) fail('phone /c03/: cta · the next-chapter button has no block sweep');
-      if (r.blink !== 'nb-blink') fail('phone /c03/: cta · the current chapter marker does not blink');
+      if (!r.sweep) fail('phone /01/: cta · the next-part button has no block sweep');
+      if (r.blink !== 'nb-blink') fail('phone /01/: cta · the current part marker does not blink');
       await ctx.close();
-      const q = await openPage(browser, 'phone', { reducedMotion: 'reduce' }, 'c03/', { origin });
+      const q = await openPage(browser, 'phone', { reducedMotion: 'reduce' }, '01/', { origin });
       const r2 = await q.p.evaluate(() => ({ sweep: !!document.querySelector('.cn .nx canvas.nb-sweep'), blink: getComputedStyle(document.querySelector('.cn .rail a[aria-current="step"] .g')).animationName }));
-      if (r2.sweep || r2.blink !== 'none') fail('phone /c03/ (motion off): cta · the sweep or the blink still runs');
+      if (r2.sweep || r2.blink !== 'none') fail('phone /01/ (motion off): cta · the sweep or the blink still runs');
       await q.ctx.close();
     }
   }

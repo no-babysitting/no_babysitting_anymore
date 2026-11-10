@@ -52,8 +52,9 @@ import { PHASES, SOURCES, partOf } from '../content/parts';
   .manifesto { position: relative; display: grid; gap: 28px; padding-block: 120px 96px; }
   .stmt { display: grid; gap: 28px; padding-block: 8px; } /* the block a hold pins while the statement is read */
   .beta { color: var(--fg-muted); display: inline-flex; gap: 8px; align-items: center; }
-  .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 8px 24px; }
-  .three > div { display: grid; gap: 12px; align-content: start; background: color-mix(in srgb, var(--bg) 78%, transparent); }
+  /* three branches, shared rows (subgrid): label, sentence and links line up across the columns */
+  .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, auto); gap: 12px 32px; padding-block: 8px 24px; }
+  .three > div { display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; background: color-mix(in srgb, var(--bg) 78%, transparent); }
   .tq { margin: 0; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.15; }
   .three p { margin: 0; font-size: 17px; line-height: 1.6; color: var(--fg-muted); max-width: 40ch; }
   .three .lk { display: flex; flex-wrap: wrap; gap: 0 18px; margin: 0; }
@@ -67,7 +68,7 @@ import { PHASES, SOURCES, partOf } from '../content/parts';
   .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .facts > div { display: grid; gap: 6px; }
   .n { margin: 0; font-size: clamp(64px, 9vw, 128px); line-height: .85; color: var(--fg); font-variant-numeric: tabular-nums; }
-  @media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr; } .manifesto { padding-block: 72px; } .three { grid-template-columns: minmax(0, 1fr); gap: 28px; } .proof { grid-template-columns: 1fr; gap: 8px; } }
+  @media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr; } .manifesto { padding-block: 72px; } .three { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; gap: 28px; } .three > div { grid-row: auto; grid-template-rows: none; gap: 12px; } .proof { grid-template-columns: 1fr; gap: 8px; } }
 </style>
 
 <script>

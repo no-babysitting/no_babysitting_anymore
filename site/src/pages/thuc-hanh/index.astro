@@ -1,0 +1,103 @@
+---
+/* Trang Thực hành (docs/23 §6, §9 Q1a): ba bài tự làm sau lộ trình chính, cho người tự học và người trình bày nội bộ.
+   Chỉ có chữ. Phần "bài này cố ý gài gì" và thang tự soát nằm trong <details>, đóng sẵn: làm xong mới mở. */
+import Base from '../../layouts/Base.astro';
+import Hud from '../../components/Hud.astro';
+import PartNav from '../../components/PartNav.astro';
+import { EXERCISES, LEVELS } from '../../content/practice';
+import { url } from '../../lib/url';
+---
+<Base title="Thực hành: ba bài tự làm · No Babysitting" description="Ba tình huống chưa có trong bài học, để bạn tự giao một việc cho agent rồi tự soát: làm rõ và giao, đặt ranh giới, lái và kiểm.">
+  <Hud current="thuc-hanh" />
+  <main id="main" tabindex="-1" class="wrap pr">
+    <header class="op">
+      <p class="nb-tag">Sau lộ trình chính</p>
+      <h1 class="en" lang="en">PRACTICE</h1>
+      <p class="vi">Thực hành: ba bài tự làm</p>
+      <p class="sum">Ba tình huống dưới đây chưa xuất hiện trong bài học nào. Bạn tự chọn nguyên lý để dùng, viết câu trả lời ra, rồi mới mở phần tự soát. Không ai chấm điểm.</p>
+    </header>
+
+    <section class="how" aria-labelledby="how-h">
+      <h2 class="bh" id="how-h">Cách dùng</h2>
+      <ul>
+        <li><b>Tự học:</b> viết câu trả lời ra giấy, ghi chú hay bất cứ đâu. Xong rồi mới mở “Bài này cố ý gài gì” và thang tự soát để so.</li>
+        <li><b>Trình bày cho nhóm:</b> chiếu tình huống, cho mọi người 10 phút tự viết, rồi mở phần cố ý gài để cùng bàn.</li>
+      </ul>
+      <p class="body">Thang tự soát có bốn mức: {LEVELS.map((l, i) => `${i + 1} ${l.toLowerCase()}`).join(' · ')}. Nó cho bạn biết mình còn thiếu gì và nên đọc lại phần nào. Nó không cho ra một điểm tổng.</p>
+      <p class="nb-tag is-info">Bản thử · chưa có bài giải mẫu</p>
+    </section>
+
+    {EXERCISES.map((x, n) => (
+      <article class="ex" id={x.id} aria-labelledby={`${x.id}-h`}>
+        <header>
+          <p class="nb-micro"><span class="nb-sq"></span>Bài {n + 1} · {x.minutes}</p>
+          <h2 class="bh" id={`${x.id}-h`}>{x.title}</h2>
+          <p class="from">{x.from}</p>
+        </header>
+        {x.parts.map((pt, k) => {
+          const body = (<>
+            <p class="body">{pt.scene}</p>
+            <p class="nb-micro">Viết ra</p>
+            <ol class="asks">{pt.asks.map((a) => <li>{a}</li>)}</ol>
+          </>);
+          return k === 0 ? <div class="scene">{pt.label && <h3 class="lb">{pt.label}</h3>}{body}</div>
+            : <details class="more"><summary><span class="sm">{pt.label}</span></summary><div class="scene">{body}</div></details>;
+        })}
+        <details class="more">
+          <summary><span class="sm">Làm xong rồi · mở phần tự soát</span></summary>
+          <div class="check">
+            <h3 class="lb">Bài này cố ý gài gì</h3>
+            <ul class="traps">{x.traps.map((t) => <li>{t}</li>)}</ul>
+            <h3 class="lb">Thang tự soát</h3>
+            {x.rubric.map((r) => (
+              <div class="crit">
+                <p class="cn">{r.name}</p>
+                <ol>{r.levels.map((l, i) => <li><span class="nb-micro">{i + 1} · {LEVELS[i]}</span><span>{l}</span></li>)}</ol>
+              </div>
+            ))}
+            <p class="again">Muốn đọc lại: {x.back.map((b, i) => <>{i > 0 && ' · '}<a href={url(b.href)}>{b.label}</a></>)}</p>
+          </div>
+        </details>
+      </article>
+    ))}
+
+    <PartNav current="thuc-hanh" />
+  </main>
+</Base>
+
+<style>
+  .pr { display: grid; gap: var(--space-8); padding-block: 40px 96px; grid-template-columns: minmax(0, 1fr); }
+  .op { display: grid; gap: 12px; border-bottom: 1px solid var(--control); padding-bottom: 28px; }
+  .op p, .how p, .ex p { margin: 0; }
+  .en { margin: 0; font-family: var(--font-wide); font-stretch: 125%; font-weight: 800; letter-spacing: -.012em; line-height: .96; font-size: clamp(28px, 4.6vw, 64px); }
+  .vi { font-weight: 500; font-size: clamp(19px, 1.6vw, 21px); }
+  .sum { font-size: clamp(17px, 1.4vw, 19px); line-height: 1.55; color: var(--fg-muted); max-width: var(--measure); }
+  .bh { margin: 0; font: 500 clamp(24px, 3vw, 34px)/1.22 var(--font-display); max-width: 26ch; }
+  .body { font-size: 17px; line-height: 1.65; max-width: var(--measure); }
+  .pr b { font-weight: 600; }
+  .how { display: grid; gap: 14px; justify-items: start; }
+  .how ul, .traps { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; font-size: 17px; line-height: 1.6; max-width: var(--measure); }
+  .ex { display: grid; gap: 18px; border-top: 1px solid var(--control); padding-top: var(--space-6); grid-template-columns: minmax(0, 1fr); scroll-margin-top: 72px; }
+  .ex header { display: grid; gap: 8px; }
+  .from { color: var(--fg-muted); font-size: 16px; line-height: 1.5; }
+  .scene { display: grid; gap: 12px; }
+  .lb { margin: 0; font: 600 19px/1.35 var(--font-text); }
+  .asks { margin: 0; padding-left: 1.5em; display: grid; gap: 8px; font-size: 17px; line-height: 1.6; max-width: var(--measure); }
+  .more { border: 1px solid var(--control); max-width: 860px; }
+  .more summary { list-style: none; cursor: pointer; min-height: 48px; padding: 0 16px; display: flex; align-items: center; gap: 12px; font: 600 13px/1.3 var(--font-mono); letter-spacing: .04em; }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary::before { content: '+'; color: var(--fg-muted); font-size: 16px; }
+  .more[open] summary::before { content: '−'; }
+  .more summary:hover { background: var(--bg-raised); }
+  .more summary:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+  .more > div { padding: 8px 16px 20px; }
+  .check { display: grid; gap: 14px; }
+  .crit { display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 12px; }
+  .cn { font-weight: 600; font-size: 17px; }
+  .crit ol { list-style: none; margin: 0; padding: 0; display: grid; }
+  .crit li { display: grid; grid-template-columns: 16ch minmax(0, 1fr); gap: 4px 16px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 16px; line-height: 1.55; }
+  .crit li .nb-micro { padding-top: 3px; }
+  .again { font-size: 15px; color: var(--fg-muted); }
+  .again a { color: var(--fg); text-underline-offset: 3px; display: inline-block; padding: 10px 0; }
+  @media (max-width: 640px) { .crit li { grid-template-columns: 1fr; } }
+</style>
