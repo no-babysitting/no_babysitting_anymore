@@ -1,37 +1,38 @@
 ---
-/* Scene · Hành trình. The 12 chapters as one horizontal track, pinned and scrubbed by vertical scroll.
+/* Scene · Lộ trình. The five parts of the main path (docs/14 §5) as one horizontal track, pinned and scrubbed by vertical scroll.
    Each chapter number is ASCII art (NB.ascii + sources.text): noise as the panel enters, converging into the
    number by the centre of the screen (M11: white head, glyphs settle to accent), dissolving again as it leaves.
    The panel in the centre is the current one: full contrast and an accent rule; the others step back.
    Inside each panel the giant number drifts slower than the track (containerAnimation parallax);
    the level meter (Low → Pro) lights up as the track passes each part; the counter follows. */
-import { chapters, href, PARTS } from '../../lib/chapters';
-import { isLive } from '../../lib/status';
-import { inline } from '../../lib/matrix';
-const LV = ['LOW', 'MEDIUM', 'HIGH', 'PRO'];
-const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
+import { PARTS } from '../../content/parts';
+import { url } from '../../lib/url';
+const LV = ['MỞ ĐẦU', 'TRƯỚC', 'TRONG', 'SAU'];
+const PH = ['Mở đầu', 'Trước', 'Trong', 'Sau'];
+/* one line per panel (docs/14 §5, bảng Lộ trình) */
+const one = (p: (typeof PARTS)[number]) => (p.id === '01' ? 'Việc giao thường hỏng ở những chỗ chính bạn chưa nghĩ tới.' : p.summary);
 ---
 <section class="journey" id="journey" aria-labelledby="journey-h">
   <div class="jpin" id="journey-pin">
     <div class="jhead wrap">
-      <h2 class="nb-sr" id="journey-h">Hành trình {chapters.length} phần, từ vibe đến agentic</h2>
+      <h2 class="nb-sr" id="journey-h">Lộ trình {PARTS.length} phần: trước, trong và sau khi giao việc</h2>
       <div class="meter" aria-hidden="true">
         {LV.map((l, i) => <span class={`lv l${i + 1}`}><i></i><b>{l}</b></span>)}
       </div>
-      <span class="nb-micro cnt"><b id="journey-n">01</b> / {chapters.length} · <span id="journey-lv">LOW</span></span>
+      <span class="nb-micro cnt"><b id="journey-n">01</b> / {String(PARTS.length).padStart(2, '0')} · <span id="journey-lv">MỞ ĐẦU</span></span>
     </div>
     <div class="viewport">
       <ol class="track" id="journey-track">
-        {chapters.map((c) => (
-          <li class="panel" data-lv={c.id === 'c00' ? 0 : c.id === 'c10' ? 3 : lvOf(c.level)} data-no={c.no}>
-            <a href={href(c.id)}>
+        {PARTS.map((c) => (
+          <li class="panel" data-lv={PH.indexOf(c.phase)} data-no={c.id}>
+            <a href={url(c.id + '/')}>
               <canvas class="pcv" aria-hidden="true"></canvas>
-              <span class="no nb-cond" aria-hidden="true">{c.no}</span>
-              <span class="meta nb-micro">{PARTS[c.id]}{c.level && c.level !== 'Kết' ? ` · ${c.level.toUpperCase()}` : ''} · {c.minutes.split('/')[0].replace("'", ' phút')}{!isLive(c.id) && ' · đang viết'}</span>
-              <span class="en nb-wide">{c.en}</span>
+              <span class="no nb-cond" aria-hidden="true">{c.id}</span>
+              <span class="meta nb-micro">{c.phase} · {c.minutes} phút</span>
+              <span class="en nb-wide" lang="en">{c.en}</span>
               <span class="vi">{c.vi}</span>
-              <span class="q nb-q" set:html={inline(c.question)} />
-              <span class="go nb-micro">{isLive(c.id) ? 'Vào chương →' : 'Xem khung chương →'}</span>
+              <span class="q nb-q">{one(c)}</span>
+              <span class="go nb-micro">Vào phần →</span>
             </a>
           </li>
         ))}
@@ -114,7 +115,7 @@ const lvOf = (lv: string) => Math.max(0, LV.indexOf(lv.toUpperCase()));
         onToggle: (s: any) => { if (!s.isActive) return;
           panels.forEach((x) => x.classList.toggle('is-active', x === p));
           n.textContent = String(pi + 1).padStart(2, '0'); const lv = +p.dataset.lv!;
-          lvs.forEach((l, i) => l.classList.toggle('on', i <= lv)); document.getElementById('journey-lv')!.textContent = ['LOW', 'MEDIUM', 'HIGH', 'PRO'][lv]; } });
+          lvs.forEach((l, i) => l.classList.toggle('on', i <= lv)); document.getElementById('journey-lv')!.textContent = ['MỞ ĐẦU', 'TRƯỚC', 'TRONG', 'SAU'][lv]; } });
     });
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });

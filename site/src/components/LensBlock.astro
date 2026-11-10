@@ -1,0 +1,51 @@
+---
+/* Khối kính (docs/14 §4, docs/15 §7): đủ 10 biến thể trong DOM, biến thể không chọn mang `hidden`.
+   Kính được chọn lưu ở localStorage 'nb-lens' (script trong Hud.astro), dùng chung với bộ chọn nhóm việc ở trang chủ. */
+import { LENSES, type Rows } from '../content/parts';
+const { title, intro, outro, rows, chips } = Astro.props as { title: string; intro?: string; outro?: string; rows: Rows; chips?: boolean };
+---
+<section class="lens" data-lens-group aria-label={title}>
+  <header class="lh">
+    <h2 class="lt">{title}</h2>
+    {!chips && <button class="nb-micro lc" type="button" data-lens-open>Kính: <b data-lens-name>Chung</b> · đổi</button>}
+  </header>
+  {intro && <p class="body">{intro}</p>}
+  {chips && (
+    <div class="pick">
+      <p class="nb-micro">Bạn làm việc gì?</p>
+      <div class="chips" role="group" aria-label="Chọn kính theo nhóm việc">
+        {LENSES.map((l) => <button type="button" class="chip" data-lens-set={l.id} aria-pressed={l.id === 'chung' ? 'true' : 'false'}>{l.label}</button>)}
+      </div>
+    </div>
+  )}
+  {LENSES.map((l) => (
+    <div class="var" data-lens-id={l.id} hidden={l.id !== 'chung'}>
+      <p class="who">{l.label}</p>
+      <dl>{rows[l.id].map(([k, v]) => <div class={k ? '' : 'solo'}>{k && <dt class="nb-micro">{k}</dt>}<dd set:html={v} /></div>)}</dl>
+    </div>
+  ))}
+  {outro && <p class="body">{outro}</p>}
+</section>
+<style>
+  .lens { display: grid; gap: 14px; border: 1px solid var(--control); padding: clamp(16px, 2.6vw, 28px); margin-top: 20px; max-width: 860px; }
+  .lens p { margin: 0; }
+  .lh { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+  .lt { margin: 0; font: 600 19px/1.35 var(--font-text); }
+  .lc { appearance: none; background: transparent; border: 1px solid var(--control); color: var(--fg-muted); padding: 0 12px; min-height: 44px; cursor: pointer; }
+  .lc:hover { color: var(--fg); border-color: var(--fg); }
+  .lc:focus-visible, .chip:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+  .pick { display: grid; gap: 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { appearance: none; background: transparent; color: var(--fg); border: 1px solid var(--control); padding: 0 12px; min-height: 44px; font: 500 14px/1.2 var(--font-text); cursor: pointer; }
+  .chip:hover { border-color: var(--fg); }
+  .chip[aria-pressed='true'] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .var { display: grid; gap: 10px; }
+  .var[hidden] { display: none; }
+  .who { font: 600 17px/1.4 var(--font-text); }
+  dl { margin: 0; display: grid; border-top: 1px solid var(--line); }
+  dl > div { display: grid; grid-template-columns: 15ch minmax(0, 1fr); gap: 4px 16px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  dl > div.solo { grid-template-columns: minmax(0, 1fr); }
+  dt { padding-top: 3px; }
+  dd { margin: 0; font-size: 16px; line-height: 1.6; max-width: 58ch; }
+  @media (max-width: 640px) { dl > div { grid-template-columns: 1fr; } }
+</style>

@@ -2,18 +2,18 @@
 import { url } from '../../lib/url';
 /* Scene · Finale. The only full-colour moment on the home page (design system §12: full colour only at the
    opening and the finale): CinematicAscii's dusk city (NB.sources.scene, own artwork) converges out of noise as you
-   scroll (M11, pinned), the counter reaches 12 / 12, The Colleague turns to verified, and the call to start rises. */
+   scroll (M11, pinned), the counter reaches 05 / 05, The Colleague turns to verified, and the call to start rises. */
 ---
 <section class="fin" id="finale" aria-labelledby="finale-h">
   <div class="stage" id="finale-stage">
     <canvas class="nb-canvas cv" id="finale-cv" aria-hidden="true"></canvas>
     <span class="nb-corner tl nb-micro"><span class="nb-sq"></span>FINALE · FULL-COLOR</span>
     <span class="nb-corner tr nb-micro">Đồng nghiệp <b id="finale-col">[•_•]</b></span>
-    <span class="nb-corner bl nb-micro">Phần <b id="finale-n" class="nb-tabular">00</b> / 12</span>
+    <span class="nb-corner bl nb-micro">Phần <b id="finale-n" class="nb-tabular">00</b> / 05</span>
     <div class="ct" id="finale-ct">
       <span class="nb-micro">Bắt đầu</span>
-      <h2 class="nb-q" id="finale-h">Hôm nay ta biến đồng xu thành một quy trình.</h2>
-      <p class="go"><a class="nb-btn is-solid" href={url('c02/')}>Đọc chương 02 · bản đầy đủ</a><a class="nb-btn" href={url('c00/')}>Mở đầu</a><a class="nb-btn" href={url('library/')}>Library</a></p>
+      <h2 class="nb-q" id="finale-h">Việc vẫn chạy khi bạn đã về.</h2>
+      <p class="go"><a class="nb-btn is-solid" href={url('00/')}>Bắt đầu với 00 →</a><a class="nb-btn" href={url('thuc-hanh/')}>Thực hành</a><a class="nb-btn" href={url('c02/')}>Nâng cao</a><a class="nb-btn" href={url('library/')}>Library</a></p>
     </div>
   </div>
 </section>
@@ -41,14 +41,14 @@ import { url } from '../../lib/url';
       font: small ? '500 9.5px "JetBrains Mono", monospace' : '500 12px "JetBrains Mono", ui-monospace, monospace', lensColor: 'fg', lensPx: 120,
       source: NB.sources.scene({ sunX: small ? 0.6 : 0.68 }),
     });
-    if (reduce || !gsap) { n.textContent = '12'; col.set('verified', true); return; }
+    if (reduce || !gsap) { n.textContent = '05'; col.set('verified', true); return; }
     gsap.set('#finale-ct', { opacity: 0, pointerEvents: 'none', y: 40 });
     const S = A.state, c = { v: 0 };
     const tl = gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: '#finale', start: 'top top+=48', end: '+=160%', pin: true, scrub: 0.6,
         onUpdate: (s: any) => col.set(s.progress > 0.62 ? 'verified' : 'working') } })
       .to(S, { order: 1, noiseFill: 0.05, duration: 0.6, onUpdate: A.redraw }, 0)
-      .to(c, { v: 12, duration: 0.55, onUpdate: () => { n.textContent = String(Math.round(c.v)).padStart(2, '0'); } }, 0.05)
+      .to(c, { v: 5, duration: 0.55, onUpdate: () => { n.textContent = String(Math.round(c.v)).padStart(2, '0'); } }, 0.05)
       .to('#finale-ct', { opacity: 1, pointerEvents: 'auto', y: 0, duration: 0.18, ease: 'power2.out' }, 0.66)
       .to({}, { duration: 0.16 });
     /* a keyboard user who tabs to the call to action should see it: move the pin to where it is shown */

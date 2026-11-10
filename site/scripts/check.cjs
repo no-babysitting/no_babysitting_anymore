@@ -10,7 +10,7 @@ const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const { BASE, DIST, file, serve, htmlFiles } = require('./serve-dist.cjs');
 
-const PAGES = ['', 'c00/', 'c02/', 'c03/', 'c10/', 'library/'];
+const PAGES = ['', '00/', '01/', '04/', 'thuc-hanh/', 'c02/', 'library/'];
 /* every page that was built: index.html of each folder, plus loose files such as 404.html */
 const ALL = [...new Set(htmlFiles().map((f) => { const r = path.relative(DIST, f).split(path.sep).join('/'); return path.basename(r) === 'index.html' ? r.slice(0, -'index.html'.length) : r; }))].filter((d) => !/^ds\//.test(d)).sort();
 const IDLE_DRAWS_PER_S = 600; /* breathing hero: tens per second; the old renderer: ~80k */

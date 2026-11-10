@@ -6,7 +6,7 @@
    ASCII runs numbers (brief) → terrain (exploration); the full-colour moment stays with the finale. */
 import { WORK, AVAIL } from '../../content/work-types';
 import { url } from '../../lib/url';
-import { chapters } from '../../lib/chapters';
+import { PARTS } from '../../content/parts';
 const STEPS = [
   ['Brief', 'Bạn nói kết quả, ràng buộc và thế nào là xong'],
   ['Hiểu mục tiêu', 'Claude nhắc lại mục tiêu và hỏi điều còn mơ hồ'],
@@ -17,7 +17,8 @@ const STEPS = [
   ['Bàn giao', 'Bạn duyệt trước việc không hoàn tác được'],
 ];
 const w = WORK[0];
-const chName = (id: string) => { const c = chapters.find((x) => x.id === id); return c ? `${c.no} · ${c.en}` : id; };
+const NAMES: Record<string, string> = { ...Object.fromEntries(PARTS.map((p) => [p.id, `${p.id} · ${p.vi}`])), c02: 'Nâng cao A1 · Ngân sách ngữ cảnh' };
+const chName = (id: string) => NAMES[id] || id;
 ---
 <section class="run" id="run" aria-labelledby="run-h">
   <div class="pin" id="run-pin">
@@ -97,7 +98,7 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
       </div>
     </div>
   </div>
-  <script type="application/json" id="run-data" set:html={JSON.stringify({ work: WORK, avail: AVAIL, base: url(), names: Object.fromEntries(chapters.map((c) => [c.id, `${c.no} · ${c.en}`])) })}></script>
+  <script type="application/json" id="run-data" set:html={JSON.stringify({ work: WORK, avail: AVAIL, base: url(), names: NAMES })}></script>
 </section>
 
 <style>
@@ -291,7 +292,14 @@ const chName = (id: string) => { const c = chapters.find((x) => x.id === id); re
     }
     root.querySelectorAll<HTMLInputElement>('[name="run-kind"]').forEach((r) => r.addEventListener('change', () => {
       const k = D.work.find((x: any) => x.id === r.value); if (k) render(k, !reduce);
+      if (w.nbLens) w.nbLens.set(r.value);   /* the picker and the lens are one choice (docs/14 §4, D44) */
     }));
+    const follow = (id: string, animate: boolean) => {
+      const r = root.querySelector<HTMLInputElement>(`[name="run-kind"][value="${id}"]`), k = D.work.find((x: any) => x.id === id);
+      if (r && k && !r.checked) { r.checked = true; render(k, animate); }
+    };
+    document.addEventListener('nb:lens', (e) => follow((e as CustomEvent).detail.id, !reduce));
+    if (w.nbLens) follow(w.nbLens.get(), false);
     root.querySelector('[data-approve]')!.addEventListener('click', (e) => {
       (e.currentTarget as HTMLButtonElement).disabled = true; root.querySelector<HTMLElement>('[data-done]')!.hidden = false;
       side.set('verified'); NB.say(sideTxt, 'đã được duyệt');
