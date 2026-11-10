@@ -9,6 +9,7 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 - **Văn phong:** viết lại chữ của hero, kim tự tháp, finale, 5 phần và trang Thực hành theo lối nói của người Việt, đủ hư từ; "em nó" ở chỗ thân mật, "Claude" ở thân bài; thuật ngữ tiếng Anh lần đầu trong mỗi phần có nghĩa tiếng Việt trong ngoặc. Tên phần tiếng Việt đổi theo (04: "Kiểm kết quả, hỏi vặn lại, rồi từ đó tin tưởng").
 - **Trang chủ:** ba chặng Trước, Trong, Sau thành một dòng thời gian liền mạch; bỏ hàng ASCII lặp số ở bước Brief; bỏ nhãn "FINALE · FULL-COLOR"; câu finale thành "Việc đã chạy xong khi bạn về."
 - **Bỏ link tới mã nguồn** ở menu và chân trang (giữ nút Góp ý và dòng ghi công).
+- **Khối kính và prompt:** viết lại ví dụ theo nghề của cả 5 phần và 10 prompt của phần 01 theo cùng lối văn. Prompt mang đi thử của 00, 02, 04 thêm phần còn thiếu theo chính bài học: mục đích, thế nào là xong, đòi bằng chứng, hỏi lại thay vì đoán.
 - **Đo được:** `check.cjs`, `type-check.cjs`, `design-check.cjs` xanh trên máy làm việc.
 
 ## Lộ trình chính v4 lên site: 5 phần, kính, trang Thực hành (10/11/2026, chờ duyệt chữ)
