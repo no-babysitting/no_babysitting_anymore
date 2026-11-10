@@ -49,7 +49,7 @@ export const WORK: WorkType[] = [
     deliver: 'Bản nháp báo cáo tuần, kèm bảng nguồn.',
     approve: 'Lần đầu bạn duyệt trước khi gửi; gửi lên kênh là hành động không hoàn tác được.',
     surface: 'Cowork, hoặc lịch chạy trên cloud của Claude Code',
-    chapters: ['c06', 'c09'],
+    chapters: ['02', '04'],
   },
   {
     id: 'content', label: 'Marketing',
@@ -69,7 +69,7 @@ export const WORK: WorkType[] = [
     deliver: 'Tài liệu nội dung và lịch đăng.',
     approve: 'Bạn duyệt trước khi đăng; đăng bài cần quyền bạn cho.',
     surface: 'Cowork hoặc Claude Code',
-    chapters: ['c03'],
+    chapters: ['01', '02'],
   },
   {
     id: 'research', label: 'Nghiên cứu',
@@ -89,7 +89,7 @@ export const WORK: WorkType[] = [
     deliver: 'brief.md và bảng nguồn.',
     approve: 'Bạn đọc và duyệt trước khi gửi đi.',
     surface: 'Claude Code hoặc Cowork',
-    chapters: ['c04', 'c08'],
+    chapters: ['01', '04'],
   },
   {
     id: 'data', label: 'Dữ liệu',
@@ -109,7 +109,7 @@ export const WORK: WorkType[] = [
     deliver: 'Dashboard và script chạy lại được.',
     approve: 'Bạn xem nhận định trước khi chia sẻ.',
     surface: 'Claude Code hoặc Cowork',
-    chapters: ['c02', 'c07'],
+    chapters: ['04', 'c02'],
   },
   {
     id: 'build', label: 'Dựng sản phẩm',
@@ -129,7 +129,7 @@ export const WORK: WorkType[] = [
     deliver: 'Pull request kèm ảnh chụp.',
     approve: 'Bạn review và merge.',
     surface: 'Terminal hoặc IDE kèm Claude in Chrome, hoặc ứng dụng desktop',
-    chapters: ['c05b', 'c07'],
+    chapters: ['03', '04'],
   },
   {
     id: 'media', label: 'Sáng tạo',
@@ -149,6 +149,6 @@ export const WORK: WorkType[] = [
     deliver: 'Thư mục 24 clip và bảng mốc giờ.',
     approve: 'Bạn xem trước khi đăng.',
     surface: 'Phiên Claude Code chạy trên máy có ffmpeg',
-    chapters: ['c05'],
+    chapters: ['01'],
   },
 ];

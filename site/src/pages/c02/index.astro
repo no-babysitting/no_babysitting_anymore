@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ContextMeter from '../../components/ContextMeter.astro';
 import Hud from '../../components/Hud.astro';
-import ChapterNav from '../../components/ChapterNav.astro';
+import { url } from '../../lib/url';
 import ChapterOpener from '../../components/ds/ChapterOpener.astro';
 import ChapterMotion from '../../components/ChapterMotion.astro';
 import { chapters } from '../../lib/chapters';
@@ -11,11 +11,11 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
 /* c02 · The Briefing Budget. Beats b1–b3 and b4 (part) from docs/02-pedagogical-script.md §02.
    Beat text is quoted from the script; sources per beat are listed under each section. */
 ---
-<Base title="02 · The Briefing Budget · No Babysitting">
+<Base title="Ngân sách ngữ cảnh · Nâng cao A1 · No Babysitting">
   <Hud current="c02" />
 
   <main id="main" tabindex="-1" class="wrap ch">
-    <div data-ch-opener><ChapterOpener {...openerProps(c02)} /></div>
+    <div data-ch-opener><ChapterOpener {...openerProps(c02)} no="A1" part="Nâng cao · A1" pos="01" total="01" beats={4} /></div>
 
     <section class="beat ask" data-ask data-hold="0.6" id="c02-b1" aria-labelledby="b1q">
       <span class="nb-micro" data-reveal="up">b1 · hỏi</span>
@@ -49,7 +49,7 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
       <p class="src nb-micro">Nguồn · <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code docs · Best practices ↗</a></p>
     </section>
 
-    <ChapterNav current="c02" />
+    <nav class="back" aria-label="Về lộ trình chính"><a class="nb-btn" href={url('03/')}>← 03 · Để nó làm</a><a class="nb-btn is-solid" data-sweep href={url()}>Về trang chủ →</a></nav>
     <ChapterMotion />
     <script>
       /* b2 locks the S1 stage (motion.md: lock the animation, never the scroll); b3 is the chapter's big moment:
@@ -97,6 +97,8 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
   .lock { position: relative; }
   .veil { position: absolute; inset: 0; z-index: 5; display: grid; place-content: center; justify-items: center; gap: 14px; background: color-mix(in srgb, var(--bg) 72%, transparent); }
   .veil p { color: var(--fg); margin: 0; }
+  .back { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--control); padding-top: 24px; }
+  .back .nb-btn { min-height: 48px; }
   .q { margin: 0; font-size: clamp(30px, 4.2vw, 56px); max-width: 24ch; }
   .predict { border: 0; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--control); }
   .predict label { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: baseline; padding: 14px 4px; border-bottom: 1px solid var(--control); cursor: pointer; font-size: 18px; line-height: 1.5; }

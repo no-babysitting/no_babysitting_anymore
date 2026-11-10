@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 /* Scene 1 · Mở màn. A white line of code is typed over a field of ASCII noise; scrolling compiles it:
    the noise converges left to right into the Blocks logo (M11, head of the trail in fg, settled glyphs accent),
    then the crisp mark settles over it and the promise rises (M5). Pinned for 220% of the viewport. */
@@ -11,8 +12,15 @@
     <div class="code" id="intro-code" aria-hidden="true"><span class="t" id="intro-t"></span><span class="caret">▍</span></div>
     <div class="mark" id="intro-mark" data-logo-lg></div>
     <div class="tag">
-      <p class="nb-q l1" id="intro-l1">Từ vibe đến agentic.</p>
-      <p class="l2" id="intro-l2">Giao việc cho Claude như giao cho một đồng nghiệp giỏi, rồi yên tâm làm việc khác.</p>
+      <div class="g1" id="intro-l1">
+        <p class="nb-micro pre">Từ vibe đến agentic.</p>
+        <p class="nb-q l1">Claude khôn hơn rồi, sao bạn vẫn phải trông trẻ?</p>
+      </div>
+      <div class="g2" id="intro-l2">
+        <p class="l2">Cùng Claude làm rõ việc, rồi giao trọn cho nó.</p>
+        <p class="nb-micro info">Khoảng 25 phút · 5 phần ngắn · Không cần biết code · Miễn phí, có ví dụ cho từng nghề</p>
+        <p class="cta"><a class="nb-btn is-solid" href={url('00/')}>Bắt đầu →</a><a class="nb-btn" href="#pyramid">Xem lộ trình ↓</a></p>
+      </div>
     </div>
     <h1 class="nb-sr" id="intro-h">No babysitting</h1>
   </div>
@@ -28,8 +36,15 @@
   .mark :global(svg) { display: block; width: 100%; height: auto; }
   /* the promise is left aligned with the mark and sits right under it; place() sets top, left and width */
   .tag { position: absolute; left: 6%; top: 52%; width: 88%; text-align: left; display: grid; gap: 12px; }
-  .l1 { margin: 0; font-size: clamp(30px, 4vw, 50px); color: var(--fg); text-wrap: balance; }
-  .l2 { margin: 0; font-size: clamp(17px, 1.5vw, 19px); line-height: 1.5; color: var(--fg-muted); max-width: 46ch; }
+  .tag p { margin: 0; }
+  .g1, .g2 { display: grid; gap: 10px; }
+  .l1 { font-size: clamp(28px, 4vw, 52px); color: var(--fg); text-wrap: balance; max-width: 22ch; }
+  .l2 { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.5; color: var(--fg); max-width: 46ch; }
+  .info { line-height: 1.6; max-width: 60ch; }
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+  .cta .nb-btn { min-height: 44px; }
+  .cta .nb-btn:not(.is-solid) { background: var(--bg); }
+  @media (max-height: 700px) { .info { display: none; } }
   .nb-corner { z-index: 4; }
   .stage .nb-corner { background: transparent; }
   .short { display: none; }

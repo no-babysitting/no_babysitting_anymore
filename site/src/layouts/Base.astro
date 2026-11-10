@@ -2,7 +2,7 @@
 import SiteFooter from '../components/SiteFooter.astro';
 import { SITE } from '../config';
 import { url } from '../lib/url';
-const { title = 'No Babysitting', description = SITE.descriptionVi } = Astro.props;
+const { title = 'No Babysitting', description = SITE.descriptionVi, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(url('og.png'), Astro.site).href;
 /* Google Fonts strips arrows, ✓, ■ and block characters from its subsets, so each OS drew them in a different fallback
@@ -25,6 +25,7 @@ const symbolsCss = Object.entries(LOADED).flatMap(([f, vs]) => vs.map(([st, w]) 
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
   <meta name="theme-color" content="#14120f" />
   <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
   <meta property="og:type" content="website" />
