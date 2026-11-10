@@ -2,6 +2,15 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Sửa theo góp ý của chủ dự án sau khi test trên iPhone (11/11/2026, chờ duyệt chữ)
+
+- **Lỗi "Một lần giao việc" chồng 7 bước lên nhau** (đổi nhóm việc giữa cảnh ghim): bỏ lệnh tính lại vị trí ở trang không có khối kính. Đã tái hiện và kiểm lại bằng Playwright ở 390×844.
+- **Auto memory (phần 03) viết lại theo docs** (đọc lại `code.claude.com/docs/en/memory` ngày 11/11): chuyện Claude tự ghi nhớ và chuyện ghi chú nằm ở máy nào tách thành hai ý riêng.
+- **Văn phong:** viết lại chữ của hero, kim tự tháp, finale, 5 phần và trang Thực hành theo lối nói của người Việt, đủ hư từ; "em nó" ở chỗ thân mật, "Claude" ở thân bài; thuật ngữ tiếng Anh lần đầu trong mỗi phần có nghĩa tiếng Việt trong ngoặc. Tên phần tiếng Việt đổi theo (04: "Kiểm kết quả, hỏi vặn lại, rồi từ đó tin tưởng").
+- **Trang chủ:** ba chặng Trước, Trong, Sau thành một dòng thời gian liền mạch; bỏ hàng ASCII lặp số ở bước Brief; bỏ nhãn "FINALE · FULL-COLOR"; câu finale thành "Việc đã chạy xong khi bạn về."
+- **Bỏ link tới mã nguồn** ở menu và chân trang (giữ nút Góp ý và dòng ghi công).
+- **Đo được:** `check.cjs`, `type-check.cjs`, `design-check.cjs` xanh trên máy làm việc.
+
 ## Lộ trình chính v4 lên site: 5 phần, kính, trang Thực hành (10/11/2026, chờ duyệt chữ)
 
 Đợt UX3 của `docs/19`, theo thứ tự ở `docs/17` §1. Chữ mới chờ chủ dự án duyệt (D13); bản xem trước nằm trên artifact, chưa merge.

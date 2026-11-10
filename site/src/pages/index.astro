@@ -20,22 +20,23 @@ import { PHASES, SOURCES, partOf } from '../content/parts';
   <div class="wrap manifesto">
     <div class="stmt" data-hold="0.8">
       <span class="nb-micro" data-reveal="up">Cả trang trong một câu</span>
-      <h2 class="nb-q big" id="pyr-h" data-reveal="fill">Thôi cầm tay chỉ việc: cùng Claude làm rõ việc, rồi giao trọn cho nó.</h2>
+      <h2 class="nb-q big" id="pyr-h" data-reveal="fill">Thôi cầm tay chỉ việc: hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó.</h2>
     </div>
     <hr class="nb-rule" data-reveal="rule" />
     <div class="proof">
       <p class="nb-cond n" data-reveal="up"><span data-reveal="count">80</span>%</p>
-      <p class="cap" data-reveal="up">Theo bài viết của Anthropic tháng 7/2026: hơn 80% chỉ dẫn hệ thống của Claude Code đã được xoá cho Claude Opus 5 và Claude Fable 5, và không đo được sụt giảm nào trên các bài đánh giá về code. <a href={SOURCES.S1.href} target="_blank" rel="noopener">Nguồn ↗</a></p>
+      <p class="cap" data-reveal="up">Theo bài viết của Anthropic vào tháng 7/2026: hơn 80% chỉ dẫn hệ thống của Claude Code đã được xoá đi cho hai model Claude Opus 5 và Claude Fable 5, mà không đo thấy sụt giảm nào trên các bài đánh giá về code. <a href={SOURCES.S1.href} target="_blank" rel="noopener">Nguồn ↗</a></p>
     </div>
-    <div class="three">
+    <ol class="three" aria-label="Ba chặng của một lần giao việc">
       {PHASES.map((f) => (
-        <div>
-          <span class="nb-micro" data-reveal="up">{f.label}</span>
+        <li>
+          <span class="node" data-reveal="up" aria-hidden="true"><i></i></span>
+          <span class="nb-micro ph" data-reveal="up">{f.label}</span>
           <h3 class="nb-q tq" data-reveal="up">{f.line}</h3>
-          <p class="lk" data-reveal="up">{f.parts.map((id) => <a class="nb-micro go" href={url(id + '/')}>{id} · {partOf(id).vi} →</a>)}</p>
-        </div>
+          <p class="lk" data-reveal="up">{f.parts.map((id) => <a class="go" href={url(id + '/')}><span class="nb-micro">{id}</span>{partOf(id).vi} →</a>)}</p>
+        </li>
       ))}
-    </div>
+    </ol>
   </div>
   </section>
 
@@ -52,13 +53,19 @@ import { PHASES, SOURCES, partOf } from '../content/parts';
   .manifesto { position: relative; display: grid; gap: 28px; padding-block: 120px 96px; }
   .stmt { display: grid; gap: 28px; padding-block: 8px; } /* the block a hold pins while the statement is read */
   .beta { color: var(--fg-muted); display: inline-flex; gap: 8px; align-items: center; }
-  /* three branches, shared rows (subgrid): label, sentence and links line up across the columns */
-  .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, auto); gap: 12px 32px; padding-block: 8px 24px; }
-  .three > div { display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; background: color-mix(in srgb, var(--bg) 78%, transparent); }
-  .tq { margin: 0; font-size: clamp(24px, 2.6vw, 34px); line-height: 1.15; }
-  .three p { margin: 0; font-size: 17px; line-height: 1.6; color: var(--fg-muted); max-width: 40ch; }
-  .three .lk { display: flex; flex-wrap: wrap; gap: 0 18px; margin: 0; }
-  .three .go { color: var(--fg); text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 44px; }
+  /* three stages on one line of time: a rule runs through three numbered nodes (left to right on a desktop, top to bottom on a phone);
+     label, sentence and links share their rows across the columns (subgrid) */
+  .three { list-style: none; margin: 0; padding: 8px 0 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(4, auto); gap: 10px 32px; position: relative; }
+  .three::before { content: ''; position: absolute; left: 0; right: 0; top: 27px; height: 1px; background: var(--control); }
+  .three::after { content: '→'; position: absolute; right: -4px; top: 14px; font: 600 16px/1.6 var(--font-mono); color: var(--fg-muted); background: var(--bg); padding-left: 6px; }
+  .three > li { display: grid; grid-row: span 4; grid-template-rows: subgrid; align-content: start; position: relative; }
+  .node { display: inline-flex; align-items: center; gap: 10px; justify-self: start; height: 38px; padding-right: 12px; background: var(--bg); font: 600 13px/1 var(--font-mono); color: var(--fg-muted); position: relative; }
+  .node i { width: 11px; height: 11px; background: var(--accent); display: block; }
+  .ph { color: var(--fg); font-size: 13px; }
+  .tq { margin: 0; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.2; max-width: 20ch; background: color-mix(in srgb, var(--bg) 78%, transparent); }
+  .three .lk { display: grid; gap: 0; margin: 0; justify-items: start; }
+  .three .go .nb-micro { color: var(--fg); }
+  .three .go { background: color-mix(in srgb, var(--bg) 78%, transparent); color: var(--fg); font-size: 15px; text-underline-offset: 3px; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
   .proof { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: end; }
   .proof > * { background: color-mix(in srgb, var(--bg) 78%, transparent); }
   .proof .n { margin: 0; font-size: clamp(96px, 14vw, 200px); color: var(--fg); }
@@ -68,7 +75,7 @@ import { PHASES, SOURCES, partOf } from '../content/parts';
   .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   .facts > div { display: grid; gap: 6px; }
   .n { margin: 0; font-size: clamp(64px, 9vw, 128px); line-height: .85; color: var(--fg); font-variant-numeric: tabular-nums; }
-  @media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr; } .manifesto { padding-block: 72px; } .three { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; gap: 28px; } .three > div { grid-row: auto; grid-template-rows: none; gap: 12px; } .proof { grid-template-columns: 1fr; gap: 8px; } }
+  @media (max-width: 720px) { .facts { grid-template-columns: 1fr 1fr; } .manifesto { padding-block: 72px; } .three { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; gap: 22px; padding-left: 28px; } .three::before { left: 5px; right: auto; top: 14px; bottom: 30px; width: 1px; height: auto; } .three::after { content: '↓'; left: -1px; right: auto; top: auto; bottom: 4px; padding: 0; } .three > li { grid-row: auto; grid-template-rows: none; gap: 6px; } .node { margin-left: -28px; background: transparent; height: 28px; } .node i { outline: 6px solid var(--bg); } .proof { grid-template-columns: 1fr; gap: 8px; } }
 </style>
 
 <script>

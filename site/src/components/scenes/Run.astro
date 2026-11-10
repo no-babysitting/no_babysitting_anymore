@@ -43,7 +43,6 @@ const chName = (id: string) => NAMES[id] || id;
         <article class="step" data-step="0" aria-labelledby="run-s0">
           <h3 class="sh" id="run-s0"><span class="nb-micro">01 · {STEPS[0][0]}</span><span class="sd">{STEPS[0][1]}</span></h3>
           <p class="prompt"><span class="pr" aria-hidden="true">›</span><span data-f="outcome">{w.outcome}</span></p>
-          <canvas class="nb-canvas ncv" data-cv="numbers" aria-hidden="true"></canvas>
           <ul class="brief" data-f="brief">{w.brief.map((b) => <li><b>{b[0]}</b><span>{b[1]}</span></li>)}</ul>
         </article>
 
@@ -268,8 +267,8 @@ const chName = (id: string) => NAMES[id] || id;
 
     /* ASCII: the brief's numbers converge (M11), left aligned and made of many small characters */
     const numSource = (k: any) => NB.sources.text([k.brief.map((b: string[]) => b[0]).join('  ')], { family: '"Archivo", "Arial Black", sans-serif', weight: 900, stretch: 'ultra-condensed', fill: 0.8, vfill: 0.9, cy: 0.52, align: 'left', padX: 0 });
-    const A1 = NB.ascii(root.querySelector('[data-cv="numbers"]'), { cell: wide ? [5, 9] : [4, 7], font: wide ? '600 8.2px "JetBrains Mono", monospace' : '600 6.6px "JetBrains Mono", monospace',
-      ramp: ' .:-=+*#%@', order: scrub ? 0 : 1, sweep: 0.5, noiseFill: 0.22, pointer: false, tone: 'fg', frontColor: 'accent', fontLoad: '900 100px Archivo', source: numSource(kind) });
+    /* the row of ASCII numbers under the brief repeated the figures right below it and is gone (owner, 11/11); the steps still drive this stand-in */
+    const A1 = { state: { order: 1 }, redraw() {}, setSource(_s: unknown) {} };
 
     /* the picker swaps every step's content at once (P tier: NB.say for words, no replay of the scene) */
     function render(k: any, animate: boolean) {

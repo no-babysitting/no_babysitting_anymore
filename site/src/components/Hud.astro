@@ -57,7 +57,7 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${c.phase} · ${
           <span class="no">A1</span><span class="en" lang="en">THE BRIEFING BUDGET</span><span class="vi">Ngân sách ngữ cảnh</span>
         </a></li>
       </ol>
-      <p class="nb-micro m-foot"><a href={SITE.repo}>Mã nguồn</a><a href={`${SITE.repo}/issues/new`}>Góp ý</a><span>Dự án cộng đồng độc lập, không liên kết với Anthropic</span></p>
+      <p class="nb-micro m-foot"><a href={`${SITE.repo}/issues/new`}>Góp ý</a><span>Dự án cộng đồng độc lập, không liên kết với Anthropic</span></p>
     </nav>
   </div>
 </div>
@@ -165,7 +165,9 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${c.phase} · ${
       document.querySelectorAll<HTMLElement>('[data-lens-set]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lensSet === id)));
       document.documentElement.dataset.lens = id;
       document.dispatchEvent(new CustomEvent('nb:lens', { detail: { id } }));
-      if (save && w.ScrollTrigger) w.ScrollTrigger.refresh();   /* variants differ in height; pins below must move with them */
+      /* lens variants differ in height, so pins below them must move. Only pages that show a lens block need this: on the home page
+         a refresh in the middle of the pinned delegation run threw its seven steps on top of each other */
+      if (save && w.ScrollTrigger && document.querySelector('[data-lens-group]')) w.ScrollTrigger.refresh();
     };
     const show = (open: boolean, from?: HTMLElement) => {
       pop.hidden = !open;
