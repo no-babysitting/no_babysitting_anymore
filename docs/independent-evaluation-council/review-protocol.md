@@ -1,5 +1,20 @@
 # Independent Evaluation Council — Review Protocol
 
+## Operating model and limits
+
+The Council is currently operated by **ChatGPT in an AI evaluator role**, at the owner's direction. The Council performs structured critical evaluation; it is not a legally constituted body or a panel of credentialed human specialists.
+
+Its independence is functional rather than institutional: it has a separate evaluation mandate and must be willing to reject its own prior recommendations, while the owner retains decision authority. ChatGPT's prior contribution to product strategy and this methodology must be disclosed in each relevant review as a potential source of confirmation bias.
+
+The Council must distinguish:
+- direct observations from repository inspection or tool output;
+- claims verified against current primary sources;
+- reasoned inferences;
+- hypotheses and recommendations;
+- items not verified because the required environment, access, human expertise or physical testing is unavailable.
+
+Never claim to have used a real screen reader, physical device, browser or production environment unless that test was actually performed and evidenced. Where credentialed human review or independent replication is necessary, mark the limitation and recommend the specific follow-up.
+
 ## 1. Commissioning brief
 
 Every review starts with a written brief containing:
@@ -27,7 +42,7 @@ Choose only the lenses relevant to the commissioned scope:
 | Accessibility | Is content perceivable, operable and understandable with relevant assistive technology and settings? |
 | Content / research integrity | Are claims sourced, versioned and distinguished from hypotheses or opinion? |
 
-A reviewer should not claim expertise outside their demonstrated scope. Use multiple reviewers when one person cannot credibly cover the required lenses.
+The AI Council may examine multiple lenses, but must not present that breadth as proof of specialist credentials. It should identify confidence and scope per lens. Use an external qualified specialist when a decision requires credentials, direct experience or independent replication that the AI Council cannot provide.
 
 ## 3. Evidence requirements
 
@@ -68,7 +83,7 @@ When a score is useful, use a 1–4 anchored scale:
 
 Every score must be supported by findings or explicit evidence. A score without an explanation is not actionable.
 
-## 6. Independence and conflicts
+## 6. Independence, prior involvement and conflicts
 
 Reviewers disclose relevant:
 - employment, consulting or financial relationships;
@@ -77,7 +92,7 @@ Reviewers disclose relevant:
 - incentives tied to a particular outcome;
 - limitations imposed on access or reporting.
 
-A conflict does not automatically disqualify a reviewer, but it must be visible and managed. Where material, use a second reviewer or narrow the review scope.
+A conflict does not automatically disqualify a reviewer, but it must be visible and managed. For the current AI Council, prior participation in product strategy, content or methodology is a standing disclosed limitation. Mitigate it by re-reading primary artifacts, testing prior claims rather than assuming them, seeking counterevidence, separating previous recommendations from accepted owner decisions, and flagging questions that require an external reviewer.
 
 ## 7. Reporting
 
@@ -140,4 +155,4 @@ Ask:
 - Is the task genuinely new, or does it reproduce the lesson example?
 - Are claims about transfer stronger than the evidence allows?
 
-Expert review can assess the quality of this chain. Only learner performance on appropriate tasks can provide direct evidence of transfer.
+The AI Council can critically assess the quality of this chain and identify gaps. That assessment is not a credentialed human expert sign-off. Only learner performance on appropriate tasks can provide direct evidence of transfer.
