@@ -10,7 +10,7 @@ The approved architecture is **Hybrid**:
 - Learning Path develops capability in a deliberate progression.
 - Knowledge System provides just-in-time retrieval through Glossary, Cookbook, Reference and Examples.
 
-The first validation gate is **expert review**. Do not claim that expert approval proves learner transfer.
+The first validation gate is **AI Independent Evaluation Council review**. The Council is currently operated by ChatGPT in an AI evaluator role. This is functional role separation, not institutional independence or credentialed human expert certification. Do not claim that Council review proves learner transfer.
 
 ## Read progressively
 
@@ -42,7 +42,7 @@ First produce a concise **Learning Evidence Blueprint** for the current product:
 3. Identify overlap, missing coverage and content that is not connected to an observable outcome.
 4. Recommend a representative vertical slice that covers distinct learning archetypes. Do not select chapters merely because they come first in navigation.
 5. Draft one novel assessment task for each selected pilot module and a 4-level scoring rubric.
-6. Identify what an independent expert should review, and prepare a review packet with source references.
+6. Identify what the AI Council should review, and prepare a review packet with source references, explicit uncertainties and any questions requiring qualified external specialists.
 7. Propose a staged implementation plan that distinguishes approved decisions from hypotheses and open questions.
 
 Deliver the blueprint as a Markdown document under `docs/` using the next available number. Do not overwrite existing files.
@@ -85,7 +85,7 @@ The first assignment is complete when:
 - every selected pilot outcome is observable;
 - assessment tasks genuinely require application beyond copying a lesson example;
 - the rubric distinguishes guided execution from independent transfer;
-- the proposed expert review has clear scope and review criteria;
+- the proposed AI Council review has clear scope, review criteria and disclosed limitations;
 - open questions and assumptions are explicit;
 - no code or UI has been changed without owner approval.
 
