@@ -1,7 +1,8 @@
 # 21 · Learning Product Methodology — Transfer-first
 
-> **Status:** Product direction approved by the owner; framework and competency map are working hypotheses pending expert review and learner validation.  
-> **Decision baseline:** Hybrid architecture · Transfer North Star · Expert review as the first validation gate.  
+> **Status:** Product direction approved by the owner; framework and competency map are working hypotheses pending AI Council review and learner validation.  
+> **Decision baseline:** Hybrid architecture · Transfer North Star · AI Independent Evaluation Council review as the first validation gate.  
+> **Council operator:** ChatGPT, acting in an AI evaluator role. This is functional role separation, not institutional independence or credentialed human expert certification.  
 > **Audience baseline:** Knowledge workers and AI power users are primary hypotheses; developers are a deeper technical audience; leaders/managers are secondary. Validate this segmentation rather than treating it as established fact.
 
 ## 1. Purpose
@@ -31,7 +32,7 @@ Treat this as a value proposition to validate, not a proven outcome.
 |---|---|---|
 | Product architecture | **Hybrid**: Learning Path + Knowledge System | Hybrid is a functional architecture, not merely two equal navigation tabs |
 | North Star | **Transfer** | Measure independent performance on novel tasks |
-| First validation | **Expert review** | Expert review assesses design quality; it cannot prove learner transfer |
+| First validation | **AI Council review** | ChatGPT evaluates the design against evidence and explicit criteria; this is not a credentialed human expert sign-off and cannot prove learner transfer |
 | Positioning | Agentic Work field guide, Claude Code as platform/example | Keep principles portable beyond one vendor |
 | Learning outcome | Understand, explain, execute and create usable artifacts | Prioritize observable work products where appropriate |
 | Release strategy | Representative vertical slice | Select by learning archetype and competency coverage, not chapter order alone |
@@ -64,7 +65,7 @@ These methods answer different questions:
 
 ## 4. Capability model — initial hypothesis
 
-Use these six competencies as a starting point for expert review. They are not yet a validated occupational standard.
+Use these six competencies as a starting point for AI Council review. They are not yet a validated occupational standard.
 
 | Competency | Target capability | Observable evidence |
 |---|---|---|
@@ -198,7 +199,11 @@ Map these modules to actual repository chapters only after reviewing the current
 
 ## 9. Evaluation sequence
 
-### Gate 1 — Expert review (first)
+### Gate 1 — AI Independent Evaluation Council review (first)
+
+The first reviewer is ChatGPT acting as the project's AI Council, as designated by the owner. It must actively challenge prior recommendations it helped create, rather than treating its own earlier output as authority. It must inspect the source artifacts, state evidence provenance, separate observation from inference and disclose uncertainty.
+
+This gate is an evidence-informed critical review, not institutional independence, a panel of credentialed specialists or a certification. Refer questions requiring real assistive-technology use, physical-device testing, specialist credentials or independent human replication to a qualified external reviewer when those capabilities are unavailable.
 
 Use distinct review lenses. One person may cover more than one lens if their expertise supports it.
 
@@ -232,14 +237,14 @@ Finding severity:
 - **Minor:** clarity, consistency or usability improvement;
 - **Optional:** plausible idea without demonstrated value.
 
-Expert review outputs:
+AI Council review outputs:
 1. revised competency model and measurable outcomes;
 2. assessment blueprint and rubric critique;
 3. technical/source issues and volatile claims to verify;
 4. UX, accessibility and cognitive-load findings;
 5. decision log: accept, reject or defer, with rationale.
 
-Expert review is a design-quality gate. It is not proof that learners learn or transfer.
+AI Council review is a design-quality gate. It is not a credentialed human expert sign-off and is not proof that learners learn or transfer.
 
 ### Gate 2 — Usability testing
 
@@ -266,7 +271,7 @@ Where practical, include a delayed assessment to check whether capability persis
 
 The North Star is transfer. The other layers diagnose why transfer succeeds or fails; they are not substitutes for it.
 
-Do not invent a universal target score before baseline data exists. Establish baseline, define an initial success threshold with reviewers, then revise it after the first pilot.
+Do not invent a universal target score before baseline data exists. Establish baseline, define an initial success threshold with the AI Council and owner, then revise it after the first pilot.
 
 ## 11. Visual and interaction decision rules
 
@@ -302,7 +307,7 @@ The six shifts are design heuristics for how the team and its agents collaborate
 Every major recommendation or product decision must be labelled as one of:
 
 - **Evidence-backed:** supported by relevant research or project data; state the limits and context.
-- **Expert-informed:** supported by a qualified review; record the reviewer lens and rationale.
+- **Expert-informed:** supported by a qualified human specialist review; identify the reviewer and scope. AI Council analysis must be labelled as AI evaluation, not silently elevated to credentialed expert judgment.
 - **Product hypothesis:** plausible but not yet validated with target learners.
 - **Design decision:** an intentional choice based on brand, constraints or strategy; record the trade-off.
 
@@ -314,18 +319,18 @@ Do not present these categories as having equal evidential strength. Record reje
 2. **Define:** competency map, observable outcomes and assessment blueprint.
 3. **Design:** curriculum, knowledge model, content, examples and interactions.
 4. **Prototype:** a small but representative working slice.
-5. **Evaluate:** expert review, usability, learning and transfer evidence.
+5. **Evaluate:** AI Council review, usability, learning and transfer evidence; add qualified external review where the scope exceeds the Council's capabilities.
 6. **Iterate:** prioritize changes by severity, evidence, expected learning impact and implementation cost.
 
 This is iterative, not waterfall. Findings may send the team back to any earlier stage.
 
 ## 15. Immediate next actions
 
-1. Create and maintain the Independent Evaluation Council workspace and review protocol.
+1. Operate the Independent Evaluation Council in its current AI-evaluator mode; maintain its workspace, review protocol and disclosure of limitations.
 2. Map the six proposed competencies to the existing chapters and current learning outcomes.
 3. Select the smallest representative pilot slice without duplicating existing content.
 4. Draft one assessment task and rubric per pilot competency.
-5. Commission expert review before expanding content or animation.
+5. Run the AI Council review before expanding content or animation; commission external specialists only where a required validation capability is missing.
 6. Revise the design from review findings, then run a small learner usability and transfer pilot.
 
 Do not expand the Glossary, simulations or motion inventory simply to increase feature count. Expand them when the learning model and evidence justify the cost.
