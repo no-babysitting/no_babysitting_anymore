@@ -4,6 +4,11 @@
 
 ## Mục lục
 
+- [`21-learning-product-methodology.md`](21-learning-product-methodology.md): Transfer-first methodology, competency framework, ECD, validation and Six Shifts governance.
+- [`22-handoff-prompt-claude-learning-methodology.md`](22-handoff-prompt-claude-learning-methodology.md): Handoff prompt for Claude to build the Learning Evidence Blueprint.
+- [`independent-evaluation-council/README.md`](independent-evaluation-council/README.md): Independent Evaluation Council workspace charter.
+- [`independent-evaluation-council/review-protocol.md`](independent-evaluation-council/review-protocol.md): Review commissioning, evidence, severity, response and closure protocol.
+
 - [`01-PRD.md`](01-PRD.md): PRD · No Babysitting
 - [`02-pedagogical-script.md`](02-pedagogical-script.md): Pedagogical Script · No Babysitting
 - [`03-design-system.md`](03-design-system.md): Design System · No Babysitting
