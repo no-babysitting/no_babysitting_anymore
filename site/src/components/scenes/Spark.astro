@@ -2,16 +2,19 @@
 import { url } from '../../lib/url';
 /* Scene · Spark (right after the hero). Two hands from the owner's image of Michelangelo's "The Creation of Adam"
    (fresco, public domain; see THIRD_PARTY_NOTICES.md) drawn as ASCII by a small renderer of their own. Scrolling
-   closes the gap (pinned, scrubbed); at contact the glyphs burst outward with a light made only of glyphs on the
-   same grid (time-based, about 1.6 s) while the stage scrolls on. The picture emerges glyph by glyph as the hero
-   leaves, and every screen gets about 150 columns, so a phone sees it as finely as a desktop. Scrolling back above contact restores the hands.
+   closes the gap (pinned, scrubbed), but the two fingers never touch (owner, 11/11: in the fresco man does not reach
+   God in the flesh; the gap is the point). A spark gathers in the gap, then the hands come apart slowly into far fewer
+   glyphs than made them, carried outward by an orange wave of glyphs that thins into the dark as the stage scrolls away.
+   Every frame is a pure function of the scroll position, so it scrubs forward and back; motion.ts (nbAuto) plays it by
+   itself when the visitor stops scrolling. The picture emerges glyph by glyph as the hero leaves, and every screen gets
+   about 150 columns, so a phone sees it as finely as a desktop.
    Reduced motion / motion off: one still frame, fingertips almost touching, no pin. Idle cost: nothing is painted
-   unless the scroll position changes or the burst is running. */
+   unless the scroll position changes. */
 ---
 <section class="spark" id="spark" aria-label="Hai bàn tay">
   <div class="stage" id="spark-stage" data-fresco={url('art/fresco.jpg')} data-left={url('art/hand-left.png')} data-right={url('art/hand-right.png')}>
     <canvas class="cv" id="spark-cv" aria-hidden="true"></canvas>
-    <p class="nb-sr">Hình ASCII: toàn cảnh bức tranh theo bích hoạ “Sáng tạo ra Adam” của Michelangelo, rồi cận cảnh hai bàn tay vươn tới nhau. Khi hai ngón tay chạm nhau, hình vỡ tung thành ký tự rồi tắt.</p>
+    <p class="nb-sr">Hình ASCII: toàn cảnh bức tranh theo bích hoạ “Sáng tạo ra Adam” của Michelangelo, rồi cận cảnh hai bàn tay vươn tới nhau. Hai ngón tay tiến lại gần nhưng không chạm nhau; một tia sáng loé lên ở khe hở, rồi hình tan thành một làn sóng ký tự màu cam và chìm dần vào nền tối.</p>
   </div>
 </section>
 
@@ -34,8 +37,8 @@ import { url } from '../../lib/url';
     const g = canvas.getContext('2d')!, off = document.createElement('canvas'), og = off.getContext('2d', { willReadFrequently: true })!;
     const css = getComputedStyle(document.documentElement), tok = (n: string, f: string) => css.getPropertyValue(n).trim() || f;
     const BG = tok('--bg', '#14120f');
-    let W = 0, H = 0, cw = 8, ch = 14, cols = 0, rows = 0, lay = { w: 0, h: 0, x: 0, y: 0, s: 1 }, gap = 0.3, zoom = 0, mix = 0, appear = 1;
-    let glyphs: Cell[] = [], burst: any = null, raf = 0;
+    let W = 0, H = 0, cw = 8, ch = 14, cols = 0, rows = 0, lay = { w: 0, h: 0, x: 0, y: 0, s: 1 }, gap = 0.3, zoom = 0, mix = 0, appear = 1, glow = 0;
+    let glyphs: Cell[] = [], wv = -1, final: Cell[] | null = null;
     const tip = () => ({ x: W / 2, y: lay.y + lay.h * 0.4 });
     function size() {
       const r = canvas.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height;
@@ -46,7 +49,7 @@ import { url } from '../../lib/url';
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); g.setTransform(dpr, 0, 0, dpr, 0, 0);
       g.font = `500 ${(cw * 1.5).toFixed(2)}px "JetBrains Mono", ui-monospace, monospace`; g.textBaseline = 'top';
       const lw = small ? W * 2.2 : Math.min(W * 1.1, H * 1.7 * 199 / 109), lh = lw * 109 / 199;
-      lay = { w: lw, h: lh, x: (W - lw) / 2, y: H / 2 - lh * 0.4, s: lw / 199 };   // fingertips (40% down the image) on the middle line
+      lay = { w: lw, h: lh, x: (W - lw) / 2, y: H / 2 - lh * 0.4, s: lw / 199 }; final = null;   // fingertips (40% down the image) on the middle line
     }
     const smooth = (t: number) => t * t * (3 - 2 * t);
     function tone(r: number, gg: number, b: number, a: number, x: number, y: number): Cell {
@@ -71,7 +74,8 @@ import { url } from '../../lib/url';
     function handsData() {
       og.setTransform(1, 0, 0, 1, 0, 0); og.clearRect(0, 0, cols, rows);
       og.setTransform(1 / cw, 0, 0, 1 / ch, 0, 0); og.imageSmoothingQuality = 'high';
-      const travel = W * 0.42 * gap, touch = 2.6 * lay.s * (1 - gap);
+      /* at gap 0 the fingertips stop about two glyphs apart: they never meet */
+      const travel = W * 0.42 * gap, touch = 1.7 * lay.s * (1 - gap / 0.3);
       og.drawImage(L, lay.x - travel + touch, lay.y, 98 * lay.s, lay.h);
       og.drawImage(R, lay.x + 98 * lay.s + travel - touch, lay.y, 101 * lay.s, lay.h);
       return og.getImageData(0, 0, cols, rows).data;
@@ -153,42 +157,63 @@ import { url } from '../../lib/url';
     }
     function draw() {
       glyphs = cells();
-      if (gap < 0.25 && mix >= 1) { const t = tip(), k = 1 - gap / 0.25, M = Math.max(W, H); paint(light(glyphs, t.x, t.y, M * (0.06 + 0.16 * k), 0.35 + 0.65 * k, M * (0.012 + 0.022 * k))); }   // light gathers before the touch
+      /* a small light gathers in the gap as the fingers near each other; while they wait (glow 0..1) it swells and breathes */
+      if (gap < 0.2 && mix >= 1) { const t = tip(), k = 1 - gap / 0.2, M = Math.max(W, H), b = glow * (0.75 + 0.25 * Math.sin(glow * 9));
+        paint(light(glyphs, t.x, t.y, M * (0.03 + 0.05 * k + 0.12 * b), 0.3 + 0.4 * k + 0.3 * b, M * (0.006 + 0.01 * k + 0.014 * b))); }
       else paint(glyphs);
     }
-    function dark() { g.globalAlpha = 1; g.fillStyle = BG; g.fillRect(0, 0, W, H); }
-    function boom() {
-      if (burst) return;
-      const c = tip(), T = 1.6;
-      const parts = glyphs.filter(q => q.c !== '.').map(q => {
-        const px = q.x * cw, py = q.y * ch, dx = px - c.x, dy = py - c.y, d = Math.hypot(dx, dy) + 1, sp = (300 + 800 * Math.exp(-d / 260)) * (0.5 + hash(q.x, q.y));
-        return { q, px, py, vx: dx / d * sp, vy: dy / d * sp - 50 * hash(q.y, q.x) };
-      });
-      burst = { t0: performance.now(), done: false };
-      const step = (now: number) => {
-        const t = (now - burst.t0) / 1000, fade = Math.max(0, 1 - Math.pow(t / T, 1.3)), hot = Math.max(0, 1 - t * 2);
-        /* the hands' own glyphs fly outward, snapped to the grid, heating toward gold first */
-        const map = new Map<number, Cell>();
-        for (const p of parts) {
-          const x = Math.round((p.px + p.vx * t) / cw), y = Math.round((p.py + p.vy * t + 110 * t * t) / ch);
+    /* the coming apart, d = 0..1. Three layers on the one grid:
+       - the hands fade where they are, warming toward orange;
+       - about a quarter of their glyphs drift outward on eased, slightly curved paths (fewer glyphs than drew the hands);
+       - a wave of glyphs runs out from the gap: a bright front, a rippling field behind it, in a gradient from pale gold
+         at the centre through the accent orange to a deep ember at the edge. From d = 0.55 everything thins into the dark. */
+    const ORANGE = [[255, 208, 138], [236, 142, 82], [198, 90, 42], [118, 44, 20]];
+    function orange(t: number): [number, number, number] {
+      t = Math.max(0, Math.min(0.999, t)) * 3; const i = Math.floor(t), f = t - i, a = ORANGE[i], b = ORANGE[i + 1];
+      return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+    }
+    function wave(d: number) {
+      if (!final) { const g0 = gap, m0 = mix, z0 = zoom, a0 = appear; gap = 0; mix = 1; zoom = 1; appear = 1; final = cells().filter(q => q.c !== '.'); gap = g0; mix = m0; zoom = z0; appear = a0; }
+      const c = tip(), M = Math.hypot(W, H) / 2, map = new Map<number, Cell>();
+      const out = 1 - smooth(Math.max(0, Math.min(1, (d - 0.55) / 0.45))), e = 1 - Math.pow(1 - Math.min(1, d / 0.85), 3);
+      const stay = Math.max(0, 1 - d / 0.3), warm = Math.min(1, d * 3.5), front = M * 1.15 * (1 - Math.pow(1 - d, 2.2));
+      for (const q of final) {
+        const h = hash(q.x * 3 + 1, q.y * 7 + 5), px = q.x * cw - c.x, py = (q.y * ch - c.y) / 0.85, dist = Math.hypot(px, py) + 1;
+        if (h < 0.26) {
+          const h2 = hash(q.y + 31, q.x + 17), r = dist + (0.15 + 0.85 * h2) * M * 0.75 * e, an = Math.atan2(py, px) + (h2 - 0.5) * 0.9 * e;
+          const x = Math.round((c.x + Math.cos(an) * r) / cw), y = Math.round((c.y + Math.sin(an) * r * 0.85 - 26 * e * h) / ch);
           if (x < 0 || x >= cols || y < 0 || y >= rows) continue;
-          const q = p.q; map.set(y * cols + x, { x, y, c: q.c, r: q.r + (255 - q.r) * hot, g: q.g + (210 - q.g) * hot, b: q.b + (122 - q.b) * hot, a: q.a * fade });
+          const o = orange(r / (M * 1.6) + (h2 - 0.5) * 0.2);
+          map.set(y * cols + x, { x, y, c: q.c, r: q.r + (o[0] - q.r) * warm, g: q.g + (o[1] - q.g) * warm, b: q.b + (o[2] - q.b) * warm, a: Math.min(1, q.a + 0.2) * out });
+        } else if (stay > 0 && h < 0.26 + 0.74 * stay) {
+          const o = orange(0.35);
+          map.set(q.y * cols + q.x, { x: q.x, y: q.y, c: q.c, r: q.r + (o[0] - q.r) * warm, g: q.g + (o[1] - q.g) * warm, b: q.b + (o[2] - q.b) * warm, a: q.a * stay });
         }
-        /* and the light: a flash at the core, rays reaching out to the edges, a ring of glyphs running outward, then all fades */
-        const M = Math.max(W, H), grow = 1 - Math.pow(1 - Math.min(1, t / 0.7), 3), flash = Math.exp(-t / 0.14);
-        const k = t < 0.3 ? 1 : Math.max(0, 1 - (t - 0.3) / 1.1);
-        paint(light(Array.from(map.values()), c.x, c.y, M * (0.3 + 0.75 * grow), k, M * (0.03 + 0.07 * flash), M * 0.95 * grow));
-        if (t < T) raf = requestAnimationFrame(step); else { raf = 0; burst.done = true; dark(); }
-      };
-      raf = requestAnimationFrame(step);
+      }
+      const band = M * 0.1;
+      for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+        const dx = x * cw + cw / 2 - c.x, dy = (y * ch + ch / 2 - c.y) / 0.85, dd = Math.hypot(dx, dy);
+        if (dd > front + band * 2) continue;
+        const n = hash(x * 13 + 7, y * 17 + 3);
+        const edge = Math.exp(-Math.pow((dd - front) / band, 2));
+        const ripple = 0.5 + 0.5 * Math.sin(dd / (ch * 2.4) - d * 16 + n * 1.6);
+        const behind = dd < front ? 0.5 * Math.pow(dd / Math.max(1, front), 1.4) * ripple : 0;
+        const I = Math.min(1, (1.1 * edge + behind) * (0.65 + 0.35 * n)) * out;
+        if (I < 0.1 || (I < 0.3 && n > 0.55)) continue;
+        const k = y * cols + x, prev = map.get(k); if (prev && prev.a > I) continue;
+        const o = orange(dd / (M * 1.5) + (n - 0.5) * 0.14), idx = Math.max(1, Math.min(CH.length - 1, Math.round(I * (CH.length - 2) + n * 2)));
+        map.set(k, { x, y, c: CH[idx], r: o[0], g: o[1], b: o[2], a: Math.min(1, 0.3 + 0.9 * I) });
+      }
+      /* the spark itself: a short flash in the gap at the start of the wave */
+      const fl = Math.exp(-d / 0.07), list = Array.from(map.values());
+      paint(fl > 0.03 ? light(list, c.x, c.y, M * (0.14 + 0.5 * d), fl, M * (0.02 + 0.05 * fl)) : list);
     }
     size(); draw();
     return {
-      set(v: { zoom: number; mix: number; gap: number }) { zoom = v.zoom; mix = v.mix; gap = Math.max(0, Math.min(1, v.gap)); if (!burst) draw(); },
-      reveal(v: number) { appear = Math.max(0, Math.min(1, v)); if (!burst) draw(); },
-      boom, get exploded() { return !!burst; },
-      reset() { if (raf) cancelAnimationFrame(raf); raf = 0; burst = null; draw(); },
-      resize() { size(); if (!burst) draw(); else if (burst.done) dark(); },
+      set(v: { zoom: number; mix: number; gap: number; glow?: number }) { wv = -1; zoom = v.zoom; mix = v.mix; gap = Math.max(0, Math.min(1, v.gap)); glow = v.glow || 0; draw(); },
+      reveal(v: number) { appear = Math.max(0, Math.min(1, v)); if (wv < 0) draw(); },
+      wave(d: number) { wv = Math.max(0, Math.min(1, d)); wave(wv); },
+      resize() { size(); if (wv < 0) draw(); else wave(wv); },
     };
   }
 
@@ -197,14 +222,15 @@ import { url } from '../../lib/url';
     const stage = document.getElementById('spark-stage')!, cv = document.getElementById('spark-cv') as HTMLCanvasElement;
     const S = await spark(cv, stage.dataset.fresco!, stage.dataset.left!, stage.dataset.right!);
     addEventListener('resize', () => S.resize());
-    if ((NB && NB.reduce()) || !gsap || !ST) { S.set({ zoom: 1, mix: 1, gap: 0.04 }); return; }
-    /* 0–0.45 zoom into the fresco · 0.38–0.55 glyphs dissolve into the close-up · 0.55–0.94 the hands close · 0.94 contact, the burst plays as the stage scrolls on */
-    const CONTACT = 0.94, clamp = (v: number) => Math.max(0, Math.min(1, v));
+    if ((NB && NB.reduce()) || !gsap || !ST) { S.set({ zoom: 1, mix: 1, gap: 0.02 }); return; }
+    /* inside the pin: 0–0.34 zoom into the fresco · 0.28–0.42 glyphs dissolve into the close-up · 0.42–0.66 the hands
+       near each other and stop short · 0.66–0.76 the spark gathers in the gap · 0.76–1 the first 70% of the wave.
+       The last 30% of the wave (thinning into the dark) plays while the stage scrolls away under the next section. */
+    const NEAR = 0.66, WAVE = 0.76, IN = 0.7, clamp = (v: number) => Math.max(0, Math.min(1, v));
     const hud = document.querySelector<HTMLElement>('.hud');
-    /* the header fades out from 0.74 (hands about to meet) to 0.90, stays hidden through the burst, comes back at 0.99 */
-    const cinema = (p: number) => {
+    /* the header steps back while the hands wait and the wave runs, and returns as the stage leaves; it always returns on keyboard focus */
+    const cinema = (k: number) => {
       if (!hud) return;
-      const k = p >= 0.99 ? 0 : clamp((p - 0.74) / 0.16);
       hud.classList.toggle('nb-cinema-fade', k > 0);
       hud.style.opacity = k > 0 ? String(1 - k) : '';
       hud.style.transform = k > 0 ? `translateY(${-100 * k}%)` : '';
@@ -213,16 +239,28 @@ import { url } from '../../lib/url';
     /* entering: the picture emerges glyph by glyph while the hero scrolls away, so there is no empty dark band */
     S.reveal(0);
     ST.create({ trigger: '#spark', start: 'top bottom', end: 'top top+=48', scrub: 0.3, onUpdate: (s: any) => S.reveal(0.05 + 0.95 * s.progress), onLeave: () => S.reveal(1), onLeaveBack: () => S.reveal(0) });
-    ST.create({
-      trigger: '#spark', start: 'top top+=48', end: '+=220%', pin: true, scrub: 0.5,
-      onLeave: () => cinema(1), onLeaveBack: () => cinema(0),
+    const pin = ST.create({
+      trigger: '#spark', start: 'top top+=48', end: '+=130%', pin: true, scrub: 0.5,
+      onLeaveBack: () => cinema(0),
       onUpdate: (s: any) => {
-        const p = s.progress; cinema(p);
-        if (p >= CONTACT) { if (!S.exploded) { S.set({ zoom: 1, mix: 1, gap: 0 }); S.boom(); } return; }
-        if (S.exploded) S.reset();
-        S.set({ zoom: clamp(p / 0.45), mix: clamp((p - 0.38) / 0.17), gap: 0.3 * (1 - clamp((p - 0.55) / (CONTACT - 0.55))) });
+        const p = s.progress; cinema(clamp((p - 0.6) / 0.1));
+        if (p >= WAVE) { S.wave(IN * (p - WAVE) / (1 - WAVE)); return; }
+        S.set({ zoom: clamp(p / 0.34), mix: clamp((p - 0.28) / 0.14), gap: 0.3 * (1 - clamp((p - 0.42) / (NEAR - 0.42))), glow: clamp((p - NEAR) / (WAVE - NEAR)) });
       },
     });
+    const tail = () => innerHeight * 0.5;
+    ST.create({ trigger: '#spark', start: () => pin.end, end: () => pin.end + tail(), scrub: 0.3,
+      onUpdate: (s: any) => { S.wave(IN + (1 - IN) * s.progress); cinema(1 - clamp((s.progress - 0.5) / 0.4)); }, onLeave: () => cinema(0) });
+    /* played by itself: up to the pin, through it at the pace of the picture, on to the statement below and through its hold */
+    const hold = () => (document.querySelector('#pyramid [data-hold]') as any)?.nbHold;
+    w.nbAuto({ from: () => (w.nbIntroEnd ? w.nbIntroEnd() : 0) + 12, legs: [
+      { to: () => pin.start, dur: 1.2 },
+      { to: () => pin.start + (pin.end - pin.start) * NEAR, dur: 5.2 },
+      { to: () => pin.start + (pin.end - pin.start) * WAVE, dur: 1.5 },
+      { to: () => pin.end, dur: 2.6 },
+      { to: () => (hold() ? hold().start : pin.end + tail()), dur: 2 },
+      { to: () => (hold() ? hold().end : pin.end + tail()), dur: 3.4 },
+    ] });
     ST.sort(); ST.refresh();
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });

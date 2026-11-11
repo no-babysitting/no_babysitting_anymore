@@ -5,9 +5,9 @@
    The panel in the centre is the current one: full contrast and an accent rule; the others step back.
    Inside each panel the giant number drifts slower than the track (containerAnimation parallax);
    the level meter (Low → Pro) lights up as the track passes each part; the counter follows. */
-import { PARTS } from '../../content/parts';
+import { PARTS, PHASE_LABEL, hl } from '../../content/parts';
 import { url } from '../../lib/url';
-const LV = ['MỞ ĐẦU', 'TRƯỚC', 'TRONG', 'SAU'];
+const LV = ['MỞ ĐẦU', 'TRƯỚC KHI CHẠY', 'TRONG LÚC CHẠY', 'SAU KHI XONG'];
 const PH = ['Mở đầu', 'Trước', 'Trong', 'Sau'];
 /* one line per panel (docs/14 §5, bảng Lộ trình) */
 const one = (p: (typeof PARTS)[number]) => (p.id === '01' ? 'Việc giao thường hỏng ở những chỗ chính bạn chưa nghĩ tới.' : p.summary);
@@ -28,11 +28,11 @@ const one = (p: (typeof PARTS)[number]) => (p.id === '01' ? 'Việc giao thườ
             <a href={url(c.id + '/')}>
               <canvas class="pcv" aria-hidden="true"></canvas>
               <span class="no nb-cond" aria-hidden="true">{c.id}</span>
-              <span class="meta nb-micro">{c.phase} · {c.minutes} phút</span>
+              <span class="meta nb-micro">{PHASE_LABEL[c.phase]} · {c.minutes} phút</span>
               <span class="en nb-wide" lang="en">{c.en}</span>
               <span class="vi">{c.vi}</span>
-              <span class="q nb-q">{one(c)}</span>
-              <span class="go nb-micro">Vào phần →</span>
+              <span class="q nb-q" set:html={hl(one(c), c.id)} />
+              <span class="go nb-micro">{c.id === '00' ? 'Vào ngó chút bạn mình nhỉ? →' : 'Tìm hiểu ngay →'}</span>
             </a>
           </li>
         ))}
@@ -55,7 +55,7 @@ const one = (p: (typeof PARTS)[number]) => (p.id === '01' ? 'Việc giao thườ
   .viewport { position: relative; min-width: 0; overflow-x: clip; }
   .track { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
   .panel a { position: relative; display: grid; align-content: center; gap: 10px; padding: 26px 26px 30px; min-height: 100%; box-sizing: border-box; color: var(--fg); text-decoration: none; border-right: 1px solid var(--control); border-top: 1px solid var(--control); }
-  .panel a:hover .go { color: var(--fg); }
+  .panel a:hover .go { color: var(--accent); }
   .no { font-size: clamp(120px, 20vh, 240px); line-height: .8; color: var(--fg); }
   .pcv { display: none; }
   :global(html.motion) .pcv { display: block; width: 100%; height: clamp(120px, 21svh, 210px); margin: 0 0 4px; transition: opacity .45s; }
@@ -90,13 +90,31 @@ const one = (p: (typeof PARTS)[number]) => (p.id === '01' ? 'Việc giao thườ
     const panels = gsap.utils.toArray<HTMLElement>('#journey .panel'), lvs = gsap.utils.toArray<HTMLElement>('#journey .lv');
     const small = innerWidth < 720;
     const dist = () => track.scrollWidth - innerWidth + (small ? 16 : 32);
+    /* which panel is the current one follows the progress of the track, not where a panel sits on the screen: on a wide
+       screen the last panel never reaches the middle, and it was left dim with its number still in noise. Every stop of
+       the track (0, 1/4 … 1) now has its own panel lit, with its number fully formed; the neighbours stay half formed. */
+    const arts: any[] = [], lvName = document.getElementById('journey-lv')!;
+    let cur = -1;
+    const update = (prog: number) => {
+      const f = prog * (panels.length - 1), i = Math.round(f);
+      arts.forEach((A, k) => { const d = Math.min(1, Math.abs(f - k)), o = 1 - 0.45 * d, nf = 0.06 + 0.2 * d;
+        if (Math.abs(A.state.order - o) > 0.004) { A.state.order = o; A.state.noiseFill = nf; A.redraw(); } });
+      if (i === cur) return; cur = i;
+      panels.forEach((x, k) => { x.classList.toggle('is-active', k === i); w.nbLight(x, k === i); });
+      n.textContent = String(i + 1).padStart(2, '0'); const lv = +panels[i].dataset.lv!;
+      lvs.forEach((l, k) => l.classList.toggle('on', k <= lv)); lvName.textContent = lvs[lv].textContent;
+    };
     const move = gsap.to(track, {
-      x: () => -dist(), ease: 'none',
+      x: () => -dist(), ease: 'none', onUpdate() { update((this as any).progress()); },
       scrollTrigger: { trigger: '#journey', start: 'top top+=48', end: () => '+=' + dist(), pin: '#journey-pin', scrub: 0.8, invalidateOnRefresh: true,
         snap: { snapTo: 1 / (panels.length - 1), duration: { min: 0.2, max: 0.6 }, delay: 0.08, ease: 'power2.inOut' } },
     });
     const NB = w.NoBabysitting;
-    panels.forEach((p, pi) => {
+    /* the track moves itself one part at a time and rests on each (nbAuto); any input hands it back */
+    const jst = move.scrollTrigger!, at = (k: number) => () => jst.start + (jst.end - jst.start) * k / (panels.length - 1);
+    const io = (t: number) => t * t * (3 - 2 * t);
+    w.nbAuto({ from: () => jst.start - innerHeight * 0.5, legs: [{ to: at(0), dur: 0.9, wait: 3.2, ease: io }, ...panels.slice(1).map((_, k) => ({ to: at(k + 1), dur: 1.1, wait: 3.2, ease: io }))] });
+    panels.forEach((p) => {
       /* the big number is made of many small characters (4x7 px cells on a phone) and starts at the panel's left edge */
       const A = NB.ascii(p.querySelector('canvas'), {
         cell: small ? [4, 7] : [5, 9], font: small ? '600 6.6px "JetBrains Mono", monospace' : '600 8.2px "JetBrains Mono", monospace',
@@ -104,19 +122,11 @@ const one = (p: (typeof PARTS)[number]) => (p.id === '01' ? 'Việc giao thườ
         tone: 'accent', frontColor: 'fg', fontLoad: '900 100px Archivo',
         source: NB.sources.text([p.dataset.no!], { family: '"Archivo", "Arial Black", sans-serif', weight: 900, stretch: 'ultra-condensed', fill: 0.7, vfill: 0.94, cy: 0.52, align: 'left', padX: 0 }),
       });
-      const S = A.state;
-      gsap.timeline({ scrollTrigger: { trigger: p, containerAnimation: move, start: 'left 95%', end: 'right 5%', scrub: true } })
-        .fromTo(S, { order: 0, noiseFill: 0.45 }, { order: 1, noiseFill: 0.06, duration: 0.45, ease: 'none', onUpdate: A.redraw })
-        .to(S, { duration: 0.15 })
-        .to(S, { order: 0.6, noiseFill: 0.18, duration: 0.4, ease: 'none', onUpdate: A.redraw });
+      arts.push(A);
       gsap.from(p.querySelectorAll('.meta, .en, .vi, .q, .go'), { y: 24, stagger: 0.06, duration: 0.6,
         scrollTrigger: { trigger: p, containerAnimation: move, start: 'left 75%', toggleActions: 'play none none reverse' } });
-      w.ScrollTrigger.create({ trigger: p, containerAnimation: move, start: 'left center', end: 'right center',
-        onToggle: (s: any) => { if (!s.isActive) return;
-          panels.forEach((x) => x.classList.toggle('is-active', x === p));
-          n.textContent = String(pi + 1).padStart(2, '0'); const lv = +p.dataset.lv!;
-          lvs.forEach((l, i) => l.classList.toggle('on', i <= lv)); document.getElementById('journey-lv')!.textContent = ['MỞ ĐẦU', 'TRƯỚC', 'TRONG', 'SAU'][lv]; } });
     });
+    update(0);
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
 </script>

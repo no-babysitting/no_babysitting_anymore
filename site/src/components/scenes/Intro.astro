@@ -2,13 +2,14 @@
 import { url } from '../../lib/url';
 /* Scene 1 · Mở màn. A white line of code is typed over a field of ASCII noise; scrolling compiles it:
    the noise converges left to right into the Blocks logo (M11, head of the trail in fg, settled glyphs accent),
-   then the crisp mark settles over it and the promise rises (M5). Pinned for 220% of the viewport. */
+   then the crisp mark settles over it and the promise rises (M5). Pinned for about one screen of scroll; after the line is
+   typed the page plays the compile by itself (motion.ts nbAuto), and scrolling scrubs it as before. */
 ---
 <section class="intro" id="intro" aria-labelledby="intro-h">
   <div class="stage" id="intro-stage">
     <canvas class="nb-canvas cv" id="intro-cv" aria-hidden="true"></canvas>
     <span class="nb-corner bl nb-micro"><span class="long">Dự án cộng đồng độc lập · không phải trang chính thức của Anthropic</span><span class="short">Dự án độc lập · không chính thức</span></span>
-    <span class="nb-corner br nb-micro" id="intro-cue"><span class="long">cuộn để biên dịch ↓</span><span class="short">cuộn ↓</span></span>
+    <span class="nb-corner br nb-micro" id="intro-cue"><span class="long">trang tự chạy · cuộn để xem tiếp ↓</span><span class="short">cuộn ↓</span></span>
     <div class="code" id="intro-code" aria-hidden="true"><span class="t" id="intro-t"></span><span class="caret">▍</span></div>
     <div class="mark" id="intro-mark" data-logo-lg></div>
     <div class="tag">
@@ -17,7 +18,7 @@ import { url } from '../../lib/url';
         <p class="nb-q l1">Claude đã khôn hơn rồi, sao bạn vẫn còn phải trông trẻ?</p>
       </div>
       <div class="g2" id="intro-l2">
-        <p class="l2">Hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó.</p>
+        <p class="l2" id="intro-say">Hãy cùng Claude <em class="nb-hl">làm rõ</em> công việc, rồi <em class="nb-hl">giao trọn</em> phần thực thi cho em nó.</p>
         <p class="nb-micro info">Đọc trong khoảng 25 phút · Gồm 5 phần ngắn · Không cần biết lập trình · Miễn phí, có ví dụ riêng cho từng nghề</p>
         <p class="cta"><a class="nb-btn is-solid" href={url('00/')}>Bắt đầu →</a><a class="nb-btn" href="#pyramid">Xem lộ trình ↓</a></p>
       </div>
@@ -100,13 +101,14 @@ import { url } from '../../lib/url';
       .to(o, { n: TEXT.length, duration: TEXT.length * 0.06, ease: `steps(${TEXT.length})`, onUpdate: () => { t.textContent = TEXT.slice(0, o.n); } })
       .to('#intro-code .caret', { autoAlpha: 0, duration: 0.35, repeat: 5, yoyo: true, ease: 'steps(1)' }, '>')
       .to('#intro-l1', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, TEXT.length * 0.06 - 0.1)
-      .to('#intro-l2', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, TEXT.length * 0.06 + 0.25);
+      .to('#intro-l2', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, TEXT.length * 0.06 + 0.25)
+      .add(() => w.nbLight($('intro-say')), '>0.5');
 
     /* scroll: compile */
     const S = A.state;
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
-      scrollTrigger: { trigger: '#intro', start: 'top top+=' + 48, end: small ? '+=140%' : '+=180%', pin: true, scrub: 0.6, anticipatePin: 1 },
+      scrollTrigger: { trigger: '#intro', start: 'top top+=' + 48, end: small ? '+=90%' : '+=110%', pin: true, scrub: 0.6, anticipatePin: 1 },
     });
     tl.to(S, { order: 1, duration: 0.62, onUpdate: () => {
         A.redraw();
@@ -115,11 +117,14 @@ import { url } from '../../lib/url';
         caret.style.display = S.order > 0.02 ? 'none' : '';
       } }, 0)
       .to(S, { noiseFill: 0.08, duration: 0.4, onUpdate: A.redraw }, 0.3)
-      .to('#intro-cue', { autoAlpha: 0, duration: 0.05 }, 0)
       .to(mark, { autoAlpha: 1, duration: 0.1 }, 0.66)
       .to(cv, { opacity: 0.32, duration: 0.14 }, 0.66)
       .to({}, { duration: 0.1 });
     ST.addEventListener('refresh', place);
+    /* the hero plays itself once the line has been typed; after that, a visitor who pauses inside it gets the rest played */
+    const st = tl.scrollTrigger, auto = w.nbAuto({ from: () => st.start, legs: [{ to: () => st.end, dur: 4.2 }] });
+    w.nbIntroEnd = () => st.end;
+    gsap.delayedCall(0.3 + TEXT.length * 0.06 + 1.6, auto.play);
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });
 </script>

@@ -7,13 +7,13 @@ const { title, intro, outro, rows, chips } = Astro.props as { title: string; int
 <section class="lens" data-lens-group aria-label={title}>
   <header class="lh">
     <h2 class="lt">{title}</h2>
-    {!chips && <button class="nb-micro lc" type="button" data-lens-open>Kính: <b data-lens-name>Chung</b> · đổi</button>}
+    {!chips && <button class="nb-micro lc" type="button" data-lens-open>Lens: <b data-lens-name>Chung</b> · đổi</button>}
   </header>
   {intro && <p class="body">{intro}</p>}
   {chips && (
     <div class="pick">
       <p class="nb-micro">Bạn làm việc gì?</p>
-      <div class="chips" role="group" aria-label="Chọn kính theo nhóm việc">
+      <div class="chips" role="group" aria-label="Chọn Lens theo nhóm việc">
         {LENSES.map((l) => <button type="button" class="chip" data-lens-set={l.id} aria-pressed={l.id === 'chung' ? 'true' : 'false'}>{l.label}</button>)}
       </div>
     </div>
@@ -32,12 +32,13 @@ const { title, intro, outro, rows, chips } = Astro.props as { title: string; int
   .lh { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
   .lt { margin: 0; font: 600 19px/1.35 var(--font-text); }
   .lc { appearance: none; background: transparent; border: 1px solid var(--control); color: var(--fg-muted); padding: 0 12px; min-height: 44px; cursor: pointer; }
-  .lc:hover { color: var(--fg); border-color: var(--fg); }
+  .lc:hover { color: var(--accent); border-color: var(--accent); }
   .lc:focus-visible, .chip:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
   .pick { display: grid; gap: 8px; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .chip { appearance: none; background: transparent; color: var(--fg); border: 1px solid var(--control); padding: 0 12px; min-height: 44px; font: 500 14px/1.2 var(--font-text); cursor: pointer; }
-  .chip:hover { border-color: var(--fg); }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip[aria-pressed='true']:hover { color: var(--bg); border-color: var(--fg); }
   .chip[aria-pressed='true'] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
   .var { display: grid; gap: 10px; }
   .var[hidden] { display: none; }

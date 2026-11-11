@@ -396,9 +396,26 @@ export const SHIFTS: { vi: string; en: string; part: string }[] = [
 ];
 
 export const PHASES: { label: string; line: string; parts: string[] }[] = [
-  { label: 'Trước', line: 'Cùng Claude làm rõ công việc, rồi mới giao cho thật gọn.', parts: ['01', '02'] },
-  { label: 'Trong', line: 'Cứ để em nó tự tìm, tự nhớ. Bạn chỉ cầm lái khi em nó đi lệch.', parts: ['03'] },
-  { label: 'Sau', line: 'Cho em nó một phép kiểm, hỏi vặn lại kết quả, rồi mới yên tâm buông tay.', parts: ['04'] },
+  { label: 'Trước khi chạy', line: 'Cùng Claude làm rõ công việc, rồi mới giao cho thật gọn.', parts: ['01', '02'] },
+  { label: 'Trong lúc chạy', line: 'Cứ để em nó tự tìm, tự nhớ. Bạn chỉ cầm lái khi em nó đi lệch.', parts: ['03'] },
+  { label: 'Sau khi xong', line: 'Cho em nó một phép kiểm, hỏi vặn lại kết quả, rồi mới yên tâm buông tay.', parts: ['04'] },
 ];
+
+/* Tên chặng khi đứng một mình trên màn hình: "Trước", "Trong", "Sau" trơ trọi thì tối nghĩa (docs/16 §9). */
+export const PHASE_LABEL: Record<Part['phase'], string> = { 'Mở đầu': 'Mở đầu', 'Trước': 'Trước khi chạy', 'Trong': 'Trong lúc chạy', 'Sau': 'Sau khi xong' };
+
+/* Cụm từ cần người đọc để mắt tới trong các câu tóm tắt: sáng lên màu nhấn sau khi câu đã hiện xong (class nb-hl, motion.ts). */
+const HL: Record<string, string[]> = {
+  '00': ['ít lời dặn hơn', 'chỉ có bạn mới biết'],
+  '01': ['chính bạn cũng chưa nghĩ tới', 'chính bạn chưa nghĩ tới', 'trước khi em nó bắt tay vào làm'],
+  '02': ['kết quả bạn cần', 'thế nào thì tính là xong'],
+  '03': ['tự biết mở đúng tài liệu', 'tự ghi nhớ', 'cầm lái'],
+  '04': ['một phép kiểm', 'bằng chứng', 'hỏi vặn lại'],
+  phases: ['làm rõ công việc', 'giao cho thật gọn', 'tự tìm, tự nhớ', 'cầm lái', 'một phép kiểm', 'hỏi vặn lại', 'buông tay'],
+  one: ['Thôi cầm tay chỉ việc', 'làm rõ', 'giao trọn', 'đã chạy xong'],
+};
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+export const hl = (text: string, key: string) =>
+  (HL[key] || []).reduce((s, p) => s.replace(p, `<em class="nb-hl">${p}</em>`), esc(text));
 
 export const partOf = (id: string) => PARTS.find((p) => p.id === id)!;

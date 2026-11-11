@@ -74,7 +74,7 @@ const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.pus
       P.drawImage = function () { window.__d++; return di.apply(this, arguments); };
       P.fillText = function () { window.__d++; return ft.apply(this, arguments); };
     });
-    const p = await ctx.newPage(); await p.goto(origin + BASE, { waitUntil: 'networkidle' }); await p.waitForTimeout(2500);
+    const p = await ctx.newPage(); await p.goto(origin + BASE, { waitUntil: 'networkidle' }); await p.waitForTimeout(9000);   /* the hero plays itself once after load (nbAuto); idle is measured after that */
     const cdp = await ctx.newCDPSession(p); await cdp.send('Performance.enable');
     const busy = async () => (await cdp.send('Performance.getMetrics')).metrics.find((m) => m.name === 'TaskDuration').value;
     for (const spot of ['top', 'manifesto', 'finale']) {
