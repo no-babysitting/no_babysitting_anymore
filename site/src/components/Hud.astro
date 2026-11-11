@@ -2,7 +2,7 @@
 /* JourneyHUD (M0 subset): the logo, where you are, the Library link, and two pixel buttons:
    play/pause for the page's motion (FR-09, WCAG 2.2.2) and the menu. The menu opens as a full-screen layer under the header;
    the picture behind its list (a crossed-out stroller) is ASCII art that converges when it opens and dissolves when it closes. */
-import { PARTS, LENSES } from '../content/parts';
+import { PARTS, LENSES, PHASE_LABEL } from '../content/parts';
 import { url } from '../lib/url';
 import { iconSVG, ICONS } from '../lib/icons';
 import { SITE } from '../config';
@@ -10,7 +10,7 @@ import { SITE } from '../config';
 const { current } = Astro.props as { current?: string };
 const i = PARTS.findIndex((p) => p.id === current);
 const c = i >= 0 ? PARTS[i] : null;
-const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${c.phase} · ${c.id}`) : current === 'thuc-hanh' ? 'Thực hành' : current === 'c02' ? 'Nâng cao · A1' : '';
+const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.phase]} · ${c.id}`) : current === 'thuc-hanh' ? 'Thực hành' : current === 'c02' ? 'Nâng cao · A1' : '';
 ---
 <header class="hud">
   <div class="wrap row">
@@ -19,7 +19,7 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${c.phase} · ${
     <nav class="links" aria-label="Trang">
       <a class="nb-micro lib" href={url('library/')}>Library</a>
       {c && <span class="nb-micro pos"><b>{c.id}</b> · {i + 1}/{PARTS.length}</span>}
-      <button class="nb-micro lensb" type="button" data-lens-open aria-haspopup="dialog" aria-expanded="false" aria-controls="nb-lens"><span class="lk">Kính<span class="lv">: <b data-lens-name>Chung</b></span></span></button>
+      <button class="nb-micro lensb" type="button" data-lens-open aria-haspopup="dialog" aria-expanded="false" aria-controls="nb-lens"><span class="lk">Lens<span class="lv">: <b data-lens-name>Chung</b></span></span></button>
       <button class="ib" type="button" data-motion aria-pressed="true" title="Tắt chuyển động của trang">
         <span class="sq"><span class="on" set:html={iconSVG('pause')} /><span class="off" set:html={iconSVG('play')} /></span>
         <span class="nb-sr">Chuyển động</span>
@@ -62,9 +62,9 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${c.phase} · ${
   </div>
 </div>
 
-<div class="lp" id="nb-lens" role="dialog" aria-label="Chọn kính theo nhóm việc" hidden>
-  <p class="nb-micro">Bạn làm việc gì? Ví dụ và prompt đổi theo kính bạn chọn.</p>
-  <div class="lpc" role="group" aria-label="Kính">
+<div class="lp" id="nb-lens" role="dialog" aria-label="Chọn Lens theo nhóm việc" hidden>
+  <p class="nb-micro">Bạn làm việc gì? Ví dụ và prompt đổi theo Lens bạn chọn.</p>
+  <div class="lpc" role="group" aria-label="Lens">
     {LENSES.map((l) => <button type="button" data-lens-set={l.id} aria-pressed={l.id === 'chung' ? 'true' : 'false'}>{l.label}</button>)}
   </div>
   <button type="button" class="nb-btn" data-lens-close>Đóng</button>
@@ -73,14 +73,14 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${c.phase} · ${
 
 <style>
   .lensb { appearance: none; background: transparent; border: 1px solid var(--control); color: var(--fg-muted); height: 40px; padding: 0 10px; cursor: pointer; white-space: nowrap; }
-  .lensb:hover { color: var(--fg); border-color: var(--fg); }
+  .lensb:hover { color: var(--accent); border-color: var(--accent); }
   .lensb:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
   .lp { position: fixed; z-index: 28; top: calc(var(--hud-height) + 8px); right: max(16px, calc((100vw - var(--page-max)) / 2 + 16px)); width: min(420px, calc(100vw - 32px)); background: var(--bg-raised); border: 1px solid var(--control); padding: 16px; display: grid; gap: 12px; justify-items: start; box-shadow: var(--shadow-overlay); }
   .lp[hidden] { display: none; }
   .lp p { margin: 0; line-height: 1.5; }
   .lpc { display: flex; flex-wrap: wrap; gap: 6px; }
   .lpc button { appearance: none; background: transparent; color: var(--fg); border: 1px solid var(--control); padding: 0 12px; min-height: 44px; font: 500 14px/1.2 var(--font-text); cursor: pointer; }
-  .lpc button:hover { border-color: var(--fg); }
+  .lpc button:hover { border-color: var(--accent); color: var(--accent); }
   .lpc button[aria-pressed='true'] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
   .lpc button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
   .lp .nb-btn { min-height: 44px; }
@@ -97,7 +97,7 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${c.phase} · ${
   .sq { width: 40px; height: 40px; box-sizing: border-box; border: 1px solid var(--control); display: grid; place-items: center; position: relative; transition: background .12s steps(2), color .12s steps(2); }
   .sq > span { grid-area: 1 / 1; display: grid; }
   .sq :global(svg) { width: 32px; height: 32px; display: block; }
-  .ib:hover .sq { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .ib:hover .sq { color: var(--accent); border-color: var(--accent); }
   .ib:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
   .ib:disabled { cursor: default; opacity: .7; }
   .ib:disabled:hover .sq { background: transparent; color: var(--fg); border-color: var(--control); }

@@ -28,6 +28,11 @@
 .nb-sq.is-signal::before { background: var(--signal); } .nb-sq.is-warn::before { background: var(--warn); } .nb-sq.is-danger::before { background: var(--danger); }
 .nb-wide { font-family: var(--font-wide); font-stretch: 125%; font-weight: 800; text-transform: uppercase; letter-spacing: -.012em; line-height: .92; }
 .nb-cond { font-family: var(--font-wide); font-stretch: 62%; font-weight: 800; line-height: .8; letter-spacing: -.02em; }
+/* key phrase inside a statement: turns accent with a rule drawn under it once the sentence has been shown
+   (motion.ts adds .is-lit); without motion it is simply lit */
+.nb-hl { font-style: normal; color: inherit; background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 100% / 0 2px; padding-bottom: .05em; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: color .5s, background-size .7s cubic-bezier(.22,1,.36,1); }
+.nb-hl.is-lit, html:not(.motion) .nb-hl { color: var(--accent); background-size: 100% 2px; }
+@media (prefers-reduced-motion: reduce) { .nb-hl { transition: none; } }
 .nb-q { font-family: var(--font-display); font-weight: 400; line-height: 1.14; letter-spacing: -.01em; font-variation-settings: 'opsz' 72; }
 .nb-mono { font-family: var(--font-mono); }
 .nb-ghost { position: absolute; font-family: var(--font-wide); font-stretch: 62%; font-weight: 900; text-transform: uppercase; color: var(--fg); opacity: .055; pointer-events: none; white-space: nowrap; line-height: .78; user-select: none; }
@@ -38,16 +43,17 @@
 .nb-corner.bl { bottom: 12px; left: 14px; } .nb-corner.br { bottom: 12px; right: 14px; text-align: right; }
 
 /* ---------- controls: bracket buttons ---------- */
-.nb-btn { appearance: none; display: inline-flex; align-items: center; gap: .5em; background: transparent; color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 10px 14px; font: 600 12.5px/1.15 var(--font-mono); letter-spacing: .04em; cursor: pointer; text-decoration: none; transition: background .12s, color .12s; }
+.nb-btn { appearance: none; display: inline-flex; align-items: center; gap: .5em; background: transparent; color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 10px 14px; font: 600 12.5px/1.15 var(--font-mono); letter-spacing: .04em; cursor: pointer; text-decoration: none; transition: background .12s, color .12s, border-color .12s; }
 .nb-btn::before { content: "["; color: var(--fg-muted); } .nb-btn::after { content: "]"; color: var(--fg-muted); }
-.nb-btn:hover { background: var(--fg); color: var(--bg); }
-.nb-btn:hover::before, .nb-btn:hover::after { color: var(--bg); }
+/* one hover for every control: the words and the frame turn accent, the fill stays (or returns to) the page colour */
+.nb-btn:hover, .nb-btn.is-solid:hover { background: var(--bg); color: var(--accent); border-color: var(--accent); }
+.nb-btn:hover::before, .nb-btn:hover::after, .nb-btn.is-solid:hover::before, .nb-btn.is-solid:hover::after { color: var(--accent); }
 .nb-btn.is-solid { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .nb-btn.is-solid::before, .nb-btn.is-solid::after { color: var(--on-accent); }
 .nb-btn[aria-pressed="true"], .nb-btn[aria-selected="true"] { background: var(--fg); color: var(--bg); }
 .nb-btn[aria-pressed="true"]::before, .nb-btn[aria-pressed="true"]::after, .nb-btn[aria-selected="true"]::before, .nb-btn[aria-selected="true"]::after { color: var(--bg); }
 .nb-btn:disabled { opacity: .45; cursor: not-allowed; }
-.nb-btn:disabled:hover { background: transparent; color: var(--fg); }
+.nb-btn:disabled:hover { background: transparent; color: var(--fg); border-color: var(--control); }
 .nb-btn:disabled:hover::before, .nb-btn:disabled:hover::after { color: var(--fg-muted); }
 .nb :focus-visible, .nb-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
 
@@ -85,7 +91,7 @@
 .nb-input { appearance: none; width: 100%; background: var(--bg-sunken); color: var(--fg); border: 1px solid var(--control); border-radius: 0; padding: 11px 12px; font: 400 15px/1.3 var(--font-text); }
 .nb-input::placeholder { color: var(--fg-muted); }
 .nb-chip { appearance: none; display: inline-flex; align-items: center; gap: .4em; background: transparent; color: var(--fg-muted); border: 1px solid var(--control); border-radius: 0; padding: 6px 9px; font: 600 12.5px/1.1 var(--font-mono); letter-spacing: .04em; cursor: pointer; white-space: nowrap; }
-.nb-chip:hover { color: var(--fg); border-color: var(--fg); }
+.nb-chip:hover { color: var(--accent); border-color: var(--accent); }
 .nb-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .nb-chip .n { color: var(--fg-subtle); font-variant-numeric: tabular-nums; }
 .nb-chip[aria-pressed="true"] .n { color: var(--bg); opacity: .7; }

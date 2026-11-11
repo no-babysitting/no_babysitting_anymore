@@ -6,14 +6,14 @@ import Base from '../../layouts/Base.astro';
 import Hud from '../../components/Hud.astro';
 import PartNav from '../../components/PartNav.astro';
 import LensBlock from '../../components/LensBlock.astro';
-import { PARTS, SOURCES, SHIFTS, PHASES, LENSES, partOf, type Block } from '../../content/parts';
+import { PARTS, SOURCES, SHIFTS, PHASES, PHASE_LABEL, LENSES, hl, partOf, type Block } from '../../content/parts';
 import { url } from '../../lib/url';
 export function getStaticPaths() { return PARTS.map((p) => ({ params: { part: p.id }, props: { p } })); }
 const { p } = Astro.props;
 const link = (h: string) => h.replace(/data-href="([^"]*)"/g, (_m, x) => `href="${url(x)}"`);
 /* nguồn trong câu là nhãn chữ (S1, S3); link bấm được nằm ở danh sách "Nguồn của phần này" cuối trang, nơi ô bấm đủ lớn cho điện thoại */
 const refs = (src?: string[]) => (src || []).join(' · ');
-const label = p.phase === 'Mở đầu' ? 'Mở đầu' : `${p.phase} · ${p.id}`;
+const label = p.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[p.phase]} · ${p.id}`;
 ---
 <Base title={`${p.vi} · ${p.id} ${p.en} · No Babysitting`} description={p.summary}>
   <Hud current={p.id} />
@@ -24,7 +24,7 @@ const label = p.phase === 'Mở đầu' ? 'Mở đầu' : `${p.phase} · ${p.id}
         <p class="nb-tag">{label}</p>
         <h1 class="en" lang="en">{p.en}</h1>
         <p class="vi">{p.vi}</p>
-        <p class="sum">{p.summary}</p>
+        <p class="sum" data-hl-auto set:html={hl(p.summary, p.id)} />
         <p class="nb-micro mins">{p.minutes} phút</p>
       </div>
     </header>

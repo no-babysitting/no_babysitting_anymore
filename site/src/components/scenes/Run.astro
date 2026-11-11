@@ -109,7 +109,7 @@ const chName = (id: string) => NAMES[id] || id;
   .chip { position: relative; cursor: pointer; }
   .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
   .chip span { display: inline-block; font: 600 13px/1 var(--font-mono); letter-spacing: .04em; padding: 9px 12px; border: 1px solid var(--control); color: var(--fg-muted); background: var(--bg); transition: background .12s, color .12s; }
-  .chip:hover span { color: var(--fg); border-color: var(--fg-muted); }
+  .chip:hover span { color: var(--accent); border-color: var(--accent); }
   .chip input:checked + span { background: var(--fg); color: var(--bg); border-color: var(--fg); }
   .chip input:focus-visible + span { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
   .ex { color: var(--fg-subtle); margin-left: 6px; }
@@ -338,7 +338,7 @@ const chName = (id: string) => NAMES[id] || id;
       if (tl) { tl.scrollTrigger && tl.scrollTrigger.kill(); tl.kill(); }
       const N = steps.length, seg = 1 / N;
       gsap.set(steps, { opacity: 0, pointerEvents: 'none', y: 24 });
-      tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#run', start: 'top top+=48', end: '+=' + N * (wide ? 90 : 100) + '%', pin: '#run-pin', scrub: 0.6, invalidateOnRefresh: true,
+      tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: '#run', start: 'top top+=48', end: '+=' + N * (wide ? 60 : 70) + '%', pin: '#run-pin', scrub: 0.6, invalidateOnRefresh: true,
         onUpdate: (s: any) => { const i = Math.min(N - 1, Math.floor(s.progress * N)); rail.forEach((r, j) => { r.classList.toggle('cur', j === i); r.classList.toggle('on', j < i); }); sideAt(i); } } });
       steps.forEach((st, i) => {
         const t0 = i * seg;
@@ -362,7 +362,13 @@ const chName = (id: string) => NAMES[id] || id;
       ST.refresh();
     }
 
-    if (scrub) { build(); return; }
+    if (scrub) {
+      build();
+      /* the run plays itself one step at a time: the step's own animation, a rest to read it, then the next (nbAuto) */
+      const T = () => tl.scrollTrigger, N = steps.length, pt = (k: number) => () => T().start + (T().end - T().start) * k;
+      w.nbAuto({ from: () => T().start - innerHeight * 0.5, legs: [{ to: pt(0), dur: 0.9 }, ...steps.map((_: any, i: number) => ({ to: pt((i + 0.8) / N), dur: i ? 3 : 2.6, wait: 1.6 }))] });
+      return;
+    }
     endStates(); /* reduced motion or no GSAP: every step shows its end state, stacked */
   }
   if ((window as any).gsap) start(window); else document.addEventListener('nb:gsap', () => start(window), { once: true });

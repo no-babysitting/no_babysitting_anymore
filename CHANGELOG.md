@@ -2,6 +2,17 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Trang chủ tự chạy, hai bàn tay không chạm, cụm từ nhấn, hover một kiểu (11/11/2026, chờ duyệt)
+
+Theo 6 góp ý của chủ dự án sau khi xem trên máy tính.
+
+- **Cảnh tự chạy** (`motion.ts`, `nbAuto`): hero, hai bàn tay, câu chốt, "Một lần giao việc", Lộ trình và finale tự diễn theo nhịp nội dung khi người xem dừng lại trong cảnh; hero tự chạy ngay sau khi gõ xong dòng chữ. Cảnh vẫn đọc trạng thái từ vị trí cuộn nên tua tới, tua lui như cũ; bất kỳ thao tác nào (lăn chuột, chạm, phím) trả quyền điều khiển ngay. Quãng cuộn ghim rút ngắn: hero 180% → 110%, hai bàn tay 220% → 130%, giao việc 90% → 60% mỗi bước, finale 160% → 100%.
+- **Hai bàn tay** (`Spark.astro`): hai ngón dừng cách nhau chừng hai ký tự, không bao giờ chạm. Tia sáng tụ ở khe hở, rồi hình tan chậm: chỉ khoảng một phần tư số ký tự bay ra, cùng một làn sóng ký tự chuyển màu từ vàng nhạt qua cam tới đỏ than, nhạt dần vào nền tối khi cảnh trôi đi. Bỏ đoạn nổ chạy theo đồng hồ; mọi khung hình giờ là hàm của vị trí cuộn.
+- **Lộ trình:** sửa lỗi thẻ cuối (04) trên màn hình rộng không bao giờ sáng và số vẫn là nhiễu: thẻ hiện tại tính theo tiến độ của dải, không theo vị trí trên màn hình.
+- **Cụm từ nhấn** (`nb-hl`): câu chốt, câu hero, câu tóm tắt của 5 phần, ba chặng và finale có 2 đến 3 cụm sáng màu cam kèm gạch chân sau khi câu hiện xong.
+- **Chữ:** "Kính" → "Lens"; "Vào phần" → "Tìm hiểu ngay" (thẻ 00: "Vào ngó chút bạn mình nhỉ?"); "Trước / Trong / Sau" → "Trước khi chạy / Trong lúc chạy / Sau khi xong". Bài học ghi ở `docs/16` §9.
+- **Hover:** mọi nút và chip khi rê chuột đều thành chữ cam, viền cam trên nền trang (trước đây nút nền tối đổi thành chữ đen trên nền sáng).
+
 ## Sửa theo góp ý của chủ dự án sau khi test trên iPhone (11/11/2026, chờ duyệt chữ)
 
 - **Lỗi "Một lần giao việc" chồng 7 bước lên nhau** (đổi nhóm việc giữa cảnh ghim): bỏ lệnh tính lại vị trí ở trang không có khối kính. Đã tái hiện và kiểm lại bằng Playwright ở 390×844.

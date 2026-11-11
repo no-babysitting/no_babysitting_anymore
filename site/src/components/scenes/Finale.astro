@@ -11,7 +11,7 @@ import { url } from '../../lib/url';
     <span class="nb-corner bl nb-micro">Phần <b id="finale-n" class="nb-tabular">00</b> / 05</span>
     <div class="ct" id="finale-ct">
       <span class="nb-micro">Bắt đầu</span>
-      <h2 class="nb-q" id="finale-h">Việc đã chạy xong khi bạn về.</h2>
+      <h2 class="nb-q" id="finale-h">Việc <em class="nb-hl">đã chạy xong</em> khi bạn về.</h2>
       <p class="go"><a class="nb-btn is-solid" href={url('00/')}>Bắt đầu với 00 →</a><a class="nb-btn" href={url('thuc-hanh/')}>Thực hành</a><a class="nb-btn" href={url('c02/')}>Nâng cao</a><a class="nb-btn" href={url('library/')}>Library</a></p>
     </div>
   </div>
@@ -44,15 +44,17 @@ import { url } from '../../lib/url';
     gsap.set('#finale-ct', { opacity: 0, pointerEvents: 'none', y: 40 });
     const S = A.state, c = { v: 0 };
     const tl = gsap.timeline({ defaults: { ease: 'none' },
-      scrollTrigger: { trigger: '#finale', start: 'top top+=48', end: '+=160%', pin: true, scrub: 0.6,
-        onUpdate: (s: any) => col.set(s.progress > 0.62 ? 'verified' : 'working') } })
+      scrollTrigger: { trigger: '#finale', start: 'top top+=48', end: '+=100%', pin: true, scrub: 0.6,
+        onUpdate: (s: any) => { col.set(s.progress > 0.62 ? 'verified' : 'working'); w.nbLight(document.getElementById('finale-h'), s.progress > 0.86); } } })
       .to(S, { order: 1, noiseFill: 0.05, duration: 0.6, onUpdate: A.redraw }, 0)
       .to(c, { v: 5, duration: 0.55, onUpdate: () => { n.textContent = String(Math.round(c.v)).padStart(2, '0'); } }, 0.05)
       .to('#finale-ct', { opacity: 1, pointerEvents: 'auto', y: 0, duration: 0.18, ease: 'power2.out' }, 0.66)
       .to({}, { duration: 0.16 });
+    const st = tl.scrollTrigger;
+    w.nbAuto({ from: () => st.start - innerHeight * 0.5, legs: [{ to: () => st.start, dur: 0.9 }, { to: () => st.start + (st.end - st.start) * 0.92, dur: 4.5 }] });
     /* a keyboard user who tabs to the call to action should see it: move the pin to where it is shown */
     document.getElementById('finale-ct')!.addEventListener('focusin', () => {
-      const st = tl.scrollTrigger; if (!st || st.progress > 0.7) return;
+      if (!st || st.progress > 0.7) return;
       const y = st.start + (st.end - st.start) * 0.8; w.lenis ? w.lenis.scrollTo(y, { immediate: true }) : scrollTo(0, y);
     });
   }

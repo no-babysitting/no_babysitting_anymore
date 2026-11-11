@@ -189,6 +189,22 @@
 - [ ] Không quá 5 golden word mỗi phần; câu hook ≤ 30 âm tiết; câu chốt ≤ 40 âm tiết.
 - [ ] `type-check.cjs` không còn cảnh báo `punctuation` trên trang mới.
 
+## 9. Chữ trên giao diện: bài học từ các lần chủ dự án sửa (11/11/2026)
+
+Nhãn, nút và tên tính năng là chữ ngắn nhất trên trang nên dễ sai nhất: người viết biết ngữ cảnh, người đọc thì không. Mỗi lần chủ dự án sửa một chữ, ghi lại ở đây thành luật để lần sau không lặp lại.
+
+| Chữ đã bị sửa | Vì sao hỏng | Luật rút ra |
+| --- | --- | --- |
+| "Trước", "Trong", "Sau" đứng một mình | Thiếu vế sau nên tối nghĩa: trước cái gì? | Nhãn phải tự đứng được khi tách khỏi ngữ cảnh. Viết đủ cụm: "Trước khi chạy", "Trong lúc chạy", "Sau khi xong". |
+| "Vào phần →" | Dịch từng chữ từ "Enter section"; người Việt không nói vậy | Nút viết theo điều người đọc nhận được hoặc lời mời tự nhiên: "Tìm hiểu ngay", "Vào ngó chút bạn mình nhỉ?". Câu vui chỉ dùng một lần trên một màn hình; chỗ lặp lại dùng câu gọn. |
+| "Kính" | Từ tự đặt, dịch từ "lens", người đọc không đoán ra | Tên tính năng: nếu chữ Việt phải giải thích mới hiểu thì giữ chữ Anh quen tai ("Lens"), và không đặt tên gợi sai việc (ví dụ "Role-play" khi không có ai đóng vai). |
+| Câu chốt hiện đều đều một màu | Người đọc không biết đâu là ý chính | Câu tóm tắt nào cũng đánh dấu 2 đến 3 cụm chủ chốt (class `nb-hl`, khai ở `HL` trong `parts.ts`); cụm sáng lên sau khi cả câu đã hiện. |
+| Văn cụt, thiếu hư từ, giọng dịch | Xem §2 và §4 | Đọc to thành tiếng: nếu không ai nói câu đó với đồng nghiệp thì viết lại. |
+| Thuật ngữ tiếng Anh để trần trong thân bài | Người không rành tiếng Anh bị bỏ lại | Lần đầu xuất hiện trong bài học, bài thực hành và hero: kèm nghĩa tiếng Việt trong ngoặc. Tên phần giữ nguyên. |
+| Prompt mẫu chỉ đẹp văn | Người đọc sẽ chép và dùng thật | Prompt phải đúng cách làm được khuyên (kết quả cần có, thế nào là xong, ngữ cảnh chỉ người dùng biết), rồi mới tới văn phong. |
+
+Trước khi gửi duyệt một nhãn hay một nút mới, hỏi ba câu: (1) tách khỏi trang, chữ này còn hiểu được không; (2) có ai nói câu này bằng miệng không; (3) chữ này hứa đúng điều sẽ xảy ra khi bấm không.
+
 ## Nguồn
 
 - [V1] Huỳnh Thanh Triều, "Hình ảnh của thời gian trong ngôn ngữ", *Tạp chí Khoa học ĐHSP TP.HCM*, số 9/2006, tr. 71–. <https://journal.hcmue.edu.vn/index.php/hcmuejos/article/download/1272/1263/1273>

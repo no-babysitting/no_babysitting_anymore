@@ -7,7 +7,7 @@ import Journey from '../components/scenes/Journey.astro';
 import Run from '../components/scenes/Run.astro';
 import { url } from '../lib/url';
 import Finale from '../components/scenes/Finale.astro';
-import { PHASES, SOURCES, partOf } from '../content/parts';
+import { PHASES, SOURCES, partOf, hl } from '../content/parts';
 ---
 <Base>
   <Hud />
@@ -20,7 +20,7 @@ import { PHASES, SOURCES, partOf } from '../content/parts';
   <div class="wrap manifesto">
     <div class="stmt" data-hold="0.8">
       <span class="nb-micro" data-reveal="up">Cả trang trong một câu</span>
-      <h2 class="nb-q big" id="pyr-h" data-reveal="fill">Thôi cầm tay chỉ việc: hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó.</h2>
+      <h2 class="nb-q big" id="pyr-h" data-reveal="fill" set:html={hl('Thôi cầm tay chỉ việc: hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó.', 'one')} />
     </div>
     <hr class="nb-rule" data-reveal="rule" />
     <div class="proof">
@@ -32,7 +32,7 @@ import { PHASES, SOURCES, partOf } from '../content/parts';
         <li>
           <span class="node" data-reveal="up" aria-hidden="true"><i></i></span>
           <span class="nb-micro ph" data-reveal="up">{f.label}</span>
-          <h3 class="nb-q tq" data-reveal="up">{f.line}</h3>
+          <h3 class="nb-q tq" data-reveal="up" data-hl-auto set:html={hl(f.line, 'phases')} />
           <p class="lk" data-reveal="up">{f.parts.map((id) => <a class="go" href={url(id + '/')}><span class="nb-micro">{id}</span>{partOf(id).vi} →</a>)}</p>
         </li>
       ))}
