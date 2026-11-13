@@ -2,6 +2,9 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Người duy trì, ngày kiểm chứng, link giấy phép MIT ở chân trang (13/11/2026)
+
+Refs #22 (F-003). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J, và chọn "taiseixx" làm tên người duy trì; về ngày, "ghi ngày để biết bài được viết ngày nào là được, đừng làm quá lên" (bản ghi do agent viết, theo `AGENTS.md` §3). Mục "Về dự án" ở chân trang có thêm "Người duy trì: taiseixx (link github.com/taiseixx) · kiểm chứng ngày 13/11/2026. Thấy chỗ sai? Báo sai trên GitHub."; chữ "MIT" là link tới `LICENSE` của repo; ở chương 01 "Tác giả kể rằng" thành "Tác giả bài gốc kể rằng" (tác giả là ông Thariq Shihipar của bài nguồn, không phải người làm trang). Ngày và tên nằm ở `site/src/config.ts` (`SITE.verifiedAt`, `SITE.maintainer`). Giới hạn: ngày 13/11/2026 là ngày đối chiếu nguồn gần nhất cho chương 04, các câu về Cowork và nguồn chương 00; chủ dự án chọn không đối chiếu lại toàn bộ 00–03 trong đợt này. Đo được: chân trang có link `github.com/taiseixx`, chuỗi `kiểm chứng` kèm ngày, và "MIT" là link.
 ## Chương 00: hộp "Bạn đang ở đâu?" (13/11/2026)
 
 Refs #26 (F-007). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J (bản ghi do agent viết, theo `AGENTS.md` §3). Cuối chương 00 có mục "Bạn đang ở đâu?" với ba dòng cho chat, Cowork và Claude Code (nguồn: tổng quan Cowork và tổng quan Claude Code, thêm S18, S19) và một dòng chỉ đường cho người chưa biết chọn gì. Một chỗ khác bản đã duyệt: dòng chat có thêm ", tức chat," để cụm `chat` có dạng chữ thường mà phép đo của #26 so khớp. Chưa làm: đổi câu đố ở chương 04 sang tình huống không cần kiến thức kỹ thuật (phần thứ hai của đề xuất #26), chờ track Nhập môn. Đo được: chương 00 có `chat`, `Cowork`, `Claude Code` trong cùng một khối.
