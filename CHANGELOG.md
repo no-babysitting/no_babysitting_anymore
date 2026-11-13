@@ -5,6 +5,10 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 ## Lỗi tiếp cận nhỏ còn lại: hộp thoại Lens, nhãn vùng trùng, landmark, robots.txt (13/11/2026)
 
 Refs #30 (F-011). Không có chữ mới. Hộp thoại Lens thành `<dialog>` mở bằng `showModal()` (có `aria-modal="true"`): phần còn lại của trang bị khoá khi mở, Tab quay vòng trong hộp, Esc đóng và trả focus về nút Lens, bấm ra ngoài thì đóng. Vùng chứa câu tuyên ngôn ở trang chủ bỏ `aria-labelledby` để câu không được đọc hai lần. Khối ghi chú của chương (`aside`) thành `div role="note"` để hết lỗi axe `landmark-unique` ở /01/ và /03/. Thêm `robots.txt` (cho phép tất cả, nêu sitemap). Giới hạn đã biết: trình thu thập chỉ đọc `robots.txt` ở gốc host, mà trang này nằm dưới `/no_babysitting_anymore/`, nên tệp nằm ở `/no_babysitting_anymore/robots.txt`; tệp ở gốc `no-babysitting.github.io` thuộc repo Pages của tổ chức. Đo được: phép thử bằng trình duyệt cho Lens (mở, Tab, Esc, bấm ngoài, chọn); bộ kiểm xanh (xem PR).
+## Bản live cho biết đang chạy commit nào (13/11/2026)
+
+Refs #33 (F-014). Không có chữ mới. Bước mới trong `deploy.yml`, ngay trước khi xuất bản, ghi `dist/build.json` với `sha` (đủ 40 ký tự hex), `short` (7 ký tự) và `built_at` (UTC). Đo được: sau triển khai, GET `/no_babysitting_anymore/build.json` trả 200 và `sha` bằng commit của lần triển khai (đối chiếu với `git rev-parse origin/main` tại thời điểm merge).
+
 ## Ẩn Library, gỡ chữ nội bộ khỏi trang Nâng cao (13/11/2026)
 
 Refs #21 (F-002). Library chưa có nội dung thật nên ẩn tạm: không còn trong menu, nút Finale, trang 404 và sitemap; địa chỉ `/library/` chuyển ngay về trang chủ (noindex). Bốn nhãn `b1–b4` của trang Nâng cao thành comment trong mã, hai vùng `b2`, `b3` bỏ `aria-labelledby` vì nhãn không còn. Không có chữ mới: chỉ xoá hai chữ "ở b2" khỏi "Chốt dự đoán ở b2 để mở mô phỏng", vì nhãn b2 không còn hiện; và xoá "đặt trong ContradictionNote," (tên thành phần của design system) khỏi dòng chú thích của đồng hồ context. Hai danh sách trang của `check.cjs` và `design-check.cjs` bỏ `library/` vì trang không còn. Đo được: `dist/` không còn chữ `library` ở sitemap, trang chủ, 404; bộ kiểm xanh (xem PR).
