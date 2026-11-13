@@ -37,7 +37,7 @@ SOFTWARE.
 | [Astro](https://astro.build) (build only) | 5.18.2 | MIT |
 | [js-yaml](https://github.com/nodeca/js-yaml) (build only) | 4.1.0 | MIT |
 
-## Fonts (served by Google Fonts)
+## Fonts (self-hosted since 13/11/2026)
 
 Archivo, Be Vietnam Pro, JetBrains Mono and Newsreader are licensed under the SIL Open Font License 1.1.
 
