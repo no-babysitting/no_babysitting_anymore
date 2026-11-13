@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Mục Bài viết, lát 1: nền (collection, schema, route, trang thử, sitemap dựng từ dữ liệu) (13/11/2026, D78)
+
+Chưa có bài nào được đăng, nên người đọc không thấy gì mới ngoài trang thử `/articles/sample/` (noindex, không liên kết, không có trong sitemap). Thêm collection `articles` (chỉ bài đã đăng) và `articleFixtures`, schema frontmatter, hai route `/articles/<slug>/` và `/articles/sample/`; `sitemap.xml` dựng từ `PARTS` và từ collection, không còn sửa tay cho bài mới. Build hỏng khi: frontmatter sai (kể cả ngày không tồn tại, ngày không đặt trong nháy, khoá lạ), `art` lạ, `related` không tìm thấy, tên file không đúng kebab-case hoặc là `sample`, ảnh hay SVG thiếu alt; không hỏng khi thiếu nguồn hay link ngoài chết. Đo được: 14 trường hợp sai đều làm `astro build` thoát mã 1 với đúng thông báo; 2 trường hợp đúng (kể cả cú pháp ảnh nằm trong khối mã) thì qua và bài hiện trong sitemap. **Bản ghi duyệt (do agent ghi, không phải chủ dự án):** 13/11/2026, phiên Claude Code, hộp hỏi lựa chọn "Gói chữ". Hộp liệt kê các chữ giao diện của lát 1 và 2 và nêu trang thử bằng đường dẫn `site/src/content/article-fixtures/sample.md`. Chủ dự án chọn "Duyệt tất cả như đề xuất (Recommended)", là lựa chọn có sẵn chứ không phải câu tự viết. `check.cjs` và `design-check.cjs` thêm `articles/sample/` vào danh sách trang. Chưa có: trang chỉ mục, byline, ngày, mục lục, bảng thành thẻ, nút Chép, tranh (lát 2 và 3). Refs #44.
+
 ## Tranh Bài viết ngoài khoá art, và #44 cắt thành ba PR (13/11/2026, D77, D78)
 
 Không đổi site, không có chữ mới. Chủ dự án chọn trong phiên Claude Code, hộp hỏi lựa chọn: "Ba PR (Recommended)" cho cách cắt #44 và "Không, chỉ qua ngân sách đã đo (Recommended)" cho câu tranh Bài viết có vào khoá art không. Đây là lựa chọn có sẵn, không phải câu chủ dự án tự viết; bản ghi do agent viết. `AGENTS.md` §2 thêm một câu ở dòng art; `docs/08` §1f thêm D77 và D78. D77 chỉ nói về tranh Bài viết; hình mở chương vẫn theo `docs/19` §2. Refs #43, #44.

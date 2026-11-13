@@ -1,0 +1,8 @@
+---
+/* One page per published article (issue #44). getStaticPaths runs the cross-checks, so a bad article fails the build here. */
+import Article from '../../layouts/Article.astro';
+import { loadArticles } from '../../lib/articles';
+export async function getStaticPaths() { return (await loadArticles()).map((entry) => ({ params: { slug: entry.id }, props: { entry } })); }
+const { entry } = Astro.props;
+---
+<Article entry={entry} />

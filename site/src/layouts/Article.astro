@@ -1,0 +1,39 @@
+---
+/* The article template (issue #44, slice 1). It renders what every article has: title, description and the markdown body.
+   Byline, date line, table of contents, "report an error", navigation and the art banner arrive in the next slices, together with the
+   interface wording that needs the owner's approval (AGENTS.md §3). */
+import Base from './Base.astro';
+import Hud from '../components/Hud.astro';
+import { render } from 'astro:content';
+const { entry, noindex = false } = Astro.props;
+const { Content } = await render(entry);
+const { title, description } = entry.data;
+---
+<Base title={`${title} · No Babysitting`} description={description} noindex={noindex}>
+  <Hud current="articles" />
+  <main id="main" tabindex="-1" class="wrap art">
+    <article class="prose">
+      <h1>{title}</h1>
+      <p class="lede">{description}</p>
+      <Content />
+    </article>
+  </main>
+</Base>
+
+<style>
+  .art { padding-block: 24px 112px; }
+  .prose { max-width: 66ch; }
+  h1 { margin: 0 0 16px; font: 500 clamp(32px, 5vw, 56px)/1.12 var(--font-display); text-wrap: balance; overflow-wrap: anywhere; }
+  .lede { margin: 0 0 40px; font-size: clamp(18px, 1.6vw, 19px); line-height: 1.6; color: var(--fg-muted); }
+  .prose :global(p), .prose :global(li) { font-size: 18px; line-height: 1.7; overflow-wrap: break-word; }
+  .prose :global(p) { margin: 0 0 1.1em; }
+  .prose :global(h2) { margin: 2em 0 .6em; font: 500 clamp(24px, 3vw, 32px)/1.22 var(--font-display); text-wrap: balance; }
+  .prose :global(h3) { margin: 1.6em 0 .5em; font: 600 19px/1.4 var(--font-text); }
+  .prose :global(ul), .prose :global(ol) { margin: 0 0 1.1em; padding-left: 1.3em; display: grid; gap: 8px; }
+  .prose :global(a) { color: var(--fg); text-underline-offset: 3px; overflow-wrap: anywhere; }
+  .prose :global(code) { font: 400 .9em var(--font-mono); }
+  .prose :global(pre) { margin: 0 0 1.4em; padding: 16px; overflow-x: auto; border: 1px solid var(--control); background: var(--bg-sunken); }
+  .prose :global(pre code) { font: 400 14px/1.6 var(--font-mono); }
+  .prose :global(blockquote) { margin: 0 0 1.1em; padding-left: 16px; border-left: 2px solid var(--control); font-family: var(--font-display); }
+  .prose :global(blockquote p) { font: 400 19px/1.6 var(--font-display); }
+</style>
