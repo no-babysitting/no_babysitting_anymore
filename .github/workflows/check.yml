@@ -69,12 +69,6 @@ jobs:
         if: steps.scope.outputs.docs_only != 'true'
       - run: npm run build
         if: steps.scope.outputs.docs_only != 'true'
-      - name: Cache the Playwright browser
-        if: steps.scope.outputs.docs_only != 'true'
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ env.PW_VERSION }}
       - name: Install Chromium for the checks
         if: steps.scope.outputs.docs_only != 'true'
         run: |

@@ -38,11 +38,6 @@ jobs:
           cache-dependency-path: site/package-lock.json
       - run: npm ci
       - run: npm run build
-      - name: Cache the Playwright browser
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ env.PW_VERSION }}
       - name: Install Chromium for the checks
         run: |
           npm i --no-save playwright@${{ env.PW_VERSION }} axe-core@4.10.2
