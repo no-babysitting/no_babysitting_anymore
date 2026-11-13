@@ -197,6 +197,47 @@
           g.putImageData(img, 0, 0);
         }, opt.minLum || 0.34);
       };
+    },
+    /* A still dawn for article banners (issue #44): a sky ramp, a sun with a glow, layered ridges and a lake with a sun path.
+       Every colour is an option, so a piece can leave the brand sunset: opt.sky = [[0..1, [r, g, b]], ...] from the top to the horizon,
+       opt.sun, opt.ridges (far to near), opt.water = [at the horizon, at the bottom]; opt.sunX and opt.horizon are shares of the width and
+       height; opt.seed changes the haze and the ridge lines. Not part of the locked art (D77). */
+    dawn: function (opt) {
+      opt = opt || {};
+      var SKY = opt.sky || [[0, [14, 16, 52]], [0.45, [58, 38, 104]], [0.78, [178, 72, 104]], [1, [246, 160, 88]]];
+      var SUN = opt.sun || [255, 190, 120], RIDGES = opt.ridges || [[74, 46, 104], [50, 32, 84], [30, 22, 60]];
+      var WATER = opt.water || [[46, 30, 74], [10, 9, 20]], sd = opt.seed || 4;
+      function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+      function ramp(stops, t) { for (var i = 1; i < stops.length; i++) if (t <= stops[i][0]) return mix(stops[i - 1][1], stops[i][1], (t - stops[i - 1][0]) / (stops[i][0] - stops[i - 1][0])); return stops[stops.length - 1][1]; }
+      function ss(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+      return function (cols, rows, cw, ch) {
+        return sample(cols, rows, cw, ch, function (g, W, H) {
+          var img = g.createImageData(W, H), d = img.data, hz = opt.horizon || 0.62, sxu = opt.sunX != null ? opt.sunX : 0.7, asp = W / H;
+          for (var py = 0; py < H; py++) {
+            var v = py / H;
+            for (var px = 0; px < W; px++) {
+              var u = px / W, c, dx = (u - sxu) * asp, dy = v - (hz - 0.04), dist = Math.sqrt(dx * dx + dy * dy);
+              if (v < hz) {
+                c = ramp(SKY, v / hz);
+                c = mix([0, 0, 0], c, 0.7 + 0.5 * fbm(u * 3 + sd, v * 8, sd));
+                var glow = Math.max(0, 1 - dist / 0.5); c = mix(c, SUN, glow * glow * 0.55);
+                if (dist < 0.13) c = mix([255, 250, 232], SUN, ss(0.04, 0.13, dist) * 0.8);
+                for (var k = 0; k < RIDGES.length; k++) {
+                  var ridge = hz - 0.03 - (RIDGES.length - 1 - k) * 0.075 - fbm(u * (3 + k * 2) + k * 5, 1 + k, sd + k) * 0.11;
+                  if (v > ridge) c = v - ridge < 0.016 ? mix(RIDGES[k], SUN, 0.5 - k * 0.12) : mix(RIDGES[k], mix(RIDGES[k], SUN, 0.1), fbm(u * 10, v * 10, sd + 9));
+                }
+              } else {
+                var tw = (v - hz) / (1 - hz); c = mix(WATER[0], WATER[1], ss(0, 1, tw));
+                var wdt = 0.04 + tw * 0.12, streak = fbm(u * 24, v * 64, sd + 5);
+                if (Math.abs(u - sxu) < wdt * (0.6 + streak) && streak > 0.42) c = mix(SUN, [200, 90, 90], tw);
+              }
+              var gr = 0.85 + 0.3 * hash(px, py, 21), o = (py * W + px) * 4;
+              d[o] = c[0] * gr; d[o + 1] = c[1] * gr; d[o + 2] = c[2] * gr; d[o + 3] = 255;
+            }
+          }
+          g.putImageData(img, 0, 0);
+        }, opt.minLum || 0.34);
+      };
     }
   };
 
