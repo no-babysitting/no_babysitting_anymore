@@ -1,4 +1,5 @@
-# Bản nháp biên tập (docs/24-articles-section-plan.md §4): Grep và ripgrep bỏ qua thư mục này
-# khi tìm từ thư mục cha, để agent làm việc khác không bị kéo vào nháp và tốn token.
-# Đọc theo đường dẫn rõ ràng, hoặc tìm với path trỏ thẳng vào editorial/, vẫn được.
+# Editorial drafts (docs/24-articles-section-plan.md section 4).
+# Grep/ripgrep skip this folder when searching from a parent, so agents doing other work
+# are not pulled into drafts and do not spend tokens on them.
+# Reading by explicit path, or searching with the path pointed straight at editorial/, still works.
 editorial/

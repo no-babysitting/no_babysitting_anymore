@@ -102,6 +102,7 @@ Hỏi theo hai vòng (4 câu tổng quan, 4 câu chi tiết). Kế hoạch đầ
 | D64 | Minh bạch | Chỉ ghi byline | — |
 | D65 | Thứ tự | 80% system prompt → memory → model và effort | — |
 | D66 | Đăng bài | Một PR mỗi bài; chủ dự án duyệt rồi merge. *Mặc định đề xuất, chờ xác nhận* | — |
+| D67 | Trang Bài viết | Spec đầy đủ ở issue #44, chốt qua hai vòng hỏi ngày 13/11/2026 (5 câu tổng quan, 14 câu chi tiết). Việc rà các rule có thể quá cứng (art-lock, danh sách trang cứng) ở issue #43 | — |
 
 ## 2. Quan sát site ngày 07/11/2026
 

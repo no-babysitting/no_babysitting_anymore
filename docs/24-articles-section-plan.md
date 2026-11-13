@@ -1,6 +1,6 @@
 # 24 · Mục Bài viết: khung và bàn giao (13/11/2026)
 
-> Kết quả hai vòng hỏi chủ dự án ngày 13/11/2026. Đây là kế hoạch: **site chưa đổi gì**. Tài liệu này chỉ giữ những gì không có ở nơi khác (kiến trúc, cách chặn đọc nhầm, playbook đăng bài, spec cho coding agent). Luật nằm ở chỗ gốc của chúng; mục nào là con trỏ thì ghi rõ. Bản nháp và gói bàn giao ở `editorial/`.
+> Kết quả hai vòng hỏi chủ dự án ngày 13/11/2026. Đây là kế hoạch: **site chưa đổi gì**. Tài liệu này chỉ giữ những gì không có ở nơi khác (kiến trúc, cách chặn đọc nhầm, playbook đăng bài; spec của trang ở issue #44). Luật nằm ở chỗ gốc của chúng; mục nào là con trỏ thì ghi rõ. Bản nháp và gói bàn giao ở `editorial/`.
 
 ## 0. Hiện trạng khi bắt đầu
 
@@ -19,7 +19,7 @@ Ba chủ đề đầu trùng với kế hoạch hiện có: memory gần Nâng c
 
 ## 2. Hai khối việc
 
-**Khối A. Dựng mục Bài viết trên site.** Một PR code, giao cho coding agent chính khi bài đầu tiên được tác giả duyệt. Spec ở §8. Chữ mới trên giao diện (nhãn menu, câu của trang trống) cần chủ dự án duyệt (D13); phần code còn lại tự merge khi bộ kiểm xanh (D14).
+**Khối A. Dựng mục Bài viết trên site.** Giao cho một coding agent khác qua issue #44 (viết bằng tiếng Anh; spec đầy đủ nằm ở đó, chốt qua hai vòng hỏi ngày 13/11/2026). Không cần chờ bài đầu tiên được duyệt: mục ẩn khỏi menu cho tới khi có bài đã đăng. Chữ mới trên giao diện cần chủ dự án duyệt (D13); phần code còn lại tự merge khi bộ kiểm xanh (D14).
 
 **Khối B. Từng bài.** Mỗi bài đi hết vòng đời (§5), rồi một PR đăng bài theo §6. Phiên viết bài dùng `editorial/HANDOFF.md`.
 
@@ -65,7 +65,8 @@ Trạng thái, ba cổng (chất lượng, quyền, đăng) và ai đặt trạn
 
 Chạy khi tác giả nói "đăng bài NN" và `status: approved` ở `brief.md` của bài đó. Chỉ đọc thư mục của bài đó, `editorial/CLAUDE.md` và mục này.
 
-1. Chuyển `draft.md` thành `site/src/content/articles/<slug>.md`, thêm frontmatter (§8). Không chép `ledger.md` lên site.
+1. Chuyển `draft.md` thành `site/src/content/articles/<slug>.md`, thêm frontmatter (schema ở issue #44). Không chép `ledger.md` lên site.
+   Tranh mở đầu của bài (`art`) đã được tác giả chọn hướng từ bản nháp HTML trước bước này; tranh nằm trong PR đăng bài.
 2. `verifiedAt` lấy từ ngày gần nhất trong cột "Mở ngày" của `ledger.md`. Dòng "Thông tin thu thập ngày …" hiện từ frontmatter, không viết tay (D63).
 3. Mở mọi link trong bài; link chết thì báo tác giả, không tự thay.
 4. Chạy `check.cjs`, `type-check.cjs` (kèm `--selftest`) và `design-check.cjs`.
@@ -77,18 +78,9 @@ Chạy khi tác giả nói "đăng bài NN" và `status: approved` ở `brief.md
 
 Con trỏ, không phải luật: giọng và chữ ở `16-writing-guide.md` §1 (ngoại lệ xưng "tôi"); nguồn và ngày ở `06-sources-and-links.md` §1 mục 8; nhãn bằng chứng ở `editorial/CLAUDE.md`.
 
-## 8. Spec khối A cho coding agent
+## 8. Spec khối A
 
-Yêu cầu, không phải cách làm; agent tự chọn cách cài.
-
-- **Route:** `/bai-viet/` (mục lục) và `/bai-viet/<slug>/`. Tĩnh. Có trong sitemap, `canonical` và OG đúng.
-- **Nội dung:** markdown ở `site/src/content/articles/`. Frontmatter: `title`, `description`, `publishedAt`, `verifiedAt`, `order` (thứ tự trong cụm), `series` (tuỳ chọn). Hai trường ngày dùng lại tên của `SourceRef` (`06` §1 mục 4). Tác giả lấy từ `config.ts` (biệt danh và GitHub theo D17), không lặp ở từng bài.
-- **Ngày thu thập:** hiện ở đầu bài từ `verifiedAt`. Đề xuất của agent, chờ xác nhận: thiếu `verifiedAt` hoặc sai dạng `YYYY-MM-DD` thì build fail, theo đúng cách `site/src/lib/matrix.ts` đã kiểm `verifiedAt` của `matrix.yml`. Đây là luật build duy nhất của mục này; không có luật nào về nguồn. Tuỳ chọn: dùng lại `ageDays` của `matrix.ts` để hiện nhãn "cần kiểm lại" khi quá 30 ngày, như trạng thái đã đặc tả ở `06` §2.
-- **Bố cục:** dùng `Base.astro`, token và component hiện có. Không thêm ASCII art; `art-lock.json` không đổi. Độ rộng dòng đọc theo `type-rules.json`.
-- **Chữ:** thuật ngữ tiếng Anh lần đầu in nghiêng, đánh `lang="en"` (cho phép HTML nội tuyến trong markdown). Dấu câu theo luật `punctuation` của `type-check`.
-- **Menu:** thêm "Bài viết" chỉ khi có ít nhất một bài đã đăng. Nhãn và câu của trang trống cần chủ dự án duyệt (D13).
-- **Bộ kiểm:** đưa trang mới vào danh sách trang của `check.cjs`, `type-check.cjs`, `design-check.cjs`. Một bài mẫu làm fixture, không vào `dist`.
-- **Giữ nguyên:** disclaimer, nút phản hồi GoatCounter, dòng giấy phép CC BY-NC-SA ở chân trang.
+Ở issue #44, viết bằng tiếng Anh cho coding agent. Không chép lại ở đây. Điểm đã đổi so với bản nháp đầu của mục này, vì chủ dự án chọn khác: mỗi bài có một tranh ASCII mở đầu (cơ chế tranh nằm trong cùng task); mục lục có ảnh tranh tĩnh nhóm theo cụm; TOC cố định bên lề; bảng xếp thành thẻ trên điện thoại; trang mẫu `/bai-viet/mau/` nằm trong `dist` (noindex) để bộ kiểm quét được, thay cho ý "fixture không vào dist" ban đầu vốn không kiểm được gì.
 
 ## 9. Việc mở
 
