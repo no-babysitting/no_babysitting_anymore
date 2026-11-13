@@ -129,7 +129,7 @@ export const PARTS: Part[] = [
     core: [
       { t: 'h', text: 'Bản đồ không phải là lãnh thổ' },
       { t: 'p', html: `Tất cả những gì bạn đưa cho Claude, từ ${T('prompt', 'câu lệnh bạn gõ')}, các file cho tới skill, mới chỉ là tấm bản đồ. Còn nơi công việc thật sự diễn ra, với khách hàng thật, dữ liệu thật và những ràng buộc thật, mới là lãnh thổ. Anh Thariq Shihipar ở Anthropic gọi những chỗ bản đồ không khớp với lãnh thổ là ${E('unknowns')}, tạm dịch là ${G('điều chưa biết')}.` },
-      { t: 'p', src: ['S2'], html: 'Hễ gặp một điều chưa biết là Claude buộc phải đoán xem bạn muốn gì. Việc càng dài thì em nó càng gặp nhiều chỗ phải đoán như thế. Tác giả kể rằng Claude Fable là model đầu tiên khiến chất lượng công việc bị giới hạn bởi chính khả năng làm rõ điều chưa biết của tác giả.' },
+      { t: 'p', src: ['S2'], html: 'Hễ gặp một điều chưa biết là Claude buộc phải đoán xem bạn muốn gì. Việc càng dài thì em nó càng gặp nhiều chỗ phải đoán như thế. Tác giả bài gốc kể rằng Claude Fable là model đầu tiên khiến chất lượng công việc bị giới hạn bởi chính khả năng làm rõ điều chưa biết của tác giả.' },
       { t: 'h', text: 'Bốn loại điều chưa biết' },
       { t: 'p', html: 'Mỗi lần mang một việc tới cho Claude, tác giả lại chia những gì mình biết ra thành bốn ô:' },
       { t: 'grid4', cells: [

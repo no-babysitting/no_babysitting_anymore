@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Người duy trì, ngày kiểm chứng, link giấy phép MIT ở chân trang (13/11/2026)
+
+Refs #22 (F-003). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J, và chọn "taiseixx" làm tên người duy trì; về ngày, "ghi ngày để biết bài được viết ngày nào là được, đừng làm quá lên" (bản ghi do agent viết, theo `AGENTS.md` §3). Mục "Về dự án" ở chân trang có thêm "Người duy trì: taiseixx (link github.com/taiseixx) · kiểm chứng ngày 13/11/2026. Thấy chỗ sai? Báo sai trên GitHub."; chữ "MIT" là link tới `LICENSE` của repo; ở chương 01 "Tác giả kể rằng" thành "Tác giả bài gốc kể rằng" (tác giả là ông Thariq Shihipar của bài nguồn, không phải người làm trang). Ngày và tên nằm ở `site/src/config.ts` (`SITE.verifiedAt`, `SITE.maintainer`). Giới hạn: ngày 13/11/2026 là ngày đối chiếu nguồn gần nhất cho chương 04, các câu về Cowork và nguồn chương 00; chủ dự án chọn không đối chiếu lại toàn bộ 00–03 trong đợt này. Đo được: chân trang có link `github.com/taiseixx`, chuỗi `kiểm chứng` kèm ngày, và "MIT" là link.
+
 ## Lỗi tiếp cận nhỏ còn lại: hộp thoại Lens, nhãn vùng trùng, landmark, robots.txt (13/11/2026)
 
 Refs #30 (F-011). Không có chữ mới. Hộp thoại Lens thành `<dialog>` mở bằng `showModal()` (có `aria-modal="true"`): phần còn lại của trang bị khoá khi mở, Tab quay vòng trong hộp, Esc đóng và trả focus về nút Lens, bấm ra ngoài thì đóng. Vùng chứa câu tuyên ngôn ở trang chủ bỏ `aria-labelledby` để câu không được đọc hai lần. Khối ghi chú của chương (`aside`) thành `div role="note"` để hết lỗi axe `landmark-unique` ở /01/ và /03/. Thêm `robots.txt` (cho phép tất cả, nêu sitemap). Giới hạn đã biết: trình thu thập chỉ đọc `robots.txt` ở gốc host, mà trang này nằm dưới `/no_babysitting_anymore/`, nên tệp nằm ở `/no_babysitting_anymore/robots.txt`; tệp ở gốc `no-babysitting.github.io` thuộc repo Pages của tổ chức. Đo được: phép thử bằng trình duyệt cho Lens (mở, Tab, Esc, bấm ngoài, chọn); bộ kiểm xanh (xem PR).
