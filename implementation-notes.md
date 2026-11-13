@@ -9,6 +9,7 @@ Nơi ghi mọi chỗ **lệch kế hoạch**: chỗ làm khác tài liệu, khá
 - **Nhánh bỏ qua bộ kiểm của PR chỉ đổi tài liệu (D74) đã chạy thật.** PR #35 (28 file, chỉ `docs/`, `editorial/`, `.ignore`, `AGENTS.md`, `CHANGELOG.md`): job `check` xong sau 7 giây ở commit đầu (20:08:03 đến 20:08:10) và 8 giây ở commit ghi bản ghi duyệt (20:31:28 đến 20:31:36), so với khoảng 8 phút khi chạy đủ bộ. Trước đó nhánh này chưa được thử; ghi ở mục dọn dẹp bên dưới.
 - **Issue #44 ghi "PR text in English"; theo D76, mô tả PR và comment issue là tiếng Việt.** Chủ dự án chọn phương án code và commit tiếng Anh, PR và issue tiếng Việt (13/11). Dòng trong #44 sửa theo; khuôn mô tả PR ở `AGENTS.md` §6 giữ nguyên.
 - **Quy trình: PR #35 chuyển từ nháp sang sẵn sàng rồi merge ngay sau bản ghi duyệt.** Chủ dự án chọn "Merge luôn, sửa bằng PR nhỏ nếu cần". Hai câu hỏi trong mô tả PR (quy tắc "agent không tự merge" của bài 07, và chỗ của Gemini) chưa được quyết bằng lần merge này; sẽ hỏi riêng.
+- **`docs/19` §2 và D77 hơi lệch nhau, cố ý để vậy.** `docs/19` §2 nói thêm 5 hình mở chương vào khoá khi được duyệt; D77 chỉ nói tranh Bài viết ngoài khoá. Chủ dự án mới trả lời cho tranh Bài viết (hàng 1 của #43), nên hình mở chương vẫn theo `docs/19` §2 cho tới khi có trả lời.
 
 ### Đợt dọn dẹp theo `/skill-doctor` (13/11/2026)
 
