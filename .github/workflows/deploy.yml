@@ -19,6 +19,7 @@ concurrency:
 env:
   NB_BASE: /no_babysitting_anymore/
   NB_SITE: https://no-babysitting.github.io
+  PW_VERSION: '1.63.0'
 
 jobs:
   build:
@@ -35,9 +36,14 @@ jobs:
           cache-dependency-path: site/package-lock.json
       - run: npm ci
       - run: npm run build
+      - name: Cache the Playwright browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ env.PW_VERSION }}
       - name: Install Chromium for the checks
         run: |
-          npm i --no-save playwright@1.63.0 axe-core@4.10.2
+          npm i --no-save playwright@${{ env.PW_VERSION }} axe-core@4.10.2
           npx playwright install --with-deps chromium
       - name: Checks (links, JS errors, overflow, reduced motion, idle cost)
         run: node scripts/check.cjs

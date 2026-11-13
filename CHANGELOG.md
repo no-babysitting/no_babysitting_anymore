@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## CI nhanh hơn: cache trình duyệt Playwright, huỷ lần chạy cũ (13/11/2026)
+
+Không đổi site, không đổi phép kiểm nào, không có chữ mới. `check.yml` và `deploy.yml` cache `~/.cache/ms-playwright` (khoá theo hệ điều hành và phiên bản Playwright, nay một biến `PW_VERSION` dùng chung cho cả hai) nên lần chạy sau không tải lại trình duyệt; `check.yml` có `concurrency` huỷ lần chạy cũ khi đẩy commit mới lên cùng một PR (`deploy.yml` giữ nhóm `pages`, không huỷ). Đo được: thời gian bước "Install Chromium" và số lần chạy 8 phút mỗi PR; số đo sau khi PR này chạy xong ghi ở mô tả PR. Phần nới phép kiểm chủ dự án đã đồng ý (deploy bớt bộ kiểm, PR chỉ đổi tài liệu bỏ qua bộ kiểm site) nằm ở PR riêng (D74).
+
 ## Thẻ chia sẻ theo thông điệp hiện hành: title, meta description, og.png (13/11/2026)
 
 Refs #24 (F-005). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J (bản ghi do agent viết, theo `AGENTS.md` §3). Trang chủ: thẻ `<title>` thành "No Babysitting · Giao trọn việc cho Claude, thôi cầm tay chỉ việc"; meta description (và `og:description`) thành "Claude đã khôn hơn rồi, sao bạn vẫn còn phải trông trẻ? Hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó. Hướng dẫn không chính thức." (chỉ ghép các câu hero đã có). `og.png` dựng lại bằng `tools/make-brand-assets.js` với hai dòng của hero và dòng "Dự án cộng đồng độc lập · không phải trang chính thức của Anthropic". Các trang khác giữ nguyên mô tả chung. Đo được: sha256 của `og.png` khác `2df0bcbc…32d2`; meta description chứa `trông trẻ`; `<title>` dài hơn "No Babysitting" và có dấu tiếng Việt.
