@@ -26,10 +26,10 @@ fs.writeFileSync(path.join(out, 'favicon.svg'),
   <script src="file://${ds}/components/bundle.js"></script>
   <style>html,body{margin:0;background:var(--bg)}body{width:1200px;height:630px;box-sizing:border-box;padding:72px 80px;display:grid;align-content:space-between;color:var(--fg)}
   .m{color:var(--accent);width:834px}.m svg{display:block;width:100%;height:auto}
-  .t{font:400 44px/1.2 Newsreader,serif;margin:0 0 14px}.d{font:500 22px/1.4 "JetBrains Mono",monospace;color:var(--fg-muted);margin:0}
+  .t{font:400 44px/1.2 Newsreader,serif;margin:0 0 14px;text-wrap:balance}.d{font:500 22px/1.4 "JetBrains Mono",monospace;color:var(--fg-muted);margin:0;text-wrap:balance}
   .f{display:flex;justify-content:space-between;font:600 17px/1 "JetBrains Mono",monospace;color:var(--fg-subtle);letter-spacing:.04em;border-top:1px solid var(--control);padding-top:20px}</style></head>
-  <body><div class="m" id="m"></div><div><p class="t">Từ vibe đến agentic. Giao việc cho Claude như giao cho một đồng nghiệp giỏi.</p>
-  <p class="d">An unofficial, practical guide to delegating digital work to Claude Code</p></div>
+  <body><div class="m" id="m"></div><div><p class="t">Claude đã khôn hơn rồi, sao bạn vẫn còn phải trông trẻ?</p>
+  <p class="d">Thôi cầm tay chỉ việc: hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó.</p></div>
   <div class="f"><span>Dự án cộng đồng độc lập · không phải trang chính thức của Anthropic</span><span>tiếng Việt · beta</span></div>
   <script>document.getElementById('m').innerHTML = NoBabysitting.logoSVG('lg');</script></body></html>`;
   const tmp = path.join(require('os').tmpdir(), 'nb-og.html'); fs.writeFileSync(tmp, html);
