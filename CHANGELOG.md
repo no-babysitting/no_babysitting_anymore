@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Ngôn ngữ của code: tiếng Anh cho code và commit, tiếng Việt cho chữ người đọc, PR và issue (13/11/2026, D76)
+
+Không đổi site, không có chữ mới. Chủ dự án chọn (13/11/2026, phiên Claude Code, hộp hỏi lựa chọn: "Ghi: code và commit tiếng Anh, PR/issue tiếng Việt"). Thêm một đoạn ở `AGENTS.md` và dòng D76 ở `docs/08` §1f; số D trong hai chỗ trỏ đã cập nhật. Sửa dòng "PR text in English" ở issue #44 cho khớp. Refs #44.
+
 ## Bớt chi phí CI theo lựa chọn của chủ dự án: deploy gọn hơn, PR chỉ đổi tài liệu bỏ qua bộ kiểm site (13/11/2026, D74)
 
 Không đổi site, không có chữ mới. **Nới có chủ đích, do chủ dự án đồng ý rõ (13/11/2026, trong phiên Claude Code):** (1) `Deploy site` chỉ build và chạy `check.cjs`, không chạy lại type-check và design-check, vì PR đã qua đủ bộ và `main` được bảo vệ; (2) PR chỉ đổi tài liệu (`docs/`, `editorial/`, `.claude/`, `*.md` ở gốc, `LICENSE`, `.ignore`) bỏ qua các bước nặng của `Check site`. Chủ dự án chọn "paths-ignore"; tôi làm bằng một bước nhận diện phạm vi trong cùng job `check` thay vì `paths-ignore`, để job vẫn chạy và báo xanh: nếu `main` bắt buộc status `check` thì PR tài liệu không bị kẹt. Mọi PR đổi file khác vẫn chạy đủ bộ. Ghi ở `docs/08` §1f (D74), `AGENTS.md` §4, `docs/README.md`, `docs/13`. Đo sau lần chạy đầu: thời gian một PR chỉ đổi tài liệu và thời gian một lần deploy (trước đây mỗi lần khoảng 8 phút); số đo ghi ở mô tả PR.
