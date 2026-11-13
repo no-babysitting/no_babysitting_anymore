@@ -47,6 +47,10 @@ jobs:
         run: node scripts/type-check.cjs
       - name: Design lint (overlap, clipping, tap size, holds, demos start when seen)
         run: node scripts/design-check.cjs --shots design-report
+      - name: Record which commit is published (dist/build.json, issue #33)
+        run: |
+          printf '{"sha":"%s","short":"%s","built_at":"%s"}\n' "$GITHUB_SHA" "${GITHUB_SHA::7}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/build.json
+          cat dist/build.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist
