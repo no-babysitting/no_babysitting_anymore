@@ -2,6 +2,9 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Tự host font: không còn request tới Google (13/11/2026)
+
+Refs #28 (F-009). Không có chữ mới. Archivo, Be Vietnam Pro, JetBrains Mono và Newsreader nay nằm ở `site/public/fonts/` (27 tệp `woff2`, 840 KB; trình duyệt chỉ tải tệp có ký tự trang cần nhờ `unicode-range`) kèm `fonts.css` với đường dẫn tương đối. Giữ đúng họ, độ đậm, trục và nghiêng thật như trước; chỉ giữ ba bộ ký tự dùng cho tiếng Việt (latin, latin-ext, vietnamese), bỏ Cyrillic và Hy Lạp vì trang không dùng. `tools/fetch-fonts.cjs` tải lại được. Bỏ hai `preconnect` và liên kết Google Fonts khỏi `Base.astro`. Dòng riêng tư ở chân trang vốn chỉ nhắc GoatCounter nên nay khớp thực tế. Đo được: tập host của mọi request trên các trang đã quét chỉ còn `localhost` (bản live: `no-babysitting.github.io`) và GoatCounter; bộ kiểm xanh (xem PR). Các trang xem trước trong `design-system/` vẫn tải từ Google Fonts; không phải bản live.
 ## Một nơi cho chỉ dẫn agent: AGENTS.md, quyết định D67–D73 (13/11/2026)
 
 Refs #32 (F-013), #34 (F-015). Không có chữ mới trên site. Thêm `AGENTS.md` (vai trò, ai merge gì, duyệt chữ, phép kiểm không được tự nới, nơi đặt chỉ dẫn, truy vết, tách người viết, duyệt, đánh giá) và `CLAUDE.md` chỉ nạp nó. `docs/08` §1f ghi D67–D73; `docs/17` ghi đã dùng xong, `docs/20` hết hiệu lực, `docs/22` đã thực hiện; `docs/21` và `docs/23` nay cùng một phát biểu về vai hội đồng (D71); câu hỏi mở 1 ở `docs/19` §9 có trả lời. Thêm bước CI "Phép kiểm đã đổi" (vài giây, chỉ `git diff`, không bao giờ làm đỏ CI) in vào Job Summary các file phép kiểm đã đổi. Thêm `implementation-notes.md`. Giới hạn đã nêu trong `AGENTS.md` §4: bước CI là chứng cứ để phát hiện, không ngăn chặn. Chưa làm: hiến chương trong `docs/independent-evaluation-council/` (PR #19 chờ chủ dự án duyệt); mục "chờ duyệt" cũ trong CHANGELOG chưa có bản ghi duyệt.
