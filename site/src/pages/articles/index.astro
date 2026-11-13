@@ -1,0 +1,56 @@
+---
+/* /articles/: published articles, grouped by series, standalone pieces after the series (issue #44, slice 2).
+   Until the first article is published the page has only its heading and is noindex; the menu entry stays hidden (Hud.astro)
+   and the sitemap leaves it out (lib/articles.ts). The still art thumbnail of each card arrives in slice 3. */
+import Base from '../../layouts/Base.astro';
+import Hud from '../../components/Hud.astro';
+import { url } from '../../lib/url';
+import { loadArticles, formatDay, readingMinutes } from '../../lib/articles';
+
+const list = await loadArticles();
+const groups: { series?: string; items: typeof list }[] = [];
+for (const a of list) {
+  const key = a.data.series;
+  const g = groups.find((x) => x.series === key);
+  g ? g.items.push(a) : groups.push({ series: key, items: [a] });
+}
+const hasSeries = groups.some((g) => g.series);
+---
+<Base title="Bài viết · No Babysitting" description="Phân tích có tác giả, có ngày thu thập thông tin và nguồn, về cách làm việc với Claude." noindex={list.length === 0}>
+  <Hud current="articles" />
+  <main id="main" tabindex="-1" class="wrap idx">
+    <h1>Bài viết</h1>
+    {groups.map((g) => (
+      <section class="grp" aria-labelledby={g.series ? undefined : hasSeries ? 'single-h' : undefined}>
+        {g.series ? <h2 class="nb-micro gh">Loạt bài: {g.series}</h2> : hasSeries ? <h2 class="nb-micro gh" id="single-h">Bài lẻ</h2> : null}
+        <ul class="cards">
+          {g.items.map((a) => (
+            <li class="card">
+              <h3><a href={url(`articles/${a.id}/`)}>{a.data.title}</a></h3>
+              <p class="d">{a.data.description}</p>
+              <p class="nb-micro m">
+                <span>Đăng ngày {formatDay(a.data.publishedAt)}</span>
+                <span>Thông tin thu thập ngày {formatDay(a.data.verifiedAt)}</span>
+                <span>{readingMinutes(a.body)} phút</span>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </main>
+</Base>
+
+<style>
+  .idx { padding-block: 24px 112px; }
+  h1 { margin: 0 0 40px; font: 500 clamp(32px, 5vw, 56px)/1.12 var(--font-display); }
+  .grp { margin-bottom: 48px; }
+  .gh { margin: 0 0 16px; color: var(--fg-muted); }
+  .cards { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 900px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .card { border: 1px solid var(--control); padding: 20px; display: grid; gap: 10px; align-content: start; }
+  .card h3 { margin: 0; font: 500 clamp(22px, 2.4vw, 28px)/1.2 var(--font-display); text-wrap: balance; }
+  .card h3 a { color: var(--fg); text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 44px; }
+  .d { margin: 0; font-size: 17px; line-height: 1.6; color: var(--fg-muted); }
+  .m { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--fg-muted); }
+</style>

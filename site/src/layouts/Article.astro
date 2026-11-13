@@ -1,39 +1,216 @@
 ---
-/* The article template (issue #44, slice 1). It renders what every article has: title, description and the markdown body.
-   Byline, date line, table of contents, "report an error", navigation and the art banner arrive in the next slices, together with the
-   interface wording that needs the owner's approval (AGENTS.md §3). */
+/* The article template (issue #44, slices 1 and 2). Order: title, byline, date line, series label, table of contents, body,
+   related parts, "report an error" box, navigation. The art banner above the title arrives in slice 3.
+   Every reader-visible string of the interface is written out in this file (and in articles/index.astro and Hud.astro), so the
+   wording the owner approves is easy to find. */
 import Base from './Base.astro';
 import Hud from '../components/Hud.astro';
 import { render } from 'astro:content';
+import { SITE } from '../config';
+import { url } from '../lib/url';
+import { RELATED, formatDay, loadArticles } from '../lib/articles';
+
 const { entry, noindex = false } = Astro.props;
-const { Content } = await render(entry);
-const { title, description } = entry.data;
+const { Content, headings } = await render(entry);
+const { title, description, publishedAt, verifiedAt, series, related, updatedAt } = entry.data;
+
+/* TOC: only for an article with at least four H2 (agent default); the footnote label is an H2 made by the markdown pipeline */
+const h2 = headings.filter((h) => h.depth === 2 && h.slug !== 'footnote-label');
+const hasToc = h2.length >= 4;
+
+/* navigation: inside the series, and by date across the section. The fixture is not part of the section. */
+const all = entry.collection === 'articles' ? await loadArticles() : [];
+const sameSeries = series ? all.filter((a) => a.data.series === series) : [];
+const si = sameSeries.findIndex((a) => a.id === entry.id);
+const byDate = [...all].sort((a, b) => a.data.publishedAt.localeCompare(b.data.publishedAt) || a.id.localeCompare(b.id));
+const di = byDate.findIndex((a) => a.id === entry.id);
+const seriesPrev = sameSeries[si - 1], seriesNext = si >= 0 ? sameSeries[si + 1] : undefined;
+/* a date neighbour that is already the series neighbour is not offered twice */
+const older = byDate[di - 1]?.id === seriesPrev?.id ? undefined : byDate[di - 1];
+const newer = di >= 0 && byDate[di + 1]?.id !== seriesNext?.id ? byDate[di + 1] : undefined;
+const nav = { seriesPrev, seriesNext, older, newer };
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const issue = `${SITE.repo}/issues/new?title=${encodeURIComponent('Báo sai: ' + title)}&body=${encodeURIComponent(`Bài: ${canonical}\n\nCâu cần sửa:\n\nNguồn đúng (link):\n\n`)}`;
+const link = (a: { id: string; data: { title: string } }) => url(`articles/${a.id}/`);
 ---
 <Base title={`${title} · No Babysitting`} description={description} noindex={noindex}>
   <Hud current="articles" />
   <main id="main" tabindex="-1" class="wrap art">
-    <article class="prose">
-      <h1>{title}</h1>
-      <p class="lede">{description}</p>
-      <Content />
+    <article class:list={['layout', { 'has-toc': hasToc }]}>
+      <header class="head">
+        <h1>{title}</h1>
+        <p class="lede">{description}</p>
+        <p class="nb-micro by">Tác giả: <a href={SITE.maintainer.href}>{SITE.maintainer.name}</a></p>
+        <p class="nb-micro dates">
+          <span>Đăng ngày <time datetime={publishedAt}>{formatDay(publishedAt)}</time></span>
+          <span>Thông tin thu thập ngày <time datetime={verifiedAt}>{formatDay(verifiedAt)}</time></span>
+          <span class="nb-tag is-warn" data-stale={verifiedAt} hidden>Cần kiểm chứng lại · quá 30 ngày</span>
+        </p>
+        {updatedAt && (
+          <details class="upd">
+            <summary class="nb-micro">Cập nhật ngày {formatDay(updatedAt.date)}</summary>
+            <ul>{updatedAt.changelog.map((c) => <li>{c}</li>)}</ul>
+          </details>
+        )}
+        {series && <p class="nb-micro ser">Loạt bài: {series}{si >= 0 && ` · ${si + 1}/${sameSeries.length}`}</p>}
+      </header>
+
+      {hasToc && (
+        <nav class="toc" aria-label="Mục lục" data-toc>
+          <details>
+            <summary class="nb-micro">Mục lục</summary>
+            <ol>{h2.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+          </details>
+        </nav>
+      )}
+
+      <div class="body prose"><Content /></div>
+
+      <footer class="foot">
+        {related.length > 0 && (
+          <section class="rel" aria-labelledby="rel-h">
+            <h2 class="nb-micro" id="rel-h">Đọc thêm trong lộ trình</h2>
+            <ul>{related.map((id) => <li><a href={url(RELATED[id].href)}>{RELATED[id].title}</a></li>)}</ul>
+          </section>
+        )}
+        <p class="report">Thấy chỗ sai? <a href={issue} target="_blank" rel="noopener">Báo sai trên GitHub</a></p>
+        <nav class="an" aria-label="Điều hướng bài viết">
+          <ul>
+            {nav.seriesPrev && <li><span class="nb-micro k">Bài trước trong loạt</span><a class="nb-btn" href={link(nav.seriesPrev)}>← {nav.seriesPrev.data.title}</a></li>}
+            {nav.seriesNext && <li><span class="nb-micro k">Bài sau trong loạt</span><a class="nb-btn" href={link(nav.seriesNext)}>{nav.seriesNext.data.title} →</a></li>}
+            {nav.older && <li><span class="nb-micro k">Bài cũ hơn</span><a class="nb-btn" href={link(nav.older)}>← {nav.older.data.title}</a></li>}
+            {nav.newer && <li><span class="nb-micro k">Bài mới hơn</span><a class="nb-btn" href={link(nav.newer)}>{nav.newer.data.title} →</a></li>}
+            <li><a class="nb-btn" href={url('articles/')}>Tất cả bài viết</a></li>
+          </ul>
+        </nav>
+      </footer>
     </article>
   </main>
 </Base>
 
+<script>
+  /* the "needs re-check" label: more than 30 days since verifiedAt, counted at view time (same rule as ageDays in lib/matrix.ts) */
+  document.querySelectorAll<HTMLElement>('[data-stale]').forEach((el) => {
+    const days = Math.floor((Date.now() - new Date(el.dataset.stale + 'T00:00:00Z').getTime()) / 86400000);
+    if (days > 30) el.hidden = false;
+  });
+
+  /* tables: on a phone each row is a card whose cells carry their column name, so the header row is hidden the way the design
+     system hides anything visually (nb-sr): still in the accessibility tree, no longer drawn */
+  const phone = matchMedia('(max-width: 640px)');
+  const syncTables = () => document.querySelectorAll('.prose thead').forEach((h) => h.classList.toggle('nb-sr', phone.matches));
+  syncTables(); phone.addEventListener('change', syncTables);
+
+  /* a copy button on every code and prompt block; without JavaScript the blocks are plain text */
+  document.querySelectorAll<HTMLElement>('.prose pre').forEach((pre) => {
+    const wrap = document.createElement('div'); wrap.className = 'codeblock';
+    const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'nb-btn copy'; btn.textContent = 'Chép';
+    const say = document.createElement('span'); say.className = 'nb-micro say'; say.setAttribute('role', 'status');
+    pre.replaceWith(wrap); wrap.append(pre, btn, say);
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText((pre.textContent || '').trim()); say.textContent = 'Đã chép'; }
+      catch { say.textContent = 'Không chép được, hãy bôi đen rồi chép'; }
+      setTimeout(() => { say.textContent = ''; }, 2400);
+    });
+  });
+
+  /* TOC: open on a wide screen (a sticky sidebar), and mark the section being read */
+  const toc = document.querySelector<HTMLElement>('[data-toc]');
+  if (toc) {
+    const det = toc.querySelector('details')!, wide = matchMedia('(min-width: 1024px)');
+    const sync = () => { det.open = wide.matches; toc.classList.toggle('is-side', wide.matches); };
+    sync(); wide.addEventListener('change', sync);
+    const links = new Map<string, HTMLAnchorElement>();
+    toc.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => links.set(a.hash.slice(1), a));
+    const heads = [...links.keys()].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) if (e.isIntersecting) { links.forEach((a) => a.removeAttribute('aria-current')); links.get(e.target.id)?.setAttribute('aria-current', 'true'); }
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    heads.forEach((h) => io.observe(h));
+  }
+</script>
+
 <style>
   .art { padding-block: 24px 112px; }
-  .prose { max-width: 66ch; }
+  .layout { display: grid; gap: 0 64px; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'head' 'toc' 'body' 'foot'; }
+  .head { grid-area: head; max-width: 66ch; }
+  .toc { grid-area: toc; margin-bottom: 24px; }
+  .body { grid-area: body; max-width: 66ch; }
+  .foot { grid-area: foot; max-width: 66ch; margin-top: 56px; display: grid; gap: 32px; border-top: 1px solid var(--control); padding-top: 24px; }
+  @media (min-width: 1024px) {
+    .layout.has-toc { grid-template-columns: minmax(0, 66ch) 260px; grid-template-areas: 'head toc' 'body toc' 'foot toc'; }
+    .toc { margin: 0; align-self: start; position: sticky; top: calc(var(--hud-height) + 24px); }
+    .toc.is-side summary { display: none; }
+  }
+
   h1 { margin: 0 0 16px; font: 500 clamp(32px, 5vw, 56px)/1.12 var(--font-display); text-wrap: balance; overflow-wrap: anywhere; }
-  .lede { margin: 0 0 40px; font-size: clamp(18px, 1.6vw, 19px); line-height: 1.6; color: var(--fg-muted); }
+  .lede { margin: 0 0 20px; font-size: clamp(18px, 1.6vw, 19px); line-height: 1.6; color: var(--fg-muted); }
+  .by, .dates, .ser { margin: 0 0 8px; color: var(--fg-muted); }
+  .by a { color: var(--fg); text-underline-offset: 3px; }
+  [data-stale][hidden] { display: none; }
+  .dates { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; }
+  .upd, .ser { margin-bottom: 8px; }
+  .upd summary { cursor: pointer; padding-block: 8px; }
+  .upd ul { margin: 0 0 8px; padding-left: 1.3em; font-size: 16px; line-height: 1.6; }
+  .head { padding-bottom: 32px; }
+
+  .toc summary { cursor: pointer; padding-block: 10px; min-height: 40px; display: flex; align-items: center; border-top: 1px solid var(--control); border-bottom: 1px solid var(--control); }
+  .toc ol { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 2px; font-size: 15px; line-height: 1.45; }
+  .toc a { display: flex; align-items: center; min-height: 44px; padding: 4px 0 4px 12px; border-left: 2px solid var(--control); color: var(--fg-muted); text-decoration: none; overflow-wrap: anywhere; }
+  .toc a:hover, .toc a[aria-current] { color: var(--fg); border-left-color: var(--accent); }
+
+  .rel h2 { margin: 0 0 8px; color: var(--fg-muted); }
+  .rel ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+  .rel a, .report a { color: var(--fg); text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 44px; }
+  .report { margin: 0; font-size: 17px; line-height: 1.6; }
+  .an ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; }
+  .an li { display: grid; gap: 6px; justify-items: start; }
+  .an :global(.nb-btn) { min-height: 48px; max-width: 100%; text-align: left; overflow-wrap: anywhere; }
+  .an .k { color: var(--fg-muted); }
+
   .prose :global(p), .prose :global(li) { font-size: 18px; line-height: 1.7; overflow-wrap: break-word; }
   .prose :global(p) { margin: 0 0 1.1em; }
-  .prose :global(h2) { margin: 2em 0 .6em; font: 500 clamp(24px, 3vw, 32px)/1.22 var(--font-display); text-wrap: balance; }
-  .prose :global(h3) { margin: 1.6em 0 .5em; font: 600 19px/1.4 var(--font-text); }
+  .prose :global(h2) { margin: 2em 0 .6em; font: 500 clamp(24px, 3vw, 32px)/1.22 var(--font-display); text-wrap: balance; scroll-margin-top: calc(var(--hud-height) + 16px); }
+  .prose :global(h3) { margin: 1.6em 0 .5em; font: 600 19px/1.4 var(--font-text); scroll-margin-top: calc(var(--hud-height) + 16px); }
   .prose :global(ul), .prose :global(ol) { margin: 0 0 1.1em; padding-left: 1.3em; display: grid; gap: 8px; }
   .prose :global(a) { color: var(--fg); text-underline-offset: 3px; overflow-wrap: anywhere; }
   .prose :global(code) { font: 400 .9em var(--font-mono); }
-  .prose :global(pre) { margin: 0 0 1.4em; padding: 16px; overflow-x: auto; border: 1px solid var(--control); background: var(--bg-sunken); }
+  .prose :global(pre) { margin: 0; padding: 16px; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid var(--control); background: var(--bg-sunken); }
   .prose :global(pre code) { font: 400 14px/1.6 var(--font-mono); }
-  .prose :global(blockquote) { margin: 0 0 1.1em; padding-left: 16px; border-left: 2px solid var(--control); font-family: var(--font-display); }
+  .prose :global(.codeblock) { position: relative; margin: 0 0 1.4em; display: grid; gap: 8px; justify-items: start; }
+  .prose :global(.codeblock pre) { width: 100%; box-sizing: border-box; }
+  .prose :global(.codeblock .copy) { min-height: 40px; }
+  .prose :global(.codeblock .say) { color: var(--fg-muted); min-height: 1.4em; }
+  .prose :global(blockquote) { margin: 0 0 1.1em; padding-left: 16px; border-left: 2px solid var(--control); }
   .prose :global(blockquote p) { font: 400 19px/1.6 var(--font-display); }
+  .prose :global(img) { max-width: 100%; height: auto; }
+  .prose :global(hr) { border: 0; border-top: 1px solid var(--control); margin: 2em 0; }
+
+  /* callout: <aside aria-label="Quan điểm của tôi"> in the markdown; the label is drawn from the attribute */
+  .prose :global(aside) { margin: 0 0 1.4em; padding: 16px 20px; border: 1px solid var(--control); border-left: 3px solid var(--accent); background: var(--bg-raised); }
+  .prose :global(aside[aria-label])::before { content: attr(aria-label); display: block; margin-bottom: 8px; font: 600 13px/1.4 var(--font-mono); color: var(--fg-muted); }
+  .prose :global(aside p) { font-size: 17px; margin: 0 0 .6em; }
+  .prose :global(aside > :last-child) { margin-bottom: 0; }
+
+  /* footnotes (the markdown pipeline names the block and its label) */
+  .prose :global(section[data-footnotes]) { margin-top: 3em; border-top: 1px solid var(--control); padding-top: 8px; }
+  .prose :global(section[data-footnotes] h2) { margin: 0 0 .4em; font: 600 13px/1.4 var(--font-mono); color: var(--fg-muted); }
+  .prose :global(section[data-footnotes] li) { font-size: 16px; line-height: 1.6; }
+  .prose :global(a[data-footnote-ref]), .prose :global(a[data-footnote-backref]) { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px; }
+
+  /* tables: a scrollable block on a wide screen, stacked cards on a phone with each cell labelled by its column (data-label) */
+  .prose :global(.table-wrap) { margin: 0 0 1.4em; overflow-x: auto; }
+  .prose :global(table) { border-collapse: collapse; width: 100%; font-size: 16px; line-height: 1.5; }
+  .prose :global(th), .prose :global(td) { padding: 10px 12px; border: 1px solid var(--control); text-align: left; vertical-align: top; }
+  .prose :global(th) { font-weight: 600; background: var(--bg-raised); }
+  @media (max-width: 640px) {
+    .prose :global(.table-wrap) { overflow: visible; }
+    .prose :global(table), .prose :global(tbody), .prose :global(tr), .prose :global(td), .prose :global(th) { display: block; }
+    .prose :global(tr) { margin-bottom: 12px; border: 1px solid var(--control); }
+    .prose :global(td), .prose :global(th) { padding: 10px 12px; border: 0; border-bottom: 1px solid var(--control); overflow-wrap: anywhere; }
+    .prose :global(td:last-child) { border-bottom: 0; }
+    .prose :global(td[data-label])::before { content: attr(data-label); display: block; margin-bottom: 2px; font: 600 12px/1.5 var(--font-mono); color: var(--fg-muted); }
+    .prose :global(td a) { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; }
+  }
 </style>

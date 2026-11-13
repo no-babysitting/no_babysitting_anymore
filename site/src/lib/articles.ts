@@ -48,7 +48,11 @@ function check(kind: string, entries: CollectionEntry<'articles'>[], reserved: b
 }
 
 /* Published articles: by series, then `order` inside a series; standalone pieces after the series, newest first. Throws on any problem above. */
-export async function loadArticles(): Promise<Article[]> {
+let cached: Promise<Article[]> | undefined;
+/* cached in a build (every page's header asks whether anything is published); in dev the content can change under it */
+export function loadArticles(): Promise<Article[]> { return import.meta.env.PROD ? (cached ??= load()) : load(); }
+
+async function load(): Promise<Article[]> {
   const all = await getCollection('articles');
   check('article', all, true);
   const date = (a: Article) => a.data.publishedAt;
@@ -72,3 +76,9 @@ export async function articlePaths(): Promise<string[]> {
   const list = await loadArticles();
   return list.length ? ['articles/', ...list.map((a) => `articles/${a.id}/`)] : [];
 }
+
+/* "13/11/2026" from "2026-11-13" */
+export const formatDay = (iso: string) => iso.split('-').reverse().join('/');
+
+/* Reading time for an index card: words of the body at 220 a minute, at least one. 220 is a convention, not a measurement. */
+export const readingMinutes = (body = '') => Math.max(1, Math.round(body.split(/\s+/).filter(Boolean).length / 220));

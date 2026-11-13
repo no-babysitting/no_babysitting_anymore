@@ -5,7 +5,8 @@ publishedAt: "2026-11-13"
 verifiedAt: "2026-11-13"
 order: 0
 art: default
-related: ["01"]
+series: Thử nghiệm
+related: ["01", "c02"]
 tags: [fixture]
 ---
 
@@ -31,3 +32,30 @@ echo "dòng này đủ dài để cuộn ngang bên trong khối mã chứ khôn
 > Một câu trích ngắn, đặt trong khối trích dẫn.
 
 Đoạn cuối. Nó giữ chỗ cho phần chân bài mà hai lát sau sẽ thêm vào.
+
+## Bảng rộng
+
+| Bề mặt | Trạng thái | Ghi chú dài để thử cột hẹp và xuống dòng | Nguồn |
+|---|---|---|---|
+| Claude Code | Có | Một ghi chú đủ dài để chiếm vài dòng ở khổ điện thoại và vẫn đọc được khi bảng thành thẻ | [trang thử](/01/) |
+| Chat | Chưa rõ | Ghi chú khác, ngắn hơn | [ví dụ](https://example.com/) |
+
+## Chú thích kiểu callout
+
+<aside aria-label="Quan điểm của tôi">
+
+Đây là một khung nhấn. Nó có nhãn do bài đặt, chứa **chữ đậm**, `mã` và một [liên kết nội bộ](/01/).
+
+</aside>
+
+## Khối prompt, chú thích cuối và ảnh
+
+```text
+Hãy đọc tệp README.md rồi tóm tắt ba việc cần làm trước khi chạy thử, mỗi việc một dòng.
+```
+
+Một câu có chú thích cuối.[^1] Và một hình minh hoạ có alt:
+
+![Hai ô vuông nối nhau bằng một mũi tên, minh hoạ một bước chuyển](./sample-diagram.svg)
+
+[^1]: Nội dung chú thích cuối, đủ dài để thấy nó xuống dòng và có đường quay lại.
