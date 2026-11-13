@@ -1,5 +1,7 @@
 # 17 · Prompt giao cho coding agent: dựng nội dung v4 (08/11/2026)
 
+> **Trạng thái (13/11/2026): đã dùng xong.** Nội dung v4 đã lên site (10–11/11). Không còn là nguồn chỉ dẫn cho phiên mới: chỉ dẫn cố định ở `AGENTS.md` (D70). Danh sách nguồn ở §3 và hai luật không ngoại lệ ở §1 vẫn là tham chiếu.
+
 > Chủ dự án dán phần §1 vào một phiên Claude Code mới, mở trên repo này. Phần §2 giải thích vì sao prompt được viết như vậy. Phần §3 là danh sách tham chiếu mà prompt trỏ tới.
 
 ## 1. Prompt
