@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Chương 00: hộp "Bạn đang ở đâu?" (13/11/2026)
+
+Refs #26 (F-007). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J (bản ghi do agent viết, theo `AGENTS.md` §3). Cuối chương 00 có mục "Bạn đang ở đâu?" với ba dòng cho chat, Cowork và Claude Code (nguồn: tổng quan Cowork và tổng quan Claude Code, thêm S18, S19) và một dòng chỉ đường cho người chưa biết chọn gì. Một chỗ khác bản đã duyệt: dòng chat có thêm ", tức chat," để cụm `chat` có dạng chữ thường mà phép đo của #26 so khớp. Chưa làm: đổi câu đố ở chương 04 sang tình huống không cần kiến thức kỹ thuật (phần thứ hai của đề xuất #26), chờ track Nhập môn. Đo được: chương 00 có `chat`, `Cowork`, `Claude Code` trong cùng một khối.
+
 ## Lỗi tiếp cận nhỏ còn lại: hộp thoại Lens, nhãn vùng trùng, landmark, robots.txt (13/11/2026)
 
 Refs #30 (F-011). Không có chữ mới. Hộp thoại Lens thành `<dialog>` mở bằng `showModal()` (có `aria-modal="true"`): phần còn lại của trang bị khoá khi mở, Tab quay vòng trong hộp, Esc đóng và trả focus về nút Lens, bấm ra ngoài thì đóng. Vùng chứa câu tuyên ngôn ở trang chủ bỏ `aria-labelledby` để câu không được đọc hai lần. Khối ghi chú của chương (`aside`) thành `div role="note"` để hết lỗi axe `landmark-unique` ở /01/ và /03/. Thêm `robots.txt` (cho phép tất cả, nêu sitemap). Giới hạn đã biết: trình thu thập chỉ đọc `robots.txt` ở gốc host, mà trang này nằm dưới `/no_babysitting_anymore/`, nên tệp nằm ở `/no_babysitting_anymore/robots.txt`; tệp ở gốc `no-babysitting.github.io` thuộc repo Pages của tổ chức. Đo được: phép thử bằng trình duyệt cho Lens (mở, Tab, Esc, bấm ngoài, chọn); bộ kiểm xanh (xem PR).

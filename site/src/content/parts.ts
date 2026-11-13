@@ -23,6 +23,8 @@ export const SOURCES: Record<string, { label: string; href: string }> = {
   S4: { label: 'Claude Code docs · How Claude remembers your project', href: 'https://code.claude.com/docs/en/memory' },
   S5: { label: 'Claude Code docs · Extend Claude with skills', href: 'https://code.claude.com/docs/en/skills' },
   S6: { label: 'Anthropic · The unreasonable effectiveness of HTML (20/05/2026)', href: 'https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/' },
+  S18: { label: 'Anthropic · Cowork: Overview', href: 'https://claude.com/docs/cowork/overview' },
+  S19: { label: 'Claude Code docs · Overview', href: 'https://code.claude.com/docs/en/overview' },
   S14: { label: 'Cộng đồng · shanraisshan/claude-code-best-practice', href: 'https://github.com/shanraisshan/claude-code-best-practice' },
 };
 
@@ -110,13 +112,20 @@ export const PARTS: Part[] = [
           sales: [['', 'Bạn soạn các gói bán cho những shop online, và trả lời khi khách hỏi trước lúc mua.']],
           spec: [['', 'Bạn viết bản đặc tả cho phần học: cách tính tiến độ, bài kiểm tra cuối khoá, và điều kiện để được cấp chứng nhận.']],
         } },
+      { t: 'h', text: 'Bạn đang ở đâu?' },
+      { t: 'list', src: ['S18', 'S19'], items: [
+        '<b>Chat</b> là nơi bạn đã quen (trò chuyện, tức chat, trên claude.ai hoặc app Claude). Bắt đầu ở đây nếu bạn chỉ cần hỏi, soạn, bàn bạc.',
+        '<b>Cowork</b> nằm trong app Claude Desktop, không cần mở terminal; Claude làm trực tiếp trên file ở máy bạn. Hợp cho việc văn phòng nhiều bước như tài liệu, bảng tính, nghiên cứu.',
+        '<b>Claude Code</b> chạy ở terminal, trong trình soạn code, trong app Claude (thẻ Code) và trên web (<code>claude.ai/code</code>). Hầu hết các cách đều cần gói Claude trả phí hoặc tài khoản Console.',
+      ] },
+      { t: 'p', html: 'Chưa biết chọn gì: cứ bắt đầu từ nơi bạn đang dùng Claude hằng ngày. Mỗi kỹ thuật ở các phần sau có nhãn cho biết dùng được ở đâu.' },
       { t: 'p', html: 'No babysitting không có nghĩa là bỏ mặc cho xong. Đến phần 04, bạn sẽ thấy rõ mình cần giữ lại những việc gì.' },
     ],
     close: {
       line: `Thôi cầm tay chỉ việc không có nghĩa là buông tay hẳn. Bạn vẫn ${G('đặt tay đúng hai chỗ')}: lúc làm rõ công việc, và lúc duyệt kết quả.`,
       prompt: all((id) => `Đây là ${PASTE[id][0]}: [${PASTE[id][1]}]. Tôi muốn rút gọn nó lại. Hãy chỉ ra giúp tôi ba nhóm: dòng nào bạn vẫn tự làm đúng mà không cần tôi dặn, những dòng nào đang chỏi nhau, và còn điều gì chỉ có tôi biết mà tôi chưa nói ra. Chỗ nào bạn chưa chắc thì hỏi lại tôi, đừng đoán.`),
     },
-    sources: ['S1', 'S3'],
+    sources: ['S1', 'S3', 'S18', 'S19'],
   },
 
   {
