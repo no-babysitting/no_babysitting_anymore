@@ -23,7 +23,10 @@ export const SOURCES: Record<string, { label: string; href: string }> = {
   S4: { label: 'Claude Code docs · How Claude remembers your project', href: 'https://code.claude.com/docs/en/memory' },
   S5: { label: 'Claude Code docs · Extend Claude with skills', href: 'https://code.claude.com/docs/en/skills' },
   S6: { label: 'Anthropic · The unreasonable effectiveness of HTML (20/05/2026)', href: 'https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/' },
+  S18: { label: 'Anthropic · Cowork: Overview', href: 'https://claude.com/docs/cowork/overview' },
+  S19: { label: 'Claude Code docs · Overview', href: 'https://code.claude.com/docs/en/overview' },
   S14: { label: 'Cộng đồng · shanraisshan/claude-code-best-practice', href: 'https://github.com/shanraisshan/claude-code-best-practice' },
+  S15: { label: 'Anthropic · Cowork: Organize work with projects', href: 'https://claude.com/docs/cowork/guide/projects' },
 };
 
 export type Rows = Record<LensId, [string, string][]>;
@@ -110,13 +113,20 @@ export const PARTS: Part[] = [
           sales: [['', 'Bạn soạn các gói bán cho những shop online, và trả lời khi khách hỏi trước lúc mua.']],
           spec: [['', 'Bạn viết bản đặc tả cho phần học: cách tính tiến độ, bài kiểm tra cuối khoá, và điều kiện để được cấp chứng nhận.']],
         } },
+      { t: 'h', text: 'Bạn đang ở đâu?' },
+      { t: 'list', src: ['S18', 'S19'], items: [
+        '<b>Chat</b> là nơi bạn đã quen (trò chuyện, tức chat, trên claude.ai hoặc app Claude). Bắt đầu ở đây nếu bạn chỉ cần hỏi, soạn, bàn bạc.',
+        '<b>Cowork</b> nằm trong app Claude Desktop, không cần mở terminal; Claude làm trực tiếp trên file ở máy bạn. Hợp cho việc văn phòng nhiều bước như tài liệu, bảng tính, nghiên cứu.',
+        '<b>Claude Code</b> chạy ở terminal, trong trình soạn code, trong app Claude (thẻ Code) và trên web (<code>claude.ai/code</code>). Hầu hết các cách đều cần gói Claude trả phí hoặc tài khoản Console.',
+      ] },
+      { t: 'p', html: 'Chưa biết chọn gì: cứ bắt đầu từ nơi bạn đang dùng Claude hằng ngày. Mỗi kỹ thuật ở các phần sau có nhãn cho biết dùng được ở đâu.' },
       { t: 'p', html: 'No babysitting không có nghĩa là bỏ mặc cho xong. Đến phần 04, bạn sẽ thấy rõ mình cần giữ lại những việc gì.' },
     ],
     close: {
       line: `Thôi cầm tay chỉ việc không có nghĩa là buông tay hẳn. Bạn vẫn ${G('đặt tay đúng hai chỗ')}: lúc làm rõ công việc, và lúc duyệt kết quả.`,
       prompt: all((id) => `Đây là ${PASTE[id][0]}: [${PASTE[id][1]}]. Tôi muốn rút gọn nó lại. Hãy chỉ ra giúp tôi ba nhóm: dòng nào bạn vẫn tự làm đúng mà không cần tôi dặn, những dòng nào đang chỏi nhau, và còn điều gì chỉ có tôi biết mà tôi chưa nói ra. Chỗ nào bạn chưa chắc thì hỏi lại tôi, đừng đoán.`),
     },
-    sources: ['S1', 'S3'],
+    sources: ['S1', 'S3', 'S18', 'S19'],
   },
 
   {
@@ -251,9 +261,9 @@ export const PARTS: Part[] = [
         why: 'Model cũ đôi khi cần được nhắc lại, và thường nghe những lời dặn ở cuối context hơn là ở đầu. Model bây giờ thì làm theo ngay một dòng viết bình thường; nhấn mạnh chồng chất chỉ khiến nó áp luật quá tay. Nếu một dòng bị lạc mất trong một file dài, điều đó có nghĩa là file ấy cần được rút ngắn lại.' },
       { t: 'p', src: ['S3'], html: `Riêng những luật không được phép sai, như gửi email cho khách hay xoá dữ liệu, thì đừng đặt trong lời dặn. Chúng phải trở thành quyền hạn, hoặc thành ${T('hook', 'đoạn lệnh Claude Code tự chạy ở một thời điểm định sẵn')}, để chính phần mềm Claude Code đứng ra chặn, kể cả khi Claude có muốn làm.` },
       { t: 'h', text: 'Chỉ nói một lần thì nói ở đâu' },
-      { t: 'list', src: ['S1', 'S3'], items: [
+      { t: 'list', src: ['S1', 'S3', 'S15'], items: [
         `<b>Với Claude Code:</b> một file <code>CLAUDE.md</code> thật gọn, chủ yếu ghi các ${T('gotcha', 'chỗ dễ vấp')}, tức là những điều Claude không tự đọc ra được từ thư mục. Quy trình nào dài thì đưa vào skill; phần 03 sẽ nói tiếp chuyện này.`,
-        '<b>Với Cowork:</b> phần hướng dẫn của project (dự án). Đây là một hệ thống khác hẳn với <code>CLAUDE.md</code>.',
+        '<b>Với Cowork:</b> phần <em lang="en">Instructions</em> (hướng dẫn) của project (dự án), áp dụng cho mọi phiên trong project đó.',
       ] },
       { t: 'lens', title: 'Ở phần việc của bạn', rows: {
         chung: [['Thay vì', 'Viết ra 14 lời dặn về trang giới thiệu: nào giọng văn, độ dài, màu sắc, nào những điều bị cấm.'], ['Hãy thử', 'Một bản giao việc 3 dòng: trang này để làm gì, làm theo file <code>SPEC.md</code> đã chốt, và xong là khi mọi khối trong SPEC đều có mặt trên trang.']],
@@ -272,7 +282,7 @@ export const PARTS: Part[] = [
       line: 'Nói ít không có nghĩa là nói thiếu. Nói ít là nói cho đúng những điều chỉ bạn biết, nói một lần thôi, rồi để Claude lo nốt phần còn lại.',
       prompt: all(() => 'Đây là danh sách những lời dặn tôi hay dùng: [dán vào đây]. Hãy viết lại giúp tôi thành tối đa 5 dòng: giữ lại những điều chỉ có tôi biết, bỏ đi những điều bạn vẫn tự làm đúng, và gộp các dòng nhắc lại nhau. Dòng nào là luật không được phép sai thì hãy đánh dấu riêng ra, vì nó nên trở thành quyền hạn hoặc hook, chứ không nên là lời dặn. Xong là khi mỗi dòng còn lại đều là điều bạn không tự biết được nếu tôi không nói. Dòng nào bạn không rõ ý thì hỏi lại tôi trước khi bỏ.'),
     },
-    sources: ['S1', 'S3'],
+    sources: ['S1', 'S3', 'S15'],
   },
 
   {
@@ -298,7 +308,7 @@ export const PARTS: Part[] = [
         now: `Claude ${G('tự nhớ')} lấy những điều đáng nhớ: vai trò và thói quen làm việc của bạn, những lần bạn sửa em nó, các quyết định của dự án, và nơi tìm thông tin. Em nó tự ghi những điều ấy thành các file ghi chú, còn bạn xem lại và sửa bằng lệnh <code>/memory</code>.`,
         why: `Tính năng này tên là ${T('auto memory', 'bộ nhớ tự động')}. Claude tự quyết định điều gì đáng để nhớ cho những lần làm việc sau, rồi lưu lại thành các file markdown mà bạn mở ra đọc, sửa hay xoá lúc nào cũng được. Những gì đọc lại được từ code thì Claude không ghi, và cũng không phải phiên nào em nó cũng ghi. Muốn chắc chắn thì bạn cứ nói thẳng: “hãy nhớ giúp tôi rằng…”.` },
       { t: 'note', tag: 'Các ghi chú ấy nằm ở đâu', src: ['S4'], html: 'Chuyện Claude có tự nhớ hay không, và chuyện các ghi chú được cất ở đâu, là hai chuyện khác nhau. Về nơi cất: các file ghi chú nằm ngay trên máy đang chạy phiên làm việc, nên chúng không tự theo bạn sang một máy khác hay lên môi trường cloud. Theo tài liệu chính thức, auto memory được bật sẵn ở các phiên chạy trên máy của bạn.' },
-      { t: 'note', tag: 'Chỉ có ở Claude Code', html: 'Auto memory và lệnh <code>/memory</code> là của Claude Code. Cowork cũng có bộ nhớ, nhưng đó là một hệ thống riêng, khác hẳn.' },
+      { t: 'note', tag: 'Chỉ có ở Claude Code', src: ['S15'], html: 'Auto memory và lệnh <code>/memory</code> là của Claude Code. Cowork cũng có bộ nhớ, tính riêng cho từng project và giữ lại giữa các phiên.' },
       { t: 'h', text: 'Bạn cầm lái như thế nào' },
       { t: 'p', src: ['S3'], html: `Hãy xem kỹ ${G('phút đầu')} tiên. Thấy lệch hướng thì bấm phím Esc: Claude sẽ dừng lại ngay, và vẫn giữ nguyên những gì đã làm được. Còn nếu đã sửa tới hai lần mà vẫn sai, bạn hãy gõ <code>/clear</code> để mở lại một phiên sạch, rồi viết một prompt mới gom hết những điều vừa học được. Đừng cố sửa thêm lần thứ ba.` },
       { t: 'p', html: 'Muốn hiểu vì sao một phiên càng dài thì kết quả càng dễ kém đi, bạn đọc thêm ở <a data-href="c02/">Nâng cao A1 · Ngân sách ngữ cảnh</a>.' },
@@ -320,7 +330,7 @@ export const PARTS: Part[] = [
       src: ['S2'],
       prompt: all(() => 'Hãy giữ một file implementation-notes.md. Mỗi khi gặp chỗ buộc phải lệch kế hoạch, bạn hãy chọn phương án an toàn hơn, ghi lại vào mục “Lệch kế hoạch”, rồi làm tiếp. Chỉ dừng lại hỏi tôi khi câu trả lời làm thay đổi kết quả cuối cùng.'),
     },
-    sources: ['S1', 'S2', 'S3', 'S4', 'S5'],
+    sources: ['S1', 'S2', 'S3', 'S4', 'S5', 'S15'],
   },
 
   {
