@@ -4,6 +4,13 @@ Nơi ghi mọi chỗ **lệch kế hoạch**: chỗ làm khác tài liệu, khá
 
 ## Lệch kế hoạch
 
+### Đợt dọn dẹp theo `/skill-doctor` (13/11/2026)
+
+- **Cache trình duyệt Playwright: thêm rồi gỡ (PR #55, PR D74).** Chủ dự án chọn mục này; tôi ước tính tiết kiệm nửa phút đến một phút mỗi lần chạy. Đo ở CI: bước cài Chromium 19 giây khi chưa có cache; có cache thì 4 giây khôi phục cộng 31 giây cài. Cache không giúp vì thời gian nằm ở `--with-deps` (apt), không ở tải trình duyệt. Gỡ khỏi hai workflow; giữ biến `PW_VERSION` và `concurrency`.
+- **"paths-ignore" làm bằng bước nhận diện phạm vi, không bằng `paths-ignore`.** Chủ dự án chọn `paths-ignore`; nếu `main` bắt buộc status `check` thì PR tài liệu sẽ kẹt, nên job vẫn chạy và báo xanh, chỉ bỏ các bước nặng.
+- **Số đo một lần chạy đủ bộ (không cache):** tổng 8 phút 11 giây; `check.cjs` 1 phút 54 giây, type-check 1 phút 42 giây, design-check 2 phút 53 giây, art-lock 58 giây, cài Chromium 19 giây. Bỏ type-check, tự kiểm và design-check khỏi deploy tiết kiệm khoảng 4 phút 40 giây mỗi lần.
+- **Chưa làm theo lựa chọn của chủ dự án:** xoá nhánh đã merge, gỡ `screenshots/references`, ngừng theo dõi `previews/`, sửa skill `typography-check`; chủ dự án chỉ chọn gỡ `tools/__pycache__` (PR #54).
+
 ### Đợt xử lý 15 issue #20 đến #34 (13/11/2026)
 
 - **#21, Library: chuyển hướng thay vì trang khung (PR #42).** Issue đề xuất ẩn khỏi menu và sitemap, hoặc sửa chữ nội bộ. Chủ dự án chọn giữ trang Nâng cao dùng được (c02) và ẩn trang chưa có nội dung. Tôi ẩn Library bằng chuyển hướng `/library/` về trang chủ, không dựng trang "đang viết lại", vì trang khung cần chữ mới phải chờ duyệt.
