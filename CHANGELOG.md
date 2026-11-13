@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Nguồn bấm được ngay trong đoạn; hai câu về Cowork đối chiếu lại (13/11/2026)
+
+Refs #31 (F-012). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J (bản ghi do agent viết, theo `AGENTS.md` §3). Nhãn nguồn ở cuối đoạn ("S2 · S14") trước đây là chữ thường; nay mỗi nhãn là link tới nguồn, mở tab mới, có tên đầy đủ cho trình đọc màn hình (không đổi chữ). Hai câu về Cowork đối chiếu với tài liệu Cowork (trang "Organize work with projects", thêm làm nguồn S15): bỏ "khác hẳn" vì tài liệu Claude Code nói phiên Cowork trên máy tính cũng nạp `~/.claude/CLAUDE.md`; câu về hướng dẫn thành "phần Instructions (hướng dẫn) của project (dự án), áp dụng cho mọi phiên trong project đó"; câu về bộ nhớ thành "Cowork cũng có bộ nhớ, tính riêng cho từng project và giữ lại giữa các phiên". Hai câu trích của Boris Cherny có trong README của claude-code-best-practice (mục Tips and Tricks, ghi nguồn từ Boris Cherny); chưa mở được bài đăng gốc trên X để xác minh. Đo được: đoạn chứa "Boris Cherny" có `<a>` trong cùng khối.
+
 ## Lỗi tiếp cận nhỏ còn lại: hộp thoại Lens, nhãn vùng trùng, landmark, robots.txt (13/11/2026)
 
 Refs #30 (F-011). Không có chữ mới. Hộp thoại Lens thành `<dialog>` mở bằng `showModal()` (có `aria-modal="true"`): phần còn lại của trang bị khoá khi mở, Tab quay vòng trong hộp, Esc đóng và trả focus về nút Lens, bấm ra ngoài thì đóng. Vùng chứa câu tuyên ngôn ở trang chủ bỏ `aria-labelledby` để câu không được đọc hai lần. Khối ghi chú của chương (`aside`) thành `div role="note"` để hết lỗi axe `landmark-unique` ở /01/ và /03/. Thêm `robots.txt` (cho phép tất cả, nêu sitemap). Giới hạn đã biết: trình thu thập chỉ đọc `robots.txt` ở gốc host, mà trang này nằm dưới `/no_babysitting_anymore/`, nên tệp nằm ở `/no_babysitting_anymore/robots.txt`; tệp ở gốc `no-babysitting.github.io` thuộc repo Pages của tổ chức. Đo được: phép thử bằng trình duyệt cho Lens (mở, Tab, Esc, bấm ngoài, chọn); bộ kiểm xanh (xem PR).

@@ -12,7 +12,11 @@ export function getStaticPaths() { return PARTS.map((p) => ({ params: { part: p.
 const { p } = Astro.props;
 const link = (h: string) => h.replace(/data-href="([^"]*)"/g, (_m, x) => `href="${url(x)}"`);
 /* nguồn trong câu là nhãn chữ (S1, S3); link bấm được nằm ở danh sách "Nguồn của phần này" cuối trang, nơi ô bấm đủ lớn cho điện thoại */
-const refs = (src?: string[]) => (src || []).join(' · ');
+/* a source tag is plain text where it sits inside a link, and a link to the source everywhere else (issue #31: a claim and its source in the same block) */
+const refsText = (src?: string[]) => (src || []).join(' · ');
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+const refs = (src?: string[]) => (src || []).map((id) => SOURCES[id]
+  ? `<a href="${SOURCES[id].href}" target="_blank" rel="noopener" aria-label="${esc(id + ': ' + SOURCES[id].label)}">${id}</a>` : id).join(' · ');
 const label = p.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[p.phase]} · ${p.id}`;
 ---
 <Base title={`${p.vi} · ${p.id} ${p.en} · No Babysitting`} description={p.summary}>
@@ -33,7 +37,7 @@ const label = p.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[p.phase
       {p.hook.stat && <p class="stat"><span class="nb-cond n">{p.hook.stat[0]}</span><span class="sl">{p.hook.stat[1]}</span></p>}
       <h2 class="nb-q q" id="hook-q" data-reveal="words">{p.hook.question}</h2>
       {p.hook.bridge && <p class="bridge" data-reveal="up">{p.hook.bridge}</p>}
-      {p.hook.src && <p class="ref nb-micro"><a href="#src-h">Nguồn · {refs(p.hook.src)} ↓</a></p>}
+      {p.hook.src && <p class="ref nb-micro"><a href="#src-h">Nguồn · {refsText(p.hook.src)} ↓</a></p>}
     </section>
 
     <div class="core">
