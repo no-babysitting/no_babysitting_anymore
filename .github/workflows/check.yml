@@ -18,6 +18,26 @@ jobs:
         working-directory: site
     steps:
       - uses: actions/checkout@v4
+      - name: Changed checks (evidence of any edit to the checks themselves; AGENTS.md §4, D69)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        working-directory: .
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          PATHS="site/scripts design-system/art-lock.json design-system/type-rules.json .github/workflows tools/contrast.py"
+          git fetch --no-tags --depth=1 origin "$BASE"
+          files=$(git diff --name-only FETCH_HEAD HEAD -- $PATHS)
+          {
+            echo '### Phép kiểm đã đổi'
+            echo
+            if [ -z "$files" ]; then echo 'Không có file phép kiểm nào đổi.'; else
+              echo 'File đổi (AGENTS.md §4: PR phải nêu đổi gì và vì sao ở mục "Lệch tài liệu"):'; echo
+              echo "$files" | sed 's/^/- /'; echo; echo '```diff'
+              git diff -U0 FETCH_HEAD HEAD -- $PATHS | head -n 300
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
