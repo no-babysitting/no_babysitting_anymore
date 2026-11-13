@@ -4,7 +4,7 @@
 export const LEVELS = ['Rời rạc', 'Theo khuôn', 'Tự làm được', 'Linh hoạt'];
 export interface Exercise {
   id: string; title: string; from: string; minutes: string;
-  parts: { label?: string; scene: string; asks: string[] }[];
+  parts: { label?: string; scene: string; primer?: string[]; asks: string[] }[];
   traps: string[];
   rubric: { name: string; levels: [string, string, string, string] }[];
   back: { href: string; label: string }[];
@@ -38,6 +38,10 @@ export const EXERCISES: Exercise[] = [
     id: 'bai-2', title: 'Agent dọn tủ hợp đồng', from: 'Luyện phần 02 và 04: đặt ranh giới trước khi buông', minutes: '20 phút',
     parts: [{
       scene: 'Nhóm pháp chế ba người có một thư mục dùng chung chứa khoảng 600 hợp đồng, tên file lộn xộn, nhiều bản trùng. Nhóm muốn có một agent (trợ lý AI tự làm việc) đặt lại tên và xếp hợp đồng vào thư mục theo đối tác, cập nhật bảng theo dõi ngày hết hạn, và nhắc đối tác gia hạn trước 30 ngày. Một đồng nghiệp đã soạn sẵn cấu hình. Theo đó, agent được: toàn quyền với thư mục chung của cả công ty · đọc và gửi email từ hộp thư của nhóm · sửa bảng theo dõi · tạo sự kiện lịch · tra web · đăng vào kênh chat của nhóm.',
+      primer: [
+        'Hai câu hỏi cho từng khả năng của agent: việc này có <b>hoàn tác</b> được không (xoá file, ghi đè bản duy nhất, gửi đi là hết đường quay lại)? Việc này có <b>đi ra ngoài</b> không (gửi email, đăng vào kênh chung, gọi một dịch vụ bên ngoài)?',
+        'Ba mức: <b>cho phép</b> (agent tự làm, không hỏi), <b>hỏi trước</b> (mỗi lần agent phải xin phép), <b>chặn</b> (agent không được làm). Việc không hoàn tác được hoặc đi ra ngoài thì nên để ở mức hỏi trước, hoặc chặn hẳn nếu sai một lần là không chịu nổi.',
+      ],
       asks: [
         'Với từng khả năng trong cấu hình, chọn cho phép, hỏi trước mỗi lần, hoặc chặn. Mỗi lựa chọn kèm một dòng lý do.',
         'Bản cấu hình đang cấp thừa quyền ở những chỗ nào? Bạn sẽ thu hẹp lại ra sao?',
