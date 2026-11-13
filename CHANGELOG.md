@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Dọn file bytecode Python bị theo dõi nhầm (13/11/2026)
+
+Không đổi site, không có chữ mới. Gỡ `tools/__pycache__/contrast.cpython-313.pyc` khỏi git và thêm `.gitignore` ở gốc (`__pycache__/`, `*.pyc`), vì `tools/contrast.py` sinh lại tệp này mỗi lần chạy. Đo được: `git ls-files | grep -c pycache` từ 1 xuống 0. Các mục dọn khác của `/skill-doctor` (nhánh đã merge, ảnh tham khảo, `previews/`) chưa làm theo lựa chọn của chủ dự án.
+
 ## Thẻ chia sẻ theo thông điệp hiện hành: title, meta description, og.png (13/11/2026)
 
 Refs #24 (F-005). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J (bản ghi do agent viết, theo `AGENTS.md` §3). Trang chủ: thẻ `<title>` thành "No Babysitting · Giao trọn việc cho Claude, thôi cầm tay chỉ việc"; meta description (và `og:description`) thành "Claude đã khôn hơn rồi, sao bạn vẫn còn phải trông trẻ? Hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó. Hướng dẫn không chính thức." (chỉ ghép các câu hero đã có). `og.png` dựng lại bằng `tools/make-brand-assets.js` với hai dòng của hero và dòng "Dự án cộng đồng độc lập · không phải trang chính thức của Anthropic". Các trang khác giữ nguyên mô tả chung. Đo được: sha256 của `og.png` khác `2df0bcbc…32d2`; meta description chứa `trông trẻ`; `<title>` dài hơn "No Babysitting" và có dấu tiếng Việt.
