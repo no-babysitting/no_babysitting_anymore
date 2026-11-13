@@ -92,7 +92,7 @@ Nguồn: trả lời của chủ dự án trong phiên Claude Code 13/11/2026. N
 
 | # | Chủ đề | Quyết định | Thay cho |
 |---|---|---|---|
-| D67 | Quyền merge | Agent chính (Claude) tự merge mọi PR **không có chữ mới** khi CI xanh: code, chuyển động, hạ tầng, CI, tài liệu quy trình. Chữ mới: chủ dự án duyệt rồi agent merge. Art đã khoá: D55. Không có agent thứ hai đang làm việc | Câu hỏi mở 1 ở `19` §9; "không tự merge" ở `20`; D14 giữ nguyên và nay gồm cả hạ tầng, CI |
+| D67 | Quyền merge | Agent chính (Claude) tự merge mọi PR **không có chữ mới** khi CI xanh trên commit cuối (commit chỉ gộp `main` để giải xung đột CHANGELOG thì không cần chạy lại): code, chuyển động, hạ tầng, CI, tài liệu quy trình. Chữ mới: chủ dự án duyệt rồi agent merge. Art đã khoá: D55. Không có agent thứ hai đang làm việc | Câu hỏi mở 1 ở `19` §9; "không tự merge" ở `20`; D14 giữ nguyên và nay gồm cả hạ tầng, CI |
 | D68 | Bản ghi duyệt chữ | Chủ dự án duyệt trong phiên hoặc bằng comment; agent ghi bản ghi (ngày, hình thức, trích câu duyệt) vào PR và CHANGELOG, và nói rõ bản ghi do agent viết | D13 (bổ sung cách ghi) |
 | D69 | Bảo vệ phép kiểm | Quy ước ở `AGENTS.md` §4 cộng bước CI nhẹ "Phép kiểm đã đổi" in file và dòng đổi vào Job Summary. Là chứng cứ để phát hiện, không ngăn chặn, vì agent và chủ dự án dùng chung tài khoản. Không thêm bước CI nặng: tốc độ là ưu tiên | "Không nới phép kiểm" chỉ dựa vào lời dặn (`20`) |
 | D70 | Chỉ dẫn cố định | `AGENTS.md` ở gốc repo, `CLAUDE.md` chỉ nạp nó. `17` đã dùng xong, `20` hết hiệu lực, `22` đã thực hiện; mỗi file có dòng trạng thái | Ba prompt dán tay vào mỗi phiên (`17`, `20`, `22`) |

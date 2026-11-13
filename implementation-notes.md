@@ -13,5 +13,6 @@ Nơi ghi mọi chỗ **lệch kế hoạch**: chỗ làm khác tài liệu, khá
 - **#30, chỉ bỏ nhãn vùng ở câu tuyên ngôn.** Nhiều vùng khác cũng có `aria-labelledby` trỏ tới tiêu đề của chính nó. Tôi chỉ đổi vùng có bằng chứng trong issue; bỏ nhãn ở mọi vùng làm mất mốc điều hướng theo vùng.
 - **#28, font: bỏ Cyrillic và Hy Lạp (PR C).** Google Fonts trả thêm các bộ này; trang không dùng nên chỉ giữ latin, latin-ext và vietnamese. Trang xem trước trong `design-system/` vẫn tải từ Google Fonts; không phải bản live.
 - **#33, `build.json` chỉ kiểm được sau merge.** Bước ghi tệp chạy trong `deploy.yml`, tức chỉ khi `main` nhận commit; trước merge tôi chỉ chạy được lệnh của bước đó.
+- **Quy trình: PR #45 (và các PR sau) merge ngay sau commit gộp `main` chỉ giải xung đột CHANGELOG.** Mỗi PR thêm một mục lên đầu CHANGELOG nên mọi PR còn mở xung đột sau mỗi lần merge; chờ CI chạy lại sau mỗi lần gộp (8 phút) làm các PR nối đuôi nhau. Ngoại lệ này đã ghi vào `AGENTS.md` §2.
 - **Quy trình: nhánh riêng cho từng PR.** Chủ dự án cho phép nhánh `claude/f-0NN-…` để mở PR song song (13/11), thay vì một nhánh tuần tự.
 - **#32 và #34, hiến chương.** PR #19 (file trỏ thay hiến chương, sửa #34) chưa được merge và cần chủ dự án duyệt; D71 trong `docs/08` §1f đã ghi vai hội đồng khớp với nội dung PR đó.

@@ -21,7 +21,7 @@ Chi tiết về bên đánh giá: `docs/independent-evaluation-council/` và rep
 
 | Loại thay đổi | Ai merge | Điều kiện |
 |---|---|---|
-| Code, chuyển động, hạ tầng, CI, tài liệu quy trình, **không có chữ mới** | Agent chính tự merge | CI `check` xanh trên đúng commit cuối; PR đủ khuôn §6 |
+| Code, chuyển động, hạ tầng, CI, tài liệu quy trình, **không có chữ mới** | Agent chính tự merge | CI `check` xanh trên đúng commit cuối; PR đủ khuôn §6. Ngoại lệ duy nhất: commit chỉ gộp `main` vào nhánh để giải xung đột `CHANGELOG.md` thì không cần chờ CI chạy lại (tốc độ là ưu tiên) |
 | Chữ mới trên site | Agent chính merge **sau khi** chủ dự án duyệt | Bản ghi §3 |
 | ASCII art đã khoá, `design-system/art-lock.json` | Chủ dự án phải đồng ý đổi art trước | `docs/19` §2, D55; ảnh trước và sau trong PR |
 | Quyết định sản phẩm mới | Chủ dự án quyết; agent ghi vào `docs/08` | Số D tiếp theo |
