@@ -2,6 +2,16 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Hiến chương hội đồng đánh giá: bản gốc chuyển sang repo đánh giá (13/11/2026, chờ duyệt)
+
+Chỉ là tài liệu, theo quyết định của chủ dự án ngày 13/11/2026 (DEC-02 ở repo đánh giá).
+
+- `docs/independent-evaluation-council/README.md` và `review-protocol.md` thành file trỏ, kèm tóm tắt không có hiệu lực. Bản gốc duy nhất ở repo đánh giá (private). Bản cũ nằm trong lịch sử git (`4d036fb`).
+- Sửa chỗ hiến chương ghi ChatGPT là người vận hành: báo cáo đánh giá web do Claude thực hiện; có đối chiếu chéo bằng model khác. Thêm khai báo xung đột lợi ích.
+- Giữ nguyên số mục §6 và §10 của giao thức, vì `docs/21`, `docs/22`, `docs/23` trích hai mục này.
+- Không đổi `docs/12`, `docs/21`, `docs/22`, `docs/23`, code, nội dung site.
+- **Đo được:** không đổi code, không chạy bộ kiểm của site (PR chỉ gồm tài liệu; CI sẽ chạy theo quy ước của repo).
+
 ## Trang chủ tự chạy, hai bàn tay không chạm, cụm từ nhấn, hover một kiểu (11/11/2026, chờ duyệt)
 
 Theo 6 góp ý của chủ dự án sau khi xem trên máy tính.
