@@ -1,0 +1,4 @@
+# Bản nháp biên tập (docs/24-articles-section-plan.md §4): Grep và ripgrep bỏ qua thư mục này
+# khi tìm từ thư mục cha, để agent làm việc khác không bị kéo vào nháp và tốn token.
+# Đọc theo đường dẫn rõ ràng, hoặc tìm với path trỏ thẳng vào editorial/, vẫn được.
+editorial/

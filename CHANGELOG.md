@@ -2,6 +2,17 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Khung mục Bài viết và gói bàn giao cho cụm 3 bài (13/11/2026, chờ duyệt)
+
+**Site chưa đổi.** Đợt này chỉ chốt kế hoạch và đặt chỗ cho bản nháp.
+
+- **Quyết định D57–D66** (`docs/08` §1e; đầy đủ ở `docs/24`): mục Bài viết riêng, trục Claude, nháp chung repo nhưng ngoài `site/`, giọng "tôi", ghi ngày thu thập thay cho luật nguồn, thứ tự 80% → memory → model và effort.
+- **`editorial/`**: chỗ cho ý tưởng, memo, sổ nguồn và bản nháp. `.ignore` ở gốc repo cho Grep bỏ qua nó; `editorial/CLAUDE.md` chỉ nạp khi agent đọc file trong đó. Đã thử trong phiên: Grep bỏ qua đúng thư mục và vẫn tìm được khi chỉ đường dẫn thẳng; Glob vẫn liệt kê tên file.
+- **Bàn giao**: brief, ba memo của Perplexity và hai phản hồi của ChatGPT lưu nguyên văn ở `editorial/articles/00-cluster/raw/`, đánh dấu chưa kiểm chứng. `editorial/HANDOFF.md` là prompt cho phiên viết bài.
+- **Đối chiếu docs**: 11 claim về auto memory và CLAUDE.md của Claude Code đã kiểm với docs ngày 13/11/2026 (`editorial/articles/02-memory/ledger.md`). Claim "auto memory không chạy ở phiên nền" chưa xác nhận được.
+- **`docs/16` §10**: luật cho Bài viết có tác giả.
+- **Chưa làm**: `paths-ignore` cho CI (có thể kẹt PR nếu `Check site` là required check; chưa kiểm được), và mục Bài viết trên site.
+
 ## Trang chủ tự chạy, hai bàn tay không chạm, cụm từ nhấn, hover một kiểu (11/11/2026, chờ duyệt)
 
 Theo 6 góp ý của chủ dự án sau khi xem trên máy tính.

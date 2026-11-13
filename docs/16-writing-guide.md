@@ -205,6 +205,17 @@ Nhãn, nút và tên tính năng là chữ ngắn nhất trên trang nên dễ s
 
 Trước khi gửi duyệt một nhãn hay một nút mới, hỏi ba câu: (1) tách khỏi trang, chữ này còn hiểu được không; (2) có ai nói câu này bằng miệng không; (3) chữ này hứa đúng điều sẽ xảy ra khi bấm không.
 
+## 10. Bài viết có tác giả (13/11/2026, D62–D64)
+
+Mục Bài viết (`/bai-viet/`) là chỗ duy nhất của site có người nói. Mọi luật ở §1–§9 vẫn giữ, trừ các điểm dưới đây.
+
+- **Xưng hô:** tác giả xưng "tôi" khi nêu quan điểm, trải nghiệm hoặc lựa chọn của mình. Người đọc vẫn là "bạn". Không "mình", không "chúng ta". Mascot không xuất hiện trong bài viết.
+- **Quan điểm và dữ kiện:** nói rõ đâu là điều tôi nghĩ, đâu là điều nguồn nói. *Anthropic cho biết…* và *Tôi cho rằng…* là hai câu khác nhau; đừng để câu thứ hai mặc áo câu thứ nhất.
+- **Ngày thu thập:** đầu bài có dòng "Thông tin trong bài thu thập ngày dd/mm/yyyy". Số hay đổi (giá, benchmark, mức mặc định, giới hạn) đặt kèm ngày ngay trong câu: *Theo trang giá ngày 13/11/2026, …*. Không viết "hiện nay", "mới đây" (§2.1).
+- **Nguồn:** con số và câu trích có link bấm được ngay trong đoạn. Không cần SourceButton, không chặn build. Điều hãng tự công bố thì viết "hãng cho biết", không viết như thứ đã đo.
+- **Hãng khác Claude:** đối chiếu ngắn, ghi rõ chỉ để so, dẫn nguồn của chính hãng đó.
+- **Không** ghi cách bài được làm (D64). Quy trình và sổ nguồn công khai trong `editorial/`.
+
 ## Nguồn
 
 - [V1] Huỳnh Thanh Triều, "Hình ảnh của thời gian trong ngôn ngữ", *Tạp chí Khoa học ĐHSP TP.HCM*, số 9/2006, tr. 71–. <https://journal.hcmue.edu.vn/index.php/hcmuejos/article/download/1272/1263/1273>
