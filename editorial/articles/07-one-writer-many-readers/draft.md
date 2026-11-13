@@ -126,7 +126,7 @@ Các mặc định dưới đây giả định bạn dùng Claude Code theo gói
 
 ## Điều chưa ai đo, và điều sẽ làm tôi đổi ý
 
-Chưa thấy thử nghiệm ngẫu nhiên nào so sánh multi-agent với agent đơn cho người làm một mình, trên repo thật, về thời gian, chất lượng và chi phí. Bằng chứng về năng suất của con người nói chung cũng yếu: METR (24/2/2026) công bố nghiên cứu tiếp nối và tự gọi kết quả là “không đáng tin”, vì 30–50% người tham gia né những tác vụ họ không muốn làm khi thiếu AI.
+Chưa thấy thử nghiệm ngẫu nhiên nào so sánh multi-agent với agent đơn cho người làm một mình, trên repo thật, về thời gian, chất lượng và chi phí. Bằng chứng về năng suất của con người nói chung cũng yếu. METR (24/2/2026) công bố nghiên cứu tiếp nối và tự gọi kết quả là “không đáng tin”, vì 30–50% người tham gia né những tác vụ họ không muốn làm khi thiếu AI.
 
 Bằng chứng cho reviewer khác hãng chỉ là một bản thảo của một tác giả, dùng lỗi cài sẵn. Dữ liệu xung đột merge lấy từ PR năm 2024–2025. Các số đo của Anthropic và Cognition đều là dữ liệu nội bộ.
 
