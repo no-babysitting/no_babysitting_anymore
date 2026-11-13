@@ -7,4 +7,7 @@ export const SITE = {
   repo: 'https://github.com/no-babysitting/no_babysitting_anymore',
   upstream: 'https://github.com/shanraisshan/claude-code-best-practice',
   goatcounter: 'taisei',
+  /* who answers for the pages, and the day it was last checked against the sources (issue #22, D17): nickname and GitHub, no real name */
+  maintainer: { name: 'taiseixx', href: 'https://github.com/taiseixx' },
+  verifiedAt: '13/11/2026',
 };
