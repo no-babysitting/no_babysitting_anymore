@@ -59,6 +59,7 @@ Refs #21 (F-002). Library chưa có nội dung thật nên ẩn tạm: không c�
 - **Issues**: #36–#41 (sáu bài), #44 (trang Bài viết, viết bằng tiếng Anh cho coding agent), #43 (rà các rule có thể quá cứng). Spec trang chỉ nằm ở #44; `docs/24` §8 trỏ tới đó.
 - **Bài lẻ 07** (`editorial/articles/07-one-writer-many-readers/`, issue #57): bản nháp về multi-agent coding, dựng từ báo cáo nghiên cứu của tác giả. Tác giả quyết không mở lại nguồn; sổ nguồn ghi mọi dòng là `UNVERIFIED` kèm ngoại lệ. Chưa lên site.
 - **Chưa làm**: mục Bài viết trên site (#44). Lo ngại về `paths-ignore` cho CI đã được D74 giải quyết.
+- **Bản ghi duyệt (do agent ghi, không phải chủ dự án)**: 13/11/2026, trong phiên Claude Code, qua hộp hỏi lựa chọn. Chủ dự án chọn phương án "Merge luôn, sửa bằng PR nhỏ nếu cần (Recommended)" cho câu hỏi về PR này, gồm ba chỗ cần xem: `docs/06` §1 mục 8, dòng mới ở `AGENTS.md` §5, mặc định `/articles/` ẩn khỏi menu. Đây là lựa chọn có sẵn, không phải câu chủ dự án tự viết. Năm câu hỏi ở mô tả PR (mục 4 về quy tắc "agent không tự merge" của bài 07, mục 5 về Gemini) vẫn mở cho tới khi hỏi riêng. CI của lần chạy cuối trên PR này (chỉ đổi tài liệu, bộ kiểm site bị bỏ qua theo D74) hết 7 giây.
 
 ## Trang chủ tự chạy, hai bàn tay không chạm, cụm từ nhấn, hover một kiểu (11/11/2026, chờ duyệt)
 
