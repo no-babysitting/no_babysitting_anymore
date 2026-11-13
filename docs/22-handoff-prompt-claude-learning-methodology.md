@@ -1,5 +1,7 @@
 # 22 · Handoff to Claude — Apply the Transfer-first methodology
 
+> **Status (13/11/2026): done.** The assignment was carried out; the result is `docs/23-learning-evidence-blueprint.md`. This file is no longer a source of instructions for new sessions: standing instructions are in `AGENTS.md` (D70).
+
 You are continuing work in `no-babysitting/no_babysitting_anymore`.
 
 ## Outcome
