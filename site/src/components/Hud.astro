@@ -6,11 +6,14 @@ import { PARTS, LENSES, PHASE_LABEL } from '../content/parts';
 import { url } from '../lib/url';
 import { iconSVG, ICONS } from '../lib/icons';
 import { SITE } from '../config';
+import { loadArticles } from '../lib/articles';
 /* current: '00'…'04' (lộ trình chính), 'thuc-hanh', 'c02' (Nâng cao A1), hoặc không có (trang chủ) */
 const { current } = Astro.props as { current?: string };
+/* the Articles entry shows only once at least one article is published (issue #44, D25): the fixture does not count */
+const hasArticles = (await loadArticles()).length > 0;
 const i = PARTS.findIndex((p) => p.id === current);
 const c = i >= 0 ? PARTS[i] : null;
-const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.phase]} · ${c.id}`) : current === 'thuc-hanh' ? 'Thực hành' : current === 'c02' ? 'Nâng cao · A1' : '';
+const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.phase]} · ${c.id}`) : current === 'thuc-hanh' ? 'Thực hành' : current === 'c02' ? 'Nâng cao · A1' : current === 'articles' ? 'Bài viết' : '';
 ---
 <header class="hud">
   <div class="wrap row">
@@ -18,6 +21,7 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
     {where && <span class="nb-micro part">{where}</span>}
     <nav class="links" aria-label="Trang">
       {c && <span class="nb-micro pos"><b>{c.id}</b> · {i + 1}/{PARTS.length}</span>}
+      {hasArticles && <a class="nb-micro lib" href={url('articles/')} aria-current={current === 'articles' ? 'page' : undefined}>Bài viết</a>}
       <button class="nb-micro lensb" type="button" data-lens-open aria-haspopup="dialog" aria-expanded="false" aria-controls="nb-lens"><span class="lk">Lens<span class="lv">: <b data-lens-name>Chung</b></span></span></button>
       <button class="ib" type="button" data-motion aria-pressed="true" title="Tắt chuyển động của trang">
         <span class="sq"><span class="on" set:html={iconSVG('pause')} /><span class="off" set:html={iconSVG('play')} /></span>
@@ -37,6 +41,7 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
     <nav aria-label="Menu">
       <ul class="m-main">
         <li><a href={url()} aria-current={!current ? 'page' : undefined}>Trang chủ</a></li>
+        {hasArticles && <li><a href={url('articles/')} aria-current={current === 'articles' ? 'page' : undefined}>Bài viết</a></li>}
       </ul>
       <p class="nb-micro m-h">Lộ trình chính · {PARTS.length} phần</p>
       <ol class="m-ch">
@@ -127,7 +132,9 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
   .m-foot { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; color: var(--fg-muted); }
   .m-foot a { color: var(--fg); text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 44px; }
   @media (max-width: 520px) { .row > .part, .pos { display: none; } .wm { width: 156px; } .row { gap: 8px; } }
-  @media (max-width: 640px) { .lensb .lv { display: none; } }
+  .lib { display: inline-flex; align-items: center; height: 44px; padding: 0 10px; color: var(--fg); text-underline-offset: 3px; }
+  .lib[aria-current] { text-decoration: underline; }
+  @media (max-width: 640px) { .lib, .lensb .lv { display: none; } }
   @media (max-width: 360px) { .lensb { display: none; } }
 </style>
 <script>

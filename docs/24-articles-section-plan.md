@@ -74,6 +74,22 @@ Chạy khi tác giả nói "đăng bài NN" và `status: approved` ở `brief.md
 6. Chữ mới theo `AGENTS.md` §3: tác giả duyệt, agent chính ghi bản ghi duyệt rồi merge. Đối chiếu nguồn theo §8, và PR ghi đúng sự thật về việc đó (mẫu "chủ dự án là người đối chiếu duy nhất" không đúng cho bài 07: không ai đối chiếu nguồn gốc, tác giả quyết đăng theo báo cáo).
 7. Trong cùng PR: `status: published` và `publishedAt` ở `brief.md`; cập nhật bảng ở `editorial/README.md`; một mục ở `CHANGELOG.md`.
 
+### Cú pháp markdown của bài (đã dựng ở #44, lát 2)
+
+Bài nằm ở `site/src/content/articles/<slug>.md`. Trang thử `/articles/sample/` (`site/src/content/article-fixtures/sample.md`) dùng mọi yếu tố dưới đây, nên là mẫu để chép.
+
+- **Tên file** là slug: chữ thường, số và dấu `-`, không bắt đầu bằng số; `sample` dành riêng. Sai thì build hỏng.
+- **Ngày** (`publishedAt`, `verifiedAt`) viết trong nháy: `"2026-11-13"`. Ngày không nháy bị từ chối vì YAML đổi nó thành `Date` và cuộn ngày không tồn tại.
+- **`related`** là mảng chuỗi, id phần ở lộ trình hoặc `c02`: `related: ["01", "c02"]`. `00` không nháy là số 0, build báo lỗi.
+- **Callout:** `<aside aria-label="Quan điểm của tôi">`, dòng trống, nội dung markdown, dòng trống, `</aside>`. Nhãn lấy từ `aria-label`.
+- **Bảng:** bảng markdown thường; trên điện thoại thành thẻ, mỗi ô mang nhãn cột (cần hàng tiêu đề).
+- **Khối mã và prompt:** hàng rào ``` thường; nút Chép gắn tự động.
+- **Chú thích cuối:** `[^1]` và `[^1]: …`.
+- **Ảnh:** `![alt](./ten-anh.svg)` với file nằm cạnh bài; alt bắt buộc, thiếu là build hỏng. SVG nhúng trực tiếp cần `aria-label` hoặc `<title>`.
+- **Link:** `/01/` (bắt đầu bằng `/`) tự được thêm đường dẫn gốc của site; link `https://…` mở tab mới.
+- **Chữ Anh xen giữa:** `<em lang="en">context window</em>`.
+- **Mục lục** chỉ hiện khi bài có ít nhất bốn H2.
+
 ## 7. Chuẩn nội dung
 
 Con trỏ, không phải luật: giọng và chữ ở `16-writing-guide.md` §1 (ngoại lệ xưng "tôi"); nguồn và ngày ở `06-sources-and-links.md` §1 mục 8; nhãn bằng chứng ở `editorial/CLAUDE.md`.
