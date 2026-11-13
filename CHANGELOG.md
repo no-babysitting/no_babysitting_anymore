@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Thẻ chia sẻ theo thông điệp hiện hành: title, meta description, og.png (13/11/2026)
+
+Refs #24 (F-005). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J (bản ghi do agent viết, theo `AGENTS.md` §3). Trang chủ: thẻ `<title>` thành "No Babysitting · Giao trọn việc cho Claude, thôi cầm tay chỉ việc"; meta description (và `og:description`) thành "Claude đã khôn hơn rồi, sao bạn vẫn còn phải trông trẻ? Hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó. Hướng dẫn không chính thức." (chỉ ghép các câu hero đã có). `og.png` dựng lại bằng `tools/make-brand-assets.js` với hai dòng của hero và dòng "Dự án cộng đồng độc lập · không phải trang chính thức của Anthropic". Các trang khác giữ nguyên mô tả chung. Đo được: sha256 của `og.png` khác `2df0bcbc…32d2`; meta description chứa `trông trẻ`; `<title>` dài hơn "No Babysitting" và có dấu tiếng Việt.
+
 ## Lỗi tiếp cận nhỏ còn lại: hộp thoại Lens, nhãn vùng trùng, landmark, robots.txt (13/11/2026)
 
 Refs #30 (F-011). Không có chữ mới. Hộp thoại Lens thành `<dialog>` mở bằng `showModal()` (có `aria-modal="true"`): phần còn lại của trang bị khoá khi mở, Tab quay vòng trong hộp, Esc đóng và trả focus về nút Lens, bấm ra ngoài thì đóng. Vùng chứa câu tuyên ngôn ở trang chủ bỏ `aria-labelledby` để câu không được đọc hai lần. Khối ghi chú của chương (`aside`) thành `div role="note"` để hết lỗi axe `landmark-unique` ở /01/ và /03/. Thêm `robots.txt` (cho phép tất cả, nêu sitemap). Giới hạn đã biết: trình thu thập chỉ đọc `robots.txt` ở gốc host, mà trang này nằm dưới `/no_babysitting_anymore/`, nên tệp nằm ở `/no_babysitting_anymore/robots.txt`; tệp ở gốc `no-babysitting.github.io` thuộc repo Pages của tổ chức. Đo được: phép thử bằng trình duyệt cho Lens (mở, Tab, Esc, bấm ngoài, chọn); bộ kiểm xanh (xem PR).
