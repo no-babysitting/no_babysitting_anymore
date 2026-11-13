@@ -1,0 +1,9 @@
+---
+/* The fixture: a test article that exercises the template. noindex; not linked, not in the sitemap, not in any index (issue #44).
+   It is built into dist so that check.cjs, design-check.cjs and type-check.cjs see the template. */
+import Article from '../../layouts/Article.astro';
+import { loadFixtures } from '../../lib/articles';
+const entry = (await loadFixtures()).find((e) => e.id === 'sample');
+if (!entry) throw new Error('src/content/article-fixtures/sample.md is missing: the fixture page cannot be built');
+---
+<Article entry={entry} noindex />
