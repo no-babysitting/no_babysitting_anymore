@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Tranh Bài viết ngoài khoá art, và #44 cắt thành ba PR (13/11/2026, D77, D78)
+
+Không đổi site, không có chữ mới. Chủ dự án chọn trong phiên Claude Code, hộp hỏi lựa chọn: "Ba PR (Recommended)" cho cách cắt #44 và "Không, chỉ qua ngân sách đã đo (Recommended)" cho câu tranh Bài viết có vào khoá art không. Đây là lựa chọn có sẵn, không phải câu chủ dự án tự viết; bản ghi do agent viết. `AGENTS.md` §2 thêm một câu ở dòng art; `docs/08` §1f thêm D77 và D78. D77 chỉ nói về tranh Bài viết; hình mở chương vẫn theo `docs/19` §2. Refs #43, #44.
+
 ## Ngôn ngữ của code: tiếng Anh cho code và commit, tiếng Việt cho chữ người đọc, PR và issue (13/11/2026, D76)
 
 Không đổi site, không có chữ mới. Chủ dự án chọn (13/11/2026, phiên Claude Code, hộp hỏi lựa chọn: "Ghi: code và commit tiếng Anh, PR/issue tiếng Việt"). Thêm một đoạn ở `AGENTS.md` và dòng D76 ở `docs/08` §1f; số D trong hai chỗ trỏ đã cập nhật. Sửa dòng "PR text in English" ở issue #44 cho khớp. Refs #44.

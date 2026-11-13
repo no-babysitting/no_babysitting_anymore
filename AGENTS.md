@@ -1,6 +1,6 @@
 # AGENTS.md · chỉ dẫn cố định cho agent làm việc trong repo này
 
-Đọc file này trước mọi việc. Nó là **nơi duy nhất** nói ai làm gì, ai được merge gì, ai được sửa gì (quyết định D67–D74 và D76 ở `docs/08` §1f, 13/11/2026). Nó không chép lại luật chi tiết: mỗi luật có một chỗ ở `docs/`, file này chỉ trỏ tới. Không cần dán prompt vào phiên; mở repo là đủ. `CLAUDE.md` chỉ nạp file này.
+Đọc file này trước mọi việc. Nó là **nơi duy nhất** nói ai làm gì, ai được merge gì, ai được sửa gì (quyết định D67–D74 và D76–D78 ở `docs/08` §1f, 13/11/2026). Nó không chép lại luật chi tiết: mỗi luật có một chỗ ở `docs/`, file này chỉ trỏ tới. Không cần dán prompt vào phiên; mở repo là đủ. `CLAUDE.md` chỉ nạp file này.
 
 Chủ dự án: `taiseixx`, viết tiếng Việt; trả lời bằng tiếng Việt.
 
@@ -25,7 +25,7 @@ Chi tiết về bên đánh giá: `docs/independent-evaluation-council/` và rep
 |---|---|---|
 | Code, chuyển động, hạ tầng, CI, tài liệu quy trình, **không có chữ mới** | Agent chính tự merge | CI `check` xanh trên đúng commit cuối; PR đủ khuôn §6. Ngoại lệ duy nhất: commit chỉ gộp `main` vào nhánh để giải xung đột `CHANGELOG.md` thì không cần chờ CI chạy lại (tốc độ là ưu tiên) |
 | Chữ mới trên site | Agent chính merge **sau khi** chủ dự án duyệt | Bản ghi §3 |
-| ASCII art đã khoá, `design-system/art-lock.json` | Chủ dự án phải đồng ý đổi art trước | `docs/19` §2, D55; ảnh trước và sau trong PR |
+| ASCII art đã khoá (8 mảnh đã duyệt, mặt mascot), `design-system/art-lock.json` | Chủ dự án phải đồng ý đổi art trước | `docs/19` §2, D55; ảnh trước và sau trong PR. Tranh mới của Bài viết **ngoài khoá** theo mặc định (D77): cổng là ngân sách đã đo; chủ dự án vẫn chọn hướng từ bản nháp HTML |
 | Quyết định sản phẩm mới | Chủ dự án quyết; agent ghi vào `docs/08` | Số D tiếp theo |
 
 ## 3. Duyệt chữ mới (D13)
@@ -48,7 +48,7 @@ Chữ mới là mọi chữ người đọc thấy mà chưa nằm trên site: c
 
 | Cần biết | Đọc |
 |---|---|
-| Quyết định đã chốt (D1–D76) | `docs/08` |
+| Quyết định đã chốt (D1–D78) | `docs/08` |
 | Nội dung và nguồn | `docs/14`, `docs/17` §3 (nguồn chính thức), `docs/06` |
 | Văn phong, chữ trên giao diện | `docs/16` |
 | Chữ, chuyển động, design system | `docs/09`, `docs/11`, `docs/13`, `docs/15`, `design-system/SOURCE-OF-TRUTH.md` |
