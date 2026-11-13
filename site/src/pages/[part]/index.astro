@@ -138,6 +138,8 @@ const label = p.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[p.phase
   .pt :global(.nb-gold) { font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .32em; text-decoration-skip-ink: none; }
   .pt :global(.ref) { color: var(--fg-subtle); white-space: nowrap; }
   .pt :global(.ref a) { color: var(--fg-muted); text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 44px; }
+  /* a source tag such as S2 links to the source itself; on a phone it still needs a 40px target (design-check · tap) */
+  .pt :global(.ref a[target]) { justify-content: center; min-width: 40px; padding-inline: 12px; box-sizing: border-box; }
 
   .lst { display: grid; gap: 8px; }
   .lst ul, .lst ol { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; font-size: 17px; line-height: 1.6; max-width: var(--measure); }
