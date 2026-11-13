@@ -23,7 +23,8 @@ const issue = `${SITE.repo}/issues/new?title=${encodeURIComponent('Góp ý: ' + 
       <h2 class="nb-micro" id="sf-about">Về dự án</h2>
       <p><b>No Babysitting</b> · <span lang="en">{SITE.descriptor}</span>.</p>
       <p>Dự án cộng đồng độc lập, <b>không liên kết, không được tài trợ hay xác nhận bởi Anthropic</b>. Claude và Claude Code là thương hiệu của Anthropic.</p>
-      <p class="lic">Code: MIT · Nội dung: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" lang="en">CC BY-NC-SA 4.0</a> · Một phần tổng hợp từ <a href={SITE.upstream}>claude-code-best-practice</a> (MIT)</p>
+      <p>Người duy trì: <a href={SITE.maintainer.href}>{SITE.maintainer.name}</a> · kiểm chứng ngày {SITE.verifiedAt}. Thấy chỗ sai? <a href={issue} target="_blank" rel="noopener">Báo sai trên GitHub</a>.</p>
+      <p class="lic">Code: <a href={`${SITE.repo}/blob/main/LICENSE`}>MIT</a> · Nội dung: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" lang="en">CC BY-NC-SA 4.0</a> · Một phần tổng hợp từ <a href={SITE.upstream}>claude-code-best-practice</a> (MIT)</p>
     </section>
   </div>
 </footer>

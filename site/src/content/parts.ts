@@ -23,6 +23,8 @@ export const SOURCES: Record<string, { label: string; href: string }> = {
   S4: { label: 'Claude Code docs · How Claude remembers your project', href: 'https://code.claude.com/docs/en/memory' },
   S5: { label: 'Claude Code docs · Extend Claude with skills', href: 'https://code.claude.com/docs/en/skills' },
   S6: { label: 'Anthropic · The unreasonable effectiveness of HTML (20/05/2026)', href: 'https://claude.dev/blog/using-claude-code-the-unreasonable-effectiveness-of-html/' },
+  S18: { label: 'Anthropic · Cowork: Overview', href: 'https://claude.com/docs/cowork/overview' },
+  S19: { label: 'Claude Code docs · Overview', href: 'https://code.claude.com/docs/en/overview' },
   S14: { label: 'Cộng đồng · shanraisshan/claude-code-best-practice', href: 'https://github.com/shanraisshan/claude-code-best-practice' },
   S15: { label: 'Anthropic · Cowork: Organize work with projects', href: 'https://claude.com/docs/cowork/guide/projects' },
   S16: { label: 'Claude Code docs · Configure permissions', href: 'https://code.claude.com/docs/en/permissions' },
@@ -113,13 +115,20 @@ export const PARTS: Part[] = [
           sales: [['', 'Bạn soạn các gói bán cho những shop online, và trả lời khi khách hỏi trước lúc mua.']],
           spec: [['', 'Bạn viết bản đặc tả cho phần học: cách tính tiến độ, bài kiểm tra cuối khoá, và điều kiện để được cấp chứng nhận.']],
         } },
+      { t: 'h', text: 'Bạn đang ở đâu?' },
+      { t: 'list', src: ['S18', 'S19'], items: [
+        '<b>Chat</b> là nơi bạn đã quen (trò chuyện, tức chat, trên claude.ai hoặc app Claude). Bắt đầu ở đây nếu bạn chỉ cần hỏi, soạn, bàn bạc.',
+        '<b>Cowork</b> nằm trong app Claude Desktop, không cần mở terminal; Claude làm trực tiếp trên file ở máy bạn. Hợp cho việc văn phòng nhiều bước như tài liệu, bảng tính, nghiên cứu.',
+        '<b>Claude Code</b> chạy ở terminal, trong trình soạn code, trong app Claude (thẻ Code) và trên web (<code>claude.ai/code</code>). Hầu hết các cách đều cần gói Claude trả phí hoặc tài khoản Console.',
+      ] },
+      { t: 'p', html: 'Chưa biết chọn gì: cứ bắt đầu từ nơi bạn đang dùng Claude hằng ngày. Mỗi kỹ thuật ở các phần sau có nhãn cho biết dùng được ở đâu.' },
       { t: 'p', html: 'No babysitting không có nghĩa là bỏ mặc cho xong. Đến phần 04, bạn sẽ thấy rõ mình cần giữ lại những việc gì.' },
     ],
     close: {
       line: `Thôi cầm tay chỉ việc không có nghĩa là buông tay hẳn. Bạn vẫn ${G('đặt tay đúng hai chỗ')}: lúc làm rõ công việc, và lúc duyệt kết quả.`,
       prompt: all((id) => `Đây là ${PASTE[id][0]}: [${PASTE[id][1]}]. Tôi muốn rút gọn nó lại. Hãy chỉ ra giúp tôi ba nhóm: dòng nào bạn vẫn tự làm đúng mà không cần tôi dặn, những dòng nào đang chỏi nhau, và còn điều gì chỉ có tôi biết mà tôi chưa nói ra. Chỗ nào bạn chưa chắc thì hỏi lại tôi, đừng đoán.`),
     },
-    sources: ['S1', 'S3'],
+    sources: ['S1', 'S3', 'S18', 'S19'],
   },
 
   {
@@ -132,7 +141,7 @@ export const PARTS: Part[] = [
     core: [
       { t: 'h', text: 'Bản đồ không phải là lãnh thổ' },
       { t: 'p', html: `Tất cả những gì bạn đưa cho Claude, từ ${T('prompt', 'câu lệnh bạn gõ')}, các file cho tới skill, mới chỉ là tấm bản đồ. Còn nơi công việc thật sự diễn ra, với khách hàng thật, dữ liệu thật và những ràng buộc thật, mới là lãnh thổ. Anh Thariq Shihipar ở Anthropic gọi những chỗ bản đồ không khớp với lãnh thổ là ${E('unknowns')}, tạm dịch là ${G('điều chưa biết')}.` },
-      { t: 'p', src: ['S2'], html: 'Hễ gặp một điều chưa biết là Claude buộc phải đoán xem bạn muốn gì. Việc càng dài thì em nó càng gặp nhiều chỗ phải đoán như thế. Tác giả kể rằng Claude Fable là model đầu tiên khiến chất lượng công việc bị giới hạn bởi chính khả năng làm rõ điều chưa biết của tác giả.' },
+      { t: 'p', src: ['S2'], html: 'Hễ gặp một điều chưa biết là Claude buộc phải đoán xem bạn muốn gì. Việc càng dài thì em nó càng gặp nhiều chỗ phải đoán như thế. Tác giả bài gốc kể rằng Claude Fable là model đầu tiên khiến chất lượng công việc bị giới hạn bởi chính khả năng làm rõ điều chưa biết của tác giả.' },
       { t: 'h', text: 'Bốn loại điều chưa biết' },
       { t: 'p', html: 'Mỗi lần mang một việc tới cho Claude, tác giả lại chia những gì mình biết ra thành bốn ô:' },
       { t: 'grid4', cells: [
