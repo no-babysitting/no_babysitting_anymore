@@ -14,6 +14,10 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 - **Issues**: #36–#41 (sáu bài), #44 (trang Bài viết, viết bằng tiếng Anh cho coding agent), #43 (rà các rule có thể quá cứng). Spec trang chỉ nằm ở #44; `docs/24` §8 trỏ tới đó.
 - **Chưa làm**: `paths-ignore` cho CI (có thể kẹt PR nếu `Check site` là required check; chưa kiểm được), và mục Bài viết trên site.
 
+## Ẩn Library, gỡ chữ nội bộ khỏi trang Nâng cao (13/11/2026)
+
+Refs #21 (F-002). Library chưa có nội dung thật nên ẩn tạm: không còn trong menu, nút Finale, trang 404 và sitemap; địa chỉ `/library/` chuyển ngay về trang chủ (noindex). Bốn nhãn `b1–b4` của trang Nâng cao thành comment trong mã, hai vùng `b2`, `b3` bỏ `aria-labelledby` vì nhãn không còn. Không có chữ mới: chỉ xoá hai chữ "ở b2" khỏi "Chốt dự đoán ở b2 để mở mô phỏng", vì nhãn b2 không còn hiện; và xoá "đặt trong ContradictionNote," (tên thành phần của design system) khỏi dòng chú thích của đồng hồ context. Hai danh sách trang của `check.cjs` và `design-check.cjs` bỏ `library/` vì trang không còn. Đo được: `dist/` không còn chữ `library` ở sitemap, trang chủ, 404; bộ kiểm xanh (xem PR).
+
 ## Trang chủ tự chạy, hai bàn tay không chạm, cụm từ nhấn, hover một kiểu (11/11/2026, chờ duyệt)
 
 Theo 6 góp ý của chủ dự án sau khi xem trên máy tính.
