@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Lỗi tiếp cận nhỏ còn lại: hộp thoại Lens, nhãn vùng trùng, landmark, robots.txt (13/11/2026)
+
+Refs #30 (F-011). Không có chữ mới. Hộp thoại Lens thành `<dialog>` mở bằng `showModal()` (có `aria-modal="true"`): phần còn lại của trang bị khoá khi mở, Tab quay vòng trong hộp, Esc đóng và trả focus về nút Lens, bấm ra ngoài thì đóng. Vùng chứa câu tuyên ngôn ở trang chủ bỏ `aria-labelledby` để câu không được đọc hai lần. Khối ghi chú của chương (`aside`) thành `div role="note"` để hết lỗi axe `landmark-unique` ở /01/ và /03/. Thêm `robots.txt` (cho phép tất cả, nêu sitemap). Giới hạn đã biết: trình thu thập chỉ đọc `robots.txt` ở gốc host, mà trang này nằm dưới `/no_babysitting_anymore/`, nên tệp nằm ở `/no_babysitting_anymore/robots.txt`; tệp ở gốc `no-babysitting.github.io` thuộc repo Pages của tổ chức. Đo được: phép thử bằng trình duyệt cho Lens (mở, Tab, Esc, bấm ngoài, chọn); bộ kiểm xanh (xem PR).
+
 ## Trang chủ tự chạy, hai bàn tay không chạm, cụm từ nhấn, hover một kiểu (11/11/2026, chờ duyệt)
 
 Theo 6 góp ý của chủ dự án sau khi xem trên máy tính.
