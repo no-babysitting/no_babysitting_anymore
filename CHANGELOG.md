@@ -2,6 +2,9 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Chương 00: hộp "Bạn đang ở đâu?" (13/11/2026)
+
+Refs #26 (F-007). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J (bản ghi do agent viết, theo `AGENTS.md` §3). Cuối chương 00 có mục "Bạn đang ở đâu?" với ba dòng cho chat, Cowork và Claude Code (nguồn: tổng quan Cowork và tổng quan Claude Code, thêm S18, S19) và một dòng chỉ đường cho người chưa biết chọn gì. Một chỗ khác bản đã duyệt: dòng chat có thêm ", tức chat," để cụm `chat` có dạng chữ thường mà phép đo của #26 so khớp. Chưa làm: đổi câu đố ở chương 04 sang tình huống không cần kiến thức kỹ thuật (phần thứ hai của đề xuất #26), chờ track Nhập môn. Đo được: chương 00 có `chat`, `Cowork`, `Claude Code` trong cùng một khối.
 ## Nguồn bấm được ngay trong đoạn; hai câu về Cowork đối chiếu lại (13/11/2026)
 
 Refs #31 (F-012). **Duyệt chữ:** 13/11/2026, trong phiên Claude Code, chủ dự án trả lời "Duyệt tất cả như đề xuất" cho gói chữ F–J (bản ghi do agent viết, theo `AGENTS.md` §3). Nhãn nguồn ở cuối đoạn ("S2 · S14") trước đây là chữ thường; nay mỗi nhãn là link tới nguồn, mở tab mới, có tên đầy đủ cho trình đọc màn hình và vùng bấm rộng 40px trên điện thoại (không đổi chữ). Hai câu về Cowork đối chiếu với tài liệu Cowork (trang "Organize work with projects", thêm làm nguồn S15): bỏ "khác hẳn" vì tài liệu Claude Code nói phiên Cowork trên máy tính cũng nạp `~/.claude/CLAUDE.md`; câu về hướng dẫn thành "phần Instructions (hướng dẫn) của project (dự án), áp dụng cho mọi phiên trong project đó"; câu về bộ nhớ thành "Cowork cũng có bộ nhớ, tính riêng cho từng project và giữ lại giữa các phiên". Hai câu trích của Boris Cherny có trong README của claude-code-best-practice (mục Tips and Tricks, ghi nguồn từ Boris Cherny); chưa mở được bài đăng gốc trên X để xác minh. Đo được: đoạn chứa "Boris Cherny" có `<a>` trong cùng khối.
