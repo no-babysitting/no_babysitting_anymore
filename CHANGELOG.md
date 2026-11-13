@@ -9,6 +9,12 @@ Không đổi site, không có chữ mới. **Nới có chủ đích, do chủ d
 ## CI nhanh hơn: cache trình duyệt Playwright, huỷ lần chạy cũ (13/11/2026)
 
 Không đổi site, không đổi phép kiểm nào, không có chữ mới. `check.yml` và `deploy.yml` cache `~/.cache/ms-playwright` (khoá theo hệ điều hành và phiên bản Playwright, nay một biến `PW_VERSION` dùng chung cho cả hai) nên lần chạy sau không tải lại trình duyệt; `check.yml` có `concurrency` huỷ lần chạy cũ khi đẩy commit mới lên cùng một PR (`deploy.yml` giữ nhóm `pages`, không huỷ). Đo được: thời gian bước "Install Chromium" và số lần chạy 8 phút mỗi PR; số đo sau khi PR này chạy xong ghi ở mô tả PR. Phần nới phép kiểm chủ dự án đã đồng ý (deploy bớt bộ kiểm, PR chỉ đổi tài liệu bỏ qua bộ kiểm site) nằm ở PR riêng (D74).
+## CI nhanh hơn: cache trình duyệt Playwright, huỷ lần chạy cũ (13/11/2026)
+
+Không đổi site, không đổi phép kiểm nào, không có chữ mới. `check.yml` và `deploy.yml` cache `~/.cache/ms-playwright` (khoá theo hệ điều hành và phiên bản Playwright, nay một biến `PW_VERSION` dùng chung cho cả hai) nên lần chạy sau không tải lại trình duyệt; `check.yml` có `concurrency` huỷ lần chạy cũ khi đẩy commit mới lên cùng một PR (`deploy.yml` giữ nhóm `pages`, không huỷ). Đo được: thời gian bước "Install Chromium" và số lần chạy 8 phút mỗi PR; số đo sau khi PR này chạy xong ghi ở mô tả PR. Phần nới phép kiểm chủ dự án đã đồng ý (deploy bớt bộ kiểm, PR chỉ đổi tài liệu bỏ qua bộ kiểm site) nằm ở PR riêng (D74).
+## Dọn file bytecode Python bị theo dõi nhầm (13/11/2026)
+
+Không đổi site, không có chữ mới. Gỡ `tools/__pycache__/contrast.cpython-313.pyc` khỏi git và thêm `.gitignore` ở gốc (`__pycache__/`, `*.pyc`), vì `tools/contrast.py` sinh lại tệp này mỗi lần chạy. Đo được: `git ls-files | grep -c pycache` từ 1 xuống 0. Các mục dọn khác của `/skill-doctor` (nhánh đã merge, ảnh tham khảo, `previews/`) chưa làm theo lựa chọn của chủ dự án.
 
 ## Thẻ chia sẻ theo thông điệp hiện hành: title, meta description, og.png (13/11/2026)
 
