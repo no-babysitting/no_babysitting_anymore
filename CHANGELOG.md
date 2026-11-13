@@ -5,6 +5,9 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 ## Tự host font: không còn request tới Google (13/11/2026)
 
 Refs #28 (F-009). Không có chữ mới. Archivo, Be Vietnam Pro, JetBrains Mono và Newsreader nay nằm ở `site/public/fonts/` (27 tệp `woff2`, 840 KB; trình duyệt chỉ tải tệp có ký tự trang cần nhờ `unicode-range`) kèm `fonts.css` với đường dẫn tương đối. Giữ đúng họ, độ đậm, trục và nghiêng thật như trước; chỉ giữ ba bộ ký tự dùng cho tiếng Việt (latin, latin-ext, vietnamese), bỏ Cyrillic và Hy Lạp vì trang không dùng. `tools/fetch-fonts.cjs` tải lại được. Bỏ hai `preconnect` và liên kết Google Fonts khỏi `Base.astro`. Dòng riêng tư ở chân trang vốn chỉ nhắc GoatCounter nên nay khớp thực tế. Đo được: tập host của mọi request trên các trang đã quét chỉ còn `localhost` (bản live: `no-babysitting.github.io`) và GoatCounter; bộ kiểm xanh (xem PR). Các trang xem trước trong `design-system/` vẫn tải từ Google Fonts; không phải bản live.
+## Bản live cho biết đang chạy commit nào (13/11/2026)
+
+Refs #33 (F-014). Không có chữ mới. Bước mới trong `deploy.yml`, ngay trước khi xuất bản, ghi `dist/build.json` với `sha` (đủ 40 ký tự hex), `short` (7 ký tự) và `built_at` (UTC). Đo được: sau triển khai, GET `/no_babysitting_anymore/build.json` trả 200 và `sha` bằng commit của lần triển khai (đối chiếu với `git rev-parse origin/main` tại thời điểm merge).
 
 ## Ẩn Library, gỡ chữ nội bộ khỏi trang Nâng cao (13/11/2026)
 
