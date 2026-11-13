@@ -11,7 +11,7 @@ Ngày 13/11/2026, GitHub báo PR [#35](https://github.com/no-babysitting/no_baby
 
 Cả hai lần chỉ có một file xung đột là `CHANGELOG.md`. Ba PR cùng thêm một mục mới ở đầu file: PR của tôi, [#42](https://github.com/no-babysitting/no_babysitting_anymore/pull/42) và [#46](https://github.com/no-babysitting/no_babysitting_anymore/pull/46). Git không biết mục nào đứng trước nên dừng lại hỏi. Agent giữ cả ba mục, rồi dời mục của PR tôi xuống dưới các mục cùng ngày để lần sau không ai chèn đúng chỗ đó.
 
-Xung đột này vô hại: chỉ là một dòng nhật ký, không phải code. Nhưng nó là ví dụ nhỏ của kiểu va chạm mà các nghiên cứu về <em lang="en">multi-agent coding</em> (nhiều agent cùng làm một việc code) đo trên quy mô lớn. Repo này cũng có hơn một agent làm việc.
+Xung đột này vô hại: chỉ là một dòng nhật ký, không phải code. Nhưng nó là ví dụ nhỏ của kiểu va chạm mà các nghiên cứu về <em lang="en">multi-agent coding</em> (nhiều agent cùng làm một việc code) đo trên quy mô lớn. Ba PR ấy chạy song song trên cùng một repo, đúng tình huống đó. Quy ước của repo có hẳn một ngoại lệ cho việc này: commit chỉ gộp `main` để giải xung đột `CHANGELOG.md` không cần chờ CI chạy lại ([AGENTS.md](https://github.com/no-babysitting/no_babysitting_anymore/blob/main/AGENTS.md), mục 2).
 
 Bài này gom bằng chứng tháng 11/2026 về chuyện thêm agent: khi nào có lời, “xong” nghĩa là gì, bạn nên đứng ở đâu và hóa đơn đi đâu. Kết luận trước: với việc code hằng ngày, hãy để một agent ghi và cho các agent khác đọc.
 

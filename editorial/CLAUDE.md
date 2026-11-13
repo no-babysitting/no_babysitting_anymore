@@ -5,7 +5,7 @@ Chỗ cho ý tưởng, memo, sổ nguồn và bản nháp của mục Bài viế
 ## Luật đã có, đọc ở chỗ gốc (đừng chép lại)
 
 - Quyết định của mục này (trục Claude, giọng, chuẩn kiểm chứng, minh bạch, đăng bài): `docs/08-kaizen-go-live.md` §1e, D57–D66.
-- Hai luật không ngoại lệ (không bịa; chữ mới chờ tác giả duyệt) và cách làm với tác giả (blind spot pass, hỏi từng câu một kèm đề xuất): `docs/17-handoff-prompt.md` §1. Áp dụng nguyên cho bài viết.
+- Vai, quyền merge, duyệt chữ mới (gồm bản ghi duyệt và việc đối chiếu nguồn), không bịa số liệu: `AGENTS.md` §1–§3, §8, §9. Áp dụng nguyên cho bài viết.
 - Giọng và chữ: `docs/16-writing-guide.md`. §1 có ngoại lệ xưng "tôi" cho Bài viết.
 - Nguồn và ngày: `docs/06-sources-and-links.md` §1, mục 8 là chuẩn nhẹ cho Bài viết.
 
@@ -16,6 +16,7 @@ Chỗ cho ý tưởng, memo, sổ nguồn và bản nháp của mục Bài viế
 3. Sáu bước với tác giả: rút luận điểm · phản biện (giả định ẩn, góc nhìn ngược) · dựng mạch · giữ giọng tác giả · rà biên tập (đúng, sâu, mạch lạc) · bản sẵn đăng.
 4. Với mỗi bài hỏi: điều gì ở đây không có trong docs và blog chính thức? Nếu không có thì bài chỉ là bản tóm tắt; nói thẳng với tác giả.
 5. Làm memo trước, chưa viết bài trơn tru che mất chỗ chưa chắc.
+6. Trước khi viết, làm blind spot pass trên brief và memo. Điều còn mơ hồ mà câu trả lời đổi cấu trúc bài thì hỏi tác giả từng câu một, kèm đề xuất của bạn; điều nhỏ thì tự quyết và ghi lại.
 
 ## Sổ nguồn (`ledger.md`, mẫu ở `_templates/`)
 

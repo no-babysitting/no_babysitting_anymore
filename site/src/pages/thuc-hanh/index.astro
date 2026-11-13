@@ -37,6 +37,7 @@ import { url } from '../../lib/url';
         {x.parts.map((pt, k) => {
           const body = (<>
             <p class="body">{pt.scene}</p>
+            {pt.primer && <div class="primer">{pt.primer.map((t) => <p set:html={t} />)}<p class="nb-micro">Nguồn · <a href="https://code.claude.com/docs/en/permissions" target="_blank" rel="noopener">Claude Code docs · Configure permissions ↗</a></p></div>}
             <p class="nb-micro">Viết ra</p>
             <ol class="asks">{pt.asks.map((a) => <li>{a}</li>)}</ol>
           </>);
@@ -82,6 +83,9 @@ import { url } from '../../lib/url';
   .from { color: var(--fg-muted); font-size: 16px; line-height: 1.5; }
   .scene { display: grid; gap: 12px; }
   .lb { margin: 0; font: 600 19px/1.35 var(--font-text); }
+  .primer { display: grid; gap: 8px; border-left: 2px solid var(--control); padding-left: 16px; max-width: var(--measure); }
+  .primer p { margin: 0; }
+  .primer p:not(.nb-micro) { font-size: 17px; line-height: 1.6; }
   .asks { margin: 0; padding-left: 1.5em; display: grid; gap: 8px; font-size: 17px; line-height: 1.6; max-width: var(--measure); }
   .more { border: 1px solid var(--control); max-width: 860px; }
   .more summary { list-style: none; cursor: pointer; min-height: 48px; padding: 0 16px; display: flex; align-items: center; gap: 12px; font: 600 13px/1.3 var(--font-mono); letter-spacing: .04em; }

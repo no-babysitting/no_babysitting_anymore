@@ -15,11 +15,11 @@ Ba chủ đề đầu trùng với kế hoạch hiện có: memory gần Nâng c
 
 ## 1. Quyết định
 
-Ở `08-kaizen-go-live.md` §1e (D57–D66). Không chép lại ở đây. Chờ chủ dự án xác nhận: D66 (một PR mỗi bài, chủ dự án duyệt rồi mới merge) và các mặc định sau: nhãn mục "Bài viết"; đường dẫn `/bai-viet/`; chỉ tiếng Việt (D1); ẩn mục khỏi menu cho tới khi có bài đầu tiên (cùng tinh thần D25).
+Ở `08-kaizen-go-live.md` §1e (D57–D66). Không chép lại ở đây. D66 (một PR mỗi bài) đã được `AGENTS.md` §2–§3 trả lời: chữ mới thì chủ dự án duyệt, agent chính ghi bản ghi duyệt rồi merge. Còn chờ chủ dự án xác nhận các mặc định sau: nhãn menu "Bài viết"; đường dẫn `/articles/` (tiếng Anh, theo chỉ dẫn 13/11/2026: mọi thứ trong code dùng tiếng Anh); chỉ tiếng Việt (D1); ẩn mục khỏi menu cho tới khi có bài đầu tiên (cùng tinh thần D25).
 
 ## 2. Hai khối việc
 
-**Khối A. Dựng mục Bài viết trên site.** Giao cho một coding agent khác qua issue #44 (viết bằng tiếng Anh; spec đầy đủ nằm ở đó, chốt qua hai vòng hỏi ngày 13/11/2026). Không cần chờ bài đầu tiên được duyệt: mục ẩn khỏi menu cho tới khi có bài đã đăng. Chữ mới trên giao diện cần chủ dự án duyệt (D13); phần code còn lại tự merge khi bộ kiểm xanh (D14).
+**Khối A. Dựng mục Bài viết trên site.** Giao cho một coding agent khác qua issue #44 (viết bằng tiếng Anh; spec đầy đủ nằm ở đó, chốt qua hai vòng hỏi ngày 13/11/2026). Không cần chờ bài đầu tiên được duyệt: mục ẩn khỏi menu cho tới khi có bài đã đăng. Chữ mới trên giao diện theo `AGENTS.md` §3 (chủ dự án duyệt); phần còn lại theo §2 (agent chính tự merge khi CI xanh).
 
 **Khối B. Từng bài.** Mỗi bài đi hết vòng đời (§5), rồi một PR đăng bài theo §6. Phiên viết bài dùng `editorial/HANDOFF.md`.
 
@@ -46,7 +46,7 @@ Chi phí token đến từ ba đường: kết quả tìm kiếm, agent tự qu�
 | Cơ chế | Kết quả kiểm chứng | Quyết định |
 |---|---|---|
 | `.ignore` ở gốc, ghi `editorial/` | **Đã thử trong phiên:** Grep bỏ qua thư mục khi tìm từ thư mục cha; vẫn tìm được khi `path` trỏ thẳng vào `editorial/`; **Glob vẫn liệt kê tên file** | Dùng. Chỉ chặn tìm nội dung |
-| `editorial/CLAUDE.md` | Docs `memory`: CLAUDE.md ở thư mục con nạp khi Claude đọc, ghi hoặc sửa file trong thư mục đó. Giới hạn 40.000 ký tự mỗi file nạp theo nhu cầu (cửa sổ 200K). Repo chưa có `CLAUDE.md` gốc nên agent chính không nạp gì thêm | Dùng. Giữ file dưới 8.000 ký tự |
+| `editorial/CLAUDE.md` | Docs `memory`: CLAUDE.md ở thư mục con nạp khi Claude đọc, ghi hoặc sửa file trong thư mục đó. Giới hạn 40.000 ký tự mỗi file nạp theo nhu cầu (cửa sổ 200K). `CLAUDE.md` gốc chỉ nạp `AGENTS.md` (D70), nên agent chính chỉ nạp thêm khi đọc file trong `editorial/` | Dùng. Giữ file dưới 8.000 ký tự |
 | `Read(editorial/**)` deny | Docs `permissions`: áp cho Read; "best-effort" cho Grep và Glob; không chặn `grep -r` chạy trong thư mục; allow không đè được deny, nên chặn luôn phiên viết bài | **Không dùng**, trừ khi hai cơ chế trên không đủ |
 
 Giới hạn cần biết:
@@ -55,7 +55,7 @@ Giới hạn cần biết:
 - `CLAUDE.md` là ngữ cảnh, không phải cưỡng chế (docs `memory`). Phần chặn thật chỉ là `.ignore`.
 - Còn lại rủi ro nhỏ: agent chủ động mở một file trong `editorial/`. Không có cơ chế nào cấm mà không chặn luôn phiên viết bài.
 - Nếu nháp vẫn gây tốn token: tách `editorial/` sang repo riêng (phương án B). Đây là lối thoát đã chuẩn bị, không phải phương án mặc định.
-- Đã cân nhắc rồi bỏ: thêm `paths-ignore: editorial/**` vào hai workflow CI. Nếu `Check site` là required check của nhánh `main`, một PR chỉ đổi `editorial/` sẽ không bao giờ có check và bị kẹt. Chưa kiểm được quy tắc bảo vệ nhánh; để dành cho khi chủ dự án xác nhận.
+- CI: D74 (`docs/08` §1f) cho PR chỉ đổi `docs/`, `editorial/` hoặc `.ignore` bỏ qua các bước nặng của `Check site`, và job `check` vẫn báo xanh nên không kẹt khi `main` được bảo vệ (D73). Không cần thêm `paths-ignore`.
 
 ## 5. Vòng đời bài
 
@@ -70,8 +70,8 @@ Chạy khi tác giả nói "đăng bài NN" và `status: approved` ở `brief.md
 2. `verifiedAt` lấy từ ngày gần nhất trong cột "Mở ngày" của `ledger.md`. Dòng "Thông tin thu thập ngày …" hiện từ frontmatter, không viết tay (D63).
 3. Mở mọi link trong bài; link chết thì báo tác giả, không tự thay.
 4. Chạy `check.cjs`, `type-check.cjs` (kèm `--selftest`) và `design-check.cjs`.
-5. Mở PR nháp, kèm một trang HTML xem trước ngắn: đã đổi gì, vì sao, rủi ro còn lại, vài câu để tác giả tự kiểm (theo `17` §1).
-6. Tác giả duyệt chữ trên PR (D13) rồi mới merge.
+5. Mở PR nháp, kèm một trang HTML xem trước ngắn: đã đổi gì, vì sao, rủi ro còn lại, vài câu để tác giả tự kiểm. Mô tả PR theo khuôn ở `AGENTS.md` §6.
+6. Chữ mới theo `AGENTS.md` §3: tác giả duyệt, agent chính ghi bản ghi duyệt rồi merge. Đối chiếu nguồn theo §8, và PR ghi đúng sự thật về việc đó (mẫu "chủ dự án là người đối chiếu duy nhất" không đúng cho bài 07: không ai đối chiếu nguồn gốc, tác giả quyết đăng theo báo cáo).
 7. Trong cùng PR: `status: published` và `publishedAt` ở `brief.md`; cập nhật bảng ở `editorial/README.md`; một mục ở `CHANGELOG.md`.
 
 ## 7. Chuẩn nội dung
@@ -80,7 +80,7 @@ Con trỏ, không phải luật: giọng và chữ ở `16-writing-guide.md` §1
 
 ## 8. Spec khối A
 
-Ở issue #44, viết bằng tiếng Anh cho coding agent. Không chép lại ở đây. Điểm đã đổi so với bản nháp đầu của mục này, vì chủ dự án chọn khác: mỗi bài có một tranh ASCII mở đầu (cơ chế tranh nằm trong cùng task); mục lục có ảnh tranh tĩnh nhóm theo cụm; TOC cố định bên lề; bảng xếp thành thẻ trên điện thoại; trang mẫu `/bai-viet/mau/` nằm trong `dist` (noindex) để bộ kiểm quét được, thay cho ý "fixture không vào dist" ban đầu vốn không kiểm được gì.
+Ở issue #44, viết bằng tiếng Anh cho coding agent. Không chép lại ở đây. Điểm đã đổi so với bản nháp đầu của mục này, vì chủ dự án chọn khác: mỗi bài có một tranh ASCII mở đầu (cơ chế tranh nằm trong cùng task); mục lục có ảnh tranh tĩnh nhóm theo cụm; TOC cố định bên lề; bảng xếp thành thẻ trên điện thoại; trang mẫu `/articles/sample/` nằm trong `dist` (noindex) để bộ kiểm quét được, thay cho ý "fixture không vào dist" ban đầu vốn không kiểm được gì.
 
 ## 9. Việc mở
 
@@ -89,15 +89,14 @@ Con trỏ, không phải luật: giọng và chữ ở `16-writing-guide.md` §1
 3. **Memory của Chat và Cowork:** memo 5 và `05-surface-matrix.md` nói chưa khớp nhau (`02-memory/ledger.md` dòng 13).
 4. **Ai rà ở bước `review`:** tác giả quyết ở bài đầu tiên.
 5. **Tên cụm** và tên tiếng Việt của nó.
-6. **`paths-ignore` cho CI:** chờ xác nhận quy tắc bảo vệ nhánh (§4).
-7. **Xem lại sau cụm 3 bài (D61):** quy trình có chạy không; nháp có gây tốn token không; bài có nói được điều docs chưa nói không; số liệu GoatCounter và phản hồi. Từ đó quyết định tách repo, mở rộng nhịp, hay dừng.
+6. **Xem lại sau cụm 3 bài (D61):** quy trình có chạy không; nháp có gây tốn token không; bài có nói được điều docs chưa nói không; số liệu GoatCounter và phản hồi. Từ đó quyết định tách repo, mở rộng nhịp, hay dừng.
 
 ## 10. Rủi ro
 
 | Rủi ro | Giảm thiểu |
 |---|---|
 | Số hay đổi (giá, benchmark, mức mặc định) lỗi thời | `verifiedAt` hiện ở đầu bài và số kèm ngày trong câu (`06` §1 mục 8); bài 03 ra cuối vì đổi nhanh nhất |
-| Memo chưa kiểm chứng bị chép thẳng vào bài | Nhãn `UNVERIFIED` trên mọi memo; hai luật không ngoại lệ (`17` §1); mọi số phải có dòng trong `ledger.md` |
+| Memo chưa kiểm chứng bị chép thẳng vào bài | Nhãn `UNVERIFIED` trên mọi memo; `AGENTS.md` §3 và §9; mọi số phải có dòng trong `ledger.md` |
 | Bài chỉ là tóm tắt tài liệu chính thức | Câu hỏi "điều gì docs chưa nói" ở mọi brief; hỏi tác giả chuyện thật và số tự đo |
 | Nháp làm agent chính tốn token | §4. Lối thoát: repo riêng |
 | Giọng "tôi" lệch khỏi phần còn lại của site | Ngoại lệ có phạm vi ở `16` §1; mascot không xuất hiện trong bài |

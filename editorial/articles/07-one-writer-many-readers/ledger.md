@@ -12,8 +12,8 @@ Nhãn và dòng nào được vào bài: `editorial/CLAUDE.md`. Cột "Mở ngà
 | # | Khẳng định (như trong bài) | Nhãn | Nguồn (theo báo cáo) | Mở ngày | Bề mặt, model, phiên bản | Điều kiện và giới hạn |
 |---|---|---|---|---|---|---|
 | 1 | PR #35 xung đột với `main` hai lần ngày 13/11/2026; cả hai lần chỉ `CHANGELOG.md` xung đột | MEASURED | PR #35; hai commit gộp `8153e3e` và `892d00b` trên nhánh `claude/trusting-tesla-c17skz` | 2026-11-13 | GitHub, repo này | Quan sát trực tiếp trong phiên làm việc. Log công khai là lịch sử commit và PR |
-| 2 | PR #35, #42 và #46 cùng thêm một mục ở đầu `CHANGELOG.md` | MEASURED | PR #35; #42 (`306db15`); #46 (`0e4fa1e`) | 2026-11-13 | GitHub, repo này | Bài không nói #42 và #46 do agent nào viết: chưa biết |
-| 3 | Agent giữ cả ba mục rồi dời mục của PR #35 xuống dưới các mục cùng ngày | MEASURED | commit `892d00b` | 2026-11-13 | GitHub, repo này | |
+| 2 | PR #35, #42 và #46 cùng thêm một mục ở đầu `CHANGELOG.md` | MEASURED | PR #35; #42 (`306db15`); #46 (`0e4fa1e`) | 2026-11-13 | GitHub, repo này | Bài không nói #42 và #46 do agent nào viết (chưa biết), và không viết "repo có hơn một agent": `AGENTS.md` (D67) ghi "không có agent thứ hai đang làm việc" |
+| 3 | Agent giữ cả ba mục rồi dời mục của PR #35 xuống dưới các mục cùng ngày; quy ước của repo có ngoại lệ cho commit chỉ gộp `main` để giải xung đột `CHANGELOG.md` (không cần chờ CI chạy lại) | MEASURED | commit `892d00b`; `AGENTS.md` §2 (D67) trên `main` | 2026-11-13 | GitHub, repo này | Vế sau là nội dung của `AGENTS.md` ngày 13/11/2026 |
 | 4 | Kim và cộng sự (Google Research, Google DeepMind, MIT): 260 cấu hình, 6 benchmark, 5 kiến trúc, 3 họ LLM; bản 3 ngày 8/4/2026 | UNVERIFIED | arXiv 2512.08296 | — | | Báo cáo §3.1. Hạng A |
 | 5 | Phối hợp tập trung +80,8% trên Finance-Agent; mọi biến thể multi-agent kém hơn 39–70% trên PlanCraft | UNVERIFIED | arXiv 2512.08296 | — | | Báo cáo §3.1. Hạng A |
 | 6 | Khi điểm của agent đơn vượt khoảng 45%, phối hợp thêm cho lợi ích giảm dần | UNVERIFIED | arXiv 2512.08296 | — | | Báo cáo §3.1. Hạng A |

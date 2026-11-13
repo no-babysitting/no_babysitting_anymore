@@ -9,13 +9,13 @@ import { url } from '../lib/url';
 import Finale from '../components/scenes/Finale.astro';
 import { PHASES, SOURCES, partOf, hl } from '../content/parts';
 ---
-<Base>
+<Base title="No Babysitting · Giao trọn việc cho Claude, thôi cầm tay chỉ việc" description="Claude đã khôn hơn rồi, sao bạn vẫn còn phải trông trẻ? Hãy cùng Claude làm rõ công việc, rồi giao trọn phần thực thi cho em nó. Hướng dẫn không chính thức.">
   <Hud />
   <main id="main" tabindex="-1">
   <Intro />
   <Spark />
 
-  <section class="manifesto-wrap" id="pyramid" aria-labelledby="pyr-h">
+  <section class="manifesto-wrap" id="pyramid">
   <canvas class="nb-canvas terrain" id="man-cv" aria-hidden="true"></canvas>
   <div class="wrap manifesto">
     <div class="stmt" data-hold="0.8">

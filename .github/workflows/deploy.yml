@@ -1,5 +1,7 @@
-# Production: every merge into main builds, checks and publishes the site to GitHub Pages
-# (docs/08-kaizen-go-live.md · D10, D14). One-time setup: Settings → Pages → Source: GitHub Actions.
+# Production: every merge into main builds, runs the page checks (links, JS errors, overflow, reduced motion, idle cost,
+# accessibility) and publishes the site to GitHub Pages (docs/08-kaizen-go-live.md · D10, D14, D74). The typography and
+# design checks run on the pull request, not again here: main only takes pull requests that passed them (D74).
+# One-time setup: Settings → Pages → Source: GitHub Actions.
 name: Deploy site
 
 on:
@@ -19,6 +21,7 @@ concurrency:
 env:
   NB_BASE: /no_babysitting_anymore/
   NB_SITE: https://no-babysitting.github.io
+  PW_VERSION: '1.63.0'
 
 jobs:
   build:
@@ -37,16 +40,10 @@ jobs:
       - run: npm run build
       - name: Install Chromium for the checks
         run: |
-          npm i --no-save playwright@1.63.0 axe-core@4.10.2
+          npm i --no-save playwright@${{ env.PW_VERSION }} axe-core@4.10.2
           npx playwright install --with-deps chromium
       - name: Checks (links, JS errors, overflow, reduced motion, idle cost)
         run: node scripts/check.cjs
-      - name: Typography self-test (the checker still catches what it should)
-        run: node scripts/type-check.cjs --selftest
-      - name: Typography (contrast, sizes, Vietnamese marks, text spacing, zoom, fonts)
-        run: node scripts/type-check.cjs
-      - name: Design lint (overlap, clipping, tap size, holds, demos start when seen)
-        run: node scripts/design-check.cjs --shots design-report
       - name: Record which commit is published (dist/build.json, issue #33)
         run: |
           printf '{"sha":"%s","short":"%s","built_at":"%s"}\n' "$GITHUB_SHA" "${GITHUB_SHA::7}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/build.json

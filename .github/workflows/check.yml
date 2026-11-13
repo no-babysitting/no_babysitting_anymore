@@ -6,9 +6,15 @@ on:
   pull_request:
   workflow_dispatch:
 
+# a newer push to the same PR makes the older run pointless: cancel it instead of paying for ~8 minutes twice
+concurrency:
+  group: check-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 env:
   NB_BASE: /no_babysitting_anymore/
   NB_SITE: https://no-babysitting.github.io
+  PW_VERSION: '1.63.0'
 
 jobs:
   check:
@@ -18,49 +24,94 @@ jobs:
         working-directory: site
     steps:
       - uses: actions/checkout@v4
+      - name: Changed checks (evidence of any edit to the checks themselves; AGENTS.md §4, D69)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        working-directory: .
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          PATHS="site/scripts design-system/art-lock.json design-system/type-rules.json .github/workflows tools/contrast.py"
+          git fetch --no-tags --depth=1 origin "$BASE"
+          files=$(git diff --name-only FETCH_HEAD HEAD -- $PATHS)
+          {
+            echo '### Phép kiểm đã đổi'
+            echo
+            if [ -z "$files" ]; then echo 'Không có file phép kiểm nào đổi.'; else
+              echo 'File đổi (AGENTS.md §4: PR phải nêu đổi gì và vì sao ở mục "Lệch tài liệu"):'; echo
+              echo "$files" | sed 's/^/- /'; echo; echo '```diff'
+              git diff -U0 FETCH_HEAD HEAD -- $PATHS | head -n 300
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Scope (a PR that only changes documentation skips the site checks; D74)
+        id: scope
+        if: github.event_name == 'pull_request'
+        working-directory: .
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE"
+          other=$(git diff --name-only FETCH_HEAD HEAD | grep -v -E '^(docs/|editorial/|\.claude/|[^/]+\.md$|LICENSE$|\.ignore$)' || true)
+          if [ -z "$other" ]; then
+            echo "docs_only=true" >> "$GITHUB_OUTPUT"
+            echo '### Chỉ đổi tài liệu: bỏ qua các bộ kiểm site (D74)' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "docs_only=false" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/setup-node@v4
+        if: steps.scope.outputs.docs_only != 'true'
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: site/package-lock.json
       - run: npm ci
+        if: steps.scope.outputs.docs_only != 'true'
       - run: npm run build
+        if: steps.scope.outputs.docs_only != 'true'
       - name: Install Chromium for the checks
+        if: steps.scope.outputs.docs_only != 'true'
         run: |
-          npm i --no-save playwright@1.63.0 axe-core@4.10.2
+          npm i --no-save playwright@${{ env.PW_VERSION }} axe-core@4.10.2
           npx playwright install --with-deps chromium
       - name: Checks (links, JS errors, overflow, reduced motion, idle cost)
+        if: steps.scope.outputs.docs_only != 'true'
         run: node scripts/check.cjs
       - name: Typography self-test (the checker still catches what it should)
+        if: steps.scope.outputs.docs_only != 'true'
         run: node scripts/type-check.cjs --selftest
       - name: Typography (contrast, sizes, Vietnamese marks, text spacing, zoom, fonts)
+        if: steps.scope.outputs.docs_only != 'true'
         run: node scripts/type-check.cjs
       - name: Design lint (overlap, clipping, tap size, holds, demos start when seen)
+        if: steps.scope.outputs.docs_only != 'true'
         run: node scripts/design-check.cjs --shots design-report
       - name: Art lock, advisory (reports drift of the signed-off ASCII art, never blocks; docs/19 §2, D55)
+        if: steps.scope.outputs.docs_only != 'true'
         continue-on-error: true
         run: node scripts/art-check.cjs --shots art-report
       - name: Art report
-        if: always()
+        if: always() && steps.scope.outputs.docs_only != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: art-report
           path: site/art-report
           if-no-files-found: ignore
       - name: Design report
-        if: always()
+        if: always() && steps.scope.outputs.docs_only != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: design-report
           path: site/design-report
           if-no-files-found: ignore
       - name: Typography report
-        if: always()
+        if: always() && steps.scope.outputs.docs_only != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: type-report
           path: site/type-report
           if-no-files-found: ignore
       - name: Contrast of the design tokens
+        if: steps.scope.outputs.docs_only != 'true'
         working-directory: .
         run: python3 tools/contrast.py design-system/tokens.json --fail

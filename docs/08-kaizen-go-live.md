@@ -101,8 +101,23 @@ Hỏi theo hai vòng (4 câu tổng quan, 4 câu chi tiết). Kế hoạch đầ
 | D63 | Kiểm chứng | Chỉ cần ghi ngày thu thập thông tin (chủ dự án: "note thêm vào là thông tin thu thập ở ngày nào là ok"). Dùng lại `verifiedAt`, một ngày cho cả bài; nguồn là link trong đoạn; không build-fail vì thiếu nguồn. Ngoại lệ ghi ở `06` §1 mục 8 | `06` §1 mục 3–5 (SourceRef cho từng nguồn, build fail), chỉ trong mục Bài viết |
 | D64 | Minh bạch | Chỉ ghi byline | — |
 | D65 | Thứ tự | 80% system prompt → memory → model và effort | — |
-| D66 | Đăng bài | Một PR mỗi bài; chủ dự án duyệt rồi merge. *Mặc định đề xuất, chờ xác nhận* | — |
-| D67 | Trang Bài viết | Spec đầy đủ ở issue #44, chốt qua hai vòng hỏi ngày 13/11/2026 (5 câu tổng quan, 14 câu chi tiết). Việc rà các rule có thể quá cứng (art-lock, danh sách trang cứng) ở issue #43 | — |
+| D66 | Đăng bài | Một PR mỗi bài; duyệt và merge theo `AGENTS.md` §2–§3 (chữ mới: chủ dự án duyệt, agent chính ghi bản ghi rồi merge) | — |
+| D75 | Trang Bài viết | Spec đầy đủ ở issue #44, chốt qua hai vòng hỏi ngày 13/11/2026 (5 câu tổng quan, 14 câu chi tiết). Việc rà các rule có thể quá cứng (art-lock, danh sách trang cứng) ở issue #43 | — |
+
+## 1f. Quyết định ngày 13/11/2026 (tổ chức làm việc của agent; trả lời issue #32 và #34)
+
+Nguồn: trả lời của chủ dự án trong phiên Claude Code 13/11/2026. Nơi duy nhất cho các luật này là `AGENTS.md`; bảng dưới chỉ ghi quyết định và điều nó thay.
+
+| # | Chủ đề | Quyết định | Thay cho |
+|---|---|---|---|
+| D67 | Quyền merge | Agent chính (Claude) tự merge mọi PR **không có chữ mới** khi CI xanh trên commit cuối (commit chỉ gộp `main` để giải xung đột CHANGELOG thì không cần chạy lại): code, chuyển động, hạ tầng, CI, tài liệu quy trình. Chữ mới: chủ dự án duyệt rồi agent merge. Art đã khoá: D55. Không có agent thứ hai đang làm việc | Câu hỏi mở 1 ở `19` §9; "không tự merge" ở `20`; D14 giữ nguyên và nay gồm cả hạ tầng, CI |
+| D68 | Bản ghi duyệt chữ | Chủ dự án duyệt trong phiên hoặc bằng comment; agent ghi bản ghi (ngày, hình thức, trích câu duyệt) vào PR và CHANGELOG, và nói rõ bản ghi do agent viết | D13 (bổ sung cách ghi) |
+| D69 | Bảo vệ phép kiểm | Quy ước ở `AGENTS.md` §4 cộng bước CI nhẹ "Phép kiểm đã đổi" in file và dòng đổi vào Job Summary. Là chứng cứ để phát hiện, không ngăn chặn, vì agent và chủ dự án dùng chung tài khoản. Không thêm bước CI nặng: tốc độ là ưu tiên | "Không nới phép kiểm" chỉ dựa vào lời dặn (`20`) |
+| D70 | Chỉ dẫn cố định | `AGENTS.md` ở gốc repo, `CLAUDE.md` chỉ nạp nó. `17` đã dùng xong, `20` hết hiệu lực, `22` đã thực hiện; mỗi file có dòng trạng thái | Ba prompt dán tay vào mỗi phiên (`17`, `20`, `22`) |
+| D71 | Vai hội đồng | Claude vận hành đánh giá black-box (phiên riêng, không dùng chung ngữ cảnh); model khác họ đối chiếu chéo tài liệu do Claude viết và kết luận từ Major trở lên; ChatGPT chỉ góp ý tham khảo, không chặn. Chưa có reviewer độc lập thì PR ghi ngoại lệ D13 | `21` §2 và §9 (ChatGPT là cổng đầu); hiến chương cũ "Current operator: ChatGPT" (#19, #34) |
+| D72 | Truy vết | Mỗi commit có `Co-Authored-By: Claude <model>` và `Claude-Session`; PR ghi đường dẫn phiên; squash merge giữ các dòng đó | Squash commit chỉ có tác giả là chủ dự án (PR #15–#17) |
+| D73 | Bảo vệ `main` | Chủ dự án đã đặt rule bảo vệ nhánh `main` (13/11): thay đổi vào `main` đi qua PR | Chín commit tài liệu vào thẳng `main` ngày 10/11 |
+| D74 | Chi phí CI | Chủ dự án chọn giảm chi phí CI (13/11): cache trình duyệt Playwright; huỷ lần chạy cũ khi đẩy commit mới lên cùng PR; `Deploy site` chỉ build và chạy `check.cjs` (bỏ type-check, design-check vì PR đã qua đủ bộ và `main` được bảo vệ, D73); PR chỉ đổi tài liệu (`docs/`, `editorial/`, `.claude/`, `*.md` ở gốc, `LICENSE`, `.ignore`) bỏ qua các bước nặng của `Check site` nhưng job `check` vẫn chạy và báo xanh, nên không kẹt nếu `main` bắt buộc status đó. Đây là ngoại lệ có chủ đích với "không nới phép kiểm" (`AGENTS.md` §4) | D14 (kiểm tra đầy đủ ở cả PR lẫn deploy) |
 
 ## 2. Quan sát site ngày 07/11/2026
 
@@ -125,7 +140,7 @@ Hỏi theo hai vòng (4 câu tổng quan, 4 câu chi tiết). Kế hoạch đầ
 ## 3. Quy tắc làm việc
 
 - **Mỗi đợt là một thay đổi đo được.** Ghi thước đo trước khi làm, đo trước và sau, rồi ghi vào `CHANGELOG.md`.
-- **Phát hành.** Code, chuyển động, hạ tầng: Claude tự merge khi kiểm tra đạt (D14). Nội dung mới (kịch bản, chương, mô tả loại việc, câu chữ trang chủ): chủ dự án duyệt trước khi merge (D13).
+- **Phát hành.** Code, chuyển động, hạ tầng: Claude tự merge khi kiểm tra đạt (D14). Nội dung mới (kịch bản, chương, mô tả loại việc, câu chữ trang chủ): chủ dự án duyệt trước khi merge (D13). Từ 13/11: luật gom ở `AGENTS.md` (D67–D73).
 - **Kiểm tra tự động trước khi merge** (`site/scripts/check.mjs`, chạy cả local lẫn trong CI):
   - build xanh;
   - 0 lỗi JS;

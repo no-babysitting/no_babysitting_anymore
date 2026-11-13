@@ -60,21 +60,22 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
   </div>
 </div>
 
-<div class="lp" id="nb-lens" role="dialog" aria-label="Chọn Lens theo nhóm việc" hidden>
+<dialog class="lp" id="nb-lens" aria-label="Chọn Lens theo nhóm việc" aria-modal="true">
   <p class="nb-micro">Bạn làm việc gì? Ví dụ và prompt đổi theo Lens bạn chọn.</p>
   <div class="lpc" role="group" aria-label="Lens">
     {LENSES.map((l) => <button type="button" data-lens-set={l.id} aria-pressed={l.id === 'chung' ? 'true' : 'false'}>{l.label}</button>)}
   </div>
   <button type="button" class="nb-btn" data-lens-close>Đóng</button>
   <script type="application/json" id="nb-lens-labels" set:html={JSON.stringify(Object.fromEntries(LENSES.map((l) => [l.id, l.label])))}></script>
-</div>
+</dialog>
 
 <style>
   .lensb { appearance: none; background: transparent; border: 1px solid var(--control); color: var(--fg-muted); height: 40px; padding: 0 10px; cursor: pointer; white-space: nowrap; }
   .lensb:hover { color: var(--accent); border-color: var(--accent); }
   .lensb:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
-  .lp { position: fixed; z-index: 28; top: calc(var(--hud-height) + 8px); right: max(16px, calc((100vw - var(--page-max)) / 2 + 16px)); width: min(420px, calc(100vw - 32px)); background: var(--bg-raised); border: 1px solid var(--control); padding: 16px; display: grid; gap: 12px; justify-items: start; box-shadow: var(--shadow-overlay); }
-  .lp[hidden] { display: none; }
+  .lp { position: fixed; z-index: 28; margin: 0; left: auto; bottom: auto; max-width: none; max-height: none; color: var(--fg); top: calc(var(--hud-height) + 8px); right: max(16px, calc((100vw - var(--page-max)) / 2 + 16px)); width: min(420px, calc(100vw - 32px)); background: var(--bg-raised); border: 1px solid var(--control); padding: 16px; display: grid; gap: 12px; justify-items: start; box-shadow: var(--shadow-overlay); }
+  .lp:not([open]) { display: none; }
+  .lp::backdrop { background: transparent; }
   .lp p { margin: 0; line-height: 1.5; }
   .lpc { display: flex; flex-wrap: wrap; gap: 6px; }
   .lpc button { appearance: none; background: transparent; color: var(--fg); border: 1px solid var(--control); padding: 0 12px; min-height: 44px; font: 500 14px/1.2 var(--font-text); cursor: pointer; }
@@ -151,7 +152,7 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
      Bộ chọn nhóm việc của "Một lần giao việc" nghe sự kiện nb:lens và ghi cùng khoá. */
   {
     const LABEL: Record<string, string> = JSON.parse(document.getElementById('nb-lens-labels')!.textContent || '{}');
-    const pop = document.getElementById('nb-lens')!, w = window as any;
+    const pop = document.getElementById('nb-lens') as HTMLDialogElement, w = window as any;
     let opener: HTMLElement | null = null;
     const read = () => { try { const v = localStorage.getItem('nb-lens'); return v && LABEL[v] ? v : 'chung'; } catch (e) { return 'chung'; } };
     const apply = (id: string, save = false) => {
@@ -166,20 +167,23 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
          a refresh in the middle of the pinned delegation run threw its seven steps on top of each other */
       if (save && w.ScrollTrigger && document.querySelector('[data-lens-group]')) w.ScrollTrigger.refresh();
     };
+    /* a real modal dialog (showModal): the rest of the page is inert while it is open, Tab stays inside, Esc closes it */
+    const sync = (open: boolean) => document.querySelectorAll('[data-lens-open]').forEach((b) => b.setAttribute('aria-expanded', String(open)));
     const show = (open: boolean, from?: HTMLElement) => {
-      pop.hidden = !open;
-      document.querySelectorAll('[data-lens-open]').forEach((b) => b.setAttribute('aria-expanded', String(open)));
-      if (open) { opener = from || null; (pop.querySelector('[aria-pressed="true"]') as HTMLElement | null)?.focus({ preventScroll: true }); }
-      else if (opener) { opener.focus({ preventScroll: true }); opener = null; }
+      if (open === pop.open) return;
+      if (open) { opener = from || null; pop.showModal(); sync(true); (pop.querySelector('[aria-pressed="true"]') as HTMLElement | null)?.focus({ preventScroll: true }); }
+      else pop.close();
     };
+    pop.addEventListener('close', () => { sync(false); if (opener) { opener.focus({ preventScroll: true }); opener = null; } });
     w.nbLens = { get: read, set: (id: string) => apply(id, true) };
     document.addEventListener('click', (e) => {
       const t = e.target as HTMLElement, o = t.closest<HTMLElement>('[data-lens-open]'), s = t.closest<HTMLElement>('[data-lens-set]');
-      if (o) { show(pop.hidden, o); return; }
+      if (o) { show(!pop.open, o); return; }
       if (s) { apply(s.dataset.lensSet!, true); if (pop.contains(s)) show(false); return; }
-      if (t.closest('[data-lens-close]') || (!pop.hidden && !pop.contains(t))) show(false);
+      if (t.closest('[data-lens-close]')) { show(false); return; }
+      /* with a modal, a click outside the box lands on the dialog itself (its backdrop); the box has padding, so test the pointer */
+      if (pop.open && t === pop) { const r = pop.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) show(false); }
     });
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pop.hidden) show(false); });
     apply(read());
   }
 
