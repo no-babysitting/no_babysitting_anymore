@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Tự host font: không còn request tới Google (13/11/2026)
+
+Refs #28 (F-009). Không có chữ mới. Archivo, Be Vietnam Pro, JetBrains Mono và Newsreader nay nằm ở `site/public/fonts/` (27 tệp `woff2`, 840 KB; trình duyệt chỉ tải tệp có ký tự trang cần nhờ `unicode-range`) kèm `fonts.css` với đường dẫn tương đối. Giữ đúng họ, độ đậm, trục và nghiêng thật như trước; chỉ giữ ba bộ ký tự dùng cho tiếng Việt (latin, latin-ext, vietnamese), bỏ Cyrillic và Hy Lạp vì trang không dùng. `tools/fetch-fonts.cjs` tải lại được. Bỏ hai `preconnect` và liên kết Google Fonts khỏi `Base.astro`. Dòng riêng tư ở chân trang vốn chỉ nhắc GoatCounter nên nay khớp thực tế. Đo được: tập host của mọi request trên các trang đã quét chỉ còn `localhost` (bản live: `no-babysitting.github.io`) và GoatCounter; bộ kiểm xanh (xem PR). Các trang xem trước trong `design-system/` vẫn tải từ Google Fonts; không phải bản live.
+
 ## Ẩn Library, gỡ chữ nội bộ khỏi trang Nâng cao (13/11/2026)
 
 Refs #21 (F-002). Library chưa có nội dung thật nên ẩn tạm: không còn trong menu, nút Finale, trang 404 và sitemap; địa chỉ `/library/` chuyển ngay về trang chủ (noindex). Bốn nhãn `b1–b4` của trang Nâng cao thành comment trong mã, hai vùng `b2`, `b3` bỏ `aria-labelledby` vì nhãn không còn. Không có chữ mới: chỉ xoá hai chữ "ở b2" khỏi "Chốt dự đoán ở b2 để mở mô phỏng", vì nhãn b2 không còn hiện; và xoá "đặt trong ContradictionNote," (tên thành phần của design system) khỏi dòng chú thích của đồng hồ context. Hai danh sách trang của `check.cjs` và `design-check.cjs` bỏ `library/` vì trang không còn. Đo được: `dist/` không còn chữ `library` ở sitemap, trang chủ, 404; bộ kiểm xanh (xem PR).
