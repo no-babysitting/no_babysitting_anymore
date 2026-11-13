@@ -44,54 +44,74 @@ jobs:
               echo '```'
             fi
           } >> "$GITHUB_STEP_SUMMARY"
+      - name: Scope (a PR that only changes documentation skips the site checks; D74)
+        id: scope
+        if: github.event_name == 'pull_request'
+        working-directory: .
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE"
+          other=$(git diff --name-only FETCH_HEAD HEAD | grep -v -E '^(docs/|editorial/|\.claude/|[^/]+\.md$|LICENSE$|\.ignore$)' || true)
+          if [ -z "$other" ]; then
+            echo "docs_only=true" >> "$GITHUB_OUTPUT"
+            echo '### Chỉ đổi tài liệu: bỏ qua các bộ kiểm site (D74)' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "docs_only=false" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/setup-node@v4
+        if: steps.scope.outputs.docs_only != 'true'
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: site/package-lock.json
       - run: npm ci
+        if: steps.scope.outputs.docs_only != 'true'
       - run: npm run build
-      - name: Cache the Playwright browser
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ env.PW_VERSION }}
+        if: steps.scope.outputs.docs_only != 'true'
       - name: Install Chromium for the checks
+        if: steps.scope.outputs.docs_only != 'true'
         run: |
           npm i --no-save playwright@${{ env.PW_VERSION }} axe-core@4.10.2
           npx playwright install --with-deps chromium
       - name: Checks (links, JS errors, overflow, reduced motion, idle cost)
+        if: steps.scope.outputs.docs_only != 'true'
         run: node scripts/check.cjs
       - name: Typography self-test (the checker still catches what it should)
+        if: steps.scope.outputs.docs_only != 'true'
         run: node scripts/type-check.cjs --selftest
       - name: Typography (contrast, sizes, Vietnamese marks, text spacing, zoom, fonts)
+        if: steps.scope.outputs.docs_only != 'true'
         run: node scripts/type-check.cjs
       - name: Design lint (overlap, clipping, tap size, holds, demos start when seen)
+        if: steps.scope.outputs.docs_only != 'true'
         run: node scripts/design-check.cjs --shots design-report
       - name: Art lock, advisory (reports drift of the signed-off ASCII art, never blocks; docs/19 §2, D55)
+        if: steps.scope.outputs.docs_only != 'true'
         continue-on-error: true
         run: node scripts/art-check.cjs --shots art-report
       - name: Art report
-        if: always()
+        if: always() && steps.scope.outputs.docs_only != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: art-report
           path: site/art-report
           if-no-files-found: ignore
       - name: Design report
-        if: always()
+        if: always() && steps.scope.outputs.docs_only != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: design-report
           path: site/design-report
           if-no-files-found: ignore
       - name: Typography report
-        if: always()
+        if: always() && steps.scope.outputs.docs_only != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: type-report
           path: site/type-report
           if-no-files-found: ignore
       - name: Contrast of the design tokens
+        if: steps.scope.outputs.docs_only != 'true'
         working-directory: .
         run: python3 tools/contrast.py design-system/tokens.json --fail

@@ -7,7 +7,7 @@ Chủ dự án xem trang trên iPhone thật và gửi tám nhóm nhận xét v�
 | Công cụ | Làm gì | Khi nào dùng |
 | --- | --- | --- |
 | `site/scripts/shots.cjs` + `sheet.py` | Cuộn trang như người đọc, chụp một khung ở mỗi điểm dừng, ghép tám khung một tờ kèm vị trí cuộn. Có `--scene "#run" --steps 7 --mid 1` để chụp giữa từng bước của một cảnh ghim, `--vp phone\|small\|tiny\|desktop`, `--motion off`. | Khi *tạo* hoặc *sửa* một cảnh: nhìn bằng mắt, vì "đẹp" không đo được. |
-| `site/scripts/design-check.cjs` | Đo hình học của trang đã build ở mọi khổ và chặn merge khi vi phạm (§2). Chạy trong `Check site` và `Deploy site`. | Mỗi PR: giữ cho những lỗi đã sửa không quay lại. |
+| `site/scripts/design-check.cjs` | Đo hình học của trang đã build ở mọi khổ và chặn merge khi vi phạm (§2). Chạy trong `Check site` (mọi PR đổi code hoặc nội dung site); `Deploy site` không chạy lại (D74). | Mỗi PR: giữ cho những lỗi đã sửa không quay lại. |
 
 Giới hạn, nói thẳng: cả hai chạy trên **Chromium** (Playwright). Không có WebKit nên không bắt được lỗi riêng của Safari iOS (thanh công cụ co giãn làm `svh` ngắn hơn vùng nhìn thấy; đã gặp một lần). Ảnh chụp màn hình của chủ dự án trên iPhone thật vẫn là chuẩn cuối cùng; theo D20, kiểm thử trên thiết bị thật và trình đọc màn hình chưa làm, ghi là rủi ro đã chấp nhận.
 
