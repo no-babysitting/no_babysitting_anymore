@@ -1,12 +1,12 @@
 ---
-/* JourneyHUD (M0 subset): the logo, where you are, the Library link, and two pixel buttons:
+/* JourneyHUD (M0 subset): the logo, where you are, and two pixel buttons:
    play/pause for the page's motion (FR-09, WCAG 2.2.2) and the menu. The menu opens as a full-screen layer under the header;
    the picture behind its list (a crossed-out stroller) is ASCII art that converges when it opens and dissolves when it closes. */
 import { PARTS, LENSES, PHASE_LABEL } from '../content/parts';
 import { url } from '../lib/url';
 import { iconSVG, ICONS } from '../lib/icons';
 import { SITE } from '../config';
-/* current: '00'…'04' (lộ trình chính), 'thuc-hanh', 'c02' (Nâng cao A1), hoặc không có (trang chủ, Library) */
+/* current: '00'…'04' (lộ trình chính), 'thuc-hanh', 'c02' (Nâng cao A1), hoặc không có (trang chủ) */
 const { current } = Astro.props as { current?: string };
 const i = PARTS.findIndex((p) => p.id === current);
 const c = i >= 0 ? PARTS[i] : null;
@@ -17,7 +17,6 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
     <a href={url()} class="wm" data-logo aria-label="No babysitting, về trang đầu"></a>
     {where && <span class="nb-micro part">{where}</span>}
     <nav class="links" aria-label="Trang">
-      <a class="nb-micro lib" href={url('library/')}>Library</a>
       {c && <span class="nb-micro pos"><b>{c.id}</b> · {i + 1}/{PARTS.length}</span>}
       <button class="nb-micro lensb" type="button" data-lens-open aria-haspopup="dialog" aria-expanded="false" aria-controls="nb-lens"><span class="lk">Lens<span class="lv">: <b data-lens-name>Chung</b></span></span></button>
       <button class="ib" type="button" data-motion aria-pressed="true" title="Tắt chuyển động của trang">
@@ -38,7 +37,6 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
     <nav aria-label="Menu">
       <ul class="m-main">
         <li><a href={url()} aria-current={!current ? 'page' : undefined}>Trang chủ</a></li>
-        <li><a href={url('library/')}>Library</a></li>
       </ul>
       <p class="nb-micro m-h">Lộ trình chính · {PARTS.length} phần</p>
       <ol class="m-ch">
@@ -90,7 +88,6 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
   .wm { width: 208px; flex: none; color: var(--fg); display: flex; align-items: center; min-height: 44px; }
   .wm :global(svg) { width: 100%; height: auto; display: block; }
   .links { margin-left: auto; display: flex; gap: 6px; align-items: center; }
-  .lib { display: inline-flex; align-items: center; height: 44px; padding: 0 10px; color: var(--fg); text-underline-offset: 3px; }
   .pos { padding-right: 10px; }
 
   /* retro pixel buttons: a 40px square with a 16x16 bitmap drawn at exactly 2x, inside a 44px hit area */
@@ -130,7 +127,7 @@ const where = c ? (c.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[c.
   .m-foot { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; color: var(--fg-muted); }
   .m-foot a { color: var(--fg); text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: 44px; }
   @media (max-width: 520px) { .row > .part, .pos { display: none; } .wm { width: 156px; } .row { gap: 8px; } }
-  @media (max-width: 640px) { .lib, .lensb .lv { display: none; } }
+  @media (max-width: 640px) { .lensb .lv { display: none; } }
   @media (max-width: 360px) { .lensb { display: none; } }
 </style>
 <script>
