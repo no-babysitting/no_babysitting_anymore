@@ -86,6 +86,20 @@ Outline: `18-intro-track-plan.md`.
 | D55 | Khoá ASCII art | Art đã duyệt (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark, mặt mascot) được khoá bằng `site/scripts/art-check.cjs` + `design-system/art-lock.json`, chạy trong CI ở chế độ chỉ báo, không chặn merge (09/11: ưu tiên GTM). PR đổi `art-lock.json` cần chủ dự án duyệt, như D13 (`19` §2) | — |
 | D56 | Kaizen UI/UX | Nhận xét *ASCII & Motion Design Direction* (ChatGPT, 09/11) được đối chiếu và chuyển thành các đợt UX0–UX6 (`19-uiux-kaizen-plan.md`). Prompt cho coding agent mới (DeepSeek v4.1 Flash): `20-handoff-prompt-deepseek.md`. *Đề xuất, chờ chủ dự án duyệt* | — |
 
+## 1f. Quyết định ngày 13/11/2026 (tổ chức làm việc của agent; trả lời issue #32 và #34)
+
+Nguồn: trả lời của chủ dự án trong phiên Claude Code 13/11/2026. Nơi duy nhất cho các luật này là `AGENTS.md`; bảng dưới chỉ ghi quyết định và điều nó thay.
+
+| # | Chủ đề | Quyết định | Thay cho |
+|---|---|---|---|
+| D67 | Quyền merge | Agent chính (Claude) tự merge mọi PR **không có chữ mới** khi CI xanh: code, chuyển động, hạ tầng, CI, tài liệu quy trình. Chữ mới: chủ dự án duyệt rồi agent merge. Art đã khoá: D55. Không có agent thứ hai đang làm việc | Câu hỏi mở 1 ở `19` §9; "không tự merge" ở `20`; D14 giữ nguyên và nay gồm cả hạ tầng, CI |
+| D68 | Bản ghi duyệt chữ | Chủ dự án duyệt trong phiên hoặc bằng comment; agent ghi bản ghi (ngày, hình thức, trích câu duyệt) vào PR và CHANGELOG, và nói rõ bản ghi do agent viết | D13 (bổ sung cách ghi) |
+| D69 | Bảo vệ phép kiểm | Quy ước ở `AGENTS.md` §4 cộng bước CI nhẹ "Phép kiểm đã đổi" in file và dòng đổi vào Job Summary. Là chứng cứ để phát hiện, không ngăn chặn, vì agent và chủ dự án dùng chung tài khoản. Không thêm bước CI nặng: tốc độ là ưu tiên | "Không nới phép kiểm" chỉ dựa vào lời dặn (`20`) |
+| D70 | Chỉ dẫn cố định | `AGENTS.md` ở gốc repo, `CLAUDE.md` chỉ nạp nó. `17` đã dùng xong, `20` hết hiệu lực, `22` đã thực hiện; mỗi file có dòng trạng thái | Ba prompt dán tay vào mỗi phiên (`17`, `20`, `22`) |
+| D71 | Vai hội đồng | Claude vận hành đánh giá black-box (phiên riêng, không dùng chung ngữ cảnh); model khác họ đối chiếu chéo tài liệu do Claude viết và kết luận từ Major trở lên; ChatGPT chỉ góp ý tham khảo, không chặn. Chưa có reviewer độc lập thì PR ghi ngoại lệ D13 | `21` §2 và §9 (ChatGPT là cổng đầu); hiến chương cũ "Current operator: ChatGPT" (#19, #34) |
+| D72 | Truy vết | Mỗi commit có `Co-Authored-By: Claude <model>` và `Claude-Session`; PR ghi đường dẫn phiên; squash merge giữ các dòng đó | Squash commit chỉ có tác giả là chủ dự án (PR #15–#17) |
+| D73 | Bảo vệ `main` | Chủ dự án đã đặt rule bảo vệ nhánh `main` (13/11): thay đổi vào `main` đi qua PR | Chín commit tài liệu vào thẳng `main` ngày 10/11 |
+
 ## 2. Quan sát site ngày 07/11/2026
 
 Đo trên bản build bằng Chromium headless, ở 1440×900 và ở chế độ giả lập iPhone 13 Pro Max (428×926). Số CPU chỉ mang tính tương đối (đo trên máy container), dùng để so trước và sau mỗi đợt.
@@ -107,7 +121,7 @@ Outline: `18-intro-track-plan.md`.
 ## 3. Quy tắc làm việc
 
 - **Mỗi đợt là một thay đổi đo được.** Ghi thước đo trước khi làm, đo trước và sau, rồi ghi vào `CHANGELOG.md`.
-- **Phát hành.** Code, chuyển động, hạ tầng: Claude tự merge khi kiểm tra đạt (D14). Nội dung mới (kịch bản, chương, mô tả loại việc, câu chữ trang chủ): chủ dự án duyệt trước khi merge (D13).
+- **Phát hành.** Code, chuyển động, hạ tầng: Claude tự merge khi kiểm tra đạt (D14). Nội dung mới (kịch bản, chương, mô tả loại việc, câu chữ trang chủ): chủ dự án duyệt trước khi merge (D13). Từ 13/11: luật gom ở `AGENTS.md` (D67–D73).
 - **Kiểm tra tự động trước khi merge** (`site/scripts/check.mjs`, chạy cả local lẫn trong CI):
   - build xanh;
   - 0 lỗi JS;

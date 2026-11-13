@@ -24,7 +24,7 @@
 | 3 | Ba bài ở §6 là để **người học thực hành**, không phải để đo cho công bằng. Không quan tâm người học làm nghề gì | Bỏ thang gợi ý chuẩn hoá, hai người chấm, luật giao đề theo nghề và buổi thử 5–8 người |
 | 4 | Người dùng sản phẩm là **người tự học** và **người trình bày nội bộ** | Bài thực hành phải tự làm, tự soát được, và dùng được làm bài thảo luận nhóm |
 | 5 | **Ưu tiên go live nhanh.** Bỏ những chi tiết không giúp việc đó | Kế hoạch ở §8 viết lại quanh việc đưa v4 lên site |
-| 6 | AI Council (ChatGPT) **chỉ cho góc nhìn tham khảo**. Claude chịu trách nhiệm chính về blueprint | §7 rút gọn; Council không còn là cổng chặn. `21` §2 và §9 còn ghi Council là cổng đầu tiên; chỗ nào khác tài liệu này thì theo bảng này |
+| 6 | AI Council (ChatGPT) **chỉ cho góc nhìn tham khảo**. Claude chịu trách nhiệm chính về blueprint | §7 rút gọn; Council không còn là cổng chặn. `21` §2 và §9 đã sửa theo D71 (13/11/2026, `docs/08` §1f): một phát biểu duy nhất về vai Council |
 
 ### Nhãn dùng trong tài liệu
 

@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Một nơi cho chỉ dẫn agent: AGENTS.md, quyết định D67–D73 (13/11/2026)
+
+Refs #32 (F-013), #34 (F-015). Không có chữ mới trên site. Thêm `AGENTS.md` (vai trò, ai merge gì, duyệt chữ, phép kiểm không được tự nới, nơi đặt chỉ dẫn, truy vết, tách người viết, duyệt, đánh giá) và `CLAUDE.md` chỉ nạp nó. `docs/08` §1f ghi D67–D73; `docs/17` ghi đã dùng xong, `docs/20` hết hiệu lực, `docs/22` đã thực hiện; `docs/21` và `docs/23` nay cùng một phát biểu về vai hội đồng (D71); câu hỏi mở 1 ở `docs/19` §9 có trả lời. Thêm bước CI "Phép kiểm đã đổi" (vài giây, chỉ `git diff`, không bao giờ làm đỏ CI) in vào Job Summary các file phép kiểm đã đổi. Thêm `implementation-notes.md`. Giới hạn đã nêu trong `AGENTS.md` §4: bước CI là chứng cứ để phát hiện, không ngăn chặn. Chưa làm: hiến chương trong `docs/independent-evaluation-council/` (PR #19 chờ chủ dự án duyệt); mục "chờ duyệt" cũ trong CHANGELOG chưa có bản ghi duyệt.
+
 ## Ẩn Library, gỡ chữ nội bộ khỏi trang Nâng cao (13/11/2026)
 
 Refs #21 (F-002). Library chưa có nội dung thật nên ẩn tạm: không còn trong menu, nút Finale, trang 404 và sitemap; địa chỉ `/library/` chuyển ngay về trang chủ (noindex). Bốn nhãn `b1–b4` của trang Nâng cao thành comment trong mã, hai vùng `b2`, `b3` bỏ `aria-labelledby` vì nhãn không còn. Không có chữ mới: chỉ xoá hai chữ "ở b2" khỏi "Chốt dự đoán ở b2 để mở mô phỏng", vì nhãn b2 không còn hiện; và xoá "đặt trong ContradictionNote," (tên thành phần của design system) khỏi dòng chú thích của đồng hồ context. Hai danh sách trang của `check.cjs` và `design-check.cjs` bỏ `library/` vì trang không còn. Đo được: `dist/` không còn chữ `library` ở sitemap, trang chủ, 404; bộ kiểm xanh (xem PR).
