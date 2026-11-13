@@ -5,7 +5,7 @@
 ## 1. Người đọc và giọng
 
 - **Người đọc:** người đi làm, đã dùng Claude, thuộc đủ vai (dev, BA, designer, marketing, sales, quản lý, người làm sáng tạo). Họ thông minh, bận, không cần được dỗ dành, cũng không cần được khen.
-- **Xưng hô:** gọi người đọc là "bạn". Người kể không xưng: không "tôi", không "mình", không "chúng ta". Mascot cũng gọi người đọc là "bạn" và tự xưng "mình".
+- **Xưng hô:** gọi người đọc là "bạn". Người kể không xưng: không "tôi", không "mình", không "chúng ta". Mascot cũng gọi người đọc là "bạn" và tự xưng "mình". **Ngoại lệ có phạm vi:** trong mục Bài viết (D62), tác giả xưng "tôi" khi nêu quan điểm hay trải nghiệm của mình; người đọc vẫn là "bạn", vẫn không "mình" hay "chúng ta", và mascot không xuất hiện.
 - **Giọng:** thẳng và thực dụng. Có chút tinh nghịch ở tiêu đề và câu hook ("sao bạn vẫn phải trông trẻ?"). Thân bài thì nghiêm túc và có nguồn. Không cường điệu, không doạ, không tâng bốc.
 - **Ý chính đi trước** (Minto [P5], kim tự tháp ngược [P3]): câu đầu của đoạn nói ý chính, các câu sau đưa lý do hoặc ví dụ. Người chỉ đọc câu đầu của mỗi đoạn vẫn phải nắm được bài.
 

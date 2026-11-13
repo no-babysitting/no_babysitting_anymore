@@ -52,6 +52,7 @@ Chữ mới là mọi chữ người đọc thấy mà chưa nằm trên site: c
 | Chữ, chuyển động, design system | `docs/09`, `docs/11`, `docs/13`, `docs/15`, `design-system/SOURCE-OF-TRUTH.md` |
 | Kế hoạch UI/UX và khoá art | `docs/19` |
 | Phương pháp học | `docs/21`, `docs/23` |
+| Bài viết (nháp, sổ nguồn, đăng bài) | `docs/24`; `editorial/CLAUDE.md` (chỉ nạp khi làm bài viết) |
 | Chạy kiểm | `README.md`, "Chạy local" |
 
 Prompt giao việc cũ: `docs/17` đã dùng xong (nguồn ở §3 vẫn dùng); `docs/20` hết hiệu lực; `docs/22` đã thực hiện (kết quả là `docs/23`). Mỗi file có dòng trạng thái ở đầu. Chỗ hai tài liệu nói khác nhau: theo `docs/08` §1f, rồi theo ngày mới hơn.

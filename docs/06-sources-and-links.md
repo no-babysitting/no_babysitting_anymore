@@ -11,6 +11,7 @@
 5. **Cổng kiểm tra:** build fail nếu có beat, con số hoặc đơn vị Library không có nguồn; CI hằng tháng chạy link checker (link chết, chuyển hướng, đổi tiêu đề) và nhắc kiểm chứng lại mục có `verifiedAt` quá 30 ngày. Link nội bộ của docs không được dùng đuôi `.md` khi hiển thị cho người học (đó là dạng markdown thô); kiểm tra lại từng link trước khi đăng.
 6. **Nút "Nguồn" (SourceButton) là một thành phần giao diện quan trọng và phải được thiết kế đẹp**, không phải chú thích nhỏ cuối trang. Xem §2.
 7. **Khi nguồn mâu thuẫn:** hiện cả hai nguồn cạnh nhau (ContradictionNote); docs chính thức là chuẩn (PRD §11).
+8. **Ngoại lệ có phạm vi: mục Bài viết** (D63, `24-articles-section-plan.md`). Mục 1 vẫn đúng: con số và câu trích có link bấm được, đặt ngay trong đoạn. Mục 3–5 áp dụng ở dạng nhẹ: không có `SourceRef[]` và `SourceButton` cho từng nguồn; cả bài có **một `verifiedAt`** (ngày mở nguồn gần nhất, dạng `YYYY-MM-DD`), hiện cho người đọc là ngày thu thập thông tin; số hay đổi (giá, benchmark, mức mặc định, giới hạn) kèm ngày ngay trong câu; thiếu nguồn không làm build fail.
 
 ## 2. Đặc tả SourceButton (yêu cầu thiết kế)
 

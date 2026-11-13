@@ -1,0 +1,5 @@
+# Editorial drafts (docs/24-articles-section-plan.md section 4).
+# Grep/ripgrep skip this folder when searching from a parent, so agents doing other work
+# are not pulled into drafts and do not spend tokens on them.
+# Reading by explicit path, or searching with the path pointed straight at editorial/, still works.
+editorial/

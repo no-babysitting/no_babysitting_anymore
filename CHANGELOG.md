@@ -42,9 +42,24 @@ Refs #30 (F-011). Không có chữ mới. Hộp thoại Lens thành `<dialog>` m
 
 Refs #33 (F-014). Không có chữ mới. Bước mới trong `deploy.yml`, ngay trước khi xuất bản, ghi `dist/build.json` với `sha` (đủ 40 ký tự hex), `short` (7 ký tự) và `built_at` (UTC). Đo được: sau triển khai, GET `/no_babysitting_anymore/build.json` trả 200 và `sha` bằng commit của lần triển khai (đối chiếu với `git rev-parse origin/main` tại thời điểm merge).
 
+
 ## Ẩn Library, gỡ chữ nội bộ khỏi trang Nâng cao (13/11/2026)
 
 Refs #21 (F-002). Library chưa có nội dung thật nên ẩn tạm: không còn trong menu, nút Finale, trang 404 và sitemap; địa chỉ `/library/` chuyển ngay về trang chủ (noindex). Bốn nhãn `b1–b4` của trang Nâng cao thành comment trong mã, hai vùng `b2`, `b3` bỏ `aria-labelledby` vì nhãn không còn. Không có chữ mới: chỉ xoá hai chữ "ở b2" khỏi "Chốt dự đoán ở b2 để mở mô phỏng", vì nhãn b2 không còn hiện; và xoá "đặt trong ContradictionNote," (tên thành phần của design system) khỏi dòng chú thích của đồng hồ context. Hai danh sách trang của `check.cjs` và `design-check.cjs` bỏ `library/` vì trang không còn. Đo được: `dist/` không còn chữ `library` ở sitemap, trang chủ, 404; bộ kiểm xanh (xem PR).
+
+## Khung mục Bài viết và gói bàn giao cho cụm 3 bài (13/11/2026)
+
+**Site chưa đổi.** Đợt này chỉ chốt kế hoạch và đặt chỗ cho bản nháp.
+
+- **Quyết định D57–D66 và D75** (`docs/08` §1e; đầy đủ ở `docs/24`): mục Bài viết riêng, trục Claude, nháp chung repo nhưng ngoài `site/`, giọng "tôi", chuẩn nguồn nhẹ (một `verifiedAt` cho cả bài), thứ tự 80% → memory → model và effort.
+- **`editorial/`**: chỗ cho ý tưởng, memo, sổ nguồn và bản nháp. `.ignore` ở gốc repo cho Grep bỏ qua nó; `editorial/CLAUDE.md` chỉ nạp khi agent đọc file trong đó. Đã thử trong phiên: Grep bỏ qua đúng thư mục và vẫn tìm được khi chỉ đường dẫn thẳng; Glob vẫn liệt kê tên file.
+- **Bàn giao**: brief, ba memo của Perplexity và hai phản hồi của ChatGPT lưu nguyên văn ở `editorial/articles/00-cluster/raw/`, đánh dấu chưa kiểm chứng. `editorial/HANDOFF.md` là prompt cho phiên viết bài.
+- **Đối chiếu docs**: 11 claim về auto memory và CLAUDE.md của Claude Code đã kiểm với docs ngày 13/11/2026 (`editorial/articles/02-memory/ledger.md`). Claim "auto memory không chạy ở phiên nền" chưa xác nhận được.
+- **Dùng lại luật có sẵn, không thêm phần luật mới**: xưng "tôi" là ngoại lệ có phạm vi ngay trong `docs/16` §1; chuẩn nguồn nhẹ là mục 8 trong `docs/06` §1, dùng lại `verifiedAt` thay vì thêm trường mới. Vai, quyền merge và duyệt chữ lấy từ `AGENTS.md` (D67–D73); `docs/24` và `editorial/` chỉ trỏ tới đó. Vòng đời bài và nhãn bằng chứng chỉ nằm ở `editorial/CLAUDE.md`; quyết định chỉ nằm ở `docs/08` §1e.
+- **Issues**: #36–#41 (sáu bài), #44 (trang Bài viết, viết bằng tiếng Anh cho coding agent), #43 (rà các rule có thể quá cứng). Spec trang chỉ nằm ở #44; `docs/24` §8 trỏ tới đó.
+- **Bài lẻ 07** (`editorial/articles/07-one-writer-many-readers/`, issue #57): bản nháp về multi-agent coding, dựng từ báo cáo nghiên cứu của tác giả. Tác giả quyết không mở lại nguồn; sổ nguồn ghi mọi dòng là `UNVERIFIED` kèm ngoại lệ. Chưa lên site.
+- **Chưa làm**: mục Bài viết trên site (#44). Lo ngại về `paths-ignore` cho CI đã được D74 giải quyết.
+- **Bản ghi duyệt (do agent ghi, không phải chủ dự án)**: 13/11/2026, trong phiên Claude Code, qua hộp hỏi lựa chọn. Chủ dự án chọn phương án "Merge luôn, sửa bằng PR nhỏ nếu cần (Recommended)" cho câu hỏi về PR này, gồm ba chỗ cần xem: `docs/06` §1 mục 8, dòng mới ở `AGENTS.md` §5, mặc định `/articles/` ẩn khỏi menu. Đây là lựa chọn có sẵn, không phải câu chủ dự án tự viết. Năm câu hỏi ở mô tả PR (mục 4 về quy tắc "agent không tự merge" của bài 07, mục 5 về Gemini) vẫn mở cho tới khi hỏi riêng. CI của lần chạy cuối trên PR này (chỉ đổi tài liệu, bộ kiểm site bị bỏ qua theo D74) hết 7 giây.
 
 ## Trang chủ tự chạy, hai bàn tay không chạm, cụm từ nhấn, hover một kiểu (11/11/2026, chờ duyệt)
 

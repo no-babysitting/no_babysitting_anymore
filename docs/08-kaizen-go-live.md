@@ -86,6 +86,24 @@ Outline: `18-intro-track-plan.md`.
 | D55 | Khoá ASCII art | Art đã duyệt (logo hero, mặt nước, thành phố ở finale, tranh trong menu, Spark, mặt mascot) được khoá bằng `site/scripts/art-check.cjs` + `design-system/art-lock.json`, chạy trong CI ở chế độ chỉ báo, không chặn merge (09/11: ưu tiên GTM). PR đổi `art-lock.json` cần chủ dự án duyệt, như D13 (`19` §2) | — |
 | D56 | Kaizen UI/UX | Nhận xét *ASCII & Motion Design Direction* (ChatGPT, 09/11) được đối chiếu và chuyển thành các đợt UX0–UX6 (`19-uiux-kaizen-plan.md`). Prompt cho coding agent mới (DeepSeek v4.1 Flash): `20-handoff-prompt-deepseek.md`. *Đề xuất, chờ chủ dự án duyệt* | — |
 
+## 1e. Quyết định ngày 13/11/2026: mục Bài viết
+
+Hỏi theo hai vòng (4 câu tổng quan, 4 câu chi tiết). Kế hoạch đầy đủ, kiến trúc `editorial/` và spec cho coding agent ở `24-articles-section-plan.md`. **Site chưa đổi.**
+
+| # | Chủ đề | Quyết định | Thay cho |
+|---|---|---|---|
+| D57 | Bài viết | Mục **Bài viết** riêng, byline theo D17 | chưa có kế hoạch nào cho blog hay bài có tác giả |
+| D58 | Phạm vi | Trục Claude; hãng khác đối chiếu ngắn | — |
+| D59 | Lưu trữ | Chung repo; nháp ở `editorial/` ngoài `site/`, không lên site tới khi duyệt (chủ dự án: "chung repo cũng được, chỉ cần không hiển thị lên site khi approve") | — |
+| D60 | Chặn đọc nhầm | `.ignore` ở gốc repo + `editorial/CLAUDE.md` nạp theo nhu cầu; không dùng deny rule | — |
+| D61 | Nhịp | Một cụm 3 bài rồi xem lại | — |
+| D62 | Giọng | Bài viết xưng "tôi", là ngoại lệ có phạm vi ngay trong `16` §1 | "người kể không xưng" (`16` §1), chỉ trong mục Bài viết |
+| D63 | Kiểm chứng | Chỉ cần ghi ngày thu thập thông tin (chủ dự án: "note thêm vào là thông tin thu thập ở ngày nào là ok"). Dùng lại `verifiedAt`, một ngày cho cả bài; nguồn là link trong đoạn; không build-fail vì thiếu nguồn. Ngoại lệ ghi ở `06` §1 mục 8 | `06` §1 mục 3–5 (SourceRef cho từng nguồn, build fail), chỉ trong mục Bài viết |
+| D64 | Minh bạch | Chỉ ghi byline | — |
+| D65 | Thứ tự | 80% system prompt → memory → model và effort | — |
+| D66 | Đăng bài | Một PR mỗi bài; duyệt và merge theo `AGENTS.md` §2–§3 (chữ mới: chủ dự án duyệt, agent chính ghi bản ghi rồi merge) | — |
+| D75 | Trang Bài viết | Spec đầy đủ ở issue #44, chốt qua hai vòng hỏi ngày 13/11/2026 (5 câu tổng quan, 14 câu chi tiết). Việc rà các rule có thể quá cứng (art-lock, danh sách trang cứng) ở issue #43 | — |
+
 ## 1f. Quyết định ngày 13/11/2026 (tổ chức làm việc của agent; trả lời issue #32 và #34)
 
 Nguồn: trả lời của chủ dự án trong phiên Claude Code 13/11/2026. Nơi duy nhất cho các luật này là `AGENTS.md`; bảng dưới chỉ ghi quyết định và điều nó thay.
