@@ -118,6 +118,7 @@ Nguồn: trả lời của chủ dự án trong phiên Claude Code 13/11/2026. N
 | D72 | Truy vết | Mỗi commit có `Co-Authored-By: Claude <model>` và `Claude-Session`; PR ghi đường dẫn phiên; squash merge giữ các dòng đó | Squash commit chỉ có tác giả là chủ dự án (PR #15–#17) |
 | D73 | Bảo vệ `main` | Chủ dự án đã đặt rule bảo vệ nhánh `main` (13/11): thay đổi vào `main` đi qua PR | Chín commit tài liệu vào thẳng `main` ngày 10/11 |
 | D74 | Chi phí CI | Chủ dự án chọn giảm chi phí CI (13/11): cache trình duyệt Playwright; huỷ lần chạy cũ khi đẩy commit mới lên cùng PR; `Deploy site` chỉ build và chạy `check.cjs` (bỏ type-check, design-check vì PR đã qua đủ bộ và `main` được bảo vệ, D73); PR chỉ đổi tài liệu (`docs/`, `editorial/`, `.claude/`, `*.md` ở gốc, `LICENSE`, `.ignore`) bỏ qua các bước nặng của `Check site` nhưng job `check` vẫn chạy và báo xanh, nên không kẹt nếu `main` bắt buộc status đó. Đây là ngoại lệ có chủ đích với "không nới phép kiểm" (`AGENTS.md` §4) | D14 (kiểm tra đầy đủ ở cả PR lẫn deploy) |
+| D76 | Ngôn ngữ của code | Chủ dự án chọn (13/11, phiên Claude Code): code, tên file, route, tên trường, comment và commit bằng tiếng Anh; chữ cho người đọc (giao diện, `docs/`, bài viết), mô tả PR và comment trên issue bằng tiếng Việt. Chỉ áp dụng cho phần mới viết, không dịch lại phần cũ. Luật nằm ở `AGENTS.md` | Dòng "PR text in English" ở issue #44 (sửa theo quyết định này); lệ thường viết commit bằng tiếng Việt |
 
 ## 2. Quan sát site ngày 07/11/2026
 

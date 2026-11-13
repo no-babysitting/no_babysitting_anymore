@@ -4,6 +4,12 @@ Nơi ghi mọi chỗ **lệch kế hoạch**: chỗ làm khác tài liệu, khá
 
 ## Lệch kế hoạch
 
+### Đợt Bài viết: #43, #44, #36 đến #41, #57 (13/11/2026)
+
+- **Nhánh bỏ qua bộ kiểm của PR chỉ đổi tài liệu (D74) đã chạy thật.** PR #35 (28 file, chỉ `docs/`, `editorial/`, `.ignore`, `AGENTS.md`, `CHANGELOG.md`): job `check` xong sau 7 giây ở commit đầu (20:08:03 đến 20:08:10) và 8 giây ở commit ghi bản ghi duyệt (20:31:28 đến 20:31:36), so với khoảng 8 phút khi chạy đủ bộ. Trước đó nhánh này chưa được thử; ghi ở mục dọn dẹp bên dưới.
+- **Issue #44 ghi "PR text in English"; theo D76, mô tả PR và comment issue là tiếng Việt.** Chủ dự án chọn phương án code và commit tiếng Anh, PR và issue tiếng Việt (13/11). Dòng trong #44 sửa theo; khuôn mô tả PR ở `AGENTS.md` §6 giữ nguyên.
+- **Quy trình: PR #35 chuyển từ nháp sang sẵn sàng rồi merge ngay sau bản ghi duyệt.** Chủ dự án chọn "Merge luôn, sửa bằng PR nhỏ nếu cần". Hai câu hỏi trong mô tả PR (quy tắc "agent không tự merge" của bài 07, và chỗ của Gemini) chưa được quyết bằng lần merge này; sẽ hỏi riêng.
+
 ### Đợt dọn dẹp theo `/skill-doctor` (13/11/2026)
 
 - **Cache trình duyệt Playwright: thêm rồi gỡ (PR #55, PR D74).** Chủ dự án chọn mục này; tôi ước tính tiết kiệm nửa phút đến một phút mỗi lần chạy. Đo ở CI: bước cài Chromium 19 giây khi chưa có cache; có cache thì 4 giây khôi phục cộng 31 giây cài. Cache không giúp vì thời gian nằm ở `--with-deps` (apt), không ở tải trình duyệt. Gỡ khỏi hai workflow; giữ biến `PW_VERSION` và `concurrency`.
