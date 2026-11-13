@@ -2,7 +2,7 @@
 
 > **Status:** Product direction approved by the owner; framework and competency map are working hypotheses pending AI Council review and learner validation.  
 > **Decision baseline:** Hybrid architecture · Transfer North Star · AI Independent Evaluation Council review as the first validation gate.  
-> **Council operator:** ChatGPT, acting in an AI evaluator role. This is functional role separation, not institutional independence or credentialed human expert certification.  
+> **Council operator (updated 13/11/2026, D71):** Claude runs the black-box evaluation in a separate session; a model from another family cross-checks documents written by Claude and conclusions of Major or above; ChatGPT gives reference opinions only. This is functional role separation, not institutional independence or credentialed human expert certification. Where this file still names ChatGPT as the first gate, D71 in `docs/08` §1f prevails.  
 > **Audience baseline:** Knowledge workers and AI power users are primary hypotheses; developers are a deeper technical audience; leaders/managers are secondary. Validate this segmentation rather than treating it as established fact.
 
 ## 1. Purpose
@@ -32,7 +32,7 @@ Treat this as a value proposition to validate, not a proven outcome.
 |---|---|---|
 | Product architecture | **Hybrid**: Learning Path + Knowledge System | Hybrid is a functional architecture, not merely two equal navigation tabs |
 | North Star | **Transfer** | Measure independent performance on novel tasks |
-| First validation | **AI Council review** | ChatGPT evaluates the design against evidence and explicit criteria; this is not a credentialed human expert sign-off and cannot prove learner transfer |
+| First validation | **AI Council review** | The Council (operator per D71, `docs/08` §1f) evaluates the design against evidence and explicit criteria; this is not a credentialed human expert sign-off and cannot prove learner transfer |
 | Positioning | Agentic Work field guide, Claude Code as platform/example | Keep principles portable beyond one vendor |
 | Learning outcome | Understand, explain, execute and create usable artifacts | Prioritize observable work products where appropriate |
 | Release strategy | Representative vertical slice | Select by learning archetype and competency coverage, not chapter order alone |
@@ -201,7 +201,7 @@ Map these modules to actual repository chapters only after reviewing the current
 
 ### Gate 1 — AI Independent Evaluation Council review (first)
 
-The first reviewer is ChatGPT acting as the project's AI Council, as designated by the owner. It must actively challenge prior recommendations it helped create, rather than treating its own earlier output as authority. It must inspect the source artifacts, state evidence provenance, separate observation from inference and disclose uncertainty.
+The first reviewer is the project's AI Council (operator per D71 in `docs/08` §1f: Claude for black-box evaluation, a model from another family for cross-checks). It must actively challenge prior recommendations it helped create, rather than treating its own earlier output as authority. It must inspect the source artifacts, state evidence provenance, separate observation from inference and disclose uncertainty.
 
 This gate is an evidence-informed critical review, not institutional independence, a panel of credentialed specialists or a certification. Refer questions requiring real assistive-technology use, physical-device testing, specialist credentials or independent human replication to a qualified external reviewer when those capabilities are unavailable.
 

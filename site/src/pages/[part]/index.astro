@@ -58,7 +58,7 @@ const label = p.phase === 'Mở đầu' ? 'Mở đầu' : `${PHASE_LABEL[p.phase
             </div>
             <p class="why"><Fragment set:html={b.why} /><span class="ref nb-micro" set:html={' ' + refs(b.src)} /></p>
           </section>);
-        if (b.t === 'note') return <aside class="note"><p class="nb-tag is-warn">{b.tag}</p><p class="body"><Fragment set:html={link(b.html)} />{b.src && <span class="ref nb-micro" set:html={' ' + refs(b.src)} />}</p></aside>;
+        if (b.t === 'note') return <div class="note" role="note"><p class="nb-tag is-warn">{b.tag}</p><p class="body"><Fragment set:html={link(b.html)} />{b.src && <span class="ref nb-micro" set:html={' ' + refs(b.src)} />}</p></div>;
         if (b.t === 'grill') { const rec = b.options.find((o) => o.rec)!; return (
           <section class="gr" data-grill aria-label="Giả lập: Claude hỏi bạn một câu">
             <p class="nb-tag">Câu 1/3</p>

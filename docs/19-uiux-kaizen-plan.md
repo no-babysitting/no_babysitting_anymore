@@ -162,5 +162,6 @@ Mỗi đợt là một hay vài PR nhỏ. Cột "Ai duyệt": **code** thì merg
 ## 9. Câu hỏi mở cho chủ dự án
 
 1. **Agent mới có tự merge PR code không?** D14 cho Claude tự merge khi CI xanh. Đề xuất cho agent mới: **không tự merge** ở vài PR đầu; chủ dự án (hoặc một phiên Claude) xem rồi merge. Khi đã tin, mở lại D14 cho agent đó.
+   - **Đã trả lời 13/11/2026 (D67):** không có agent mới (DeepSeek chưa từng làm việc); agent chính là Claude và tự merge mọi PR không có chữ mới khi CI xanh, gồm cả hạ tầng và CI. Chữ mới do chủ dự án duyệt.
 2. **Đích ghim 12 màn** có hợp không, hay bạn muốn giữ cảm giác "điện ảnh" dài hơn?
 3. **Nút `Bỏ qua ↓`** ở cảnh ghim dài: đồng ý không?

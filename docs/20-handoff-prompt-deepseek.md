@@ -1,5 +1,7 @@
 # 20 · Prompt giao cho coding agent (DeepSeek v4.1 Flash): giữ art, kaizen UI/UX, dựng v4 (09/11/2026)
 
+> **Trạng thái (13/11/2026): hết hiệu lực.** DeepSeek v4.1 Flash chưa từng làm việc trên repo này; Claude làm các đợt UX và dựng v4 (chủ dự án xác nhận 13/11). Giữ để tham khảo lịch sử. Còn đúng và đã được `AGENTS.md` giữ lại: khoá art (D55), không nới phép kiểm, khuôn mô tả PR ở §1. "Không tự merge" ở §1 bước 5 không còn áp dụng (D67).
+
 > Chủ dự án dán phần §1 vào phiên đầu tiên của agent, mở trên repo này. §2 giải thích vì sao prompt này chặt hơn prompt cũ (`17-handoff-prompt.md`). Prompt cũ vẫn là nơi gốc của danh sách nguồn (`17` §3) và thứ tự dựng v4 (`17` §1).
 
 ## 1. Prompt

@@ -75,7 +75,7 @@ NB_BASE=/no_babysitting_anymore/ node scripts/design-check.cjs # gu trình bày
 NB_BASE=/no_babysitting_anymore/ node scripts/art-check.cjs    # ASCII art đã duyệt không bị đổi
 ```
 
-Mỗi thay đổi là một PR. Merge vào `main` thì GitHub Pages tự cập nhật. Câu chữ mới trên trang cần chủ dự án duyệt trước khi merge.
+Mỗi thay đổi là một PR (quy tắc cho agent: `AGENTS.md`). Merge vào `main` thì GitHub Pages tự cập nhật. Câu chữ mới trên trang cần chủ dự án duyệt trước khi merge.
 
 ## Giấy phép và ghi công
 
