@@ -18,12 +18,12 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
     <div data-ch-opener><ChapterOpener {...openerProps(c02)} no="A1" part="Nâng cao · A1" pos="01" total="01" beats={4} /></div>
 
     <section class="beat ask" data-ask data-hold="0.6" id="c02-b1" aria-labelledby="b1q">
-      <span class="nb-micro" data-reveal="up">b1 · hỏi</span>
+      <!-- beat b1 · hỏi (the beat label is an author note, not shown to readers; issue #21) -->
       <h2 class="nb-q q" id="b1q" data-reveal="words">Claude vừa viết hỏng phần phân tích 2 lần. Bạn nhắn "không phải vậy, thử lại". Lần thứ 3 sẽ tốt hơn hay tệ&nbsp;hơn?</h2>
     </section>
 
-    <section class="beat" id="c02-b2" aria-labelledby="b2h">
-      <span class="nb-micro" id="b2h">b2 · đoán</span>
+    <section class="beat" id="c02-b2">
+      <!-- beat b2 · đoán -->
       <fieldset class="predict" id="c02-predict" data-reveal="up">
         <legend class="nb-sr">Dự đoán của bạn</legend>
         <label><input type="radio" name="p" value="1" /> <span>Tốt hơn, vì Claude đã có thêm thông tin về điều bạn muốn.</span></label>
@@ -33,17 +33,17 @@ const c02 = chapters.find((c) => c.id === 'c02')!;
       <p class="hint" id="c02-hint">Chốt dự đoán để mở mô phỏng bên dưới. Không có đáp án bị chấm sai.</p>
     </section>
 
-    <section class="beat" id="c02-b3" aria-labelledby="b3h">
-      <span class="nb-micro" id="b3h">b3 · thấy</span>
+    <section class="beat" id="c02-b3">
+      <!-- beat b3 · thấy -->
       <div class="lock" id="c02-lock">
         <ContextMeter />
-        <div class="veil" id="c02-veil"><p class="nb-micro">Chốt dự đoán ở b2 để mở mô phỏng</p><button class="nb-btn" type="button" id="c02-skip">Bỏ qua, xem luôn</button></div>
+        <div class="veil" id="c02-veil"><p class="nb-micro">Chốt dự đoán ở trên để mở mô phỏng</p><button class="nb-btn" type="button" id="c02-skip">Bỏ qua, xem luôn</button></div>
       </div>
       <p class="hint">Cuộn để chạy phiên làm việc: đọc 12 file, tra 6 trang web, rồi hai lần viết hỏng. Sau đó các nút là của bạn.</p>
     </section>
 
     <section class="beat" id="c02-b4" aria-labelledby="b4h">
-      <span class="nb-micro" data-reveal="up">b4 · hiểu</span>
+      <!-- beat b4 · hiểu -->
       <h2 class="h" id="b4h" data-reveal="lines">Context là bộ nhớ làm việc, xoá ở mỗi phiên</h2>
       <p class="body" data-reveal="lines">Thứ ăn context: file đã đọc, kết quả tra web, mô tả công cụ, hướng dẫn dự án. Hầu hết model có cửa sổ 1M token và tự nén, nên hết context hiếm khi là vấn đề. Nhưng mỗi bản hỏng và lời sửa vẫn nằm lại trong hội thoại. <code>/clear</code> giữa các việc không liên quan vẫn đáng làm: hội thoại tập trung cho kết quả tốt hơn và rẻ hơn.</p>
       <p class="src nb-micro">Nguồn · <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code docs · Best practices ↗</a></p>

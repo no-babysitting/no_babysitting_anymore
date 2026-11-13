@@ -1,22 +1,20 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Hud from '../../components/Hud.astro';
-import FilterBar from '../../components/FilterBar.astro';
+/* The Library is hidden until it has real content (13/11/2026, issue #21): the page used to show 14 sample entries and
+   internal wording (FilterBar, MiniSearch, ingest, M1). Nothing links here any more and the sitemap leaves it out; the old
+   address sends the visitor to the home page at once, so a saved link does not break, and is noindex.
+   To bring the Library back, restore FilterBar.astro as the page body and re-add the links in Hud, 404, sitemap and the
+   checks' page lists (the git history before this change has the old page). */
+import { url } from '../../lib/url';
+const home = url();
 ---
-<Base title="Library · No Babysitting">
-  <Hud />
-  <main id="main" tabindex="-1" class="wrap lib">
-    <div class="head">
-      <span class="nb-micro"><span class="nb-sq"></span>Library · khoảng 350–450 mục sau lần ingest đầu (M1)</span>
-      <h1 class="nb-wide">Library</h1>
-      <p>Mọi best practice ở mức bài viết, có nguồn, cấp độ và nhãn độ bền. Bản này dùng 14 mục mẫu.</p>
-    </div>
-    <FilterBar />
-  </main>
-</Base>
-<style>
-  .lib { display: grid; gap: 32px; padding-block: 56px 96px; }
-  .head { display: grid; gap: 10px; }
-  .head h1 { margin: 0; font-size: clamp(32px, 6vw, 64px); }
-  .head p { margin: 0; color: var(--fg-muted); line-height: 1.5; max-width: var(--measure); }
-</style>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>No Babysitting</title>
+  <meta name="robots" content="noindex" />
+  <meta http-equiv="refresh" content={`0;url=${home}`} />
+  <link rel="canonical" href={home} />
+</head>
+<body><a href={home}>Về trang chủ</a></body>
+</html>
