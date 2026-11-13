@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Bớt chi phí CI theo lựa chọn của chủ dự án: deploy gọn hơn, PR chỉ đổi tài liệu bỏ qua bộ kiểm site (13/11/2026, D74)
+
+Không đổi site, không có chữ mới. **Nới có chủ đích, do chủ dự án đồng ý rõ (13/11/2026, trong phiên Claude Code):** (1) `Deploy site` chỉ build và chạy `check.cjs`, không chạy lại type-check và design-check, vì PR đã qua đủ bộ và `main` được bảo vệ; (2) PR chỉ đổi tài liệu (`docs/`, `editorial/`, `.claude/`, `*.md` ở gốc, `LICENSE`, `.ignore`) bỏ qua các bước nặng của `Check site`. Chủ dự án chọn "paths-ignore"; tôi làm bằng một bước nhận diện phạm vi trong cùng job `check` thay vì `paths-ignore`, để job vẫn chạy và báo xanh: nếu `main` bắt buộc status `check` thì PR tài liệu không bị kẹt. Mọi PR đổi file khác vẫn chạy đủ bộ. Ghi ở `docs/08` §1f (D74), `AGENTS.md` §4, `docs/README.md`, `docs/13`. Đo sau lần chạy đầu: thời gian một PR chỉ đổi tài liệu và thời gian một lần deploy (trước đây mỗi lần khoảng 8 phút); số đo ghi ở mô tả PR.
+
 ## CI nhanh hơn: cache trình duyệt Playwright, huỷ lần chạy cũ (13/11/2026)
 
 Không đổi site, không đổi phép kiểm nào, không có chữ mới. `check.yml` và `deploy.yml` cache `~/.cache/ms-playwright` (khoá theo hệ điều hành và phiên bản Playwright, nay một biến `PW_VERSION` dùng chung cho cả hai) nên lần chạy sau không tải lại trình duyệt; `check.yml` có `concurrency` huỷ lần chạy cũ khi đẩy commit mới lên cùng một PR (`deploy.yml` giữ nhóm `pages`, không huỷ). Đo được: thời gian bước "Install Chromium" và số lần chạy 8 phút mỗi PR; số đo sau khi PR này chạy xong ghi ở mô tả PR. Phần nới phép kiểm chủ dự án đã đồng ý (deploy bớt bộ kiểm, PR chỉ đổi tài liệu bỏ qua bộ kiểm site) nằm ở PR riêng (D74).

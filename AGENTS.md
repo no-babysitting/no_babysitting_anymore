@@ -39,13 +39,14 @@ Chữ mới là mọi chữ người đọc thấy mà chưa nằm trên site: c
 
 - Không nới ngưỡng, tắt hay bỏ qua một bước, đặt `continue-on-error` cho bộ chặn merge. Phép kiểm sai thật thì dừng, đưa bằng chứng vào issue hay PR (cách `docs/12` đã làm), chờ chủ dự án quyết.
 - PR đụng `site/scripts/`, `design-system/art-lock.json`, `design-system/type-rules.json` hoặc `.github/workflows/` phải nêu trong mục "Lệch tài liệu" đổi gì và vì sao. Bước CI **"Phép kiểm đã đổi"** in danh sách file và các dòng đổi vào Job Summary của PR.
+- **Ngoại lệ do chủ dự án quyết (D74, 13/11/2026):** `Deploy site` chỉ chạy `check.cjs`; PR chỉ đổi tài liệu bỏ qua các bộ kiểm site. Mọi nới khác vẫn cần chủ dự án quyết và một số D mới.
 - Đó là **chứng cứ để phát hiện, không phải ngăn chặn**: agent và chủ dự án dùng chung một tài khoản GitHub nên cài đặt không tách được hai bên. Điều ngăn là quy ước này và việc bên đánh giá đọc Job Summary (D69).
 
 ## 5. Chỉ dẫn nằm ở đâu
 
 | Cần biết | Đọc |
 |---|---|
-| Quyết định đã chốt (D1–D73) | `docs/08` |
+| Quyết định đã chốt (D1–D74) | `docs/08` |
 | Nội dung và nguồn | `docs/14`, `docs/17` §3 (nguồn chính thức), `docs/06` |
 | Văn phong, chữ trên giao diện | `docs/16` |
 | Chữ, chuyển động, design system | `docs/09`, `docs/11`, `docs/13`, `docs/15`, `design-system/SOURCE-OF-TRUTH.md` |
