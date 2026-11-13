@@ -4,7 +4,7 @@ topic: 5
 order: 2
 slug:
 working_title: Memory: tin harness hay tự quản?
-collectedAt: 13/11/2026
+verifiedAt: 2026-11-13
 ---
 
 # Memory: tin harness hay tự quản?

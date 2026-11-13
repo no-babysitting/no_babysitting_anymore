@@ -1,6 +1,6 @@
 # 24 · Mục Bài viết: khung và bàn giao (13/11/2026)
 
-> Kết quả hai vòng hỏi chủ dự án ngày 13/11/2026 (tổng quan, rồi chi tiết). Quyết định ghi ở §1 và ở `08-kaizen-go-live.md` §1e (D57–D66). Đây là kế hoạch: **site chưa đổi gì**. Bản nháp và gói bàn giao nằm ở `editorial/`.
+> Kết quả hai vòng hỏi chủ dự án ngày 13/11/2026. Đây là kế hoạch: **site chưa đổi gì**. Tài liệu này chỉ giữ những gì không có ở nơi khác (kiến trúc, cách chặn đọc nhầm, playbook đăng bài, spec cho coding agent). Luật nằm ở chỗ gốc của chúng; mục nào là con trỏ thì ghi rõ. Bản nháp và gói bàn giao ở `editorial/`.
 
 ## 0. Hiện trạng khi bắt đầu
 
@@ -13,28 +13,15 @@ Repo chưa có kế hoạch cho mục blog hay bài viết có tác giả:
 
 Ba chủ đề đầu trùng với kế hoạch hiện có: memory gần Nâng cao A2 và phần 03; model và effort gần A5 (c05b); 80% system prompt là six shifts, đã ở trang chủ (S1). Bài viết vì thế không dạy lại các mục đó. Nó là phân tích có tác giả, có ngày, và dẫn sang mục tương ứng.
 
-## 1. Quyết định (13/11/2026)
+## 1. Quyết định
 
-| # | Chủ đề | Quyết định | Nguồn quyết định |
-|---|---|---|---|
-| D57 | Vai trò | Mục **Bài viết** riêng, tách khỏi Lộ trình chính. Byline theo D17 (biệt danh và GitHub) | Chủ dự án chọn |
-| D58 | Phạm vi | Trục Claude. OpenAI và Gemini chỉ đối chiếu ngắn, kèm nguồn của chính hãng | Chủ dự án chọn |
-| D59 | Lưu trữ | **Chung repo.** Nháp ở `editorial/`, ngoài `site/`; không hiện lên site cho tới khi duyệt | Chủ dự án: "chung repo cũng được, chỉ cần không hiển thị lên site khi approve" |
-| D60 | Chặn đọc nhầm | `.ignore` ở gốc repo, và `editorial/CLAUDE.md` chỉ nạp khi agent đọc file trong đó. Không dùng deny rule (§4) | Chủ dự án đồng ý nếu đặt được luật; cơ chế do agent chọn |
-| D61 | Nhịp | Một cụm 3 bài rồi xem lại. Hạ tầng vừa đủ, chưa dựng cho dòng chảy chưa có | Chủ dự án chọn |
-| D62 | Giọng | Bài viết xưng "tôi" (`16-writing-guide.md` §10) | Chủ dự án chọn |
-| D63 | Kiểm chứng | Chuẩn nhẹ: **ghi ngày thu thập thông tin**. Nguồn dẫn ngay trong bài; không SourceButton bắt buộc, không build-fail vì thiếu nguồn. Sổ nguồn ở `editorial/` | Chủ dự án: "note thêm vào là thông tin thu thập ở ngày nào là ok" |
-| D64 | Minh bạch | Chỉ ghi byline; bài không có hộp "cách bài được làm". Quy trình và sổ nguồn vẫn công khai trong repo | Chủ dự án chọn |
-| D65 | Thứ tự | 01 system prompt → 02 memory → 03 model và effort | Chủ dự án chọn (theo chi phí kiểm chứng) |
-| D66 | Đăng bài | Một PR mỗi bài, kèm trang xem trước. Chủ dự án duyệt chữ rồi mới merge (D13). Agent không tự merge bài | Mặc định đề xuất, chờ xác nhận |
-
-Mặc định đề xuất khác, chờ xác nhận: nhãn mục "Bài viết"; đường dẫn `/bai-viet/`; chỉ tiếng Việt (D1); ẩn mục khỏi menu cho tới khi có bài đầu tiên (cùng tinh thần D25).
+Ở `08-kaizen-go-live.md` §1e (D57–D66). Không chép lại ở đây. Chờ chủ dự án xác nhận: D66 (một PR mỗi bài, chủ dự án duyệt rồi mới merge) và các mặc định sau: nhãn mục "Bài viết"; đường dẫn `/bai-viet/`; chỉ tiếng Việt (D1); ẩn mục khỏi menu cho tới khi có bài đầu tiên (cùng tinh thần D25).
 
 ## 2. Hai khối việc
 
 **Khối A. Dựng mục Bài viết trên site.** Một PR code, giao cho coding agent chính khi bài đầu tiên được tác giả duyệt. Spec ở §8. Chữ mới trên giao diện (nhãn menu, câu của trang trống) cần chủ dự án duyệt (D13); phần code còn lại tự merge khi bộ kiểm xanh (D14).
 
-**Khối B. Từng bài.** Mỗi bài đi hết vòng đời ở §5, rồi một PR đăng bài theo §6. Phiên viết bài dùng `editorial/HANDOFF.md`.
+**Khối B. Từng bài.** Mỗi bài đi hết vòng đời (§5), rồi một PR đăng bài theo §6. Phiên viết bài dùng `editorial/HANDOFF.md`.
 
 Hai khối độc lập. Có thể viết cả ba bài mà chưa dựng khối A.
 
@@ -72,24 +59,14 @@ Giới hạn cần biết:
 
 ## 5. Vòng đời bài
 
-| Trạng thái | Nghĩa | Ai làm |
-|---|---|---|
-| `idea` | Ý tưởng thô, ghi chú | Tác giả |
-| `memo` | Có memo nghiên cứu, chưa kiểm | Perplexity, ChatGPT, Claude |
-| `ledger` | Sổ nguồn đủ cho một bản nháp | Claude mở nguồn gốc; mỗi dòng có nhãn |
-| `draft` | Có bản nháp | Tác giả và Claude, theo sáu bước ở `editorial/CLAUDE.md` |
-| `review` | Đang rà. Có thể qua Council (ChatGPT); quyết định ở bài đầu tiên | Council, tác giả |
-| `approved` | Tác giả duyệt chữ | **Chỉ tác giả đặt** |
-| `published` | PR đăng bài đã merge | Coding agent chính, tác giả merge |
-
-Ba cổng, không gộp: *chất lượng* (sổ nguồn, rà biên tập), *quyền* (tác giả đặt `approved`), *đăng* (PR và merge). Bài qua cổng chất lượng không tự có quyền lên site.
+Trạng thái, ba cổng (chất lượng, quyền, đăng) và ai đặt trạng thái nào: `editorial/CLAUDE.md`. Không chép lại ở đây.
 
 ## 6. Playbook đăng bài (cho coding agent chính)
 
-Chạy khi tác giả nói "đăng bài NN" và `status: approved` ở `brief.md` của bài đó. Chỉ đọc thư mục của bài đó, `docs/16` và mục này.
+Chạy khi tác giả nói "đăng bài NN" và `status: approved` ở `brief.md` của bài đó. Chỉ đọc thư mục của bài đó, `editorial/CLAUDE.md` và mục này.
 
 1. Chuyển `draft.md` thành `site/src/content/articles/<slug>.md`, thêm frontmatter (§8). Không chép `ledger.md` lên site.
-2. `collectedAt` lấy từ ngày mở nguồn gần nhất trong `ledger.md`. Dòng "Thông tin thu thập ngày …" hiện từ frontmatter, không viết tay (D63).
+2. `verifiedAt` lấy từ ngày gần nhất trong cột "Mở ngày" của `ledger.md`. Dòng "Thông tin thu thập ngày …" hiện từ frontmatter, không viết tay (D63).
 3. Mở mọi link trong bài; link chết thì báo tác giả, không tự thay.
 4. Chạy `check.cjs`, `type-check.cjs` (kèm `--selftest`) và `design-check.cjs`.
 5. Mở PR nháp, kèm một trang HTML xem trước ngắn: đã đổi gì, vì sao, rủi ro còn lại, vài câu để tác giả tự kiểm (theo `17` §1).
@@ -98,18 +75,15 @@ Chạy khi tác giả nói "đăng bài NN" và `status: approved` ở `brief.md
 
 ## 7. Chuẩn nội dung
 
-- Giọng và chữ: `16-writing-guide.md` §1–§9, cùng §10 dành riêng cho Bài viết (xưng "tôi", ngày thu thập, nguồn trong câu).
-- Nhãn trong sổ nguồn: `VERIFIED`, `VENDOR CLAIM`, `INFERENCE`, `UNVERIFIED`, `MEASURED` (định nghĩa ở `editorial/CLAUDE.md`). Chỉ `VERIFIED`, `VENDOR CLAIM` (nói rõ hãng công bố) và `MEASURED` vào bài như dữ kiện.
-- Bài không lặp lại Lộ trình chính hay Nâng cao. Chỗ trùng chủ đề thì dẫn sang.
-- Với mỗi bài hỏi: điều gì ở đây không có trong docs và blog chính thức? Không có thì bài chỉ là bản tóm tắt.
+Con trỏ, không phải luật: giọng và chữ ở `16-writing-guide.md` §1 (ngoại lệ xưng "tôi"); nguồn và ngày ở `06-sources-and-links.md` §1 mục 8; nhãn bằng chứng ở `editorial/CLAUDE.md`.
 
 ## 8. Spec khối A cho coding agent
 
 Yêu cầu, không phải cách làm; agent tự chọn cách cài.
 
 - **Route:** `/bai-viet/` (mục lục) và `/bai-viet/<slug>/`. Tĩnh. Có trong sitemap, `canonical` và OG đúng.
-- **Nội dung:** markdown ở `site/src/content/articles/`. Frontmatter: `title`, `description`, `publishedAt`, `collectedAt`, `order` (thứ tự trong cụm), `series` (tuỳ chọn). Tác giả lấy từ `config.ts` (biệt danh và GitHub theo D17), không lặp ở từng bài.
-- **Ngày thu thập:** hiện ở đầu bài từ `collectedAt`. Đề xuất của agent, chờ xác nhận: thiếu `collectedAt` thì build fail, để ghi chú ngày mà D63 yêu cầu không bị quên. Đây là luật build duy nhất của mục này; không có luật nào về nguồn.
+- **Nội dung:** markdown ở `site/src/content/articles/`. Frontmatter: `title`, `description`, `publishedAt`, `verifiedAt`, `order` (thứ tự trong cụm), `series` (tuỳ chọn). Hai trường ngày dùng lại tên của `SourceRef` (`06` §1 mục 4). Tác giả lấy từ `config.ts` (biệt danh và GitHub theo D17), không lặp ở từng bài.
+- **Ngày thu thập:** hiện ở đầu bài từ `verifiedAt`. Đề xuất của agent, chờ xác nhận: thiếu `verifiedAt` hoặc sai dạng `YYYY-MM-DD` thì build fail, theo đúng cách `site/src/lib/matrix.ts` đã kiểm `verifiedAt` của `matrix.yml`. Đây là luật build duy nhất của mục này; không có luật nào về nguồn. Tuỳ chọn: dùng lại `ageDays` của `matrix.ts` để hiện nhãn "cần kiểm lại" khi quá 30 ngày, như trạng thái đã đặc tả ở `06` §2.
 - **Bố cục:** dùng `Base.astro`, token và component hiện có. Không thêm ASCII art; `art-lock.json` không đổi. Độ rộng dòng đọc theo `type-rules.json`.
 - **Chữ:** thuật ngữ tiếng Anh lần đầu in nghiêng, đánh `lang="en"` (cho phép HTML nội tuyến trong markdown). Dấu câu theo luật `punctuation` của `type-check`.
 - **Menu:** thêm "Bài viết" chỉ khi có ít nhất một bài đã đăng. Nhãn và câu của trang trống cần chủ dự án duyệt (D13).
@@ -121,7 +95,7 @@ Yêu cầu, không phải cách làm; agent tự chọn cách cài.
 1. **Sáu chủ đề, ba bài.** Tác giả có sáu chủ đề (A, B, C của brief và 4, 5, 6 có memo); cụm 3 bài lấy 4–6. A gộp vào bài 02, B vào bài 03. **C (Gemini Orchestrator) chưa có chỗ.** Xem `editorial/articles/00-cluster/README.md`.
 2. **URL chuẩn của bài six shifts:** site dẫn `claude.dev/blog/...`, memo dẫn `claude.com/blog/...` (`07` §1 mục 3 vẫn mở). Bài 01 phải chốt.
 3. **Memory của Chat và Cowork:** memo 5 và `05-surface-matrix.md` nói chưa khớp nhau (`02-memory/ledger.md` dòng 13).
-4. **Council:** bài nào qua ChatGPT trước khi tác giả duyệt. Quyết định ở bài đầu tiên.
+4. **Ai rà ở bước `review`:** tác giả quyết ở bài đầu tiên.
 5. **Tên cụm** và tên tiếng Việt của nó.
 6. **`paths-ignore` cho CI:** chờ xác nhận quy tắc bảo vệ nhánh (§4).
 7. **Xem lại sau cụm 3 bài (D61):** quy trình có chạy không; nháp có gây tốn token không; bài có nói được điều docs chưa nói không; số liệu GoatCounter và phản hồi. Từ đó quyết định tách repo, mở rộng nhịp, hay dừng.
@@ -130,10 +104,10 @@ Yêu cầu, không phải cách làm; agent tự chọn cách cài.
 
 | Rủi ro | Giảm thiểu |
 |---|---|
-| Số hay đổi (giá, benchmark, mức mặc định) lỗi thời | Luôn kèm ngày thu thập (D63); bài 03 ra cuối vì đổi nhanh nhất |
-| Memo chưa kiểm chứng bị chép thẳng vào bài | Nhãn `UNVERIFIED` trên mọi memo; hai luật cứng ở `editorial/CLAUDE.md`; mọi số phải có dòng trong `ledger.md` |
+| Số hay đổi (giá, benchmark, mức mặc định) lỗi thời | `verifiedAt` hiện ở đầu bài và số kèm ngày trong câu (`06` §1 mục 8); bài 03 ra cuối vì đổi nhanh nhất |
+| Memo chưa kiểm chứng bị chép thẳng vào bài | Nhãn `UNVERIFIED` trên mọi memo; hai luật không ngoại lệ (`17` §1); mọi số phải có dòng trong `ledger.md` |
 | Bài chỉ là tóm tắt tài liệu chính thức | Câu hỏi "điều gì docs chưa nói" ở mọi brief; hỏi tác giả chuyện thật và số tự đo |
 | Nháp làm agent chính tốn token | §4. Lối thoát: repo riêng |
-| Giọng "tôi" lệch khỏi phần còn lại của site | `16` §10 giới hạn trong mục Bài viết; mascot không xuất hiện trong bài |
-| Chuẩn kiểm chứng nhẹ cho số sai lọt qua | Ngày thu thập cho người đọc biết tuổi của số; sổ nguồn công khai trong repo để người khác kiểm |
+| Giọng "tôi" lệch khỏi phần còn lại của site | Ngoại lệ có phạm vi ở `16` §1; mascot không xuất hiện trong bài |
+| Chuẩn kiểm chứng nhẹ cho số sai lọt qua | Ngày kiểm chứng cho người đọc biết tuổi của số; sổ nguồn công khai trong repo để người khác kiểm |
 | Coi mục Bài viết là chỗ đăng tin | Chỉ nhận bài có luận điểm riêng của tác giả; cụm 3 bài rồi xem lại |

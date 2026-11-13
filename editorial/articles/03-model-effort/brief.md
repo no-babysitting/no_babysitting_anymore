@@ -4,7 +4,7 @@ topic: 4
 order: 3
 slug:
 working_title: Chọn model và effort: trí thông minh đúng chỗ
-collectedAt:
+verifiedAt:
 ---
 
 # Chọn model và effort: trí thông minh đúng chỗ

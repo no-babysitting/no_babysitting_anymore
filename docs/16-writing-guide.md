@@ -5,7 +5,7 @@
 ## 1. Người đọc và giọng
 
 - **Người đọc:** người đi làm, đã dùng Claude, thuộc đủ vai (dev, BA, designer, marketing, sales, quản lý, người làm sáng tạo). Họ thông minh, bận, không cần được dỗ dành, cũng không cần được khen.
-- **Xưng hô:** gọi người đọc là "bạn". Người kể không xưng: không "tôi", không "mình", không "chúng ta". Mascot cũng gọi người đọc là "bạn" và tự xưng "mình".
+- **Xưng hô:** gọi người đọc là "bạn". Người kể không xưng: không "tôi", không "mình", không "chúng ta". Mascot cũng gọi người đọc là "bạn" và tự xưng "mình". **Ngoại lệ có phạm vi:** trong mục Bài viết (D62), tác giả xưng "tôi" khi nêu quan điểm hay trải nghiệm của mình; người đọc vẫn là "bạn", vẫn không "mình" hay "chúng ta", và mascot không xuất hiện.
 - **Giọng:** thẳng và thực dụng. Có chút tinh nghịch ở tiêu đề và câu hook ("sao bạn vẫn phải trông trẻ?"). Thân bài thì nghiêm túc và có nguồn. Không cường điệu, không doạ, không tâng bốc.
 - **Ý chính đi trước** (Minto [P5], kim tự tháp ngược [P3]): câu đầu của đoạn nói ý chính, các câu sau đưa lý do hoặc ví dụ. Người chỉ đọc câu đầu của mỗi đoạn vẫn phải nắm được bài.
 
@@ -204,17 +204,6 @@ Nhãn, nút và tên tính năng là chữ ngắn nhất trên trang nên dễ s
 | Prompt mẫu chỉ đẹp văn | Người đọc sẽ chép và dùng thật | Prompt phải đúng cách làm được khuyên (kết quả cần có, thế nào là xong, ngữ cảnh chỉ người dùng biết), rồi mới tới văn phong. |
 
 Trước khi gửi duyệt một nhãn hay một nút mới, hỏi ba câu: (1) tách khỏi trang, chữ này còn hiểu được không; (2) có ai nói câu này bằng miệng không; (3) chữ này hứa đúng điều sẽ xảy ra khi bấm không.
-
-## 10. Bài viết có tác giả (13/11/2026, D62–D64)
-
-Mục Bài viết (`/bai-viet/`) là chỗ duy nhất của site có người nói. Mọi luật ở §1–§9 vẫn giữ, trừ các điểm dưới đây.
-
-- **Xưng hô:** tác giả xưng "tôi" khi nêu quan điểm, trải nghiệm hoặc lựa chọn của mình. Người đọc vẫn là "bạn". Không "mình", không "chúng ta". Mascot không xuất hiện trong bài viết.
-- **Quan điểm và dữ kiện:** nói rõ đâu là điều tôi nghĩ, đâu là điều nguồn nói. *Anthropic cho biết…* và *Tôi cho rằng…* là hai câu khác nhau; đừng để câu thứ hai mặc áo câu thứ nhất.
-- **Ngày thu thập:** đầu bài có dòng "Thông tin trong bài thu thập ngày dd/mm/yyyy". Số hay đổi (giá, benchmark, mức mặc định, giới hạn) đặt kèm ngày ngay trong câu: *Theo trang giá ngày 13/11/2026, …*. Không viết "hiện nay", "mới đây" (§2.1).
-- **Nguồn:** con số và câu trích có link bấm được ngay trong đoạn. Không cần SourceButton, không chặn build. Điều hãng tự công bố thì viết "hãng cho biết", không viết như thứ đã đo.
-- **Hãng khác Claude:** đối chiếu ngắn, ghi rõ chỉ để so, dẫn nguồn của chính hãng đó.
-- **Không** ghi cách bài được làm (D64). Quy trình và sổ nguồn công khai trong `editorial/`.
 
 ## Nguồn
 

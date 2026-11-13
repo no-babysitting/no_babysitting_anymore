@@ -16,7 +16,7 @@ Cụm 3 bài đầu, viết theo thứ tự này (D65). Cột "Chủ đề" là 
 | 02 | Memory: tin harness hay tự quản | 5 | `ledger` (một phần) | Đã đối chiếu 11 claim về Claude Code với docs ngày 13/11/2026; còn 4 dòng chưa xác nhận |
 | 03 | Chọn model và effort | 4 | `memo` | Nhiều số chưa kiểm chứng; mâu thuẫn mức effort mặc định giữa brief và memo |
 
-Vòng đời: `idea` → `memo` → `ledger` → `draft` → `review` → `approved` → `published`.
+Ý nghĩa của từng trạng thái và ai đặt: [`CLAUDE.md`](CLAUDE.md).
 
 ## Sau khi xong cụm 3 bài
 

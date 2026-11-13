@@ -4,7 +4,7 @@ topic: 6
 order: 1
 slug:
 working_title: 80% system prompt: cái gì thực sự đổi?
-collectedAt:
+verifiedAt:
 ---
 
 # 80% system prompt: cái gì thực sự đổi?

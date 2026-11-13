@@ -56,5 +56,5 @@ Tất cả là lời của công cụ khác hoặc của tác giả, chưa kiể
 
 - Tên cụm và tên tiếng Việt.
 - Chủ đề C đi đâu.
-- Bài nào qua Council (ChatGPT) trước khi tác giả duyệt: quyết định ở bài đầu tiên.
+- Ai rà ở bước `review`: tác giả quyết ở bài đầu tiên. ChatGPT đã nhận kiểm insight của các memo (`raw/02`).
 - Brief 01 §7 có dàn bài cho một bài tổng hợp (memory, model, Google). Cụm 3 bài thay nó; giữ làm tham chiếu.

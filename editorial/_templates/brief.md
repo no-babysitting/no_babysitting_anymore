@@ -1,10 +1,10 @@
 ---
-status: idea            # idea → memo → ledger → draft → review → approved → published (chỉ tác giả đặt approved)
+status: idea            # các trạng thái và ai đặt: editorial/CLAUDE.md
 topic:                  # số trong danh sách chủ đề của tác giả
 order:                  # thứ tự trong cụm
 slug:
 working_title:
-collectedAt:            # ngày thu thập thông tin gần nhất, dd/mm/yyyy (D63)
+verifiedAt:             # ngày mở nguồn gần nhất trong ledger.md, YYYY-MM-DD (docs/06 §1 mục 8)
 ---
 
 # Tiêu đề làm việc
