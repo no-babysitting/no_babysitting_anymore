@@ -1,10 +1,10 @@
 ---
-status: memo
+status: draft
 topic: 4
 order: 3
 slug:
 working_title: Chọn model và effort: trí thông minh đúng chỗ
-verifiedAt:
+verifiedAt: 2026-11-14
 ---
 
 # Chọn model và effort: trí thông minh đúng chỗ
@@ -18,6 +18,21 @@ Nguồn: memo 4 (Perplexity) và chủ đề B, C của brief 01, đều ở `..
 - Câu gọn của memo 4: *escalate intelligence automatically; escalate authority explicitly*. Khớp với *No babysitting ≠ no supervision* ở PRD §0.
 
 Cả ba là INFERENCE. Chọn luận điểm của tác giả trước.
+
+## Quyết định của tác giả (14/11/2026, hộp hỏi lựa chọn)
+
+- **Luận điểm đã chọn:** "Bắt đầu bằng model đủ mạnh ở effort vừa, có kiểm chứng và leo thang có giới hạn." (luận điểm ứng viên đầu của brief, kèm "chỉ thêm routing khi đo được lợi").
+- **Chuyện cá nhân và số tự đo:** tác giả chọn "Không dùng chuyện cá nhân ở cả hai". Bài 03 không có nhãn MEASURED; ghi rõ là cách đọc chỉ dẫn, không phải kết quả thử.
+
+## Điều agent đã thu hẹp khi viết bản nháp, tác giả cần xác nhận
+
+Sau khi mở docs (ledger dòng 4 đến 18), "effort vừa" **không phải khuyến nghị chung**: docs API khuyên bắt đầu ở `high` với Fable 5.2, Fable 5.1, Fable 5 và Opus 5; `xhigh` với Opus 4.7 và 4.8; `medium` với Opus 5.5 và Haiku 5.5. Mặc định của Claude Code thì `medium` cho Fable 5.2, Opus 5.5, Sonnet 5.5, Haiku 5.5 (ledger dòng 6). Nên bản nháp nói: "bắt đầu ở **mặc định của model**, nâng khi có bằng chứng, chỉ thêm định tuyến khi đo được", và giới hạn "bắt đầu ở medium" cho Claude Code. Đây là thu hẹp của luận điểm tác giả chọn; tác giả xác nhận hoặc nói muốn giữ nguyên "effort vừa".
+
+Mâu thuẫn "mức mặc định" giữa brief 01 và memo 4 đã giải: mỗi bên đúng với một bề mặt (ledger dòng 8). Đây cũng là điều bài nói mà docs chưa nói rõ: so sánh hai bề mặt.
+
+## Bản nháp đầu (14/11/2026)
+
+`draft.md`: do agent viết, **chưa phải giọng của tác giả**. Mọi khẳng định bám `ledger.md` (bản đồ cuối file, không đăng). Không dùng giá, benchmark, "70 đến 85%", chủ đề C (Gemini Orchestrator; chờ #41). Chưa mở trang pricing và chưa mở mức mặc định ở ứng dụng Claude. Chưa có người đối chiếu thứ hai; ba trang nguồn mở bằng công cụ tải trang, cần mở lại bằng trình duyệt trước khi đăng.
 
 ## Trong repo đã có gì (đừng dạy lại)
 
