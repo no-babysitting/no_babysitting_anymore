@@ -90,6 +90,12 @@ jobs:
         if: steps.scope.outputs.docs_only != 'true'
         continue-on-error: true
         run: node scripts/art-check.cjs --shots art-report
+      - name: TEMP, never merge. Print the CI fingerprints of two locked pieces (owner chose this on 14/11/2026)
+        if: steps.scope.outputs.docs_only != 'true'
+        continue-on-error: true
+        run: |
+          node scripts/art-check.cjs --update
+          node -e "const l=require('../design-system/art-lock.json');for(const k of ['hero-logo@phone','menu-art@phone'])console.log('CILOCK '+k+' '+JSON.stringify(l.pieces[k]))"
       - name: Art report
         if: always() && steps.scope.outputs.docs_only != 'true'
         uses: actions/upload-artifact@v4
