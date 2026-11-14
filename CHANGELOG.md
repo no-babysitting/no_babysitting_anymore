@@ -2,6 +2,12 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Cập nhật khoá art cho 10 mảnh lệch sau ngày khoá (14/11/2026, D55)
+
+**Site không đổi, không có chữ mới; đổi `design-system/art-lock.json` (art đã khoá).** Cập nhật 10 mảnh `art-check` báo lệch: 8 mảnh theo số đo máy làm việc (`water` kích thước canvas, và `spark-fresco`, `spark-hands`, `spark-light`, hai khổ mỗi mảnh) và 2 mảnh điện thoại `hero-logo@phone`, `menu-art@phone` theo số đo của chính CI (chủ dự án chọn "Sinh số khoá hai mảnh này trên CI một lần", 14/11/2026), vì hai mảnh này chỉ lệch trên CI từ trước. Sáu mảnh còn lại giữ nguyên. Ảnh trước (khoá cũ, dựng ở `c2a2c24`) và sau (hiện tại) đã được chủ dự án xem ở PR #75; thư mục ảnh được gỡ trước khi merge nên không vào `main`. Số của hai mảnh điện thoại lấy từ một lần chạy CI thử (PR #76, đã đóng, không merge).
+
+
+**Bản ghi duyệt (do agent viết, không phải chủ dự án):** 14/11/2026, trong phiên Claude Code, bằng hộp thoại hỏi đáp có đề xuất sau khi chủ dự án nhận trang so sánh ảnh trước và sau của 8 mảnh. Câu hỏi: "Bạn có duyệt cập nhật khoá art ở PR #75 (8 mảnh `water` và `spark-*` theo ảnh trước và sau, cộng hai mảnh điện thoại khoá theo số đo CI) để tôi ghi bản ghi duyệt, gỡ thư mục ảnh và merge không?" Chủ dự án chọn: "Duyệt, merge #75 (Đề xuất)". Kết quả `art-check` trên CI với khoá này: "✓ art unchanged" (16 mảnh, 3 file nguồn, mặt mascot).
 ## `design-check` xem thêm hai trang bài `/02/` và `/03/` (14/11/2026, #43 hàng 4, D83)
 
 **Site không đổi, không có chữ mới; đụng `site/scripts/design-check.cjs`: chỉ thêm phạm vi kiểm, không nới ngưỡng.** `/02/` và `/03/` được thêm vào ba khổ có `/01/` (điện thoại, nhỏ, máy tính; khổ `se` giữ nguyên). Đo trên máy làm việc: `design-check` từ 181 giây lên 201 giây (+20 giây, đúng khoảng 20 đến 30 giây đã ước tính), 0 lỗi trên hai trang mới, "design lint passed". Danh sách trang bị bỏ qua giờ không còn `/02/` `/03/`.
