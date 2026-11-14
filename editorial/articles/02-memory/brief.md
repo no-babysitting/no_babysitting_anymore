@@ -1,10 +1,10 @@
 ---
-status: ledger
+status: draft
 topic: 5
 order: 2
 slug:
 working_title: Memory: tin harness hay tự quản?
-verifiedAt: 2026-11-13
+verifiedAt: 2026-11-14
 ---
 
 # Memory: tin harness hay tự quản?
@@ -18,6 +18,16 @@ Nguồn: memo 5 (Perplexity) và chủ đề A của brief 01, đều ở `../00
 - Câu gọn của memo 5: *remember automatically, establish truth explicitly*.
 
 Cả ba là INFERENCE của công cụ nghiên cứu. Việc đầu tiên với tác giả là chọn luận điểm của chính họ.
+
+## Quyết định của tác giả (14/11/2026, hộp hỏi lựa chọn)
+
+- **Luận điểm đã chọn:** "Nhớ tôi" khác "biết cách làm việc trong repo này". Hai luận điểm ứng viên còn lại không dùng.
+- **Chuyện cá nhân và số tự đo:** tác giả chọn "Không dùng chuyện cá nhân ở cả hai, như bài 01". Bài không kể chuyện auto memory nhớ sai hay nhớ thừa, và không chạy sáu phép thử của memo 5 (nên không có nhãn MEASURED).
+- **Phạm vi:** bản nháp gồm cả Claude Code và Claude app (Chat, Cowork). Chủ đề của #39 (bài 04) trùng với luận điểm này; chờ tác giả quyết gộp (câu F).
+
+## Bản nháp đầu (14/11/2026)
+
+`draft.md`: do agent viết theo luận điểm trên, **chưa phải giọng của tác giả**. Mọi khẳng định bám `ledger.md` (bản đồ cuối file, không đăng). Callout "Quan điểm của tôi" là cách đọc của tác giả, nêu rõ trong bài là không có trong tài liệu. Dòng 12 (phiên nền) đã bỏ khỏi bài. Chưa có người đối chiếu thứ hai; ba trang nguồn mở bằng công cụ tải trang, cần mở lại bằng trình duyệt trước khi đăng.
 
 ## Trong repo đã có gì (đừng dạy lại)
 
@@ -38,10 +48,10 @@ Bài này phải thêm điều gì đó ngoài những chỗ trên, không nhắ
 
 Đã làm ngày 13/11/2026 cho Claude Code: xem `ledger.md` dòng 1–11. Còn lại:
 
-1. Dòng 12: auto memory ở phiên nền. Đọc trang `agent-view`; nếu không có câu rõ thì bỏ claim.
-2. Dòng 13: memory của Chat và Cowork. Mở hai bài support.claude.com, đối chiếu với `docs/05`, ghi kết quả vào ledger.
+1. ~~Dòng 12: auto memory ở phiên nền~~ **Xong 14/11/2026:** trang `agent-view` không có câu nói auto memory không chạy ở phiên nền (đọc 100.000 ký tự đầu của 148.008). Bỏ claim khỏi bài.
+2. ~~Dòng 13: memory của Chat và Cowork~~ **Xong 14/11/2026:** hai bài support.claude.com khớp nhau ở phần cloud; bài 11817273 nói Cowork chạy trên máy không dùng memory (ledger dòng 13, 16 đến 19). `docs/05` chưa sửa: ghi Cowork có Project memory, không mâu thuẫn nhưng nên rà lại.
 3. Phần OpenAI, Gemini: chỉ mở nếu bài cần đối chiếu ngắn (D58).
-4. Memo 5 nói "xoá hội thoại không xoá memory sinh ra từ nó" ở trải nghiệm memory mới của Claude Chat: cần nguồn trước khi dùng.
+4. ~~Memo 5 nói "xoá hội thoại không xoá memory sinh ra từ nó"~~ **Xong 14/11/2026:** đúng với trải nghiệm memory hiện hành của Chat (ledger dòng 17); memory kiểu cũ thì ngược lại.
 
 ## Câu hỏi mở cho tác giả
 
