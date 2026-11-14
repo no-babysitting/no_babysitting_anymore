@@ -6,13 +6,14 @@
 import Base from './Base.astro';
 import Hud from '../components/Hud.astro';
 import { render } from 'astro:content';
+import ArticleBanner from '../components/articles/ArticleBanner.astro';
 import { SITE } from '../config';
 import { url } from '../lib/url';
 import { RELATED, formatDay, loadArticles } from '../lib/articles';
 
 const { entry, noindex = false } = Astro.props;
 const { Content, headings } = await render(entry);
-const { title, description, publishedAt, verifiedAt, series, related, updatedAt } = entry.data;
+const { title, description, publishedAt, verifiedAt, series, related, updatedAt, art } = entry.data;
 
 /* TOC: only for an article with at least four H2 (agent default); the footnote label is an H2 made by the markdown pipeline */
 const h2 = headings.filter((h) => h.depth === 2 && h.slug !== 'footnote-label');
@@ -38,6 +39,7 @@ const link = (a: { id: string; data: { title: string } }) => url(`articles/${a.i
   <Hud current="articles" />
   <main id="main" tabindex="-1" class="wrap art">
     <article class:list={['layout', { 'has-toc': hasToc }]}>
+      <div class="art-top"><ArticleBanner art={art} /></div>
       <header class="head">
         <h1>{title}</h1>
         <p class="lede">{description}</p>
@@ -90,6 +92,9 @@ const link = (a: { id: string; data: { title: string } }) => url(`articles/${a.i
 </Base>
 
 <script>
+  import { initArtBanners } from '../scripts/article-art';
+  initArtBanners();
+
   /* the "needs re-check" label: more than 30 days since verifiedAt, counted at view time (same rule as ageDays in lib/matrix.ts) */
   document.querySelectorAll<HTMLElement>('[data-stale]').forEach((el) => {
     const days = Math.floor((Date.now() - new Date(el.dataset.stale + 'T00:00:00Z').getTime()) / 86400000);
@@ -133,13 +138,14 @@ const link = (a: { id: string; data: { title: string } }) => url(`articles/${a.i
 
 <style>
   .art { padding-block: 24px 112px; }
-  .layout { display: grid; gap: 0 64px; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'head' 'toc' 'body' 'foot'; }
+  .layout { display: grid; gap: 0 64px; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'art' 'head' 'toc' 'body' 'foot'; }
+  .art-top { grid-area: art; margin-bottom: 28px; }
   .head { grid-area: head; max-width: 66ch; }
   .toc { grid-area: toc; margin-bottom: 24px; }
   .body { grid-area: body; max-width: 66ch; }
   .foot { grid-area: foot; max-width: 66ch; margin-top: 56px; display: grid; gap: 32px; border-top: 1px solid var(--control); padding-top: 24px; }
   @media (min-width: 1024px) {
-    .layout.has-toc { grid-template-columns: minmax(0, 66ch) 260px; grid-template-areas: 'head toc' 'body toc' 'foot toc'; }
+    .layout.has-toc { grid-template-columns: minmax(0, 66ch) 260px; grid-template-areas: 'art art' 'head toc' 'body toc' 'foot toc'; }
     .toc { margin: 0; align-self: start; position: sticky; top: calc(var(--hud-height) + 24px); }
     .toc.is-side summary { display: none; }
   }

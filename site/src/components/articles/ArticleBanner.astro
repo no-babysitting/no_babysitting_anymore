@@ -1,0 +1,14 @@
+---
+/* The art above an article's title (issue #44, slice 3): one live canvas, decorative (aria-hidden), empty without JavaScript.
+   The browser draws it from the piece's data (src/scripts/article-art.ts); text never sits on it. */
+import { PIECES } from '../../lib/article-art';
+const { art } = Astro.props as { art: string };
+const piece = PIECES[art];
+if (!piece) throw new Error(`unknown art id "${art}"`);
+---
+<div class="banner" aria-hidden="true" data-art-banner data-art-piece={JSON.stringify(piece)}><canvas></canvas></div>
+
+<style>
+  .banner { height: clamp(160px, 22vw, 280px); background: var(--bg-sunken); border: 1px solid var(--control); overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100%; }
+</style>

@@ -3,6 +3,7 @@
    Missing sources and dead external links never fail the build (docs/06 §1 item 8). */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { PARTS } from '../content/parts';
+import { ART_IDS } from './article-art';
 
 export type Article = CollectionEntry<'articles'>;
 
@@ -11,8 +12,8 @@ export const RESERVED_SLUGS = ['sample'];
 /* lower-case ASCII kebab-case, no leading digit: the slug names the topic, not the position */
 const SLUG = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/;
 
-/* ids an article may use in `art`. The drawing mechanism arrives in the third slice of #44; until then there is only the default piece. */
-export const ART_IDS: readonly string[] = ['default'];
+/* ids an article may use in `art`: the pieces of src/lib/article-art.ts */
+export { ART_IDS };
 
 /* ids an article may use in `related`: the five parts of the main path and the Advanced pages that exist (the Library is hidden, #21) */
 export const RELATED: Record<string, { href: string; title: string }> = {

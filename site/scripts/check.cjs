@@ -99,6 +99,49 @@ const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.pus
     await ctx.close();
   }
 
+  console.log('4b · article art (docs/15 §5): cells, live canvases, idle cost, reduced motion, nothing drawn off screen');
+  {
+    const ART_PAGE = 'articles/sample/', MAX_CELLS = { desktop: 12000, phone: 4000 }, MAX_CPU = 8, CELL = [9, 16];
+    for (const kind of ['desktop', 'phone']) {
+      const ctx = await browser.newContext(sizes[kind]);
+      await ctx.addInitScript(() => {
+        window.__d = 0; const P = CanvasRenderingContext2D.prototype, di = P.drawImage, ft = P.fillText;
+        P.drawImage = function () { window.__d++; return di.apply(this, arguments); };
+        P.fillText = function () { window.__d++; return ft.apply(this, arguments); };
+      });
+      const p = await ctx.newPage(); await p.goto(origin + BASE + ART_PAGE, { waitUntil: 'networkidle' }); await p.waitForTimeout(6500);   /* it converges in 2.4 s, then breathes */
+      const geo = await p.evaluate(([cw, ch]) => {
+        const c = document.querySelector('[data-art-banner] canvas'), r = c.getBoundingClientRect();
+        const live = [...document.querySelectorAll('canvas')].filter((e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0 && e.offsetParent !== null; }).length;
+        return { cells: Math.floor(r.width / cw) * Math.floor(r.height / ch), live, aria: !!c.closest('[aria-hidden="true"]') };
+      }, CELL);
+      const cdp = await ctx.newCDPSession(p); await cdp.send('Performance.enable');
+      const busy = async () => (await cdp.send('Performance.getMetrics')).metrics.find((m) => m.name === 'TaskDuration').value;
+      const t0 = await busy(), d0 = await p.evaluate(() => window.__d); await p.waitForTimeout(3000);
+      const t1 = await busy(), d1 = await p.evaluate(() => window.__d);
+      const draws = Math.round((d1 - d0) / 3), cpu = ((t1 - t0) / 3 * 100).toFixed(1);
+      await p.evaluate(() => scrollTo(0, document.documentElement.scrollHeight)); await p.waitForTimeout(1500);   /* the banner is off screen now */
+      const o0 = await p.evaluate(() => window.__d); await p.waitForTimeout(3000); const o1 = await p.evaluate(() => window.__d);
+      const off = Math.round((o1 - o0) / 3);
+      note(`${kind} banner: ${geo.cells} cells, ${geo.live} live canvas(es), ${draws} glyph draws/s idle, main thread busy ${cpu}%, ${off} draws/s off screen`);
+      if (geo.cells > MAX_CELLS[kind]) fail(`${kind} banner: ${geo.cells} cells (budget ${MAX_CELLS[kind]})`);
+      if (geo.live > 2) fail(`${kind}: ${geo.live} live canvases on an article page (budget 2)`);
+      if (!geo.aria) fail(`${kind} banner: the canvas is not aria-hidden`);
+      if (draws > IDLE_DRAWS_PER_S) fail(`${kind} banner: ${draws} glyph draws/s while idle (budget ${IDLE_DRAWS_PER_S})`);
+      if (Number(cpu) > MAX_CPU) fail(`${kind} banner: main thread busy ${cpu}% while idle (budget ${MAX_CPU}%)`);
+      if (off > 5) fail(`${kind} banner: still drawing off screen (${off} glyph draws/s)`);
+      await ctx.close();
+    }
+    {
+      const ctx = await browser.newContext({ ...sizes.desktop, reducedMotion: 'reduce' }), p = await ctx.newPage();
+      await p.goto(origin + BASE + ART_PAGE, { waitUntil: 'networkidle' }); await p.waitForTimeout(800);
+      const painted = await p.evaluate(() => { const c = document.querySelector('[data-art-banner] canvas'); const d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4) if (d[i] > 0) n++; return n; });
+      note(`reduced motion: ${painted} painted pixels 0.8 s after load`);
+      if (painted < 500) fail(`reduced motion: the banner is not drawn straight away (${painted} painted pixels)`);
+      await ctx.close();
+    }
+  }
+
   console.log('5 · accessibility with the motion on (axe-core, accessibility tree, dead links)');
   {
     const axeSrc = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
