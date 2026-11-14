@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Cập nhật khoá art cho 8 mảnh lệch sau ngày khoá (14/11/2026, D55) · CHỜ CHỦ DỰ ÁN DUYỆT
+
+**Site không đổi, không có chữ mới; đổi `design-system/art-lock.json` (art đã khoá), nên chưa được merge khi chưa có câu đồng ý của chủ dự án.** Cập nhật đúng 8 mảnh `art-check` báo lệch: `water` (hai khổ, kích thước canvas) và `spark-fresco`, `spark-hands`, `spark-light` (hai khổ). Tám mảnh còn lại giữ nguyên. Ảnh trước (khoá cũ, dựng ở `c2a2c24`) và sau (hiện tại) nằm ở `design-system/art-lock-review-2026-11-14/` trên nhánh, sẽ được gỡ trước khi merge. Hai mảnh chỉ lệch trên CI (`hero-logo@phone`, `menu-art@phone`) không nằm trong PR này.
+
 ## `design-check` xem thêm hai trang bài `/02/` và `/03/` (14/11/2026, #43 hàng 4, D83)
 
 **Site không đổi, không có chữ mới; đụng `site/scripts/design-check.cjs`: chỉ thêm phạm vi kiểm, không nới ngưỡng.** `/02/` và `/03/` được thêm vào ba khổ có `/01/` (điện thoại, nhỏ, máy tính; khổ `se` giữ nguyên). Đo trên máy làm việc: `design-check` từ 181 giây lên 201 giây (+20 giây, đúng khoảng 20 đến 30 giây đã ước tính), 0 lỗi trên hai trang mới, "design lint passed". Danh sách trang bị bỏ qua giờ không còn `/02/` `/03/`.
