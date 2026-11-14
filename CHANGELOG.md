@@ -2,9 +2,9 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
-## Bài 02: đóng bốn việc kiểm chứng còn lại của sổ nguồn (14/11/2026)
+## Bài 02: đóng bốn việc kiểm chứng còn lại, bản nháp đầu (14/11/2026)
 
-**Site không đổi, không có chữ mới** (`editorial/`). Mở trang `agent-view` của Claude Code và hai bài support.claude.com về memory của Chat và Cowork, bằng công cụ tải trang. Kết quả: không có câu nào nói auto memory không chạy ở phiên nền (bỏ claim khỏi bài); memory của Chat dùng chung với Cowork trên cloud, Cowork chạy trên máy thì không dùng; xoá hội thoại không xoá memory sinh ra từ nó (memory hiện hành), ngược với memory kiểu cũ. Sổ nguồn từ 15 lên 19 dòng. Bài 02 vẫn ở `ledger`, chờ luận điểm của tác giả. Refs #37.
+**Site không đổi, không có chữ mới** (`editorial/`). Mở trang `agent-view` của Claude Code và hai bài support.claude.com về memory của Chat và Cowork, bằng công cụ tải trang. Kết quả: không có câu nào nói auto memory không chạy ở phiên nền (bỏ claim khỏi bài); memory của Chat dùng chung với Cowork trên cloud, Cowork chạy trên máy thì không dùng; xoá hội thoại không xoá memory sinh ra từ nó (memory hiện hành), ngược với memory kiểu cũ. Sổ nguồn từ 15 lên 19 dòng. Tác giả chọn luận điểm "nhớ tôi" khác "biết cách làm việc trong repo này" và không dùng chuyện cá nhân (14/11/2026, hộp hỏi lựa chọn); có `draft.md` đầu tiên (agent viết, chưa phải giọng tác giả), `status` của bài 02 từ `ledger` sang `draft`. Refs #37.
 
 ## Bài 01: mở bài gốc, sổ nguồn 19 dòng, blind spot pass, bản nháp đầu (14/11/2026)
 
