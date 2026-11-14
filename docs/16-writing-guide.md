@@ -152,10 +152,10 @@
 
 ## 6. Câu, đoạn, nhịp, con số
 
-- **Câu** trung bình 15–25 âm tiết; câu dài nhất ≤ 40 âm tiết. Mỗi câu một ý.
-- **Đoạn** ≤ 4 câu; câu đầu là ý chính.
-- **Tiêu đề khối** là một mệnh đề trọn ý (*Bản đồ không phải là lãnh thổ*) hoặc một câu hỏi thật. Không dùng nhãn chung chung như *Giới thiệu*, *Tổng quan*.
-- **Danh sách** chỉ dùng khi các mục song song. Mỗi mục tối đa một dòng trên desktop.
+- **Câu và đoạn:** viết theo độ phức tạp của ý. Câu ngắn giúp nhấn mạnh hoặc tạo nhịp; câu dài phù hợp khi cần giữ các vế có quan hệ chặt chẽ. Không cắt một ý thành nhiều câu chỉ để đạt độ dài mong muốn, cũng không nối nhiều ý độc lập vào một câu. Đoạn có thể ngắn hoặc dài tùy mạch lập luận; nên giúp người đọc nhận ra ý chính và theo được phần giải thích, không cần ép vào một số câu cố định.
+- **Mạch ý:** thường nên đưa ý quan trọng lên sớm, nhưng có thể mở bằng tình huống, câu hỏi hoặc bằng chứng nếu cách đó giúp người đọc hiểu vấn đề tốt hơn. Không bắt mọi đoạn phải theo cùng một cấu trúc.
+- **Tiêu đề khối** nên nói rõ nội dung hoặc đặt ra một câu hỏi có ý nghĩa. Tránh nhãn chung chung như *Giới thiệu*, *Tổng quan* nếu chúng không giúp định hướng.
+- **Danh sách** dùng khi các mục thực sự song song hoặc người đọc cần quét nhanh. Nếu các ý nối với nhau bằng lập luận, viết thành văn xuôi.
 - **Số:**
   - đếm thì viết bằng chữ số (*5 phần*, *4 hướng*); riêng "một" trong văn kể thì viết bằng chữ (*một phép kiểm*);
   - thập phân dùng dấu phẩy (0,6), hàng nghìn dùng dấu chấm (9.100);
@@ -165,7 +165,7 @@
 
 ## 7. Câu vui của mascot
 
-- Mỗi phần 1–2 câu, ≤ 15 âm tiết, và **luôn đúng ý của đoạn**. Người đọc cười vì nhận ra điều đó, không phải vì một trò chơi chữ vô nghĩa.
+- Mỗi phần nên có 1–2 câu, và **luôn đúng ý của đoạn**. Đây là gợi ý về nhịp giao diện, không phải giới hạn cứng; có thể thay đổi nếu bố cục hoặc nội dung cần. Người đọc cười vì nhận ra điều đó, không phải vì một trò chơi chữ vô nghĩa.
 - Tự trào về Claude. Không chế người đọc, không hạ thấp nghề nào.
 - Không meme, không tiếng lóng dễ cũ, không emoji.
 - Không nói điều sai sự thật về Claude: không "mình mệt", không "mình buồn".
@@ -179,14 +179,14 @@
 
 ## 8. Kiểm trước khi gửi duyệt
 
-- [ ] Câu đầu của mỗi đoạn là ý chính; đọc riêng các câu đầu vẫn hiểu bài.
+- [ ] Mạch đoạn rõ; người đọc theo được ý chính và quan hệ giữa các câu mà không phải tự đoán.
 - [ ] Mỗi câu nói về hành động có chủ thể rõ: bạn, Claude hay Claude Code.
 - [ ] Sự kiện có ngày khi dùng *đã/vừa*; không có *vừa* cho chuyện đã cũ.
 - [ ] Không còn chữ nào trong bảng §4.
 - [ ] Thuật ngữ tiếng Anh lần đầu có in nghiêng và giải nghĩa; không có tiếng Anh bị chia hay ghép.
 - [ ] Mọi con số và câu trích có nguồn; chỗ diễn giải có nhãn `Diễn giải của trang`.
 - [ ] Đã đọc to một lượt và viết lại những chỗ vấp.
-- [ ] Không quá 5 golden word mỗi phần; câu hook ≤ 30 âm tiết; câu chốt ≤ 40 âm tiết.
+- [ ] Hook, câu chốt và các cụm nhấn mạnh phù hợp với nội dung, không bị ép theo giới hạn độ dài máy móc.
 - [ ] `type-check.cjs` không còn cảnh báo `punctuation` trên trang mới.
 
 ## 9. Chữ trên giao diện: bài học từ các lần chủ dự án sửa (11/11/2026)
