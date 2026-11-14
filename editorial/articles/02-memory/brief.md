@@ -4,7 +4,7 @@ topic: 5
 order: 2
 slug:
 working_title: Memory: tin harness hay tự quản?
-verifiedAt: 2026-11-13
+verifiedAt: 2026-11-14
 ---
 
 # Memory: tin harness hay tự quản?
@@ -38,10 +38,10 @@ Bài này phải thêm điều gì đó ngoài những chỗ trên, không nhắ
 
 Đã làm ngày 13/11/2026 cho Claude Code: xem `ledger.md` dòng 1–11. Còn lại:
 
-1. Dòng 12: auto memory ở phiên nền. Đọc trang `agent-view`; nếu không có câu rõ thì bỏ claim.
-2. Dòng 13: memory của Chat và Cowork. Mở hai bài support.claude.com, đối chiếu với `docs/05`, ghi kết quả vào ledger.
+1. ~~Dòng 12: auto memory ở phiên nền~~ **Xong 14/11/2026:** trang `agent-view` không có câu nói auto memory không chạy ở phiên nền (đọc 100.000 ký tự đầu của 148.008). Bỏ claim khỏi bài.
+2. ~~Dòng 13: memory của Chat và Cowork~~ **Xong 14/11/2026:** hai bài support.claude.com khớp nhau ở phần cloud; bài 11817273 nói Cowork chạy trên máy không dùng memory (ledger dòng 13, 16 đến 19). `docs/05` chưa sửa: ghi Cowork có Project memory, không mâu thuẫn nhưng nên rà lại.
 3. Phần OpenAI, Gemini: chỉ mở nếu bài cần đối chiếu ngắn (D58).
-4. Memo 5 nói "xoá hội thoại không xoá memory sinh ra từ nó" ở trải nghiệm memory mới của Claude Chat: cần nguồn trước khi dùng.
+4. ~~Memo 5 nói "xoá hội thoại không xoá memory sinh ra từ nó"~~ **Xong 14/11/2026:** đúng với trải nghiệm memory hiện hành của Chat (ledger dòng 17); memory kiểu cũ thì ngược lại.
 
 ## Câu hỏi mở cho tác giả
 
