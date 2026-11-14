@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Quyết định cho backlog bài 04 đến 06 và quy tắc "không tự merge" của bài 07 (14/11/2026, D80, D81)
+
+**Site không đổi, không có chữ mới.** Chủ dự án chọn qua hộp hỏi lựa chọn sau khi cụm 3 bài đã ở bản nháp: "Tách, viết sau cụm (D61)" cho #39; "Bài riêng, kèm ngoại lệ cho D58" cho #41 (Gemini Orchestrator); "Bản khung và giả thuyết, ghi rõ chưa đo" cho #40; "Giữ nguyên, đó chỉ là khuyến nghị cho người đọc" cho quy tắc "agent không tự merge vào `main`" của bài 07. Ghi ở `docs/08` D80 và D81; chưa viết gì cho #39 đến #41 (D61). Refs #39, #40, #41, #57.
+
 ## Bài 03: mở docs effort và model, sổ nguồn 22 dòng, bản nháp đầu (14/11/2026)
 
 **Site không đổi, không có chữ mới** (`editorial/`). Mở bài *Spending your effort* (S11), docs *Effort* của nền tảng và *Model configuration* của Claude Code. Phát hiện chính: **mức effort mặc định khác nhau theo bề mặt**, nên mâu thuẫn trong brief giải được (brief 01 "Fable và Opus đều medium" đúng với Claude Code; memo 4 "Fable high, Opus medium" đúng với API); tên mức được chấm riêng cho từng model; mọi chỉ dẫn của docs đều dặn tự đo; `max` trong Claude Code chỉ áp cho phiên hiện tại. Tác giả chọn luận điểm "bắt đầu bằng model đủ mạnh ở effort vừa, có kiểm chứng và leo thang có giới hạn" và không dùng chuyện cá nhân (14/11/2026, hộp hỏi lựa chọn); vì docs không khuyên "medium" cho mọi model, bản nháp thu hẹp thành "mặc định của model" và ghi ở `brief.md` để tác giả xác nhận. Giá, benchmark, "70 đến 85%" không dùng. `status` của bài 03 từ `memo` sang `draft`. Refs #38.

@@ -58,3 +58,10 @@ Tất cả là lời của công cụ khác hoặc của tác giả, chưa kiể
 - Chủ đề C đi đâu.
 - Ai rà ở bước `review`: tác giả quyết ở bài đầu tiên. ChatGPT đã nhận kiểm insight của các memo (`raw/02`).
 - Brief 01 §7 có dàn bài cho một bài tổng hợp (memory, model, Google). Cụm 3 bài thay nó; giữ làm tham chiếu.
+
+## Quyết định ngày 14/11/2026 (D80)
+
+- **#39 (bài 04):** tách, viết sau cụm (D61). Bài 02 giữ cả Claude Code và Claude app.
+- **#41 (bài 06, Gemini Orchestrator):** bài riêng, ngoại lệ cho D58; viết sau cụm, và chỉ sau khi kiểm chứng số liệu Gemini bằng trang của chính Google.
+- **#40 (bài 05, tự đo):** bản khung và giả thuyết, ghi rõ chưa đo; sau cụm.
+- Chưa viết gì cho ba bài này.
