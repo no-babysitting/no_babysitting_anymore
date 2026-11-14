@@ -1,6 +1,8 @@
 # Vietnamese natural voice reference
 
 > Tài liệu tham chiếu cho Claude khi viết và biên tập bài tiếng Việt trong editorial. Mục tiêu không phải bắt chước nguyên xi giọng của một người, mà là tạo văn xuôi tiếng Việt tự nhiên, có nhịp nói, rõ chủ thể và chính xác về ý.
+>
+> **Thứ tự ưu tiên:** tuân thủ `docs/16-writing-guide.md` và các quyết định biên tập đã được chủ dự án chốt trước. Tài liệu này bổ sung hướng dẫn về độ tự nhiên của tiếng Việt, đặc biệt là hư từ, cú pháp và nhịp câu; không ghi đè quy định về xưng hô, cấu trúc, thuật ngữ, mascot hay thiết kế. Nếu hai tài liệu có vẻ mâu thuẫn, giữ quy tắc của writing guide và dùng tài liệu này để cải thiện cách diễn đạt trong phạm vi cho phép.
 
 ## 1. Nguyên tắc cốt lõi
 
