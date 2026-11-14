@@ -2,6 +2,12 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## `design-check` xem thêm hai trang bài `/02/` và `/03/` (14/11/2026, #43 hàng 4, D83)
+
+**Site không đổi, không có chữ mới; đụng `site/scripts/design-check.cjs`: chỉ thêm phạm vi kiểm, không nới ngưỡng.** `/02/` và `/03/` được thêm vào ba khổ có `/01/` (điện thoại, nhỏ, máy tính; khổ `se` giữ nguyên). Đo trên máy làm việc: `design-check` từ 181 giây lên 201 giây (+20 giây, đúng khoảng 20 đến 30 giây đã ước tính), 0 lỗi trên hai trang mới, "design lint passed". Danh sách trang bị bỏ qua giờ không còn `/02/` `/03/`.
+
+**Bản ghi đồng ý (do agent viết, không phải chủ dự án), 14/11/2026, trong phiên Claude Code, hai câu của chủ dự án:** "Thêm /02/ và /03/ (Đề xuất)" cho câu về danh sách của `design-check`, và "Giữ +134 giây (Đề xuất)" cho chi phí CI của D82 (không bỏ mười trang `c00` đến `c10` khỏi `check.cjs`). Theo D83 hai thay đổi phạm vi và chi phí CI này chỉ cần đồng ý trong phiên, không cần số D mới.
+
 ## Sửa số mảnh art lệch: trên CI là 10, không phải 8, và có từ trước mục Bài viết (14/11/2026)
 
 **Site không đổi, không có chữ mới, không đụng phép kiểm hay art.** Số 8 tôi ghi ở `implementation-notes.md` và ở #44 là đo trên máy làm việc; `art-check` trên CI báo 10 mảnh lệch (thêm `hero-logo@phone` và `menu-art@phone`, chỉ lệch bảng màu). Hai lần chạy CI cách nhau trước và sau ba lát của #44 (số 59 ngày 13/11 và số 91 ngày 14/11) cho cùng 10 mảnh với cùng số đo, nên lệch này không do mục Bài viết. Chưa cập nhật `art-lock.json` (D55); chủ dự án chọn để đấy.
