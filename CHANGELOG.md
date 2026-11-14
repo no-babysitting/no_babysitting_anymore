@@ -5,6 +5,13 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 ## Phép kiểm duyệt mọi trang đã dựng, và in trang chưa được xem (14/11/2026, D82)
 
 **Site không đổi, không có chữ mới; đụng `site/scripts/`: chỉ thêm phạm vi kiểm, không nới ngưỡng.** `check.cjs` mục 2 (lỗi JS, cuộn ngang) không còn dùng danh sách viết cứng mà duyệt mọi trang đã dựng (hàm dùng chung `builtPages()` ở `serve-dist.cjs`); `design-check.cjs` giữ danh sách ngắn theo khổ nhưng in "trang đã dựng mà design-check không xem" ra console và Job Summary, chỉ hiện. Đo được trên bản dựng thật: `check.cjs` duyệt 23 trang ở mỗi trong ba khổ (trước: 8), vẫn xanh, **chậm hơn 81 giây (163 giây thành 244 giây)**; `design-check.cjs` xanh, 182 giây, in 15 trang chưa xem, gồm **hai phần của lộ trình chính, `/02/` và `/03/`**. Refs #43.
+## Bài 07: bốn việc còn mở của brief đã được quyết (14/11/2026, D84)
+
+**Site không đổi, không có chữ mới** (`editorial/`). Chủ dự án chọn qua hộp hỏi lựa chọn: giữ `verifiedAt` 13/11/2026; phần mở bài "Đúng và đủ"; không nêu `/init` (mâu thuẫn với `docs/18` N4 để khi N4 được viết); và "Giữ nguyên theo báo cáo" cho bốn chỗ mà trang nguồn đã mở nói khác hoặc không có câu đó. Ghi ở `docs/08` D84 và `brief.md`; không đổi `draft.md`. Việc còn lại của bài 07 là mục 8 (PR đăng ghi đúng sự thật về đối chiếu nguồn, gồm bốn chỗ trên), chờ `status: approved` do tác giả đặt. Refs #57.
+
+## Bài 07: gắn link còn thiếu, ghi bốn chỗ trang nói khác bài (14/11/2026)
+
+**Site không đổi, không có chữ mới** (`editorial/`). Chủ dự án chọn "Agent tìm URL để gắn link, giữ nhãn UNVERIFIED" (14/11/2026, hộp hỏi lựa chọn). Gắn 12 link vào `draft.md` (Cognition, Anthropic ×2, docs Claude Code ×4, docs Codex ×2, prompt caching, MAST, METR); mọi dòng sổ vẫn `UNVERIFIED`. Mở trang để kiểm tồn tại, tiêu đề và ngày; thấy bốn chỗ bài nói khác trang hoặc trang không có câu đó (`/code-review` chạy trong subagent mới; bài Cognition không có câu về yêu cầu duyệt từ luồng nền; METR là thông báo đổi thiết kế và không thấy "30–50%"; số trace của MAST khác giữa các nguồn), ghi ở `ledger.md` để tác giả quyết. Refs #57.
 
 ## Quyết định cho danh sách trang của phép kiểm và ngoại lệ phạm vi, chi phí (14/11/2026, D82, D83)
 
