@@ -1,6 +1,6 @@
 # AGENTS.md · chỉ dẫn cố định cho agent làm việc trong repo này
 
-Đọc file này trước mọi việc. Nó là **nơi duy nhất** nói ai làm gì, ai được merge gì, ai được sửa gì (quyết định D67–D74 và D76–D78 ở `docs/08` §1f, 13/11/2026). Nó không chép lại luật chi tiết: mỗi luật có một chỗ ở `docs/`, file này chỉ trỏ tới. Không cần dán prompt vào phiên; mở repo là đủ. `CLAUDE.md` chỉ nạp file này.
+Đọc file này trước mọi việc. Nó là **nơi duy nhất** nói ai làm gì, ai được merge gì, ai được sửa gì (quyết định D67–D74 và D76–D79 ở `docs/08` §1f, 13/11/2026). Nó không chép lại luật chi tiết: mỗi luật có một chỗ ở `docs/`, file này chỉ trỏ tới. Không cần dán prompt vào phiên; mở repo là đủ. `CLAUDE.md` chỉ nạp file này.
 
 Chủ dự án: `taiseixx`, viết tiếng Việt; trả lời bằng tiếng Việt.
 
@@ -48,7 +48,7 @@ Chữ mới là mọi chữ người đọc thấy mà chưa nằm trên site: c
 
 | Cần biết | Đọc |
 |---|---|
-| Quyết định đã chốt (D1–D78) | `docs/08` |
+| Quyết định đã chốt (D1–D79) | `docs/08` |
 | Nội dung và nguồn | `docs/14`, `docs/17` §3 (nguồn chính thức), `docs/06` |
 | Văn phong, chữ trên giao diện | `docs/16` |
 | Chữ, chuyển động, design system | `docs/09`, `docs/11`, `docs/13`, `docs/15`, `design-system/SOURCE-OF-TRUTH.md` |
