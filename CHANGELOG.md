@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Bài 07: gắn link còn thiếu, ghi bốn chỗ trang nói khác bài (14/11/2026)
+
+**Site không đổi, không có chữ mới** (`editorial/`). Chủ dự án chọn "Agent tìm URL để gắn link, giữ nhãn UNVERIFIED" (14/11/2026, hộp hỏi lựa chọn). Gắn 12 link vào `draft.md` (Cognition, Anthropic ×2, docs Claude Code ×4, docs Codex ×2, prompt caching, MAST, METR); mọi dòng sổ vẫn `UNVERIFIED`. Mở trang để kiểm tồn tại, tiêu đề và ngày; thấy bốn chỗ bài nói khác trang hoặc trang không có câu đó (`/code-review` chạy trong subagent mới; bài Cognition không có câu về yêu cầu duyệt từ luồng nền; METR là thông báo đổi thiết kế và không thấy "30–50%"; số trace của MAST khác giữa các nguồn), ghi ở `ledger.md` để tác giả quyết. Refs #57.
+
 ## Quyết định cho danh sách trang của phép kiểm và ngoại lệ phạm vi, chi phí (14/11/2026, D82, D83)
 
 **Site không đổi, không có chữ mới.** Chủ dự án chọn qua hộp hỏi lựa chọn, trả lời đề xuất của #43: "Đồng ý cả (a) và (b)" (D82: `check.cjs` mục 2 dùng danh sách trang dựng sẵn; `design-check.cjs` in "trang chưa xem" vào Job Summary) và "Đồng ý: loại phạm vi và chi phí không cần số D mới" (D83). `AGENTS.md` §4 thêm một dòng cho D83. Chọn "Chưa làm, để đấy" cho `art-check` đỏ trên `main`: không đổi gì. Chưa đổi mã kiểm; việc đó là PR sau, đo chi phí thêm. Refs #43.

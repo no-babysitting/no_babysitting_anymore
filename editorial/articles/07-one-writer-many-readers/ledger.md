@@ -61,3 +61,25 @@ Nhãn và dòng nào được vào bài: `editorial/CLAUDE.md`. Cột "Mở ngà
 | 48 | "Chưa thấy thử nghiệm ngẫu nhiên nào" so sánh multi-agent với agent đơn cho người làm một mình | INFERENCE | báo cáo §3.1 và §8 ("không tìm thấy bằng chứng tốt") | — | | Phát biểu về sự vắng mặt của bằng chứng; bài ghi "chưa thấy" |
 | 49 | Điều sẽ làm đổi khuyến nghị (4 điều) và hai chỗ còn thiếu bằng chứng | INFERENCE | báo cáo §8 | — | | Mục "Sẽ đổi khuyến nghị nếu" và "Thiếu bằng chứng" của báo cáo |
 | 50 | Dữ liệu xung đột lấy từ PR 2024–2025; các số đo của Anthropic và Cognition là dữ liệu nội bộ; bằng chứng reviewer khác hãng là một bản thảo một tác giả | UNVERIFIED | báo cáo §8 | — | | Lưu ý của chính báo cáo |
+
+## Link đã tìm (14/11/2026)
+
+Chủ dự án chọn (14/11/2026, hộp hỏi lựa chọn) "Agent tìm URL để gắn link, giữ nhãn UNVERIFIED". Việc làm: tìm URL bằng tìm kiếm web, mở trang bằng công cụ tải trang **chỉ để kiểm trang có tồn tại và tiêu đề, ngày khớp bài**. Không đối chiếu lại các khẳng định của báo cáo; **mọi dòng trên vẫn `UNVERIFIED`**. Một trang đã mở nên thấy được vài chỗ khác bài, ghi bên dưới để tác giả quyết.
+
+| Nguồn trong bài | URL gắn vào bài | Đã mở? | Khớp bài? |
+|---|---|---|---|
+| Cognition, "Multi-Agents: What's Actually Working", 22/4/2026 (Walden Yan) | <https://cognition.com/blog/multi-agents-working> | Có | Khớp: ngày, câu "original observations still hold today for parallel-writer swarms", Devin Review "average of 2 bugs per PR, of which roughly 58% are severe", reviewer sạch context. **Không thấy** câu nào nói yêu cầu duyệt từ luồng nền hiện lên khi đang xem luồng chính; bài có câu "Cognition cũng nêu đúng điểm này" (đoạn nói về Codex ở phần chú ý của người dùng): cần tác giả xem lại |
+| Anthropic, "How we built our multi-agent research system", 6/2025 | <https://www.anthropic.com/engineering/multi-agent-research-system> | Chỉ qua kết quả tìm kiếm | Khớp theo tóm tắt: 90,2%, 4 lần và 15 lần token; ngày 13/6/2025 theo nguồn thứ cấp |
+| Anthropic, "Beyond permission prompts", 20/10/2025 | <https://www.anthropic.com/engineering/claude-code-sandboxing> (bản sao ở claude.com/blog) | Chỉ qua kết quả tìm kiếm | Khớp theo tóm tắt: ngày 20/10/2025, "reduces permission prompts by 84%" |
+| Docs Claude Code về agent teams | <https://code.claude.com/docs/en/agent-teams> | Chỉ qua kết quả tìm kiếm | Trang tồn tại |
+| Docs Claude Code về chi phí (subagent, agent teams, `/usage`) | <https://code.claude.com/docs/en/costs> | Có | Khớp: "Agent teams use approximately 7x more tokens than standard sessions when teammates run in plan mode"; `/usage` có mục phân bổ theo skill, subagent, plugin. Trang không nói "chi phí của subagent chủ yếu là token" bằng đúng chữ đó |
+| Docs Claude Code về auto mode | <https://code.claude.com/docs/en/permission-modes> | Có (100.000 ký tự đầu) | Khớp: "does not guarantee safety"; từ v2.1.283 là chế độ khởi đầu mặc định cho phiên tương tác |
+| Docs Claude Code về `/code-review` | <https://code.claude.com/docs/en/commands> | Có | Có lệnh `/code-review`. **Không thấy** câu nói nó chạy trong subagent mới chưa thấy hội thoại; trang chỉ nói nó kiểm diff về lỗi đúng sai và `/code-review ultra` chạy đa agent trên cloud. Câu trong bài cần nguồn khác hoặc bỏ |
+| Docs Codex về subagent | <https://developers.openai.com/codex/subagents> (chuyển 308 sang `learn.chatgpt.com/docs/agent-configuration/subagents`) | Có | Khớp: "Subagent workflows consume more tokens than comparable single-agent runs" |
+| Changelog Codex CLI | <https://developers.openai.com/codex/changelog> | Công cụ chỉ đọc được khung trang | **Chưa đối chiếu được** "Codex app 26.224 (2/2026)" và câu về yêu cầu duyệt từ luồng không hoạt động |
+| Docs prompt caching của Claude Platform | <https://platform.claude.com/docs/en/build-with-claude/prompt-caching> | Không (URL có sẵn trong brief 03) | — |
+| MAST, Cemri và cộng sự, "Why Do Multi-Agent LLM Systems Fail?" (NeurIPS 2025) | <https://arxiv.org/abs/2503.13657> | Chỉ qua kết quả tìm kiếm | **Số trace khác nhau giữa các nguồn:** bài ghi 1.642 trace; tóm tắt NeurIPS ghi "1000+", một danh mục ghi "1600+", một blog ghi 1.642. Có thể do phiên bản bài. "41% đến 86,7%" chưa thấy |
+| METR, 24/2/2026 | <https://metr.org/blog/2026-02-24-uplift-update/> | Có | Trang là thông báo **đổi thiết kế thí nghiệm**, không phải một nghiên cứu mới hoàn tất; có đúng câu về dữ liệu "unreliable signal" và số −18% (khoảng −38% đến +9%) cho nhóm cũ, −4% (−15% đến +9%) cho nhóm mới. **Không thấy** con số "30–50% người tham gia né tác vụ" trong phần đã đọc (con số này chỉ gặp ở nguồn thứ cấp). Bài viết "công bố nghiên cứu tiếp nối": gần đúng nhưng nên viết là "thông báo đổi thiết kế" |
+| Cognition, Devin Review "2 lỗi mỗi PR, 58% nghiêm trọng" | cùng bài Cognition ở dòng đầu | Có | Khớp (xem dòng đầu) |
+| PwC (trong brief) | — | — | Không có trong `draft.md`; không tìm |
+| Các URL arXiv còn lại trong bài (2512.08296, 2604.02460, 2607.04697, 2605.21537, 2610.01471, 2604.04978, 2607.12161, 2602.11988) | đã ghép theo `arxiv.org/abs/<id>` | Không | Chưa mở; vẫn chỉ là link ghép theo công thức |
