@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Quyết định cho danh sách trang của phép kiểm và ngoại lệ phạm vi, chi phí (14/11/2026, D82, D83)
+
+**Site không đổi, không có chữ mới.** Chủ dự án chọn qua hộp hỏi lựa chọn, trả lời đề xuất của #43: "Đồng ý cả (a) và (b)" (D82: `check.cjs` mục 2 dùng danh sách trang dựng sẵn; `design-check.cjs` in "trang chưa xem" vào Job Summary) và "Đồng ý: loại phạm vi và chi phí không cần số D mới" (D83). `AGENTS.md` §4 thêm một dòng cho D83. Chọn "Chưa làm, để đấy" cho `art-check` đỏ trên `main`: không đổi gì. Chưa đổi mã kiểm; việc đó là PR sau, đo chi phí thêm. Refs #43.
+
 ## Quyết định cho backlog bài 04 đến 06 và quy tắc "không tự merge" của bài 07 (14/11/2026, D80, D81)
 
 **Site không đổi, không có chữ mới.** Chủ dự án chọn qua hộp hỏi lựa chọn sau khi cụm 3 bài đã ở bản nháp: "Tách, viết sau cụm (D61)" cho #39; "Bài riêng, kèm ngoại lệ cho D58" cho #41 (Gemini Orchestrator); "Bản khung và giả thuyết, ghi rõ chưa đo" cho #40; "Giữ nguyên, đó chỉ là khuyến nghị cho người đọc" cho quy tắc "agent không tự merge vào `main`" của bài 07. Ghi ở `docs/08` D80 và D81; chưa viết gì cho #39 đến #41 (D61). Refs #39, #40, #41, #57.
