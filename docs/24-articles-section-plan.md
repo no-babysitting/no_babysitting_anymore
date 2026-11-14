@@ -112,7 +112,7 @@ Con trỏ, không phải luật: giọng và chữ ở `16-writing-guide.md` §1
 ## 9. Việc mở
 
 1. **Sáu chủ đề, ba bài.** Tác giả có sáu chủ đề (A, B, C của brief và 4, 5, 6 có memo); cụm 3 bài lấy 4–6. A gộp vào bài 02, B vào bài 03. **C (Gemini Orchestrator) chưa có chỗ.** Xem `editorial/articles/00-cluster/README.md`.
-2. **URL chuẩn của bài six shifts:** site dẫn `claude.dev/blog/...`, memo dẫn `claude.com/blog/...` (`07` §1 mục 3 vẫn mở). Bài 01 phải chốt.
+2. ~~**URL chuẩn của bài six shifts**~~ **Đã chốt 14/11/2026:** `claude.dev/blog/...`; `claude.com/blog/...` trả 308 sang đó (`editorial/articles/01-system-prompt/ledger.md` dòng 4). Site đã dẫn đúng.
 3. **Memory của Chat và Cowork:** memo 5 và `05-surface-matrix.md` nói chưa khớp nhau (`02-memory/ledger.md` dòng 13).
 4. **Ai rà ở bước `review`:** tác giả quyết ở bài đầu tiên.
 5. **Tên cụm** và tên tiếng Việt của nó.
