@@ -1,5 +1,5 @@
 ---
-status: ledger
+status: draft
 topic: 6
 order: 1
 slug:
@@ -41,6 +41,16 @@ Sổ nguồn: `ledger.md` (dòng số trong ngoặc). Điều bài gốc nói m�
 6. **Chưa có**: chuyện thật của tác giả (đã thử bỏ lời dặn chưa, kết quả ra sao). Brief hỏi từ đầu; đó là thứ bài gốc không có.
 
 Hệ quả cho luận điểm ứng viên 2 ("prompt không lỗi thời, việc của nó chính xác hơn"): bài gốc ủng hộ được nửa đầu qua việc chuyển chỉ dẫn sang skills và CLAUDE.md nhẹ; vế "giữ mục tiêu, phép kiểm, quyền" là của tác giả, phải nói rõ là suy luận.
+
+## Quyết định của tác giả (14/11/2026, hộp hỏi lựa chọn)
+
+- **Luận điểm đã chọn:** "80% là của prompt Anthropic, không phải lời khuyên cắt 80% của bạn." Đây là luận điểm của tác giả; hai luận điểm ứng viên còn lại của brief không dùng.
+- **Chuyện cá nhân:** tác giả chọn "Không dùng chuyện cá nhân". Bài không kể chuyện tự thử bỏ lời dặn, và không dùng số đo từ repo (`ledger.md` dòng 15). Rủi ro đã nêu: bài gần với một bản đọc kỹ bài gốc; giá trị của nó là phạm vi chính xác của con số và danh sách điều bài gốc không nói.
+- Còn mở: người đọc là ai (người dùng thường hay sâu), và tên cụm. Bản nháp viết cho người dùng Claude Code có CLAUDE.md; tác giả sửa nếu khác.
+
+## Bản nháp đầu (14/11/2026)
+
+`draft.md`: do agent viết theo luận điểm trên, **chưa phải giọng của tác giả** (bước "giữ giọng tác giả" chưa làm). Mọi khẳng định bám `ledger.md`; cuối file có bản đồ đoạn sang dòng sổ (không đăng). Mục "Bài gốc chưa nói" và câu "cách duy nhất là thử trên việc của bạn" là lập luận của bài, không phải khẳng định về nguồn. Chưa có người đối chiếu thứ hai; chưa mở lại bài gốc bằng trình duyệt.
 
 ## Điều gì bài này có thể nói mà site chưa nói (cần tác giả xác nhận)
 

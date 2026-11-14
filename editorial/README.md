@@ -12,7 +12,7 @@ Cụm 3 bài đầu, viết theo thứ tự này (D65). Cột "Chủ đề" là 
 
 | # | Bài | Chủ đề | Trạng thái | Ghi chú |
 |---|---|---|---|---|
-| 01 | 80% system prompt: cái gì thực sự đổi | 6 | `ledger` | Đã mở bài gốc 14/11/2026, URL chuẩn là `claude.dev`; chờ luận điểm của tác giả. Số liệu kinh tế (caching) chưa kiểm |
+| 01 | 80% system prompt: cái gì thực sự đổi | 6 | `draft` | Luận điểm tác giả chọn 14/11/2026; bản nháp đầu của agent, chưa phải giọng tác giả; chờ tác giả đọc và phản biện. Caching chưa kiểm, không vào bài |
 | 02 | Memory: tin harness hay tự quản | 5 | `ledger` (một phần) | Đã đối chiếu 11 claim về Claude Code với docs ngày 13/11/2026; còn 4 dòng chưa xác nhận |
 | 03 | Chọn model và effort | 4 | `memo` | Nhiều số chưa kiểm chứng; mâu thuẫn mức effort mặc định giữa brief và memo |
 

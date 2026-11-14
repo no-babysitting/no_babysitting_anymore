@@ -2,9 +2,9 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
-## Bài 01: mở bài gốc, sổ nguồn 18 dòng, blind spot pass (14/11/2026)
+## Bài 01: mở bài gốc, sổ nguồn 19 dòng, blind spot pass, bản nháp đầu (14/11/2026)
 
-**Site không đổi, không có chữ mới** (bản nháp nằm ở `editorial/`). Mở bài gốc của Anthropic ngày 14/11/2026: URL chuẩn là `claude.dev/blog/...` (`claude.com` trả 308 sang đó), câu 80% ghi nguyên văn, tác giả và ngày khớp `docs/14`. Phát hiện chính: bài gốc nói một phần "removed" là chuyển review code và kiểm chứng sang skills nạp khi cần, không tách phần bỏ hẳn; con số 80% là của prompt Anthropic mà người dùng "likely never modify"; bài không nêu baseline, số token, cỡ mẫu, chi phí hay caching, và không nói người dùng phải dặn tường minh mục tiêu hay quyền (đó là suy luận của memo). Đo từ repo: ba prompt dán tay 25.925 byte so với `AGENTS.md` 7.899 byte, kèm lời rào rằng đây không phải phép đo giảm 80%. `status` của bài 01 từ `memo` sang `ledger`; chờ luận điểm của tác giả. `docs/07` mục 3 và `docs/24` §9 mục 2 (URL chuẩn) đóng. Refs #36.
+**Site không đổi, không có chữ mới** (bản nháp nằm ở `editorial/`). Mở bài gốc của Anthropic ngày 14/11/2026: URL chuẩn là `claude.dev/blog/...` (`claude.com` trả 308 sang đó), câu 80% ghi nguyên văn, tác giả và ngày khớp `docs/14`. Phát hiện chính: bài gốc nói một phần "removed" là chuyển review code và kiểm chứng sang skills nạp khi cần, không tách phần bỏ hẳn; con số 80% là của prompt Anthropic mà người dùng "likely never modify"; bài không nêu baseline, số token, cỡ mẫu, chi phí hay caching, và không nói người dùng phải dặn tường minh mục tiêu hay quyền (đó là suy luận của memo). Đo từ repo: ba prompt dán tay 25.925 byte so với `AGENTS.md` 7.899 byte, kèm lời rào rằng đây không phải phép đo giảm 80%. Tác giả chọn luận điểm "80% là của prompt Anthropic, không phải lời khuyên cắt 80% của bạn" và không dùng chuyện cá nhân (14/11/2026, hộp hỏi lựa chọn), nên dòng đo từ repo không vào bài. Có `draft.md` đầu tiên (agent viết, chưa phải giọng tác giả); `status` của bài 01 từ `memo` sang `draft`. `docs/07` mục 3 và `docs/24` §9 mục 2 (URL chuẩn) đóng. Refs #36.
 
 ## Mục Bài viết, lát 2: trang bài, trang chỉ mục, mục menu, gói chữ giao diện (13/11/2026, D78)
 
