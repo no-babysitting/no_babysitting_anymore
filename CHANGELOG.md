@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Sửa số mảnh art lệch: trên CI là 10, không phải 8, và có từ trước mục Bài viết (14/11/2026)
+
+**Site không đổi, không có chữ mới, không đụng phép kiểm hay art.** Số 8 tôi ghi ở `implementation-notes.md` và ở #44 là đo trên máy làm việc; `art-check` trên CI báo 10 mảnh lệch (thêm `hero-logo@phone` và `menu-art@phone`, chỉ lệch bảng màu). Hai lần chạy CI cách nhau trước và sau ba lát của #44 (số 59 ngày 13/11 và số 91 ngày 14/11) cho cùng 10 mảnh với cùng số đo, nên lệch này không do mục Bài viết. Chưa cập nhật `art-lock.json` (D55); chủ dự án chọn để đấy.
+
 ## Sửa số đo chi phí của D82: trên CI là +134 giây, không phải +81 giây (14/11/2026)
 
 **Site không đổi, không có chữ mới.** Số +81 giây tôi ghi ở PR #68 là đo trên máy làm việc; trên CI, bước `check.cjs` từ 112 giây lên 246 giây (+134 giây), và `Deploy site` chạy cùng `check.cjs` nên dài thêm tương ứng. Sửa ở mục D82 của CHANGELOG và `implementation-notes.md`. Việc bỏ mười trang bản cũ `c00` đến `c10` khỏi mục 2 vẫn là cách giảm chưa làm; chờ bạn quyết. Refs #43.
