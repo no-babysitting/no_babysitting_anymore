@@ -6,6 +6,8 @@
 
 ## 1. Nguyên tắc cốt lõi
 
+**Đây là tài liệu tham khảo, không phải bộ luật định dạng câu chữ.** Không có độ dài câu, số câu mỗi đoạn hay tỷ lệ câu ngắn/câu dài nào tự nó làm văn bản trở nên tự nhiên. Chỉ giữ một nguyên tắc nếu nó giúp người đọc hiểu đúng và dễ theo dõi hơn trong ngữ cảnh cụ thể. Khi một quy tắc hình thức xung đột với cách diễn đạt tự nhiên, ưu tiên cách diễn đạt tự nhiên, miễn là không vi phạm yêu cầu về độ chính xác, xưng hô hoặc thiết kế đã được chốt.
+
 Viết như đang giải thích một vấn đề nghề nghiệp cho đồng nghiệp thông minh: thẳng, bình tĩnh, có chính kiến, không lên lớp và không cố tỏ ra sâu sắc.
 
 - Viết tiếng Việt trước, đừng dựng câu tiếng Anh rồi dịch từng chữ.
@@ -83,7 +85,9 @@ Không phải câu bị động nào cũng sai. Dùng bị động khi người 
 
 ## 4. Nhịp câu và cách nối ý
 
-Một đoạn văn tự nhiên thường có nhịp: nêu nhận định → giải thích → ví dụ hoặc giới hạn → chốt hệ quả. Không cần biến mọi đoạn thành công thức, nhưng người đọc phải thấy vì sao câu sau nối với câu trước.
+Đoạn văn cần có mạch suy nghĩ, nhưng không có một công thức cố định cho mọi đoạn. Có lúc nên nêu kết luận trước; có lúc cần kể tình huống, đặt câu hỏi hoặc đưa bằng chứng lên trước để người đọc hiểu vấn đề. Đừng ép đoạn nào cũng đi theo nhịp “nhận định → giải thích → ví dụ → kết luận”.
+
+Câu sau cần nối được với câu trước bằng quan hệ có thật: tiếp diễn, bổ sung, đối lập, nguyên nhân, hệ quả, điều kiện hoặc chuyển góc nhìn. Nếu quan hệ đã rõ, không cần chèn từ nối cho đủ. Nếu người đọc phải tự đoán mối liên hệ, hãy viết lại.
 
 Ví dụ:
 
@@ -113,6 +117,58 @@ Không cần mở mọi đoạn bằng “Tuy nhiên”, “Bên cạnh đó”,
 - “việc này” hoặc gọi tên sự việc thay cho “điều này” lặp lại.
 
 Không máy móc Việt hóa thuật ngữ đã quen trong nghề. Giữ nguyên tên model, Claude Code, Cowork, prompt, context, agent, skill, hook, CI, API, pull request, branch protection khi cần. Lần đầu dùng thuật ngữ ít phổ biến, giải thích ngắn ngay trong câu.
+
+## 5.1. Kết hợp từ tự nhiên (collocation)
+
+Một câu có thể đúng ngữ pháp nhưng vẫn nghe lạ vì các từ đứng cạnh nhau không phải cách người Việt thường diễn đạt ý đó. Đừng chỉ sửa cấu trúc câu; hãy kiểm tra cả cụm từ và động từ đi với bổ ngữ nào.
+
+- Không hỏi riêng “từ này có nghĩa đúng không?”, mà hỏi “người Việt có thường kết hợp những từ này theo cách đó không?”.
+- Ưu tiên động từ đi cùng đối tượng cụ thể: “làm rõ yêu cầu”, “đối chiếu nguồn”, “chạy phép kiểm”, “duyệt pull request”, “gỡ vướng mắc”.
+- Tránh bê nguyên kết hợp từ tiếng Anh sang tiếng Việt, kể cả khi từng từ đều có nghĩa đúng.
+- Không thay từ chỉ để thuần Việt hơn. Thuật ngữ quen dùng trong nghề có thể tự nhiên và chính xác hơn một cách Việt hóa gượng ép.
+
+Ví dụ:
+
+| Câu nghe gượng | Cách diễn đạt tự nhiên hơn |
+|---|---|
+| “Model mạnh hơn, bạn vẫn phải duyệt những việc không hoàn tác được.” | “Model mạnh hơn, nhưng những thao tác không thể hoàn tác vẫn cần bạn phê duyệt.” |
+| “Kể cả việc kết quả có thể tốt tới mức nào.” | “Dù kết quả có tốt đến đâu, bạn vẫn cần kiểm tra.” |
+| “Đưa ra một quyết định về hướng đi tiếp theo.” | “Quyết định bước tiếp theo.” |
+| “Tạo ra sự rõ ràng cho yêu cầu.” | “Làm rõ yêu cầu.” |
+
+Đây là ví dụ để nhận ra sắc thái, không phải bảng thay thế máy móc. Chọn cách nói phù hợp với chủ thể, ngữ cảnh và mức độ trang trọng của đoạn văn.
+
+## 5.2. Đăng ký ngôn ngữ và giọng kể
+
+Giọng của site là giọng một đồng nghiệp có kinh nghiệm đang giải thích vấn đề nghề nghiệp: gần gũi nhưng không suồng sã, có chính kiến nhưng không lên lớp. “Tự nhiên” không đồng nghĩa với đưa khẩu ngữ vào mọi chỗ.
+
+- **Văn phân tích:** rõ, bình tĩnh, có căn cứ. Dùng khẩu ngữ vừa đủ; tránh “kiểu như”, “nói chung là”, “thực ra thì” nếu chúng không thêm nghĩa.
+- **Lời hướng dẫn:** trực tiếp, gọi đúng người cần hành động. Có thể dùng cách nói gần lời nói hằng ngày, nhưng không biến mọi câu thành mệnh lệnh.
+- **Hook và tiêu đề:** có thể tinh nghịch hoặc gợi tò mò; không được cường điệu điều thân bài không chứng minh.
+- **Prompt mẫu và lời mascot:** có thể gần văn nói hơn thân bài, nhưng vẫn theo quy định xưng hô của writing guide.
+- **Thuật ngữ kỹ thuật:** giữ cách gọi quen thuộc nếu Việt hóa làm câu khó hiểu hoặc sai nghĩa.
+
+Đừng cố tạo “chất riêng” bằng tiếng lóng, câu đùa, thành ngữ hoặc từ địa phương. Chỉ dùng khi nó hợp người nói, người đọc và tình huống.
+
+## 5.3. Ví dụ ở cấp đoạn: đúng ngữ pháp chưa đủ
+
+**Đoạn đúng chữ nhưng rời và giống bản dịch:**
+
+“Agent có khả năng truy cập nhiều nguồn dữ liệu. Tuy nhiên, nó không tự xác định được nguồn có độ tin cậy cao nhất. Điều này dẫn đến khả năng kết quả đầu ra không chính xác. Người dùng cần thực hiện việc xác minh.”
+
+**Đoạn tự nhiên và rõ quan hệ hơn:**
+
+“Agent có thể đọc nhiều nguồn dữ liệu, nhưng không phải lúc nào cũng biết nguồn nào đáng tin hơn. Nếu không chỉ rõ nguồn cần ưu tiên, nó có thể lấy nhầm một bản ghi cũ rồi kết luận sai. Vì vậy, hãy quy định nguồn nào được xem là căn cứ và kiểm tra lại những kết luận quan trọng.”
+
+**Đoạn ngắn nhưng bị chặt vụn:**
+
+“Prompt đưa ra lời dặn. Hook thực thi quy tắc. CI chạy phép kiểm. Reviewer duyệt.”
+
+**Đoạn có nhịp và phân vai rõ hơn:**
+
+“Prompt cho agent biết cần làm gì, còn hook có thể chặn một hành động ngay lúc nó xảy ra. CI kiểm tra lại thay đổi trong môi trường của repo. Reviewer xem diff và bằng chứng trước khi quyết định có merge hay không.”
+
+Đừng sao chép cấu trúc của các đoạn mẫu. Hãy nhìn vào điều làm chúng tự nhiên hơn: quan hệ giữa các ý được nói rõ, từ đi với từ hợp nghĩa, và người đọc không phải tự nối những bước suy luận còn thiếu.
 
 ## 6. Những dấu hiệu cần biên tập lại
 
@@ -164,10 +220,10 @@ Sau khi viết xong, đừng chỉ yêu cầu “make it more natural”. Hãy t
 3. **Hư từ:** Có thiếu “đã”, “rồi”, “mới”, “vẫn”, “chỉ”, “cũng”, “thì” làm câu sai sắc thái hoặc sai quan hệ không? Có từ nào đang thừa?
 4. **Cú pháp:** Câu có đang đi theo trật tự tiếng Anh không? Có thể viết chủ động và gọi đúng người làm không?
 5. **Từ ngữ:** Có từ Hán Việt hoặc từ hành chính nào có thể thay bằng từ đời thường mà vẫn chính xác không?
-6. **Nhịp:** Đọc thành tiếng. Chỗ nào nghe như báo cáo hành chính, bản dịch hoặc checklist thì viết lại.
+6. **Nhịp và giọng:** Đọc thành tiếng. Chỗ nào nghe như báo cáo hành chính, bản dịch, checklist hoặc cố tỏ ra thân mật thì viết lại. Xen kẽ câu ngắn và câu dài theo mạch ý; đừng cố làm mọi câu cùng độ dài.
 7. **Độ chính xác:** Đừng thêm hư từ để tạo cảm giác chắc chắn nếu nguồn không nói vậy. “Có thể”, “thường”, “trong trường hợp này” phải phản ánh đúng mức độ của bằng chứng.
-8. **Đọc lại như độc giả:** Nếu người đọc chỉ xem tiêu đề, câu đầu mỗi đoạn và câu chốt, họ có hiểu đúng lập luận không?
+8. **Đọc lại như độc giả:** Đọc liền cả đoạn, không chỉ từng câu riêng lẻ. Mạch suy nghĩ có tự nhiên không? Có chỗ nào lặp ý, chuyển ý đột ngột hoặc bắt người đọc tự nối logic không?
 
 ### Chỉ dẫn ngắn để đưa vào prompt
 
-> Viết tiếng Việt tự nhiên, không dịch cú pháp tiếng Anh. Ưu tiên câu chủ động, chủ thể rõ, động từ cụ thể. Dùng hư từ đúng nghĩa để thể hiện thời, thể, trình tự, đối lập và giới hạn; không lược chúng chỉ để câu ngắn, cũng không rải chúng cho có vẻ thân mật. Đọc to để phát hiện câu cụt, câu hành chính và câu không ai nói với đồng nghiệp. Giữ giọng thẳng, bình tĩnh, có chính kiến; không sáo rỗng, không tâng bốc, không cường điệu. Sau bản nháp, tự rà chủ thể, hư từ, cú pháp, từ ngữ và nhịp câu trước khi gửi.
+> Viết tiếng Việt tự nhiên, không dịch cú pháp hay kết hợp từ tiếng Anh. Ưu tiên chủ thể rõ, động từ cụ thể và cách kết hợp từ người Việt thường dùng. Dùng hư từ đúng nghĩa; không lược chúng chỉ để câu ngắn, cũng không thêm vào cho có vẻ thân mật. Giữ giọng thẳng, bình tĩnh, có chính kiến; gần gũi nhưng không suồng sã. Đọc lại cả đoạn thành tiếng để kiểm tra mạch suy nghĩ, sắc thái và nhịp văn. Những ví dụ và nguyên tắc trong tài liệu này chỉ để tham khảo; đừng biến chúng thành công thức viết mới.
