@@ -15,7 +15,7 @@
 // middle of each step. usage (from site/): NB_BASE=/no_babysitting_anymore/ node scripts/design-check.cjs [--shots dir] [--only phone|se|tiny|desktop] [--sections 1,2,3]
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
-const { BASE, DIST, serve, htmlFiles } = require('./serve-dist.cjs');
+const { BASE, DIST, serve, htmlFiles, builtPages } = require('./serve-dist.cjs');
 
 const args = process.argv.slice(2), opt = (k) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : null; };
 const SHOTS = opt('shots'), ONLY = opt('only'), SEC = (opt('sections') || '1,2,3').split(',');
@@ -235,6 +235,14 @@ async function report(p, tag, found, snap) {
       if (r2.sweep || r2.blink !== 'none') fail('phone /01/ (motion off): cta · the sweep or the blink still runs');
       await q.ctx.close();
     }
+  }
+
+  /* D82 (b): pages that were built but that no viewport of this script visits. This script keeps short lists on purpose (each page costs minutes),
+     so the gap is shown, never blocking: on the console and, in CI, in the job summary. */
+  {
+    const visited = new Set(Object.values(PAGES).flat()), unseen = builtPages().filter((d) => !visited.has(d));
+    console.log(`\nBuilt pages this script does not visit: ${unseen.length ? unseen.map((d) => '/' + d).join(' ') : 'none'}`);
+    if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `\n### Trang đã dựng mà design-check không xem (D82)\n\n${unseen.length ? unseen.map((d) => '- `/' + d + '`').join('\n') : 'Không có.'}\n\nChỉ để hiện; không chặn merge.\n`);
   }
 
   await browser.close(); server.close();

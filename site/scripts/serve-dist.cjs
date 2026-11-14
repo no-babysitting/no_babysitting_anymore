@@ -24,4 +24,13 @@ function htmlFiles(dir = DIST) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((d) => d.isDirectory() ? htmlFiles(path.join(dir, d.name)) : d.name.endsWith('.html') ? [path.join(dir, d.name)] : []);
 }
 
-module.exports = { BASE, DIST, file, serve, htmlFiles };
+/* Every page that was built, as a path under the base: "" for the home page, "01/" for a folder's index.html, "404.html" for a loose file.
+   The Design System preview (ds/) is not a page of the site. check.cjs visits all of them; design-check.cjs lists the ones it does not (D82). */
+function builtPages() {
+  return [...new Set(htmlFiles().map((f) => {
+    const r = path.relative(DIST, f).split(path.sep).join('/');
+    return path.basename(r) === 'index.html' ? r.slice(0, -'index.html'.length) : r;
+  }))].filter((d) => !/^ds\//.test(d)).sort();
+}
+
+module.exports = { BASE, DIST, file, serve, htmlFiles, builtPages };

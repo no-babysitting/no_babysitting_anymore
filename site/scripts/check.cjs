@@ -8,11 +8,12 @@
 // usage (from site/): NB_BASE=/no_babysitting_anymore/ node scripts/check.cjs
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
-const { BASE, DIST, file, serve, htmlFiles } = require('./serve-dist.cjs');
+const { BASE, DIST, file, serve, htmlFiles, builtPages } = require('./serve-dist.cjs');
 
-const PAGES = ['', '00/', '01/', '04/', 'thuc-hanh/', 'c02/', 'articles/', 'articles/sample/'];
-/* every page that was built: index.html of each folder, plus loose files such as 404.html */
-const ALL = [...new Set(htmlFiles().map((f) => { const r = path.relative(DIST, f).split(path.sep).join('/'); return path.basename(r) === 'index.html' ? r.slice(0, -'index.html'.length) : r; }))].filter((d) => !/^ds\//.test(d)).sort();
+/* every page that was built: index.html of each folder, plus loose files such as 404.html. Section 2 (errors, horizontal scroll) visits all of them,
+   so a new page is never skipped silently (D82, owner's choice of 14/11/2026). */
+const ALL = builtPages();
+const PAGES = ALL;
 const IDLE_DRAWS_PER_S = 600; /* breathing hero: tens per second; the old renderer: ~80k */
 const FLOW_DRAWS_PER_S = [300, 6000]; /* the water behind the manifesto must move (min) and stay far below the old renderer (max); measured ~3k */
 const fails = [], note = (m) => console.log('  ' + m), fail = (m) => { fails.push(m); console.log('  ✕ ' + m); };
