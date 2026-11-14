@@ -2,9 +2,9 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
-## Cập nhật khoá art cho 8 mảnh lệch sau ngày khoá (14/11/2026, D55) · CHỜ CHỦ DỰ ÁN DUYỆT
+## Cập nhật khoá art cho 10 mảnh lệch sau ngày khoá (14/11/2026, D55) · CHỜ CHỦ DỰ ÁN DUYỆT
 
-**Site không đổi, không có chữ mới; đổi `design-system/art-lock.json` (art đã khoá), nên chưa được merge khi chưa có câu đồng ý của chủ dự án.** Cập nhật đúng 8 mảnh `art-check` báo lệch: `water` (hai khổ, kích thước canvas) và `spark-fresco`, `spark-hands`, `spark-light` (hai khổ). Tám mảnh còn lại giữ nguyên. Ảnh trước (khoá cũ, dựng ở `c2a2c24`) và sau (hiện tại) nằm ở `design-system/art-lock-review-2026-11-14/` trên nhánh, sẽ được gỡ trước khi merge. Hai mảnh chỉ lệch trên CI (`hero-logo@phone`, `menu-art@phone`) không nằm trong PR này.
+**Site không đổi, không có chữ mới; đổi `design-system/art-lock.json` (art đã khoá), nên chưa được merge khi chưa có câu đồng ý của chủ dự án.** Cập nhật 10 mảnh `art-check` báo lệch: 8 mảnh theo số đo máy làm việc (`water` kích thước canvas, và `spark-fresco`, `spark-hands`, `spark-light`, hai khổ mỗi mảnh) và 2 mảnh điện thoại `hero-logo@phone`, `menu-art@phone` theo số đo của chính CI (chủ dự án chọn "Sinh số khoá hai mảnh này trên CI một lần", 14/11/2026), vì hai mảnh này chỉ lệch trên CI từ trước. Sáu mảnh còn lại giữ nguyên. Ảnh trước (khoá cũ, dựng ở `c2a2c24`) và sau (hiện tại) nằm ở `design-system/art-lock-review-2026-11-14/` trên nhánh, sẽ được gỡ trước khi merge. Số của hai mảnh điện thoại lấy từ một lần chạy CI thử (PR #76, đã đóng, không merge).
 
 ## `design-check` xem thêm hai trang bài `/02/` và `/03/` (14/11/2026, #43 hàng 4, D83)
 
