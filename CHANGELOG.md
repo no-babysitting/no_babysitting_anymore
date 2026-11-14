@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Nguyên nhân `art-check` lệch: 8 trong 10 mảnh là thay đổi có chủ đích sau ngày khoá (14/11/2026)
+
+**Site không đổi, không có chữ mới, không đụng phép kiểm hay art.** Chạy `art-check` ở bốn commit: khoá `c2a2c24` qua cả 16 mảnh (Δ 0,0); #15 và #16 làm `water` đổi kích thước canvas (khối tuyên ngôn dựng lại); #17 ("hai bàn tay không chạm", góp ý của chủ dự án) đổi cảnh Spark nên sáu mảnh `spark-*` lệch; từ #17 đến nay số đo y hệt, nên mục Bài viết không làm lệch thêm. `hero-logo@phone` và `menu-art@phone` chỉ lệch trên CI, chưa giải thích được. Chưa đổi `art-lock.json` (D55); chi tiết và cách đưa về xanh ở `implementation-notes.md`.
+
 ## Sửa số mảnh art lệch: trên CI là 10, không phải 8, và có từ trước mục Bài viết (14/11/2026)
 
 **Site không đổi, không có chữ mới, không đụng phép kiểm hay art.** Số 8 tôi ghi ở `implementation-notes.md` và ở #44 là đo trên máy làm việc; `art-check` trên CI báo 10 mảnh lệch (thêm `hero-logo@phone` và `menu-art@phone`, chỉ lệch bảng màu). Hai lần chạy CI cách nhau trước và sau ba lát của #44 (số 59 ngày 13/11 và số 91 ngày 14/11) cho cùng 10 mảnh với cùng số đo, nên lệch này không do mục Bài viết. Chưa cập nhật `art-lock.json` (D55); chủ dự án chọn để đấy.
