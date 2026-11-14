@@ -152,7 +152,7 @@
 
 ## 6. Câu, đoạn, nhịp, con số
 
-- **Câu và đoạn:** viết theo độ phức tạp của ý. Câu ngắn giúp nhấn mạnh hoặc tạo nhịp; câu dài phù hợp khi cần giữ các vế có quan hệ chặt chẽ. Không cắt một ý thành nhiều câu chỉ để đạt độ dài mong muốn, cũng không nối nhiều ý độc lập vào một câu. Đoạn có thể ngắn hoặc dài tùy mạch lập luận; nên giúp người đọc nhận ra ý chính và theo được phần giải thích, không cần ép vào một số câu cố định.
+- **Câu và đoạn:** viết theo độ phức tạp của ý, không theo quota. Để tự rà, có thể bắt đầu với câu khoảng 15–25 tiếng và đoạn 2–4 câu; đây chỉ là mốc tham khảo để nhận ra chỗ quá dài, quá vụn hoặc mất cân đối, không phải độ dài mục tiêu hay tiêu chí duyệt. Câu ngắn tạo nhịp và nhấn ý nhưng dùng liên tiếp dễ thành checklist; câu dài giữ được lập luận nhưng nhiều tầng ý sẽ làm người đọc hụt hơi. Đoạn ngắn tạo khoảng nghỉ, đoạn dài giữ mạch phân tích nhưng dễ nặng nếu chứa nhiều ý. Giữ câu/đoạn ngoài mốc khi cấu trúc ý cần như vậy. Xem thêm trade-off và ví dụ trong `editorial/VIETNAMESE-NATURAL-VOICE.md` §4.1.
 - **Mạch ý:** thường nên đưa ý quan trọng lên sớm, nhưng có thể mở bằng tình huống, câu hỏi hoặc bằng chứng nếu cách đó giúp người đọc hiểu vấn đề tốt hơn. Không bắt mọi đoạn phải theo cùng một cấu trúc.
 - **Tiêu đề khối** nên nói rõ nội dung hoặc đặt ra một câu hỏi có ý nghĩa. Tránh nhãn chung chung như *Giới thiệu*, *Tổng quan* nếu chúng không giúp định hướng.
 - **Danh sách** dùng khi các mục thực sự song song hoặc người đọc cần quét nhanh. Nếu các ý nối với nhau bằng lập luận, viết thành văn xuôi.
