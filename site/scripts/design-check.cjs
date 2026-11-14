@@ -27,7 +27,7 @@ const VP = {
   se: { viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 },   /* iPhone SE: the shortest common screen */
   desktop: { viewport: { width: 1440, height: 900 } },
 };
-const PAGES = { phone: ['', '00/', '01/', '04/', 'thuc-hanh/', 'c02/', 'articles/', 'articles/sample/'], tiny: ['', '01/', 'thuc-hanh/', 'articles/sample/'], se: ['', '00/'], desktop: ['', '00/', '01/', 'articles/sample/'] };
+const PAGES = { phone: ['', '00/', '01/', '02/', '03/', '04/', 'thuc-hanh/', 'c02/', 'articles/', 'articles/sample/'], tiny: ['', '01/', '02/', '03/', 'thuc-hanh/', 'articles/sample/'], se: ['', '00/'], desktop: ['', '00/', '01/', '02/', '03/', 'articles/sample/'] };
 const PARTS = ['00/', '01/', '02/', '03/', '04/']; /* the main path (docs/14): rules gold and hold-count of docs/15 §9 */
 /* [selector, stops, where]: 'mid' = the middle of each step; the journey snaps to its panels, so it is read at the snap points (k/4) */
 const SCENES = [['#run', 7, 'mid'], ['#journey', 5, 'snap'], ['#finale', 3, 'mid']];
