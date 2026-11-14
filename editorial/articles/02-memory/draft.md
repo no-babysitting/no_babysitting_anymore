@@ -3,7 +3,7 @@ title: "Memory: “nhớ tôi” khác “biết cách làm việc trong repo n�
 description: Chữ memory gom hai việc khác nhau. Bài này tách chúng ra theo tài liệu hiện hành của Claude Code và Claude app, và chỉ ra điều gì tự lưu, điều gì phải do bạn viết.
 verifiedAt: 2026-11-14
 art: default
-related: ['02']
+related: ['03']
 # publishedAt, order and series are filled when the article is published (docs/24 section 6); it is second in the cluster after article 01.
 ---
 
