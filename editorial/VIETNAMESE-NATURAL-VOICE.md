@@ -164,7 +164,7 @@ Ví dụ:
 
 Đây là ví dụ để nhận ra sắc thái, không phải bảng thay thế máy móc. Chọn cách nói phù hợp với chủ thể, ngữ cảnh và mức độ trang trọng của đoạn văn.
 
-## 5.2. Đăng ký ngôn ngữ và giọng kể
+## 5.2. Ngữ vực và giọng kể
 
 Giọng của site là giọng một đồng nghiệp có kinh nghiệm đang giải thích vấn đề nghề nghiệp: gần gũi nhưng không suồng sã, có chính kiến nhưng không lên lớp. “Tự nhiên” không đồng nghĩa với đưa khẩu ngữ vào mọi chỗ.
 
