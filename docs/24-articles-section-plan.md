@@ -90,6 +90,17 @@ Bài nằm ở `site/src/content/articles/<slug>.md`. Trang thử `/articles/sam
 - **Chữ Anh xen giữa:** `<em lang="en">context window</em>`.
 - **Mục lục** chỉ hiện khi bài có ít nhất bốn H2.
 
+### Thêm một tranh mới (đã dựng ở #44, lát 3)
+
+Mỗi bài có `art: <id>`; các id nằm ở `site/src/lib/article-art.ts` (`PIECES`). Id lạ làm build hỏng.
+
+- **Một tranh là dữ liệu:** nguồn vẽ của design system (`dawn`, `terrain`, `scene`, `sculpture`), tuỳ chọn của nguồn, chế độ màu (`color` hay một sắc `tone`) và mức "thở" (`breathe`, mặc định 0,02 như `docs/15` §5). Thêm một mục vào `PIECES` là xong; trang bài và thẻ ở chỉ mục tự dùng nó.
+- **Bảng màu:** mặc định là hoàng hôn của thương hiệu (`docs/15` §5). Tranh được ghi đè qua tuỳ chọn; `dawn` nhận `sky`, `sun`, `ridges`, `water`, `sunX`, `horizon`, `seed`.
+- **Kiểu vẽ mới** thì thêm một nguồn vào `design-system/components/bundle.js` như `dawn` đã làm. Không sửa nguồn có sẵn: `scene`, `terrain` và các mảnh đã khoá (D55) dùng chung chúng.
+- **Duyệt:** chủ dự án chọn hướng từ một trang HTML nháp trước khi tranh vào PR của bài (D55). Tranh **không** vào `art-lock.json` (D77).
+- **Cổng là ngân sách đã đo,** `check.cjs` mục 4b chạy trên `/articles/sample/`: tối đa 12.000 ô ở desktop và 4.000 ở điện thoại, tối đa 2 canvas sống, lúc đứng yên không quá 8% luồng chính và dưới ngưỡng ô vẽ của trang chủ, reduced motion hiện khung cuối ngay, ra khỏi màn hình thì không vẽ.
+- **Ảnh tĩnh ở chỉ mục:** một khung vẽ một lần khi thẻ gần màn hình, tối đa 1.500 ô, không vòng lặp, không có JavaScript thì để trống (trang trí, `aria-hidden`).
+
 ## 7. Chuẩn nội dung
 
 Con trỏ, không phải luật: giọng và chữ ở `16-writing-guide.md` §1 (ngoại lệ xưng "tôi"); nguồn và ngày ở `06-sources-and-links.md` §1 mục 8; nhãn bằng chứng ở `editorial/CLAUDE.md`.
