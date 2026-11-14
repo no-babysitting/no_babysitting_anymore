@@ -7,7 +7,7 @@ related: ['02']
 # publishedAt, order and series are filled when the article is published (docs/24 section 6); it is third in the cluster after articles 01 and 02.
 ---
 
-Có hai núm khi giao việc cho Claude: model nào, và effort bao nhiêu. Anthropic đã có một bài dạy cách dùng effort: [Using Claude Code: Spending your effort](https://claude.dev/blog/spending-your-effort/) (Thariq Shihipar, 25/9/2026). Bài này không lặp lại nó. Đây là ba điều tôi thấy khi đối chiếu tài liệu ngày 14/11/2026, và một cách chọn rút ra từ đó. Các mức và mặc định đổi nhanh nên mọi con số ở đây đi kèm ngày.
+Có hai núm khi giao việc cho Claude: model nào, và effort bao nhiêu. Anthropic đã có một bài dạy cách dùng effort: [Using Claude Code: Spending your effort](https://claude.dev/blog/spending-your-effort/) (Thariq Shihipar, 25/9/2026). Bài này không lặp lại nó. Đây là ba điều đáng chú ý khi đối chiếu tài liệu ngày 14/11/2026, và một cách chọn rút ra từ đó. Các mức và mặc định đổi nhanh nên mọi con số ở đây đi kèm ngày.
 
 ## Mặc định khác nhau theo bề mặt
 
