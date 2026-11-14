@@ -85,6 +85,32 @@ Không phải câu bị động nào cũng sai. Dùng bị động khi người 
 
 ## 4. Nhịp câu và cách nối ý
 
+## 4.1. Mốc tham khảo và trade-off khi biên tập
+
+Các mốc dưới đây là **điểm bắt đầu để tự rà**, không phải chuẩn đúng/sai, mục tiêu phải đạt hay điều kiện để duyệt bài. Đừng đếm máy móc rồi sửa câu chỉ để khớp con số. Hãy nhìn vào vai trò của câu trong đoạn, độ phức tạp của ý và trải nghiệm đọc liền mạch.
+
+| Thành phần | Mốc tham khảo ban đầu | Trade-off và khi nên phá lệ |
+|---|---|---|
+| Độ dài câu | Khoảng 15–25 tiếng có thể là một vùng dễ đọc để bắt đầu rà. | Câu ngắn giúp nhấn mạnh và tạo nhịp, nhưng nhiều câu ngắn liên tiếp dễ thành văn cụt hoặc checklist. Câu dài giữ được quan hệ giữa các vế, nhưng nhiều tầng bổ nghĩa khiến người đọc phải đọc lại. Giữ câu dài nếu các vế thực sự gắn nhau; tách khi có nhiều ý độc lập hoặc chủ thể đổi. |
+| Độ dài đoạn | 2–4 câu thường là một điểm bắt đầu hợp lý cho đoạn giải thích. | Đoạn một câu có thể tạo nhấn mạnh hoặc làm câu chuyển. Đoạn dài hơn phù hợp với một lập luận liên tục. Đừng tách đoạn chỉ để tạo nhiều khoảng trắng; cũng đừng gom nhiều ý khác nhau vào một khối. |
+| Cách mở đoạn | Thường đưa ý quan trọng lên sớm. | Mở bằng tình huống, câu hỏi, dữ kiện hoặc mâu thuẫn khi chúng giúp người đọc hiểu vì sao vấn đề đáng quan tâm. Không ép mọi đoạn phải có câu chủ đề theo cùng một khuôn. |
+| Chủ động và bị động | Ưu tiên câu chủ động khi biết ai thực hiện hành động. | Dùng bị động khi tác nhân không rõ, không quan trọng hoặc muốn tập trung vào kết quả. Đừng đổi sang chủ động nếu phải bịa ra chủ thể. |
+| Từ nối | Dùng từ nối để chỉ rõ quan hệ giữa hai ý. | Từ nối giúp người đọc theo lập luận, nhưng lặp “tuy nhiên”, “bên cạnh đó”, “do đó” khiến văn nặng và công thức. Nếu quan hệ đã rõ, có thể bỏ. |
+| Hư từ và khẩu ngữ | Dùng hư từ khi chúng mang nghĩa về thời, thể, trình tự, phạm vi hoặc sắc thái. | Lược quá tay khiến câu giống bản dịch; thêm quá nhiều khiến câu rườm rà hoặc suồng sã. Văn phân tích, lời hướng dẫn và prompt mẫu có mức khẩu ngữ khác nhau. |
+| Danh sách và văn xuôi | Dùng danh sách cho các mục song song, độc lập hoặc cần quét nhanh. | Nếu các ý giải thích, dẫn đến hoặc phụ thuộc lẫn nhau, văn xuôi thường giữ được mạch suy nghĩ tốt hơn. Đừng biến mọi đoạn thành bullet chỉ vì dễ trình bày. |
+
+Khi áp dụng một mốc, hãy tự hỏi bốn điều:
+
+1. **Mặc định:** Đây có phải lựa chọn hợp lý để bắt đầu không?
+2. **Lý do:** Nó giúp người đọc hiểu, định hướng hoặc ghi nhớ điều gì?
+3. **Trade-off:** Nếu áp dụng quá tay, văn bản sẽ mất điều gì?
+4. **Ngoại lệ:** Có ngữ cảnh cụ thể nào khiến lựa chọn khác tốt hơn không?
+
+Một con số chỉ có ích khi nó giúp phát hiện vấn đề. Chẳng hạn, một câu dài hơn vùng tham khảo không tự động là câu khó đọc; nhưng nếu cả đoạn liên tục có câu nhiều tầng mệnh đề, đó là tín hiệu nên đọc lại. Tương tự, đoạn năm câu không mặc nhiên quá dài; điều cần kiểm tra là nó có đang chứa nhiều hơn một mạch ý hay không.
+
+**Nguyên tắc quyết định:** tối ưu trải nghiệm đọc của cả đoạn và cả bài, không tối ưu từng câu đứng riêng lẻ.
+
+
 Đoạn văn cần có mạch suy nghĩ, nhưng không có một công thức cố định cho mọi đoạn. Có lúc nên nêu kết luận trước; có lúc cần kể tình huống, đặt câu hỏi hoặc đưa bằng chứng lên trước để người đọc hiểu vấn đề. Đừng ép đoạn nào cũng đi theo nhịp “nhận định → giải thích → ví dụ → kết luận”.
 
 Câu sau cần nối được với câu trước bằng quan hệ có thật: tiếp diễn, bổ sung, đối lập, nguyên nhân, hệ quả, điều kiện hoặc chuyển góc nhìn. Nếu quan hệ đã rõ, không cần chèn từ nối cho đủ. Nếu người đọc phải tự đoán mối liên hệ, hãy viết lại.
