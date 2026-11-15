@@ -21,7 +21,7 @@ Bài lẻ, ngoài cụm (ra khi sẵn sàng, không đổi thứ tự cụm):
 | # | Bài | Chủ đề | Trạng thái | Ghi chú |
 |---|---|---|---|---|
 | 07 | Một người viết, nhiều người đọc (multi-agent coding) | 7 (mới, ngoài sáu chủ đề đầu) | `published` | Issue #57. Nguồn là báo cáo của tác giả; tác giả quyết không mở lại nguồn, ngoại lệ ghi ở `ledger.md` |
-| 08 | Một AI agent đáng tin cậy cần những gì (tổng quan) | tổng quan cho cụm bài vận hành agent | `draft` | D86, Refs #79. Bài tổng quan trỏ về 01, 02, 03, 07; chưa quyết vị trí trong cụm; chưa đăng: chưa có `brief.md` và sổ nguồn, nên chưa chạy được playbook đăng bài (`docs/24` §6) |
+| 08 | Một AI agent đáng tin cậy cần những gì (tổng quan) | tổng quan cho cụm bài vận hành agent | `published` | D86, Refs #79. Không có sổ nguồn vì không trích nguồn ngoài; trỏ về 01, 02, 03, 07; `order: 8`, vị trí trong danh sách chưa quyết |
 
 Ý nghĩa của từng trạng thái và ai đặt: [`CLAUDE.md`](CLAUDE.md).
 
