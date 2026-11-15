@@ -1,68 +1,69 @@
 ---
 title: "Memory: “nhớ tôi” khác “biết cách làm việc trong repo này”"
-description: Chữ memory gom hai việc khác nhau. Bài này tách chúng ra theo tài liệu hiện hành của Claude Code và Claude app, và chỉ ra điều gì tự lưu, điều gì phải do bạn viết.
+description: Chữ memory gom nhiều cơ chế khác nhau. Bài này phân biệt điều harness tự ghi nhớ, chỉ dẫn của dự án và những gì bạn vẫn phải kiểm soát.
 verifiedAt: 2026-11-14
 art: default
-related: ['03']
-# publishedAt, order and series are filled when the article is published (docs/24 section 6); it is second in the cluster after article 01.
+related: ['01', '03', '07', '08']
 ---
 
-Khi nói “Claude có memory không”, người ta gom hai câu hỏi vào một chữ. Câu thứ nhất: Claude có nhớ **tôi** không, tức cách tôi thích làm việc và những lần tôi đã sửa nó? Câu thứ hai: Claude có biết **cách làm việc trong repo này** không, tức lệnh build, quy ước, những chỗ dễ vấp? Tài liệu hiện hành của Claude Code và Claude app trả lời hai câu bằng hai cơ chế khác nhau. Bài này tách chúng ra, theo tài liệu đọc ngày 14/11/2026, và nói điều gì tự lưu, điều gì vẫn phải do bạn viết.
+Khi hỏi Claude có memory không, bạn có thể đang hỏi hai chuyện khác nhau. Claude có nhớ cách bạn thích làm việc, những lần bạn sửa nó và bối cảnh cá nhân không? Hay Claude có biết quy ước, lệnh build và cách nhóm làm việc trong repo này?
 
-## Trong Claude Code: một file bạn viết, một bộ ghi chú Claude tự lưu
+Hai câu hỏi đó không nhất thiết có cùng câu trả lời. Một hệ thống có thể ghi nhớ sở thích cá nhân nhưng không biết quy trình triển khai của dự án. Nó cũng có thể đọc được repo rất tốt mà không nhớ bạn muốn nhận báo cáo theo định dạng nào.
 
-**`CLAUDE.md` là file bạn viết.** Mỗi `CLAUDE.md` nạp lúc khởi động được nạp trọn. `CLAUDE.md` ở thư mục con chỉ nạp khi Claude đọc, ghi hoặc sửa file trong thư mục đó. `AGENTS.md` mặc định chỉ được đọc khi không có `CLAUDE.md` ở thư mục làm việc hoặc phía trên. Tài liệu nói rõ đây là context, không phải cấu hình cưỡng chế: muốn chặn một hành động thì dùng hook hoặc permissions.
+## Trong Claude Code, có chỉ dẫn bạn viết và ghi chú Claude tự lưu
 
-**Auto memory là ghi chú Claude tự lưu.** Có bốn loại: `user`, `feedback`, `project`, `reference`. Lúc bắt đầu, Claude nạp phần đầu của `MEMORY.md` (200 dòng đầu hoặc 25 KB đầu, cái nào tới trước); các file chủ đề chỉ được đọc khi cần. Nó nằm trên máy của bạn, theo git repo, và không chia sẻ giữa máy hay môi trường cloud. Nó không được nạp vào subagent, trừ khi subagent được tạo bằng fork.
+CLAUDE.md là chỉ dẫn bạn chủ động viết cho một dự án. Nó có thể chứa lệnh kiểm tra, quyết định chưa thể suy ra từ code, quy ước quan trọng và những điểm dễ vấp mà Claude cần biết khi làm việc.
 
-Điểm đáng chú ý nằm ở một câu của tài liệu: auto memory bỏ qua điều suy ra được từ code (kiến trúc, đường dẫn file, cách sửa lỗi) và điều `CLAUDE.md` đã nói. Nói cách khác, chính tài liệu đã tách hai việc: phần “biết cách làm việc trong repo” không phải là việc của auto memory.
+Auto memory là ghi chú Claude tự lưu trong quá trình làm việc. Tài liệu Claude Code mô tả các nhóm ghi chú như thông tin về người dùng, phản hồi, dự án và tài liệu tham chiếu. Claude nạp phần đầu của MEMORY.md theo giới hạn được tài liệu quy định; các file chủ đề có thể được đọc khi cần. Cách lưu này gắn với môi trường làm việc, không tự động trở thành một bộ chỉ dẫn dùng chung trên mọi máy hay mọi phiên cloud.
 
-## Trong Claude app: memory theo chủ đề và theo project
+Hai cơ chế có thể bổ sung cho nhau, nhưng không nên đánh đồng chúng. Auto memory có thể ghi lại một số thông tin dự án. Điều đó không có nghĩa nó thay thế được những quy ước và yêu cầu mà nhóm muốn áp dụng ổn định.
 
-Memory của Chat lưu thành từng chủ đề trong lúc bạn trò chuyện, không tóm tắt hội thoại sau khi kết thúc, và mỗi project có memory riêng. Bạn xem, sửa hoặc xoá qua mục Topics, hoặc nhờ Claude ngay trong chat. Xoá một hội thoại không xoá memory sinh ra từ nó.
+## Memory không phải nơi đặt mọi sự thật của repo
 
-Với Cowork, tài liệu chia hai trường hợp: khi Cowork chạy trên cloud thì dùng chung memory với Chat; khi chạy trên máy của bạn thì không dùng memory. Có thể tắt memory cho một việc ở Cowork, nhưng phải tắt trước tin nhắn đầu tiên và không đổi lại được. Bài hỗ trợ về memory của Chat không nói gì về việc memory đó có được chia sẻ với Claude Code hay không; hai hệ nằm ở hai chỗ khác nhau.
+Tài liệu Claude Code nói auto memory tránh lưu những điều có thể suy ra từ code và những điều đã có trong CLAUDE.md. Nhưng đừng diễn giải điều đó thành “auto memory không bao giờ chứa thông tin dự án”. Chính tài liệu có nhóm ghi chú project.
 
-<aside aria-label="Quan điểm của tôi">
+Cách phân chia thực tế hơn là:
 
-Tôi chia theo loại điều cần nhớ. Điều **“nhớ tôi”** thì tin harness tự lưu, miễn là bạn biết nó lưu ở đâu, xem được và xoá được. Điều **“cách làm việc trong repo này”** thì tự viết ra file của mình, vì auto memory cố ý không giữ nó, và vì `CLAUDE.md` là context chứ không phải luật cưỡng chế. Tài liệu không viết thành hai quy tắc như vậy; đó là cách tôi đọc.
+- Điều Claude có thể tự tìm bằng cách đọc repo: cấu trúc thư mục, cách một component đang được viết, tên test framework. Đừng chép lại tất cả vào memory.
+- Điều dự án muốn Claude áp dụng ổn định: lệnh kiểm tra chính xác, quyết định kiến trúc, quy trình release, vùng code không được sửa. Đặt trong file chỉ dẫn có version control.
+- Điều thay đổi theo từng người: cách nhận báo cáo, sở thích về cách trao đổi, phản hồi đã lặp lại. Có thể để auto memory hỗ trợ, nhưng cần biết nó lưu gì và có cách sửa khi sai.
 
-</aside>
+CLAUDE.md cũng chỉ là context, không phải cơ chế cưỡng chế. Nếu Claude không được phép đọc .env, hoặc luôn phải chạy một bước kiểm tra trước khi kết thúc, đừng chỉ viết câu đó trong file. Dùng permission rules, hooks hoặc CI phù hợp. Phần này được phân tích ở bài 01 và bài 07.
+
+## Trong Claude app, memory được tổ chức theo chủ đề và project
+
+Claude app có cơ chế memory riêng, khác với auto memory của Claude Code. Tài liệu hỗ trợ mô tả memory theo chủ đề trong Chat và memory riêng cho project. Người dùng có thể xem, sửa hoặc xóa các ghi chú qua giao diện tương ứng. Xóa một cuộc hội thoại không đồng nghĩa với việc mọi ghi chú memory được tạo từ đó cũng biến mất.
+
+Cowork có những khác biệt theo nơi chạy. Tài liệu hỗ trợ được đối chiếu cho biết Cowork chạy trên cloud dùng chung memory với Chat, trong khi Cowork chạy trên máy không dùng cơ chế memory đó. Không nên từ đây suy ra Claude Code cũng đọc được các ghi chú của Claude app: hai hệ thống có cách lưu và phạm vi riêng.
+
+Những chi tiết này có thể đổi theo phiên bản và bề mặt sản phẩm. Nếu bạn đang cấu hình một môi trường cụ thể, hãy kiểm tra tài liệu đúng sản phẩm và ngày sử dụng, thay vì lấy một quy tắc của Chat áp sang Claude Code.
+
+## Tin memory đến đâu?
+
+Tôi chia theo mức độ quan trọng và khả năng sửa sai.
+
+Với sở thích cá nhân và cách trao đổi, có thể để harness tự ghi nhớ, miễn là bạn biết nơi xem, sửa và xóa những gì nó lưu. Nếu một ghi chú sai, việc sửa nó không nên đòi hỏi bạn phải dựng lại toàn bộ hệ thống.
+
+Với quy ước repo, quyết định kỹ thuật và quy trình ảnh hưởng tới cả nhóm, hãy ghi thành file có version control. Đừng trông chờ memory tự hình thành đúng, được nạp đúng lúc và được mọi môi trường chia sẻ.
+
+Với trạng thái có hậu quả thực tế, memory dạng câu chữ thường chưa đủ. “Đã gửi báo cáo” yếu hơn một bản ghi có mã gửi, người nhận, thời điểm và trạng thái từ hệ thống nguồn. Nếu cần biết giao dịch đã xảy ra hay chưa, hãy đọc hệ thống giao dịch; đừng tin một câu agent nhớ lại.
+
+## Ba câu hỏi trước khi giao việc cho memory
+
+1. Thông tin này thuộc về cá nhân, một repo hay một hệ thống nghiệp vụ?
+2. Nếu ghi sai hoặc không được nạp đúng lúc, hậu quả là gì?
+3. Ai có quyền sửa và nguồn nào được coi là sự thật cuối cùng?
+
+Memory tiện ở chỗ giảm việc nhắc lại. Nhưng khả năng lưu thông tin không đồng nghĩa với khả năng truy xuất đúng lúc, hiểu đúng và hành động đúng. Càng gần dữ liệu có hậu quả, càng cần nguồn có thẩm quyền và cơ chế kiểm chứng.
 
 ## Bài này chưa nói
 
-- Memory của các hãng khác (ChatGPT, Gemini): ngoài trục của mục này.
-- Nó nhớ đúng lúc đến đâu, nhớ sai hay nhớ thừa ra sao: bài không đo, và tài liệu không đưa số.
-- Một điều tôi bỏ khỏi bài vì không tìm được câu nào nói thẳng: việc auto memory có chạy hay không ở phiên nền. Tài liệu chỉ nói công tắc `/memory` không bật lại được nó ở phiên nền và ở phiên do một phiên Claude Code khác khởi động.
+- Memory của mọi hãng AI: phạm vi bài này là Claude Code và Claude app.
+- Tỷ lệ memory nhớ đúng, nhớ sai hoặc được gọi ra đúng lúc: tài liệu đã đọc không cung cấp phép đo để kết luận.
+- Một kiến trúc memory ngoài cho nhiều agent: chỉ nên dựng khi có yêu cầu về chia sẻ, quyền truy cập, kiểm toán hoặc tính liên tục mà harness hiện tại không đáp ứng.
 
 ## Nguồn
 
-- [How Claude remembers your project](https://code.claude.com/docs/en/memory), tài liệu Claude Code, mở ngày 13/11/2026.
-- [Use Claude’s chat search and memory to build on previous context](https://support.claude.com/en/articles/11817273), trung tâm trợ giúp Claude, mở ngày 14/11/2026.
-- [Get started with Claude Cowork](https://support.claude.com/en/articles/13345190), trung tâm trợ giúp Claude, mở ngày 14/11/2026.
-
----
-
-<!-- Phần dưới đây KHÔNG lên site; xoá khi đăng (docs/24 §6). Bản đồ đoạn → dòng trong ledger.md -->
-
-## Bản đồ khẳng định → sổ nguồn (không đăng)
-
-| Đoạn | Dòng ledger |
-|---|---|
-| `CLAUDE.md` nạp lúc khởi động trọn; thư mục con nạp khi đọc, ghi, sửa file trong đó | 1 (giới hạn 4 MiB, không nêu trong bài), 9 |
-| `AGENTS.md` chỉ đọc khi không có `CLAUDE.md` | 10 |
-| Context, không phải cưỡng chế; dùng hook hoặc permissions | 8 |
-| Bốn loại auto memory | 2 |
-| `MEMORY.md` 200 dòng hoặc 25 KB; file chủ đề đọc khi cần | 1, 7 |
-| Lưu trên máy, theo git repo, không chia sẻ giữa máy hay cloud | 5 |
-| Không nạp vào subagent trừ fork | 7 |
-| Auto memory bỏ qua điều suy ra được từ code và điều `CLAUDE.md` đã nói | 3 |
-| Memory của Chat theo chủ đề; project có memory riêng; xem, sửa, xoá | 16, 17 |
-| Xoá hội thoại không xoá memory sinh ra từ nó | 17 |
-| Cowork trên cloud dùng chung memory với Chat; Cowork trên máy thì không | 13 |
-| Tắt memory cho một việc ở Cowork | 18 |
-| Bài hỗ trợ không nói về chia sẻ với Claude Code | 19 |
-| Callout "Quan điểm của tôi" | Luận điểm do tác giả chọn 14/11/2026; quan điểm, nêu rõ trong bài là cách đọc của tôi |
-| "Chưa nói": ChatGPT, Gemini | 14 (UNVERIFIED, không dùng) |
-| "Chưa nói": đo nhớ đúng lúc | Không có dòng; là điều bài không làm |
-| Auto memory ở phiên nền, đã bỏ | 12 |
+- [How Claude remembers your project](https://code.claude.com/docs/en/memory), tài liệu Claude Code, đối chiếu ngày 14/11/2026.
+- [Use Claude’s chat search and memory to build on previous context](https://support.claude.com/en/articles/11817273), trung tâm trợ giúp Claude, đối chiếu ngày 14/11/2026.
+- [Get started with Claude Cowork](https://support.claude.com/en/articles/13345190), trung tâm trợ giúp Claude, đối chiếu ngày 14/11/2026.
