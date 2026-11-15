@@ -12,16 +12,16 @@ Cụm 3 bài đầu, viết theo thứ tự này (D65). Cột "Chủ đề" là 
 
 | # | Bài | Chủ đề | Trạng thái | Ghi chú |
 |---|---|---|---|---|
-| 01 | 80% system prompt: cái gì thực sự đổi | 6 | `draft` | Luận điểm tác giả chọn 14/11/2026; bản nháp đầu của agent, chưa phải giọng tác giả; chờ tác giả đọc và phản biện. Caching chưa kiểm, không vào bài |
-| 02 | Memory: tin harness hay tự quản | 5 | `draft` | Luận điểm tác giả chọn 14/11/2026 ("nhớ tôi" khác "biết cách làm việc trong repo này"); bản nháp đầu của agent, chưa phải giọng tác giả; chờ tác giả đọc và phản biện. Dòng 12 (phiên nền) đã bỏ |
-| 03 | Chọn model và effort | 4 | `draft` | Luận điểm tác giả chọn 14/11/2026; agent đã thu hẹp "effort vừa" thành "mặc định của model" sau khi mở docs (cần tác giả xác nhận); bản nháp đầu, chưa phải giọng tác giả. Giá và benchmark không dùng |
+| 01 | 80% system prompt: cái gì thực sự đổi | 6 | `published` | Luận điểm tác giả chọn 14/11/2026; bản nháp đầu của agent, chưa phải giọng tác giả; chờ tác giả đọc và phản biện. Caching chưa kiểm, không vào bài |
+| 02 | Memory: tin harness hay tự quản | 5 | `published` | Luận điểm tác giả chọn 14/11/2026 ("nhớ tôi" khác "biết cách làm việc trong repo này"); bản nháp đầu của agent, chưa phải giọng tác giả; chờ tác giả đọc và phản biện. Dòng 12 (phiên nền) đã bỏ |
+| 03 | Chọn model và effort | 4 | `published` | Luận điểm tác giả chọn 14/11/2026; agent đã thu hẹp "effort vừa" thành "mặc định của model" sau khi mở docs (cần tác giả xác nhận); bản nháp đầu, chưa phải giọng tác giả. Giá và benchmark không dùng |
 
 Bài lẻ, ngoài cụm (ra khi sẵn sàng, không đổi thứ tự cụm):
 
 | # | Bài | Chủ đề | Trạng thái | Ghi chú |
 |---|---|---|---|---|
-| 07 | Một người viết, nhiều người đọc (multi-agent coding) | 7 (mới, ngoài sáu chủ đề đầu) | `draft` | Issue #57. Nguồn là báo cáo của tác giả; tác giả quyết không mở lại nguồn, ngoại lệ ghi ở `ledger.md` |
-| 08 | Một AI agent đáng tin cậy cần những gì (tổng quan) | tổng quan cho cụm bài vận hành agent | `draft` | D86, Refs #79. Bài tổng quan trỏ về 01, 02, 03, 07; chưa quyết vị trí trong cụm; chờ tác giả đọc và phản biện |
+| 07 | Một người viết, nhiều người đọc (multi-agent coding) | 7 (mới, ngoài sáu chủ đề đầu) | `published` | Issue #57. Nguồn là báo cáo của tác giả; tác giả quyết không mở lại nguồn, ngoại lệ ghi ở `ledger.md` |
+| 08 | Một AI agent đáng tin cậy cần những gì (tổng quan) | tổng quan cho cụm bài vận hành agent | `published` | D86, Refs #79. Không có sổ nguồn vì không trích nguồn ngoài; trỏ về 01, 02, 03, 07; `order: 8`, vị trí trong danh sách chưa quyết |
 
 Ý nghĩa của từng trạng thái và ai đặt: [`CLAUDE.md`](CLAUDE.md).
 

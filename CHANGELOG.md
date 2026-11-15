@@ -10,6 +10,14 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 
 Ảnh chia sẻ `site/public/og.png` có sẵn câu "…cho em nó." trong ảnh nên được dựng lại (`tools/make-brand-assets.js`) để khớp meta description. Chưa làm: chữ của bài 01, 02, 03, 07, 08 (lát sau) và các trạng thái tương tác ngoài những trạng thái đã đo; chi tiết ở mục 6 và 7 của báo cáo.
 
+## Đăng bài 01, 02, 03, 07, 08 lên `/articles/` (15/11/2026, Refs #44, #79)
+
+**Chữ mới trên site: 5 bài (đã có bản ghi duyệt bên dưới).** Chuyển `draft.md` của bài 01, 02, 03, 07 thành `site/src/content/articles/{system-prompt,memory,model-effort,one-writer-many-readers}.md` theo `docs/24` §6; `publishedAt` là "2026-11-15"; `verifiedAt` lấy từ ngày gần nhất ở sổ nguồn (07: 13/11, ba bài kia: 14/11); `order` 1, 2, 3 và 7; tranh `art: default`; không đặt `series` vì tên cụm chưa quyết (`docs/24` mục 5). Bài 07 có hai liên kết sang bài 01 và 03. Bài 08 (tổng quan, D86) đăng cùng đợt theo lời chủ dự án ("Cả 8 nữa mà nhỉ?"): không có sổ nguồn vì bài không trích nguồn ngoài, `verifiedAt` "2026-11-15" là ngày đọc đối chiếu với bốn bài đã đăng, `order: 8` (vị trí chưa quyết); thêm `brief.md` cho bài.
+
+Kiểm trên máy làm việc: build qua, 13 link nguồn ngoài đều trả HTTP 200 (kiểm 15/11/2026), `check.cjs` qua (một cảnh báo axe mức vừa `heading-order` ở `/articles/`: thẻ bài dùng `h3` ngay dưới `h1` vì chưa có nhóm loạt bài), `type-check` 0 lỗi 51 cảnh báo (cùng nhóm `measure` như trước), `design-check` qua; `design-check` chỉ đi các trang cố định nên **chưa nhìn** từng trang bài thật.
+
+**Bản ghi duyệt (do agent viết, không phải chủ dự án):** 15/11/2026, trong phiên Claude Code, bằng tin nhắn của chủ dự án sau khi hỏi các bài hiển thị ở đâu: "Tôi bảo là xuất bản đi cơ mà?". Tôi coi đây là lệnh đăng và là sự duyệt chữ của tác giả cho bốn bài trên; câu "Cả 8 nữa mà nhỉ?" thêm bài 08 vào cùng lệnh; chủ dự án nói sẽ đọc trực tiếp trên page. Đối chiếu nguồn: không có reviewer độc lập; nguồn do phiên viết mở và ghi ở `ledger.md`, hôm nay chỉ kiểm lại link còn sống, không so lại từng câu với nguồn. Riêng bài 07: không ai đối chiếu nguồn gốc, tác giả quyết đăng theo báo cáo (`docs/24` §6 bước 6).
+
 ## Trỏ tới hướng dẫn tiếng Việt tự nhiên từ `AGENTS.md` và `editorial/CLAUDE.md` (15/11/2026, Refs #79)
 
 **Site không đổi, không có chữ mới (chỉ tài liệu quy trình).** Thêm một dòng trỏ tới `editorial/VIETNAMESE-NATURAL-VOICE.md` ở `AGENTS.md` §5 (hàng "Văn phong") và ở `editorial/CLAUDE.md`, để phiên mới mở repo thấy file này. Không chép lại nội dung; vẫn là mốc tham khảo (D85).
