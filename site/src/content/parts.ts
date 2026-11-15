@@ -76,19 +76,19 @@ const PASTE: Record<LensId, [string, string]> = {
 export const PARTS: Part[] = [
   {
     id: '00', phase: 'Mở đầu', en: 'WHY YOU STILL BABYSIT', vi: 'Vì sao bạn vẫn còn phải ngồi trông', minutes: 4,
-    summary: 'Claude cần ít lời dặn hơn bạn nghĩ nhiều. Thứ em nó còn thiếu là những điều chỉ có bạn mới biết.',
+    summary: 'Claude cần ít lời dặn hơn bạn nghĩ nhiều, nhưng vẫn thiếu những điều chỉ có bạn mới biết.',
     hook: {
       stat: ['80%', 'Tháng 7/2026, Anthropic cho biết họ đã xoá đi hơn 80% chỉ dẫn hệ thống của Claude Code.'],
       question: 'Claude chỉ cần ít lời dặn đến thế, vậy sao bạn vẫn còn phải ngồi trông?', src: ['S1'],
     },
     core: [
-      { t: 'h', text: 'Khi những lời dặn chỏi nhau' },
-      { t: 'p', src: ['S1'], html: `Khi đọc lại các phiên làm việc trong nội bộ, nhóm làm Claude Code nhận ra có những yêu cầu mang theo các lời dặn trái ngược nhau. Chỉ dẫn hệ thống thì bảo “để lại tài liệu khi cần”. Một ${T('skill', 'bộ hướng dẫn đóng gói sẵn')} lại bảo “KHÔNG thêm chú thích”. Còn người dùng thì nói “cứ làm cho chạy như bản cũ”. Claude vẫn đoán ra được ý, nhưng phải nghĩ kỹ hơn hẳn mới gỡ nổi mấy chỗ chỏi nhau ấy.` },
+      { t: 'h', text: 'Khi những lời dặn mâu thuẫn nhau' },
+      { t: 'p', src: ['S1'], html: `Khi đọc lại các phiên làm việc trong nội bộ, nhóm làm Claude Code nhận ra có những yêu cầu mang theo các lời dặn trái ngược nhau. Chỉ dẫn hệ thống thì bảo “để lại tài liệu khi cần”. Một ${T('skill', 'bộ hướng dẫn đóng gói sẵn')} lại bảo “KHÔNG thêm chú thích”. Còn người dùng thì nói “cứ làm cho chạy như bản cũ”. Claude vẫn đoán ra được ý, nhưng phải nghĩ kỹ hơn hẳn mới gỡ nổi mấy chỗ mâu thuẫn ấy.` },
       { t: 'h', text: 'Vì sao bây giờ bỏ bớt được' },
       { t: 'p', src: ['S1'], html: `Những lời dặn ấy đã từng rất cần, để tránh các tình huống tệ nhất như lỡ tay xoá nhầm file. Nhưng các ${T('model', 'mô hình AI')} mới đã ${G('phán đoán')} tốt hơn nhiều. Vì thế nhóm Claude Code mới mạnh dạn xoá bớt, và để Claude tự dựa vào ${T('context', 'ngữ cảnh, tức mọi thứ Claude đang nhìn thấy')} xung quanh mà quyết.` },
       { t: 'thenNow', main: true, src: ['S1', 'S3'],
         then: 'Dặn càng nhiều thì càng an toàn.',
-        now: `Chỉ cần dặn những điều Claude ${G('không tự thấy')} được. Phần còn lại, cứ để em nó tự phán đoán.`,
+        now: `Chỉ cần dặn những điều Claude ${G('không tự thấy')} được. Phần còn lại, cứ để nó tự phán đoán.`,
         why: 'Trang Best practices của Claude Code nói về những lời khuyên cũ như sau: <q lang="en">Every one of these was good advice when it was written.</q> Tạm dịch: lời khuyên nào trong số này cũng từng là lời khuyên tốt vào lúc nó được viết ra.' },
       { t: 'h', text: 'Những điều chỉ có bạn mới biết' },
       { t: 'list', src: ['S3'], items: [
@@ -117,7 +117,7 @@ export const PARTS: Part[] = [
         } },
       { t: 'h', text: 'Bạn đang ở đâu?' },
       { t: 'list', src: ['S18', 'S19'], items: [
-        '<b>Chat</b> là nơi bạn đã quen (trò chuyện, tức chat, trên claude.ai hoặc app Claude). Bắt đầu ở đây nếu bạn chỉ cần hỏi, soạn, bàn bạc.',
+        '<b>Chat</b> là nơi bạn đã quen: trò chuyện với Claude trên claude.ai hoặc trong app Claude. Bắt đầu ở đây nếu bạn chỉ cần hỏi, soạn thảo hay bàn bạc.',
         '<b>Cowork</b> nằm trong app Claude Desktop, không cần mở terminal; Claude làm trực tiếp trên file ở máy bạn. Hợp cho việc văn phòng nhiều bước như tài liệu, bảng tính, nghiên cứu.',
         '<b>Claude Code</b> chạy ở terminal, trong trình soạn code, trong app Claude (thẻ Code) và trên web (<code>claude.ai/code</code>). Hầu hết các cách đều cần gói Claude trả phí hoặc tài khoản Console.',
       ] },
@@ -126,14 +126,14 @@ export const PARTS: Part[] = [
     ],
     close: {
       line: `Thôi cầm tay chỉ việc không có nghĩa là buông tay hẳn. Bạn vẫn ${G('đặt tay đúng hai chỗ')}: lúc làm rõ công việc, và lúc duyệt kết quả.`,
-      prompt: all((id) => `Đây là ${PASTE[id][0]}: [${PASTE[id][1]}]. Tôi muốn rút gọn nó lại. Hãy chỉ ra giúp tôi ba nhóm: dòng nào bạn vẫn tự làm đúng mà không cần tôi dặn, những dòng nào đang chỏi nhau, và còn điều gì chỉ có tôi biết mà tôi chưa nói ra. Chỗ nào bạn chưa chắc thì hỏi lại tôi, đừng đoán.`),
+      prompt: all((id) => `Đây là ${PASTE[id][0]}: [${PASTE[id][1]}]. Tôi muốn rút gọn nó lại. Hãy chỉ ra giúp tôi ba nhóm: dòng nào bạn vẫn tự làm đúng mà không cần tôi dặn, những dòng nào đang mâu thuẫn nhau, và còn điều gì chỉ có tôi biết mà tôi chưa nói ra. Chỗ nào bạn chưa chắc thì hỏi lại tôi, đừng đoán.`),
     },
     sources: ['S1', 'S3', 'S18', 'S19'],
   },
 
   {
     id: '01', phase: 'Trước', en: 'THE UNKNOWNS', vi: 'Tìm ra những điều mình chưa biết', minutes: 5,
-    summary: 'Việc giao đi thường hỏng ở đúng những chỗ mà chính bạn cũng chưa nghĩ tới. Hãy để Claude giúp bạn tìm ra chúng, trước khi em nó bắt tay vào làm.',
+    summary: 'Việc giao đi thường hỏng ở đúng những chỗ mà chính bạn cũng chưa nghĩ tới. Hãy để Claude giúp bạn tìm ra chúng, trước khi nó bắt tay vào làm.',
     hook: {
       question: 'Bản giao việc đã rõ ràng, Claude cũng làm đúng từng chữ, vậy mà kết quả vẫn trật. Trật ở chỗ nào?',
       bridge: 'Thường thì không phải trật ở Claude đâu. Trật ở những điều bạn chưa nói ra, vì chính bạn cũng chưa kịp nghĩ tới.',
@@ -141,7 +141,7 @@ export const PARTS: Part[] = [
     core: [
       { t: 'h', text: 'Bản đồ không phải là lãnh thổ' },
       { t: 'p', html: `Tất cả những gì bạn đưa cho Claude, từ ${T('prompt', 'câu lệnh bạn gõ')}, các file cho tới skill, mới chỉ là tấm bản đồ. Còn nơi công việc thật sự diễn ra, với khách hàng thật, dữ liệu thật và những ràng buộc thật, mới là lãnh thổ. Anh Thariq Shihipar ở Anthropic gọi những chỗ bản đồ không khớp với lãnh thổ là ${E('unknowns')}, tạm dịch là ${G('điều chưa biết')}.` },
-      { t: 'p', src: ['S2'], html: 'Hễ gặp một điều chưa biết là Claude buộc phải đoán xem bạn muốn gì. Việc càng dài thì em nó càng gặp nhiều chỗ phải đoán như thế. Tác giả bài gốc kể rằng Claude Fable là model đầu tiên khiến chất lượng công việc bị giới hạn bởi chính khả năng làm rõ điều chưa biết của tác giả.' },
+      { t: 'p', src: ['S2'], html: 'Hễ gặp một điều chưa biết là Claude buộc phải đoán xem bạn muốn gì. Việc càng dài thì Claude càng phải đoán ở nhiều chỗ. Tác giả bài gốc kể rằng Claude Fable là model đầu tiên khiến chất lượng công việc bị giới hạn bởi chính khả năng làm rõ điều chưa biết của tác giả.' },
       { t: 'h', text: 'Bốn loại điều chưa biết' },
       { t: 'p', html: 'Mỗi lần mang một việc tới cho Claude, tác giả lại chia những gì mình biết ra thành bốn ô:' },
       { t: 'grid4', cells: [
@@ -150,16 +150,16 @@ export const PARTS: Part[] = [
         ['Không biết là mình biết.', 'Những điều hiển nhiên tới mức bạn chẳng bao giờ viết ra, nhưng hễ nhìn thấy là nhận ra ngay.'],
         ['Không biết là mình không biết.', 'Những điều bạn chưa từng nghĩ tới, kể cả chuyện kết quả có thể tốt tới mức nào.'],
       ] },
-      { t: 'p', src: ['S2'], html: 'Người giao việc giỏi thì vẫn có điều chưa biết như ai. Họ chỉ khác ở chỗ luôn tính trước là thế nào cũng có, rồi chủ động đi tìm: trước khi làm, trong khi làm và cả sau khi làm.' },
+      { t: 'p', src: ['S2'], html: 'Người giao việc giỏi cũng có những điều chưa biết. Điểm khác là họ luôn tính trước rằng thế nào cũng có, rồi chủ động đi tìm: trước khi làm, trong khi làm và cả sau khi làm.' },
       { t: 'h', text: 'Ba cách để Claude giúp bạn tìm ra' },
       { t: 'way', no: '1', title: 'Chưa biết là mình chưa biết gì? Hãy nhờ Claude rà điểm mù.',
-        html: `Ở một mảng còn lạ, bạn thường không biết nên hỏi gì, thế nào mới gọi là tốt, trước đây người ta đã làm những gì, hay ổ gà nằm ở đâu. Hãy kể cho Claude nghe bạn là ai và đang biết tới đâu, rồi nhờ em nó ${G('rà điểm mù')} giúp. Trong prompt, tác giả dùng nguyên văn hai cụm ${T('blind spot pass', 'một lượt rà điểm mù')} và ${T('unknown unknowns', 'những điều mình không biết là mình không biết')}. Bạn cứ giữ nguyên hai cụm tiếng Anh ấy, vì Claude hiểu chúng rất rõ.`,
+        html: `Ở một mảng còn lạ, bạn thường không biết nên hỏi gì, thế nào mới gọi là tốt, trước đây người ta đã làm những gì, hay ổ gà nằm ở đâu. Hãy cho Claude biết bạn làm nghề gì và đã biết tới đâu về mảng này, rồi nhờ nó ${G('rà điểm mù')} giúp. Trong prompt, tác giả dùng nguyên văn hai cụm ${T('blind spot pass', 'một lượt rà điểm mù')} và ${T('unknown unknowns', 'những điều mình không biết là mình không biết')}. Bạn cứ giữ nguyên hai cụm tiếng Anh ấy, vì Claude hiểu chúng rất rõ.`,
         prompt: 'Tôi không biết color grading (chỉnh màu phim) là gì, nhưng tôi cần chỉnh màu cho video này. Hãy dạy cho tôi những unknown unknowns về color grading, để tôi biết cách nhờ bạn cho đúng.' },
       { t: 'way', no: '2', title: 'Phải thấy rồi mới biết mình muốn gì? Hãy xin vài bản nháp để phản ứng.', src: ['S2', 'S6'],
         html: 'Có những tiêu chí mà bạn chỉ nói ra được sau khi đã nhìn thấy: một bố cục, một giọng văn, một bảng màu. Đừng cố ngồi tả làm gì. Hãy xin vài hướng thật khác nhau, đặt trên cùng một trang HTML, rồi chọn lấy cái khiến bạn gật đầu. Sửa vào lúc này rẻ hơn rất nhiều so với sửa khi mọi thứ đã làm xong.',
         prompt: 'Tôi cần một trang giới thiệu khoá học, nhưng tôi không có mắt thẩm mỹ. Hãy làm cho tôi một trang HTML có 4 hướng thiết kế thật khác nhau để tôi chọn.' },
       { t: 'way', no: '3', title: 'Biết là vẫn còn chỗ mơ hồ? Hãy để Claude phỏng vấn bạn.', src: ['S3', 'S2'],
-        html: `Khi đã có hướng rồi mà vẫn còn vài chỗ chưa chốt, hãy để Claude ${G('phỏng vấn')} bạn. Em nó sẽ hỏi từng câu một, mỗi câu kèm sẵn vài lựa chọn, cho tới khi đủ để viết thành một ${T('spec', 'bản đặc tả công việc')}. Có spec rồi thì bạn mở một phiên mới để làm. Phiên ấy bắt đầu với context sạch sẽ, cùng một định nghĩa “thế nào là xong” đã được viết ra hẳn hoi.`,
+        html: `Khi đã có hướng rồi mà vẫn còn vài chỗ chưa chốt, hãy để Claude ${G('phỏng vấn')} bạn. Claude sẽ hỏi từng câu một, mỗi câu kèm sẵn vài lựa chọn, cho tới khi đủ để viết thành một ${T('spec', 'bản đặc tả công việc')}. Có spec rồi thì bạn mở một phiên mới để làm. Phiên ấy không mang theo những lần trao đổi cũ, nhưng đã có sẵn spec cùng một định nghĩa “thế nào là xong” được viết ra hẳn hoi.`,
         prompt: 'Hãy phỏng vấn tôi từng câu một về mọi chỗ còn mơ hồ. Hỏi trước những câu mà câu trả lời sẽ làm đổi cách làm. Khi đã đủ thì viết lại tất cả thành file SPEC.md.' },
       { t: 'grill', q: 'Trang này sẽ bán cho ai trước tiên?',
         options: [
@@ -172,7 +172,7 @@ export const PARTS: Part[] = [
       { t: 'thenNow', main: true, vi: 'Bớt tả, đưa tham chiếu', en: 'Simple specs → Rich references', src: ['S1'],
         then: 'Viết spec thành một file markdown cho Claude đọc.',
         now: 'Đưa hẳn thứ thật ra: một bản nháp HTML, một file mẫu, một bộ bài kiểm, hay một thang chấm.',
-        why: `Claude bây giờ đọc được những ${G('tham chiếu')} phức tạp hơn nhiều so với một file markdown. Bài gốc viết rằng một ${T('mockup', 'bản dựng thử')} bằng HTML thường cho ra kết quả tốt hơn hẳn một đoạn tả thiết kế hay một tấm ảnh chụp màn hình. Thang chấm (${E('rubric')}) cũng là một loại tham chiếu: nó cho Claude biết thế nào là tốt, để em nó tự đối chiếu lấy.` },
+        why: `Claude bây giờ đọc được những ${G('tham chiếu')} phức tạp hơn nhiều so với một file markdown. Bài gốc viết rằng một ${T('mockup', 'bản dựng thử')} bằng HTML thường cho ra kết quả tốt hơn hẳn một đoạn tả thiết kế hay một tấm ảnh chụp màn hình. Thang chấm (${E('rubric')}) cũng là một loại tham chiếu: nó cho Claude biết thế nào là tốt, để Claude tự đối chiếu lấy.` },
       { t: 'thenNow', vi: 'Bớt ví dụ, thiết kế khuôn', en: 'Give Claude examples → Design interfaces', src: ['S1'],
         then: 'Đưa ra vài ví dụ để Claude cứ thế làm theo.',
         now: `Nói cho rõ cái ${G('khuôn')}: việc này gồm những phần nào, và mỗi phần nhận những giá trị nào.`,
@@ -288,31 +288,31 @@ export const PARTS: Part[] = [
   },
 
   {
-    id: '03', phase: 'Trong', en: 'LET IT WORK', vi: 'Cứ để em nó làm', minutes: 5,
-    summary: 'Claude tự biết mở đúng tài liệu và tự ghi nhớ những điều đáng nhớ. Bạn chỉ cần cầm lái khi em nó đi lệch.',
+    id: '03', phase: 'Trong', en: 'LET IT WORK', vi: 'Cứ để Claude làm', minutes: 5,
+    summary: 'Claude tự biết mở đúng tài liệu và tự ghi nhớ những điều đáng nhớ. Bạn chỉ cần cầm lái khi nó đi lệch.',
     hook: {
-      question: 'Đang làm giữa chừng thì Claude gặp một chỗ mà kế hoạch không lường trước. Bạn muốn em nó dừng lại hỏi, hay cứ tự quyết rồi báo lại sau?',
+      question: 'Đang làm giữa chừng thì Claude gặp một chỗ mà kế hoạch không lường trước. Bạn muốn Claude dừng lại hỏi, hay cứ tự quyết rồi báo lại sau?',
       bridge: 'Cả hai đều đúng, tuỳ từng chỗ. Mẹo ở đây là nói trước cho Claude biết chỗ nào thì cần hỏi.',
     },
     core: [
       { t: 'h', text: 'Mở một phiên mới, mang theo bản đặc tả' },
-      { t: 'p', src: ['S2', 'S3'], html: `Khi đã có ${T('spec', 'bản đặc tả công việc')} rồi, bạn hãy mở một phiên mới để bắt đầu làm. Phiên mới có ${T('context', 'ngữ cảnh')} sạch sẽ, lại mang theo được mọi thứ bạn đã gom góp trong lúc làm rõ.` },
+      { t: 'p', src: ['S2', 'S3'], html: `Khi đã có ${T('spec', 'bản đặc tả công việc')} rồi, bạn hãy mở một phiên mới để bắt đầu làm. Phiên mới bắt đầu với ${T('context', 'ngữ cảnh')} trống, nhưng vẫn mang theo được mọi thứ bạn đã gom góp trong lúc làm rõ.` },
       { t: 'h', text: 'Để Claude ghi lại những chỗ làm khác kế hoạch' },
-      { t: 'p', src: ['S2'], html: `Hãy bảo Claude giữ một file ghi chú tên là <code>implementation-notes.md</code>. Mỗi khi gặp chỗ buộc phải ${G('lệch kế hoạch')}, em nó sẽ chọn phương án an toàn hơn, ghi lại vào mục “Lệch kế hoạch”, rồi làm tiếp. Lần sau đọc lại, cả bạn lẫn Claude đều học thêm được một điều.` },
+      { t: 'p', src: ['S2'], html: `Hãy bảo Claude giữ một file ghi chú tên là <code>implementation-notes.md</code>. Mỗi khi gặp chỗ buộc phải ${G('lệch kế hoạch')}, Claude sẽ chọn phương án an toàn hơn, ghi lại vào mục “Lệch kế hoạch”, rồi làm tiếp. Lần sau đọc lại, cả bạn lẫn Claude đều học thêm được một điều.` },
       { t: 'h', text: 'Nói trước chỗ nào thì cần hỏi' },
       { t: 'p', src: ['S3'], html: 'Gặp chỗ còn mơ hồ, Claude sẽ hỏi bạn bằng một câu hỏi có sẵn nhiều lựa chọn. Việc của bạn là quy định từ trước: chỉ hỏi khi câu trả lời làm thay đổi kết quả cuối cùng.' },
       { t: 'thenNow', main: true, vi: 'Bớt nhồi, để nó mở dần', en: 'Put it all upfront → Use progressive disclosure', src: ['S1', 'S5'],
         then: 'Dồn hết mọi hướng dẫn vào một file thật dài, để Claude khỏi bỏ sót điều gì.',
-        now: `Chia nhỏ ra thành một cây gồm nhiều file ngắn. Claude sẽ ${G('mở dần')} từng file, đúng cái cần vào đúng lúc cần.`,
+        now: `Chia hướng dẫn thành các file nhỏ, mỗi file lo một việc. Claude sẽ ${G('mở dần')} từng file, đúng cái cần vào đúng lúc cần.`,
         why: `Claude Code bây giờ đã rất giỏi việc nạp đúng context vào đúng lúc. Chính nhóm làm Claude Code cũng đã tách phần rà code và phần kiểm chứng ra thành các ${T('skill', 'bộ hướng dẫn đóng gói sẵn')} riêng, để Claude chỉ gọi tới khi cần. Với skill, Claude chỉ nhìn thấy sẵn một dòng mô tả ngắn; phần nội dung chỉ được nạp vào khi dùng tới. Nhờ vậy, tài liệu có dài mấy cũng gần như chẳng tốn gì cho tới lúc thật sự cần đến.` },
       { t: 'thenNow', vi: 'Để Claude tự nhớ', en: 'Memory in CLAUDE.md files → Auto-memory', src: ['S4', 'S1'],
         then: 'Tự tay ghi từng điều cần nhớ vào file <code>CLAUDE.md</code>.',
-        now: `Claude ${G('tự nhớ')} lấy những điều đáng nhớ: vai trò và thói quen làm việc của bạn, những lần bạn sửa em nó, các quyết định của dự án, và nơi tìm thông tin. Em nó tự ghi những điều ấy thành các file ghi chú, còn bạn xem lại và sửa bằng lệnh <code>/memory</code>.`,
-        why: `Tính năng này tên là ${T('auto memory', 'bộ nhớ tự động')}. Claude tự quyết định điều gì đáng để nhớ cho những lần làm việc sau, rồi lưu lại thành các file markdown mà bạn mở ra đọc, sửa hay xoá lúc nào cũng được. Những gì đọc lại được từ code thì Claude không ghi, và cũng không phải phiên nào em nó cũng ghi. Muốn chắc chắn thì bạn cứ nói thẳng: “hãy nhớ giúp tôi rằng…”.` },
+        now: `Claude ${G('tự nhớ')} lấy những điều đáng nhớ: vai trò và thói quen làm việc của bạn, những lần bạn sửa lại Claude, các quyết định của dự án, và nơi tìm thông tin. Claude tự ghi những điều ấy thành các file ghi chú, còn bạn xem lại và sửa bằng lệnh <code>/memory</code>.`,
+        why: `Tính năng này tên là ${T('auto memory', 'bộ nhớ tự động')}. Claude tự quyết định điều gì đáng để nhớ cho những lần làm việc sau, rồi lưu lại thành các file markdown mà bạn mở ra đọc, sửa hay xoá lúc nào cũng được. Những gì đọc lại được từ code thì Claude không ghi, và cũng không phải phiên nào Claude cũng ghi. Muốn chắc chắn thì bạn cứ nói thẳng: “hãy nhớ giúp tôi rằng…”.` },
       { t: 'note', tag: 'Các ghi chú ấy nằm ở đâu', src: ['S4'], html: 'Chuyện Claude có tự nhớ hay không, và chuyện các ghi chú được cất ở đâu, là hai chuyện khác nhau. Về nơi cất: các file ghi chú nằm ngay trên máy đang chạy phiên làm việc, nên chúng không tự theo bạn sang một máy khác hay lên môi trường cloud. Theo tài liệu chính thức, auto memory được bật sẵn ở các phiên chạy trên máy của bạn.' },
       { t: 'note', tag: 'Chỉ có ở Claude Code', src: ['S15'], html: 'Auto memory và lệnh <code>/memory</code> là của Claude Code. Cowork cũng có bộ nhớ, tính riêng cho từng project và giữ lại giữa các phiên.' },
       { t: 'h', text: 'Bạn cầm lái như thế nào' },
-      { t: 'p', src: ['S3'], html: `Hãy xem kỹ ${G('phút đầu')} tiên. Thấy lệch hướng thì bấm phím Esc: Claude sẽ dừng lại ngay, và vẫn giữ nguyên những gì đã làm được. Còn nếu đã sửa tới hai lần mà vẫn sai, bạn hãy gõ <code>/clear</code> để mở lại một phiên sạch, rồi viết một prompt mới gom hết những điều vừa học được. Đừng cố sửa thêm lần thứ ba.` },
+      { t: 'p', src: ['S3'], html: `Hãy xem kỹ ${G('phút đầu tiên')}. Thấy lệch hướng thì bấm phím Esc: Claude sẽ dừng lại ngay, và vẫn giữ nguyên những gì đã làm được. Còn nếu đã sửa tới hai lần mà vẫn sai, bạn hãy gõ <code>/clear</code> để mở lại một phiên sạch, rồi viết một prompt mới gom hết những điều vừa học được. Đừng cố sửa thêm lần thứ ba.` },
       { t: 'p', html: 'Muốn hiểu vì sao một phiên càng dài thì kết quả càng dễ kém đi, bạn đọc thêm ở <a data-href="c02/">Nâng cao A1 · Ngân sách ngữ cảnh</a>.' },
       { t: 'lens', title: 'Giữa chừng, ở phần việc của bạn', rows: {
         chung: [['Chuyện xảy ra', 'Trang hứa cho học thử, nhưng bản SPEC lại không nói rõ là mấy bài. Claude dừng lại hỏi bạn: cho học thử mấy bài?']],
@@ -322,13 +322,13 @@ export const PARTS: Part[] = [
         data: [['Chuyện xảy ra', 'File khảo sát có những dòng bị trùng. Claude chọn cách xử lý an toàn hơn, ghi lại vào mục “Lệch kế hoạch”, rồi làm tiếp.']],
         build: [['Chuyện xảy ra', 'Cổng thanh toán hoá ra không hỗ trợ hoàn tiền một phần. Claude chọn hướng an toàn hơn, ghi lại “Lệch kế hoạch #1”, rồi làm tiếp.']],
         media: [['Chuyện xảy ra', 'Phụ đề nên theo đúng từng lời nói, hay theo bản đã biên tập lại? Claude hỏi bạn.']],
-        design: [['Chuyện xảy ra', 'Màn hình thanh toán còn thiếu trạng thái báo lỗi. Claude hỏi bạn.']],
+        design: [['Chuyện xảy ra', 'Màn hình thanh toán còn thiếu trạng thái báo lỗi, nên Claude hỏi bạn muốn xử lý thế nào.']],
         sales: [['Chuyện xảy ra', 'Có một khách hỏi xin giảm giá ngoài chính sách. Claude hỏi lại bạn, chứ không tự ý hứa.']],
-        spec: [['Chuyện xảy ra', 'Có hai yêu cầu chỏi nhau. Claude hỏi bạn.']],
+        spec: [['Chuyện xảy ra', 'Hai yêu cầu trong SPEC mâu thuẫn nhau, nên Claude dừng lại hỏi bạn chọn bên nào.']],
       } },
     ],
     close: {
-      line: `Trong lúc Claude làm, việc của bạn không phải là ngồi canh từng bước. Việc của bạn là cầm ${G('lái')} khi em nó đi lệch, và đọc lại những gì em nó đã ghi.`,
+      line: `Trong lúc Claude làm, việc của bạn không phải là ngồi canh từng bước. Việc của bạn là cầm ${G('lái')} khi Claude đi lệch, và đọc lại những gì nó đã ghi.`,
       src: ['S2'],
       prompt: all(() => 'Hãy giữ một file implementation-notes.md. Mỗi khi gặp chỗ buộc phải lệch kế hoạch, bạn hãy chọn phương án an toàn hơn, ghi lại vào mục “Lệch kế hoạch”, rồi làm tiếp. Chỉ dừng lại hỏi tôi khi câu trả lời làm thay đổi kết quả cuối cùng.'),
     },
@@ -337,28 +337,28 @@ export const PARTS: Part[] = [
 
   {
     id: '04', phase: 'Sau', en: 'NO BABYSITTING', vi: 'Kiểm kết quả, hỏi vặn lại, rồi từ đó tin tưởng', minutes: 6,
-    summary: 'Hãy cho Claude một phép kiểm, đòi em nó đưa bằng chứng, rồi hỏi vặn lại cho ra lẽ. Sau đó mới tới lúc để em nó chạy, và vài lần chạy đầu của việc mới thì vẫn nên xem kỹ.',
+    summary: 'Hãy cho Claude một phép kiểm, đòi bằng chứng, rồi hỏi vặn lại cho ra lẽ. Sau đó mới tới lúc để nó chạy, và vài lần chạy đầu của việc mới thì vẫn nên xem kỹ.',
     hook: {
       question: 'Claude báo lại: “Xong rồi, mọi thứ đều chạy tốt.” Bạn tin câu đó được tới đâu?',
-      bridge: 'Nếu chẳng có gì để chạy thử, thì “trông có vẻ xong” là tất cả những gì Claude có trong tay. Khi ấy, chính bạn sẽ thành người kiểm thay cho em nó.', src: ['S3'],
+      bridge: 'Nếu chẳng có gì để chạy thử, thì “trông có vẻ xong” là tất cả những gì Claude có trong tay. Khi ấy, chính bạn sẽ thành người kiểm thay cho Claude.', src: ['S3'],
     },
     core: [
       { t: 'h', text: 'Một phép kiểm chỉ trả về đạt hay không đạt' },
-      { t: 'p', src: ['S3'], html: `Hãy cho Claude một thứ mà em nó tự chạy được, và kết quả chỉ có hai đường: đạt, hoặc không đạt. Một khi đã có ${G('phép kiểm')} như thế, Claude thường sẽ tự làm tiếp cho tới khi qua được. Nhưng ở những lần chạy dài, có lúc em nó dừng sớm và báo một bản tóm tắt tiến độ trong khi vẫn còn việc dở. Với việc chạy mà không có ai ngồi xem, hãy dùng lệnh <code>/goal</code> hoặc Stop hook để kéo em nó làm tiếp. Tài liệu chính thức đưa ra vài ví dụ: một file ${T('test', 'bài kiểm thử tự động')}, mã thoát của bản dựng phần mềm, công cụ soát lỗi code (${E('linter')}), một đoạn script so kết quả với mẫu, hay một ảnh chụp trình duyệt đặt cạnh bản dựng thử.` },
+      { t: 'p', src: ['S3'], html: `Hãy cho Claude một thứ mà Claude tự chạy được, và kết quả chỉ có hai đường: đạt, hoặc không đạt. Một khi đã có ${G('phép kiểm')} như thế, Claude thường sẽ tự làm tiếp cho tới khi qua được. Nhưng ở những lần chạy dài, có lúc Claude dừng sớm và báo một bản tóm tắt tiến độ trong khi vẫn còn việc dở. Với việc chạy mà không có ai ngồi xem, hãy dùng lệnh <code>/goal</code> hoặc Stop hook để kéo Claude làm tiếp. Tài liệu chính thức đưa ra vài ví dụ: một file ${T('test', 'bài kiểm thử tự động')}, mã thoát của bản dựng phần mềm, công cụ soát lỗi code (${E('linter')}), một đoạn script so kết quả với mẫu, hay một ảnh chụp trình duyệt đặt cạnh bản dựng thử.` },
       { t: 'note', tag: 'Diễn giải của trang', html: 'Với những việc không phải viết code, phép kiểm có thể là: tổng số khớp với file nguồn · con số nào cũng có link dẫn nguồn · mỗi clip dài tối đa 60 giây · sản phẩm đúng với cái khuôn đã giao.' },
       { t: 'h', text: 'Phép kiểm yếu cũng đánh lừa được bạn' },
       { t: 'p', src: ['S17'], html: `Phép kiểm qua được chưa chắc là việc đã đúng. Một phép kiểm yếu, ví dụ chỉ kiểm rằng file có tồn tại, thì qua rất dễ mà chẳng nói lên điều gì. Tài liệu chính thức cũng cảnh báo Claude đôi khi tập trung làm cho bài kiểm qua hơn là tìm lời giải đúng cho mọi trường hợp. Vì vậy hãy xem phép kiểm có bắt được đúng lỗi bạn lo không, rồi dặn Claude làm cho việc đúng, không làm cho riêng phép kiểm qua.` },
       { t: 'h', text: 'Đòi cho được bằng chứng' },
       { t: 'p', src: ['S3'], html: `${G('Bằng chứng')} là câu lệnh đã chạy kèm theo kết quả của nó, hoặc là một tấm ảnh chụp màn hình. Còn một câu “mọi bài kiểm đều qua cả rồi” mà không kèm theo gì, thì gần như chẳng nói lên được điều gì.` },
       { t: 'h', text: 'Nhờ thêm một người duyệt chưa hề thấy cách làm' },
-      { t: 'p', src: ['S3'], html: `Hãy nhờ một ${T('reviewer', 'người duyệt, ở đây là một phiên Claude khác')} mở trong context mới tinh, đối chiếu kết quả với bản SPEC. Nhớ dặn nó chỉ báo những chỗ ảnh hưởng tới tính đúng sai, và bỏ qua chuyện văn phong. Bởi một reviewer đã được nhờ đi tìm lỗi thì kiểu gì cũng sẽ tìm ra được một cái gì đó.` },
+      { t: 'p', src: ['S3'], html: `Hãy nhờ một ${T('reviewer', 'người duyệt, ở đây là một phiên Claude khác')} mở trong context mới tinh, đối chiếu kết quả với bản SPEC. Nhớ dặn nó chỉ báo những chỗ ảnh hưởng tới tính đúng sai, và bỏ qua chuyện văn phong. Reviewer đã được nhờ đi tìm lỗi thì kiểu gì cũng tìm ra được một cái gì đó.` },
       { t: 'thenNow', main: true, src: ['S3'],
         then: 'Dặn Claude rằng “cứ làm tiếp đi, đừng có lười, lặp lại cho tới khi xong”.',
         now: 'Cho Claude một phép kiểm buộc phải qua. Với những việc chạy mà không có ai ngồi xem, hãy dùng lệnh <code>/goal</code> hoặc Stop hook.',
         why: 'Hàng này được lấy từ bảng <em lang="en">What you can stop doing</em> (những việc bạn có thể thôi làm) của trang Best practices. Lệnh <code>/goal</code> đặt ra một điều kiện “xong” để Claude làm tiếp tới khi đạt; Stop hook là đoạn lệnh tự chạy mỗi khi Claude định dừng. Cả hai đều là tính năng của Claude Code.' },
       { t: 'h', text: 'Buông tay tới đâu' },
-      { t: 'p', src: ['S16'], html: '“Giao trọn” không có nghĩa là cho em nó mọi quyền. Với mỗi việc Claude có thể làm, hãy hỏi hai câu: việc này có <b>hoàn tác</b> được không (xoá file, ghi đè bản duy nhất, gửi đi là hết đường quay lại), và việc này có <b>đi ra ngoài</b> không (gửi email cho khách, đăng vào kênh chung, gọi một dịch vụ bên ngoài).' },
-      { t: 'p', src: ['S16'], html: 'Claude Code cho bạn ba mức: <b>cho phép</b> (Claude tự làm, không hỏi), <b>hỏi trước</b> (mỗi lần Claude phải xin phép) và <b>chặn</b> (Claude không được làm). Quy tắc khớp trước thì thắng, theo thứ tự chặn, rồi hỏi, rồi cho phép, nên luật chặn không bị luật cho phép nào lách được. Xem và sửa các quy tắc này bằng lệnh <code>/permissions</code>.' },
+      { t: 'p', src: ['S16'], html: '“Giao trọn” không có nghĩa là cho Claude mọi quyền. Với mỗi việc Claude có thể làm, hãy hỏi hai câu: việc này có <b>hoàn tác</b> được không (xoá file, ghi đè bản duy nhất, gửi đi là hết đường quay lại), và việc này có <b>đi ra ngoài</b> không (gửi email cho khách, đăng vào kênh chung, gọi một dịch vụ bên ngoài).' },
+      { t: 'p', src: ['S16'], html: 'Claude Code cho bạn ba mức: <b>cho phép</b> (Claude tự làm, không hỏi), <b>hỏi trước</b> (mỗi lần Claude phải xin phép) và <b>chặn</b> (Claude không được làm). Khi nhiều quy tắc cùng khớp, Claude Code xét theo thứ tự chặn, hỏi trước rồi cho phép, và quy tắc khớp đầu tiên sẽ thắng, nên luật chặn không bị luật cho phép nào lách được. Xem và sửa các quy tắc này bằng lệnh <code>/permissions</code>.' },
       { t: 'note', tag: 'Diễn giải của trang', html: 'Việc không hoàn tác được hoặc đi ra ngoài thì nên để ở mức hỏi trước, hoặc chặn hẳn nếu sai một lần là không chịu nổi. Việc chỉ đọc, hoặc làm ngay trong thư mục của bạn, thì có thể cho phép.' },
       { t: 'h', text: 'Đảo vai: bây giờ tới lượt bạn hỏi vặn Claude' },
       { t: 'p', src: ['S2', 'S14'], html: `Hãy bắt Claude làm một bản báo cáo HTML về những gì đã thay đổi, và cuối báo cáo phải có vài câu đố dành cho bạn. Tác giả bài field guide chỉ chịu gộp thay đổi vào bản chính khi đã trả lời đúng hết các câu đố ấy. Trong kho mẹo của cộng đồng còn có hai câu của anh Boris Cherny, dùng để ${G('hỏi vặn')} theo cả hai chiều: <q lang="en">grill me on these changes and don’t make a PR until I pass your test</q> (hãy hỏi vặn tôi về các thay đổi này, và đừng gửi lên cho tới khi tôi qua được bài kiểm của bạn), và <q lang="en">prove to me this works</q> (hãy chứng minh cho tôi thấy là nó chạy được).` },
@@ -368,7 +368,7 @@ export const PARTS: Part[] = [
           { text: 'Bỏ qua lần thứ hai, nhờ có mã đơn', rec: true, back: 'Lần thứ hai bị bỏ qua, vì đơn hàng đã ở trạng thái “đã thanh toán” rồi.' },
           { text: 'Báo lỗi cho học viên', back: 'Chưa đúng. Lần thứ hai sẽ bị bỏ qua, vì đơn hàng đã ở trạng thái “đã thanh toán” rồi.' },
         ],
-        why: 'Nếu bạn trả lời sai, tức là bạn chưa hiểu thay đổi này đủ để duyệt nó.' },
+        why: 'Trả lời sai nghĩa là bạn chưa hiểu thay đổi này đủ rõ để duyệt.' },
       { t: 'h', text: 'Trước khi để Claude chạy một mình: 5 câu hỏi' },
       { t: 'list', ordered: true, src: ['S3'], items: [
         'Claude đã biết thế nào là xong chưa?',
@@ -395,7 +395,7 @@ export const PARTS: Part[] = [
       } },
     ],
     close: {
-      line: `Thôi cầm tay chỉ việc: hãy cùng Claude làm rõ công việc, giao trọn phần thực thi, cho em nó một phép kiểm, rồi yên tâm ${G('buông')} tay. Bạn chỉ giữ lại đúng hai việc: quyết định thế nào là xong, và ${G('duyệt')} những gì không hoàn tác được.`,
+      line: `Thôi cầm tay chỉ việc: hãy cùng Claude làm rõ công việc, giao trọn phần thực thi, đưa cho nó một phép kiểm, rồi yên tâm ${G('buông')} tay. Bạn chỉ giữ lại đúng hai việc: quyết định thế nào là xong, và ${G('duyệt')} những gì không hoàn tác được.`,
       src: ['S2'],
       prompt: all(() => 'Tôi muốn chắc chắn là mình hiểu hết những gì vừa thay đổi. Hãy làm cho tôi một bản báo cáo HTML: bạn đã làm những gì, vì sao làm vậy, bằng chứng nào cho thấy nó chạy đúng (câu lệnh đã chạy kèm kết quả, hoặc ảnh chụp), và còn những rủi ro nào. Cuối báo cáo hãy đặt 5 câu hỏi về các thay đổi ấy; tôi phải trả lời đúng hết thì mới duyệt.'),
     },
@@ -415,8 +415,8 @@ export const SHIFTS: { vi: string; en: string; part: string }[] = [
 
 export const PHASES: { label: string; line: string; parts: string[] }[] = [
   { label: 'Trước khi chạy', line: 'Cùng Claude làm rõ công việc, rồi mới giao cho thật gọn.', parts: ['01', '02'] },
-  { label: 'Trong lúc chạy', line: 'Cứ để em nó tự tìm, tự nhớ. Bạn chỉ cầm lái khi em nó đi lệch.', parts: ['03'] },
-  { label: 'Sau khi xong', line: 'Cho em nó một phép kiểm, hỏi vặn lại kết quả, rồi mới yên tâm buông tay.', parts: ['04'] },
+  { label: 'Trong lúc chạy', line: 'Cứ để Claude tự tìm, tự nhớ. Bạn chỉ cầm lái khi nó đi lệch.', parts: ['03'] },
+  { label: 'Sau khi xong', line: 'Cho Claude một phép kiểm, hỏi vặn lại kết quả, rồi mới yên tâm buông tay.', parts: ['04'] },
 ];
 
 /* Tên chặng khi đứng một mình trên màn hình: "Trước", "Trong", "Sau" trơ trọi thì tối nghĩa (docs/16 §9). */
@@ -425,7 +425,7 @@ export const PHASE_LABEL: Record<Part['phase'], string> = { 'Mở đầu': 'Mở
 /* Cụm từ cần người đọc để mắt tới trong các câu tóm tắt: sáng lên màu nhấn sau khi câu đã hiện xong (class nb-hl, motion.ts). */
 const HL: Record<string, string[]> = {
   '00': ['ít lời dặn hơn', 'chỉ có bạn mới biết'],
-  '01': ['chính bạn cũng chưa nghĩ tới', 'chính bạn chưa nghĩ tới', 'trước khi em nó bắt tay vào làm'],
+  '01': ['chính bạn cũng chưa nghĩ tới', 'chính bạn chưa nghĩ tới', 'trước khi nó bắt tay vào làm'],
   '02': ['kết quả bạn cần', 'thế nào thì tính là xong'],
   '03': ['tự biết mở đúng tài liệu', 'tự ghi nhớ', 'cầm lái'],
   '04': ['một phép kiểm', 'bằng chứng', 'hỏi vặn lại'],

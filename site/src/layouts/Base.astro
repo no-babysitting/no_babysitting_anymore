@@ -57,6 +57,9 @@ const symbolsCss = Object.entries(LOADED).flatMap(([f, vs]) => vs.map(([st, w]) 
   <style is:global>
     :root { color-scheme: dark; } :root[data-theme='light'] { color-scheme: light; }
     html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-text); }
+    /* Prose avoids a last line of one short word. Where the lines are split by SplitText the browser must not re-break them. */
+    main p, main li, main dd, main figcaption { text-wrap: pretty; }
+    main [data-reveal='lines'], main [data-reveal='words'], main [data-reveal='fill'] { text-wrap: revert; }
     .wrap { max-width: var(--page-max); margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
     html.motion:not(.motion-ready) [data-reveal='up'] { opacity: 0; }
     html.motion:not(.motion-ready) [data-reveal='rule'] { visibility: hidden; }

@@ -2,6 +2,14 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Chữ tiếng Việt trên site, lát 1: bớt "em nó", sửa lối dịch sát, dòng cuối không còn một từ (14/11/2026, #79)
+
+**Có chữ mới (45 dòng nguồn đổi chữ và ảnh `og.png`).** Không đổi claim, con số, nguồn, route hay art; không đụng `site/scripts/`, `art-lock.json`, `type-rules.json` hay workflow. Rà 23 route và toàn bộ nguồn chữ tiếng Việt; sửa 19 nhóm lỗi (bảng F01 đến F19 ở `docs/25-vietnamese-copy-audit.md`, danh sách đầy đủ trước/sau ở Phụ lục A): "em nó" 31 lần thành *Claude*, *nó* hoặc lược chủ thể (kể cả meta description và tên phần 03, vốn lệch với liên kết quay lại); lối dịch sát ("context sạch sẽ", "một cây gồm nhiều file ngắn", "việc số"); câu cụt; chữ nhấn cắt đôi "đầu tiên"; nháy thẳng ở `/c02/`. Thêm một luật CSS `text-wrap: pretty` cho đoạn văn (`Base.astro`). Đo bằng script tạm ngoài repo, 23 route × 1920×1080 và 428×926 × (giảm chuyển động, bật chuyển động) = 92 tổ hợp: 0 tràn ngang, 0 chữ bị cắt; dòng cuối chỉ còn một từ (không kể nhãn nguồn S1…) giảm từ 112 trên `main` xuống 16. Luật `punctuation` của `type-check` hết cảnh báo ở `/c02/`. Thêm theo quyết định của chủ dự án: "chỏi nhau" thành "mâu thuẫn" ở cả 6 chỗ.
+
+**Bản ghi duyệt (do agent viết, không phải chủ dự án):** 15/11/2026, trong phiên Claude Code, bằng hộp thoại hỏi đáp có đề xuất. Câu hỏi 1: "PR #80 (chữ trên site, 39 dòng đổi chữ + ảnh chia sẻ og.png vừa dựng lại vì ảnh còn in sẵn \"cho em nó\"): bạn duyệt chữ mới để tôi ghi bản ghi duyệt và merge sau khi CI đủ bộ xanh không?" Chủ dự án chọn: "Duyệt tất cả, merge khi CI xanh (Đề xuất)". Câu hỏi 4 (từ "chỏi nhau"): chủ dự án chọn "Đổi thành \"mâu thuẫn\" ở cả 6 chỗ".
+
+Ảnh chia sẻ `site/public/og.png` có sẵn câu "…cho em nó." trong ảnh nên được dựng lại (`tools/make-brand-assets.js`) để khớp meta description. Chưa làm: chữ của bài 01, 02, 03, 07, 08 (lát sau) và các trạng thái tương tác ngoài những trạng thái đã đo; chi tiết ở mục 6 và 7 của báo cáo.
+
 ## D86: bài 07 mở rộng thành bài vận hành AI agent, thêm bài 08 tổng quan (15/11/2026, Refs #79)
 
 **Site không đổi, không có chữ mới (chỉ ghi quyết định).** Chủ dự án chọn "Theo #77: mở rộng 07, thêm 08". `docs/08` ghi D86: thay phần phạm vi của D81 và D84 cho bài 07; bài 08 là bài tổng quan; vị trí và thứ tự đăng của bài 08 chưa quyết. Các bản trong #77 vẫn là tham chiếu `draft`.
