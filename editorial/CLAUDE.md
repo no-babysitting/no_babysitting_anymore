@@ -7,6 +7,7 @@ Chỗ cho ý tưởng, memo, sổ nguồn và bản nháp của mục Bài viế
 - Quyết định của mục này (trục Claude, giọng, chuẩn kiểm chứng, minh bạch, đăng bài): `docs/08-kaizen-go-live.md` §1e, D57–D66.
 - Vai, quyền merge, duyệt chữ mới (gồm bản ghi duyệt và việc đối chiếu nguồn), không bịa số liệu: `AGENTS.md` §1–§3, §8, §9. Áp dụng nguyên cho bài viết.
 - Giọng và chữ: `docs/16-writing-guide.md`. §1 có ngoại lệ xưng "tôi" cho Bài viết.
+- Tiếng Việt tự nhiên (hư từ, kết hợp từ, nhịp câu): `VIETNAMESE-NATURAL-VOICE.md` cạnh file này. Đọc trước khi viết hoặc sửa nháp. Đó là mốc tham khảo, không phải công thức (D85).
 - Nguồn và ngày: `docs/06-sources-and-links.md` §1, mục 8 là chuẩn nhẹ cho Bài viết.
 
 ## Điều riêng của thư mục này

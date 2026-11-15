@@ -60,7 +60,7 @@ export const EXERCISES: Exercise[] = [
       { name: 'Xếp theo rủi ro', levels: ['Cho phép hết hoặc chặn hết; không có lý do.', 'Xếp đúng ca giống ví dụ trong bài (gửi email), sai ở ca khác.', 'Lý do dựa trên hai câu hỏi: có hoàn tác được không, có ra ngoài không. Áp dụng nhất quán.', 'Nêu ca lưng chừng và cách xử lý, ví dụ: cho đổi tên nhưng giữ sổ ghi để đảo lại.'] },
       { name: 'Cắt quyền thừa', levels: ['Không thấy chỗ thừa.', 'Thấy một chỗ, sau khi đọc lại bài.', 'Thu hẹp thư mục về đúng tủ hợp đồng; bỏ tra web; thu hẹp hộp thư.', 'Chỉ ra quyền thừa nào nguy hiểm nhất và vì sao; bắt đầu hẹp rồi nới theo tín hiệu.'] },
       { name: 'Rào chắn hay lời dặn', levels: ['Dồn mọi thứ vào lời dặn, viết in hoa.', 'Nhắc lại được câu “luật không được phép sai thì phải là quyền hạn hoặc hook” nhưng không áp vào ca cụ thể nào.', 'Đặt đúng hai rào chắn (không xoá; email chỉ soạn nháp) và giải thích vì sao lời dặn không đủ.', 'Nêu cái giá của rào chắn (agent bị chặn giữa chừng) và cách giảm.'] },
-      { name: 'Điểm dừng', levels: ['Không có.', 'Có, nhưng chung chung (“khi có vấn đề”).', 'Gắn với sự kiện cụ thể: hai bản hợp đồng chỏi nhau, không đọc được ngày hết hạn.', 'Tách chỗ agent tự quyết rồi ghi lại khỏi chỗ phải hỏi.'] },
+      { name: 'Điểm dừng', levels: ['Không có.', 'Có, nhưng chung chung (“khi có vấn đề”).', 'Gắn với sự kiện cụ thể: hai bản hợp đồng mâu thuẫn nhau, không đọc được ngày hết hạn.', 'Tách chỗ agent tự quyết rồi ghi lại khỏi chỗ phải hỏi.'] },
     ],
     back: [{ href: '02/', label: '02 · Giao việc' }, { href: '04/', label: '04 · Kiểm, hỏi vặn, rồi buông' }],
   },
@@ -81,11 +81,11 @@ export const EXERCISES: Exercise[] = [
       'Chọn thuật ngữ nào không phải là quyết định của bạn.',
     ],
     rubric: [
-      { name: 'Chia việc và điểm dừng', levels: ['Giao cả 40 trang một lượt, không điểm dừng.', 'Chia theo trang; điểm dừng chép từ bài (“chỉ hỏi khi đổi kết quả cuối”) mà không nói ở việc này là chỗ nào.', 'Làm trọn một phần nhỏ trước để duyệt; điểm dừng gắn với thuật ngữ chỏi nhau.', 'Lường trước chính loại xung đột ở lượt hai, hoặc xếp thứ tự để lỗi lộ ra sớm, lúc sửa còn rẻ.'] },
+      { name: 'Chia việc và điểm dừng', levels: ['Giao cả 40 trang một lượt, không điểm dừng.', 'Chia theo trang; điểm dừng chép từ bài (“chỉ hỏi khi đổi kết quả cuối”) mà không nói ở việc này là chỗ nào.', 'Làm trọn một phần nhỏ trước để duyệt; điểm dừng gắn với thuật ngữ mâu thuẫn nhau.', 'Lường trước chính loại xung đột ở lượt hai, hoặc xếp thứ tự để lỗi lộ ra sớm, lúc sửa còn rẻ.'] },
       { name: 'Phép kiểm', levels: ['“Đọc lại cho kỹ.”', 'Nêu ra phép kiểm của bài học nhưng không áp được ở đây, như chạy bài kiểm thử (test).', 'Ít nhất hai phép kiểm đạt hay không đạt cho việc dịch: thuật ngữ khớp bảng, không còn đoạn chưa dịch, số và đơn vị giữ nguyên.', 'Thêm một người duyệt ở context (ngữ cảnh) mới, và nói rõ phép kiểm nào không bắt được loại lỗi nào.'] },
       { name: 'Can thiệp khi lệch', levels: ['Tin lời báo, hoặc bỏ hết làm lại.', 'Biết phải làm gì đó, nhưng chọn theo luật thuộc lòng mà không xét còn dùng được gì.', 'Đòi bằng chứng trước; tách phần còn dùng được (29 trang sau) khỏi phần phải xem lại; nêu thứ mang sang phiên mới.', 'Nhận ra gốc rễ là bản giao việc thiếu luật về thuật ngữ, và sửa ngay ở bản giao việc chứ không chỉ sửa kết quả.'] },
       { name: 'Gói bàn giao', levels: ['Gửi bản dịch kèm câu “đã xong”.', 'Liệt kê việc đã làm, không có rủi ro còn lại.', 'Có bằng chứng kiểm, có mục rủi ro còn lại, nêu rõ quyết định về thuật ngữ đang chờ người có thẩm quyền.', 'Đưa cho người duyệt hai phương án, kèm cái giá của từng phương án.'] },
     ],
-    back: [{ href: '03/', label: '03 · Để nó làm' }, { href: '04/', label: '04 · Kiểm, hỏi vặn, rồi buông' }],
+    back: [{ href: '03/', label: '03 · Cứ để Claude làm' }, { href: '04/', label: '04 · Kiểm, hỏi vặn, rồi buông' }],
   },
 ];
