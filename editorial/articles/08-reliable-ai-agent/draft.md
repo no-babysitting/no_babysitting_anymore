@@ -124,7 +124,7 @@ Trước khi đưa một agent vào workflow thật, hãy trả lời:
 6. **Economics:** Chi phí trên mỗi kết quả được chấp nhận có tốt hơn quy trình hiện tại không?
 7. **Accountability:** Ai chịu trách nhiệm khi agent sai hoặc workflow vượt khỏi dự kiến?
 
-Nếu chưa trả lời được, đừng bắt đầu bằng cách thêm agent. Hãy sửa lớp đang thiếu trước.
+Nếu chưa trả lời được, đừng bắt đầu bằng cách thêm agent. Sửa lớp đang thiếu trước.
 
 ## Kết luận
 

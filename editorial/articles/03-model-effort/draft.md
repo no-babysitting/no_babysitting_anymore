@@ -30,13 +30,13 @@ Vì vậy chuyện “tôi dùng medium” không chuyển được từ model n
 
 ## Mọi chỉ dẫn đều dặn tự đo
 
-Docs API lặp một câu ở nhiều model: chạy thử các mức effort trên bài đánh giá của chính bạn, đừng mang cài đặt cũ sang model mới. Với Fable 5.2, docs viết: bắt đầu ở `high`; nâng lên `xhigh` cho việc code dài và khó nhất khi bạn đã đo thấy lợi; hạ xuống `medium` hay `low` khi bài đánh giá của bạn cho thấy chất lượng vẫn giữ; để `max` cho việc đo trần của model.
+Docs API lặp một câu ở nhiều model: chạy thử các mức effort trên bài đánh giá của chính bạn, đừng mang cài đặt cũ sang model mới. Với Fable 5.2, docs viết thế này. Bắt đầu ở `high`. Nâng lên `xhigh` cho việc code dài và khó nhất, khi bạn đã đo thấy lợi. Hạ xuống `medium` hay `low` khi bài đánh giá của bạn cho thấy chất lượng vẫn giữ. Để `max` cho việc đo trần của model.
 
 Docs Haiku 5.5 thêm một cảnh báo cụ thể: ở `low`, với prompt agent dài, model dễ bỏ một lần tìm kiếm, dừng sớm hoặc bỏ một bước kiểm tra. Còn bài *Spending your effort* viết, bằng lời của tác giả bài, rằng effort cao hợp với việc có nhiều trường hợp biên ẩn.
 
 <aside aria-label="Quan điểm của tôi">
 
-Từ đó tôi rút một cách chọn trong Claude Code: bắt đầu ở mặc định của model; nâng effort khi bạn có bằng chứng là việc này cần (có trường hợp biên, cần kiểm chứng); và chỉ thêm định tuyến giữa các model khi đã đo được lợi. Bài này không có số đo của tôi; đây là cách đọc các chỉ dẫn trên, không phải kết quả thử nghiệm.
+Từ đó tôi rút một cách chọn trong Claude Code. Bắt đầu ở mặc định của model. Nâng effort khi bạn có bằng chứng là việc này cần (có trường hợp biên, cần kiểm chứng). Chỉ thêm định tuyến giữa các model khi đã đo được lợi. Bài này không có số đo của tôi; đây là cách đọc các chỉ dẫn trên, không phải kết quả thử nghiệm.
 
 </aside>
 

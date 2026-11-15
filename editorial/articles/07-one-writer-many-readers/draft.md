@@ -25,9 +25,9 @@ Chi phí chạy hệ thống đi xuyên cả bốn lớp. Đừng chỉ đo toke
 
 ## Context phải đủ, nhưng không cần nhồi tất cả vào prompt
 
-Agent chỉ có thể phán đoán từ những gì nó nhìn thấy và truy cập được. Nếu yêu cầu nằm trong một ticket, quy ước nằm trong repo, còn tiêu chí nghiệm thu chỉ được nói trong một cuộc họp, agent không thể tự ghép chúng thành một đặc tả hoàn chỉnh nếu bạn không đưa chúng vào đúng ngữ cảnh.
+Agent chỉ có thể phán đoán từ những gì nó nhìn thấy và truy cập được. Giả sử yêu cầu nằm trong một ticket, quy ước nằm trong repo, còn tiêu chí nghiệm thu chỉ được nói trong một cuộc họp. Nếu bạn không đưa chúng vào đúng ngữ cảnh, agent không thể tự ghép thành một đặc tả hoàn chỉnh.
 
-Không phải mọi thứ đều cần nằm trong system prompt. Chỉ dẫn chung nên ngắn và ổn định; kiến thức dự án đặt trong file chỉ dẫn; quy trình chuyên biệt có thể nạp qua skill; dữ liệu thay đổi thường xuyên nên được lấy từ nguồn có thẩm quyền.
+Không phải mọi thứ đều cần nằm trong system prompt. Chỉ dẫn chung nên ngắn và ổn định. Kiến thức dự án đặt trong file chỉ dẫn. Quy trình chuyên biệt có thể nạp qua skill. Dữ liệu thay đổi thường xuyên nên lấy từ nguồn có thẩm quyền.
 
 Bài 01 phân tích vì sao giảm lời dặn không đồng nghĩa với giảm kiểm soát. Điểm mấu chốt là đặt thông tin vào đúng nơi, và không dùng prompt để thay thế một cơ chế thực thi.
 
@@ -49,7 +49,7 @@ Nguyên tắc vận hành: **leo thang năng lực khi có bằng chứng; leo t
 
 ## Quyền hạn cần được thiết kế ngoài lời dặn
 
-Prompt có thể nói “không sửa production”, nhưng câu đó vẫn là hướng dẫn cho model. Một hệ thống đáng tin cậy cần những ranh giới được thực thi bởi harness và hạ tầng.
+Prompt có thể nói “không sửa production”, nhưng câu đó vẫn là hướng dẫn cho model. Một hệ thống đáng tin cậy cần những ranh giới do harness và hạ tầng thực thi.
 
 - Permissions xác định công cụ và tài nguyên agent được dùng.
 - Sandbox giới hạn vùng agent có thể tác động khi chạy lệnh hoặc sửa file.
@@ -79,14 +79,14 @@ CI xanh không chứng minh phần mềm hoàn toàn đúng. Nó chỉ chứng m
 
 Một nguyên tắc thực dụng là để một agent ghi vào một vùng code tại một thời điểm, còn agent khác làm việc đọc: tìm hiểu codebase, đề xuất phương án, rà yêu cầu, tìm lỗi hoặc review diff. Điều này giảm xung đột khi nhiều agent cùng sửa một file hoặc cùng quyết định những chi tiết ngầm như style và cấu trúc.
 
-Nghiên cứu có kiểm soát của nhóm Google Research, Google DeepMind và MIT cho thấy phối hợp có thể cải thiện kết quả trên tác vụ chia nhỏ được, nhưng các biến thể multi-agent kém hơn trên tác vụ lập kế hoạch tuần tự. Đây không phải bằng chứng rằng một agent luôn tốt hơn; nó cho thấy lợi ích phụ thuộc cấu trúc công việc. Một nghiên cứu khác về agent coding trên PR công khai ghi nhận xung đột giữa các thay đổi song song, nhưng dữ liệu được thu thập trong giai đoạn 2024–2025 nên không thể coi là tỷ lệ hiện tại cho mọi công cụ.
+Nghiên cứu có kiểm soát của nhóm Google Research, Google DeepMind và MIT cho thấy phối hợp có thể cải thiện kết quả trên tác vụ chia nhỏ được. Trên tác vụ lập kế hoạch tuần tự, các biến thể multi-agent lại kém hơn. Đây không phải bằng chứng rằng một agent luôn tốt hơn; nó cho thấy lợi ích phụ thuộc cấu trúc công việc. Một nghiên cứu khác về agent coding trên PR công khai ghi nhận xung đột giữa các thay đổi song song. Dữ liệu được thu thập trong giai đoạn 2024–2025, nên không thể coi là tỷ lệ hiện tại cho mọi công cụ.
 
 Vụ ba PR cùng chèn đầu file CHANGELOG trong repo này là một ví dụ nhỏ về xung đột tích hợp. Nó không phải thử nghiệm multi-agent và không chứng minh cả ba PR do agent tạo ra. Nó chỉ cho thấy nhiều thay đổi độc lập vẫn có thể va vào cùng một điểm khi tích hợp.
 
 Thêm agent thường hợp với:
 - Tìm kiếm và nghiên cứu theo chiều rộng.
 - Các giả thuyết debug độc lập.
-- Review trong context sạch, chỉ đọc.
+- Review bằng context mới, chỉ đọc.
 - Ticket độc lập, tách bằng worktree và có ranh giới file rõ.
 
 Thêm agent thường không hợp với:
@@ -99,7 +99,7 @@ Worktree tách thư mục làm việc, không tự giải quyết xung đột ng
 
 ## Reviewer độc lập hữu ích, nhưng không phải oracle
 
-Agent tự review code của chính nó có thể bỏ qua lỗi mà nó vừa tạo ra. Một reviewer ở context sạch có cơ hội nhìn diff mà không bị neo vào lập luận trước đó. Reviewer khác model hoặc khác nhà cung cấp có thể bổ sung góc nhìn, nhất là với thay đổi rủi ro cao.
+Agent tự review code của chính nó có thể bỏ qua lỗi mà nó vừa tạo ra. Một reviewer bắt đầu với context mới có cơ hội nhìn diff mà không bị neo vào lập luận trước đó. Reviewer khác model hoặc khác nhà cung cấp có thể bổ sung góc nhìn, nhất là với thay đổi rủi ro cao.
 
 Tuy nhiên, không nên biến điều này thành nghi thức gọi thêm agent cho mọi pull request. Bằng chứng về lợi ích của reviewer khác model còn phụ thuộc nghiên cứu, loại lỗi và năng lực reviewer. Một reviewer yếu hoặc không có tiêu chí rõ ràng chỉ tạo thêm output để người khác đọc.
 
@@ -129,7 +129,7 @@ Chỉ số quan trọng nhất là **cost per accepted outcome**: tổng chi ph�
 
 ## Điều gì sẽ khiến tôi đổi ý?
 
-Tôi sẽ thay đổi các mặc định này nếu có bằng chứng trên repo và workflow tương tự cho thấy multi-agent cải thiện đồng thời chất lượng, thời gian và tổng chi phí; nếu cơ chế chia sẻ state giảm được xung đột ngữ nghĩa; hoặc nếu các công cụ kiểm chứng và quyền hạn mới thay đổi đáng kể chi phí điều phối.
+Tôi sẽ đổi các mặc định này nếu có bằng chứng, trên repo và workflow tương tự, cho thấy multi-agent cải thiện đồng thời chất lượng, thời gian và tổng chi phí. Tôi cũng sẽ đổi nếu cơ chế chia sẻ state giảm được xung đột ngữ nghĩa, hoặc nếu công cụ kiểm chứng và quyền hạn mới làm chi phí điều phối thay đổi đáng kể.
 
 Hiện tại, tôi không xem “nhiều agent” là mục tiêu. Mục tiêu là một hệ thống có thể giao việc, kiểm tra được kết quả và giới hạn được hậu quả khi agent sai. Một người viết, nhiều người đọc là mặc định hữu ích để bắt đầu, không phải quy luật cho mọi bài toán.
 
