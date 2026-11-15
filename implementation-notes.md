@@ -4,6 +4,8 @@ Nơi ghi mọi chỗ **lệch kế hoạch**: chỗ làm khác tài liệu, khá
 
 ## Lệch kế hoạch
 
+- **#79, lát 1: prompt yêu cầu một PR, tôi tách theo lát (chữ trên site / bài viết).** Lý do: `AGENTS.md` §6 một PR một việc, và chữ mới cần chủ dự án duyệt theo gói (như #60, #61). Chữ trên site không phụ thuộc #77 và #78 về mặt code nên dựa vào `main`; bài viết dựa vào nhánh #78, chờ quyết định phạm vi bài 07 và 08. Hai khổ nghiệm thu của prompt (1920×1080, 428×926) khác các bộ kiểm trong repo (1440×900, 390×844), nên tôi đo bằng script tạm ngoài repo, không đổi `site/scripts/`. Cụm nhấn trong `HL` (`parts.ts`) khớp chữ bằng so chuỗi nên đổi tóm tắt phải đổi `HL` theo; tôi đã kiểm bằng script và ghi ở `docs/25`.
+
 ### Đợt Bài viết: #43, #44, #36 đến #41, #57 (13/11/2026)
 
 - **Nhánh bỏ qua bộ kiểm của PR chỉ đổi tài liệu (D74) đã chạy thật.** PR #35 (28 file, chỉ `docs/`, `editorial/`, `.ignore`, `AGENTS.md`, `CHANGELOG.md`): job `check` xong sau 7 giây ở commit đầu (20:08:03 đến 20:08:10) và 8 giây ở commit ghi bản ghi duyệt (20:31:28 đến 20:31:36), so với khoảng 8 phút khi chạy đủ bộ. Trước đó nhánh này chưa được thử; ghi ở mục dọn dẹp bên dưới.

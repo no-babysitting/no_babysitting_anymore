@@ -86,6 +86,6 @@ export const EXERCISES: Exercise[] = [
       { name: 'Can thiệp khi lệch', levels: ['Tin lời báo, hoặc bỏ hết làm lại.', 'Biết phải làm gì đó, nhưng chọn theo luật thuộc lòng mà không xét còn dùng được gì.', 'Đòi bằng chứng trước; tách phần còn dùng được (29 trang sau) khỏi phần phải xem lại; nêu thứ mang sang phiên mới.', 'Nhận ra gốc rễ là bản giao việc thiếu luật về thuật ngữ, và sửa ngay ở bản giao việc chứ không chỉ sửa kết quả.'] },
       { name: 'Gói bàn giao', levels: ['Gửi bản dịch kèm câu “đã xong”.', 'Liệt kê việc đã làm, không có rủi ro còn lại.', 'Có bằng chứng kiểm, có mục rủi ro còn lại, nêu rõ quyết định về thuật ngữ đang chờ người có thẩm quyền.', 'Đưa cho người duyệt hai phương án, kèm cái giá của từng phương án.'] },
     ],
-    back: [{ href: '03/', label: '03 · Để nó làm' }, { href: '04/', label: '04 · Kiểm, hỏi vặn, rồi buông' }],
+    back: [{ href: '03/', label: '03 · Cứ để Claude làm' }, { href: '04/', label: '04 · Kiểm, hỏi vặn, rồi buông' }],
   },
 ];

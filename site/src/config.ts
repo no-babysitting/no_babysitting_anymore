@@ -3,7 +3,7 @@
 export const SITE = {
   name: 'No Babysitting',
   descriptor: 'An unofficial, practical guide to delegating digital work to Claude Code',
-  descriptionVi: 'Hướng dẫn thực hành, không chính thức, giúp bạn giao trọn việc số cho Claude Code như giao cho một đồng nghiệp giỏi: brief rõ, context gọn, quyền đúng chỗ, kết quả được kiểm chứng.',
+  descriptionVi: 'Hướng dẫn thực hành, không chính thức, giúp bạn giao trọn công việc cho Claude Code như giao cho một đồng nghiệp giỏi: brief rõ, context gọn, quyền đúng chỗ, kết quả có kiểm chứng.',
   repo: 'https://github.com/no-babysitting/no_babysitting_anymore',
   upstream: 'https://github.com/shanraisshan/claude-code-best-practice',
   goatcounter: 'taisei',

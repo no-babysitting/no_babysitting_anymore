@@ -2,6 +2,12 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Chữ tiếng Việt trên site, lát 1: bớt "em nó", sửa lối dịch sát, dòng cuối không còn một từ (14/11/2026, #79) · CHỜ CHỦ DỰ ÁN DUYỆT
+
+**Có chữ mới (39 dòng nguồn đổi chữ), nên chưa được merge khi chưa có câu duyệt của chủ dự án (`AGENTS.md` §3).** Không đổi claim, con số, nguồn, route hay art; không đụng `site/scripts/`, `art-lock.json`, `type-rules.json` hay workflow. Rà 23 route và toàn bộ nguồn chữ tiếng Việt; sửa 19 nhóm lỗi (bảng F01 đến F19 ở `docs/25-vietnamese-copy-audit.md`, danh sách đầy đủ trước/sau ở Phụ lục A): "em nó" 31 lần thành *Claude*, *nó* hoặc lược chủ thể (kể cả meta description và tên phần 03, vốn lệch với liên kết quay lại); lối dịch sát ("context sạch sẽ", "một cây gồm nhiều file ngắn", "việc số"); câu cụt; chữ nhấn cắt đôi "đầu tiên"; nháy thẳng ở `/c02/`. Thêm một luật CSS `text-wrap: pretty` cho đoạn văn (`Base.astro`). Đo bằng script tạm ngoài repo, 23 route × 1920×1080 và 428×926 × (giảm chuyển động, bật chuyển động) = 92 tổ hợp: 0 tràn ngang, 0 chữ bị cắt; dòng cuối chỉ còn một từ (không kể nhãn nguồn S1…) giảm từ 112 trên `main` xuống 16. Luật `punctuation` của `type-check` hết cảnh báo ở `/c02/`.
+
+Chưa làm: chữ của bài 01, 02, 03, 07, 08 (chờ chủ dự án quyết phạm vi bài 07 và 08), chữ trong ảnh chia sẻ `og.png`, và các trạng thái tương tác ngoài những trạng thái đã đo; chi tiết ở mục 6 và 7 của báo cáo.
+
 ## Cập nhật khoá art cho 10 mảnh lệch sau ngày khoá (14/11/2026, D55)
 
 **Site không đổi, không có chữ mới; đổi `design-system/art-lock.json` (art đã khoá).** Cập nhật 10 mảnh `art-check` báo lệch: 8 mảnh theo số đo máy làm việc (`water` kích thước canvas, và `spark-fresco`, `spark-hands`, `spark-light`, hai khổ mỗi mảnh) và 2 mảnh điện thoại `hero-logo@phone`, `menu-art@phone` theo số đo của chính CI (chủ dự án chọn "Sinh số khoá hai mảnh này trên CI một lần", 14/11/2026), vì hai mảnh này chỉ lệch trên CI từ trước. Sáu mảnh còn lại giữ nguyên. Ảnh trước (khoá cũ, dựng ở `c2a2c24`) và sau (hiện tại) đã được chủ dự án xem ở PR #75; thư mục ảnh được gỡ trước khi merge nên không vào `main`. Số của hai mảnh điện thoại lấy từ một lần chạy CI thử (PR #76, đã đóng, không merge).
