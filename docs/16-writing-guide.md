@@ -2,12 +2,14 @@
 
 > Ai viết chữ cho site, dù là người hay agent, đọc file này **trước khi viết câu đầu tiên**. Mục tiêu: chữ trên trang nghe như một đồng nghiệp người Việt đi trước đang nói với bạn. Không như bản dịch, không như chữ máy viết. Mỗi luật đều có ví dụ *trước → sau*. Phần mẫu để đối chiếu là phần 01 trong `14-content-script-v4.md` §6.1.
 
+> **Cái gì là luật, cái gì là mốc tham khảo (D85).** Luật của dự án: xưng hô, thuật ngữ, độ chính xác của claim và nguồn, nhãn tự đứng được (§9), dấu câu (`type-check`). Mọi con số về độ dài câu, độ dài đoạn, số câu của mascot, số cụm nhấn và độ dài hook hay câu chốt chỉ là **mốc tham khảo** để người viết tự rà; không phải mục tiêu bắt buộc hay tiêu chí duyệt, và được phá lệ khi mạch ý cần. Cách vận dụng linh hoạt: `editorial/VIETNAMESE-NATURAL-VOICE.md` (PR #78).
+
 ## 1. Người đọc và giọng
 
 - **Người đọc:** người đi làm, đã dùng Claude, thuộc đủ vai (dev, BA, designer, marketing, sales, quản lý, người làm sáng tạo). Họ thông minh, bận, không cần được dỗ dành, cũng không cần được khen.
 - **Xưng hô:** gọi người đọc là "bạn". Người kể không xưng: không "tôi", không "mình", không "chúng ta". Mascot cũng gọi người đọc là "bạn" và tự xưng "mình". **Ngoại lệ có phạm vi:** trong mục Bài viết (D62), tác giả xưng "tôi" khi nêu quan điểm hay trải nghiệm của mình; người đọc vẫn là "bạn", vẫn không "mình" hay "chúng ta", và mascot không xuất hiện.
 - **Giọng:** thẳng và thực dụng. Có chút tinh nghịch ở tiêu đề và câu hook ("sao bạn vẫn phải trông trẻ?"). Thân bài thì nghiêm túc và có nguồn. Không cường điệu, không doạ, không tâng bốc.
-- **Ý chính đi trước** (Minto [P5], kim tự tháp ngược [P3]): câu đầu của đoạn nói ý chính, các câu sau đưa lý do hoặc ví dụ. Người chỉ đọc câu đầu của mỗi đoạn vẫn phải nắm được bài.
+- **Đưa ý chính lên sớm khi phù hợp** (Minto [P5], kim tự tháp ngược [P3]): thường nên để người đọc sớm biết đoạn đang đi tới đâu, rồi mới giải thích hoặc đưa ví dụ. Có thể mở bằng tình huống, câu hỏi, dữ kiện hay mâu thuẫn nếu cách đó tạo ngữ cảnh cần thiết. Đừng biến câu đầu đoạn thành một khuôn bắt buộc; điều quan trọng là người đọc theo được mạch lập luận.
 
 ## 2. Hư từ: nhóm lỗi nhiều nhất
 
@@ -118,9 +120,9 @@
 | Danh từ hoá | *việc thực hiện việc kiểm tra* | *kiểm* |
 | "Một cách + tính từ" | *giao việc một cách hiệu quả* | *giao việc*, kèm cách cụ thể |
 | Từ đệm Hán Việt | *đóng vai trò quan trọng*, *mang tính*, *tiến hành*, *nhằm mục đích*, *đảm bảo rằng*, *đáng chú ý là*, *điều này cho thấy* | Động từ thường; hoặc bỏ hẳn |
-| Đoạn kết tóm tắt lại | *Tóm lại, …* · *Như vậy, có thể thấy…* | Bỏ. Câu chốt của mỗi phần đã có chỗ riêng |
+| Đoạn kết tóm tắt lại | *Tóm lại, …* · *Như vậy, có thể thấy…* | Thường nên bỏ: câu chốt của mỗi phần đã có chỗ riêng. Giữ khi bài dài và người đọc thật sự cần nhìn lại |
 | Gạch ngang dài chen giữa câu | *Claude — một agent đa năng — có thể…* | Dấu phẩy, dấu hai chấm, hoặc tách thành hai câu |
-| Câu hỏi tu từ dồn dập | *Vì sao? Làm sao? Điều gì?* | Tối đa một câu hỏi, đặt ở hook |
+| Câu hỏi tu từ dồn dập | *Vì sao? Làm sao? Điều gì?* | Thường một câu hỏi ở hook là đủ; nhiều câu liên tiếp dễ thành khuôn |
 | Khen người đọc | *Tuyệt vời!* · *Câu hỏi hay!* | Không |
 | Thổi phồng | *thay đổi cuộc chơi*, *đột phá*, *mạnh mẽ* | Một con số hoặc một ví dụ |
 | Viết hoa kiểu tiếng Anh | *Bốn Loại Điều Chưa Biết* | Chỉ viết hoa chữ đầu câu và tên riêng |
@@ -152,10 +154,10 @@
 
 ## 6. Câu, đoạn, nhịp, con số
 
-- **Câu** trung bình 15–25 âm tiết; câu dài nhất ≤ 40 âm tiết. Mỗi câu một ý.
-- **Đoạn** ≤ 4 câu; câu đầu là ý chính.
-- **Tiêu đề khối** là một mệnh đề trọn ý (*Bản đồ không phải là lãnh thổ*) hoặc một câu hỏi thật. Không dùng nhãn chung chung như *Giới thiệu*, *Tổng quan*.
-- **Danh sách** chỉ dùng khi các mục song song. Mỗi mục tối đa một dòng trên desktop.
+- **Câu và đoạn:** viết theo độ phức tạp của ý, không theo quota. Để tự rà, có thể bắt đầu với câu khoảng 15–25 tiếng và đoạn 2–4 câu; đây chỉ là mốc tham khảo để nhận ra chỗ quá dài, quá vụn hoặc mất cân đối, không phải độ dài mục tiêu hay tiêu chí duyệt. Câu ngắn tạo nhịp và nhấn ý nhưng dùng liên tiếp dễ thành checklist; câu dài giữ được lập luận nhưng nhiều tầng ý sẽ làm người đọc hụt hơi. Đoạn ngắn tạo khoảng nghỉ, đoạn dài giữ mạch phân tích nhưng dễ nặng nếu chứa nhiều ý. Giữ câu/đoạn ngoài mốc khi cấu trúc ý cần như vậy. Xem thêm trade-off và ví dụ trong `editorial/VIETNAMESE-NATURAL-VOICE.md` §4.1.
+- **Mạch ý:** thường nên đưa ý quan trọng lên sớm, nhưng có thể mở bằng tình huống, câu hỏi hoặc bằng chứng nếu cách đó giúp người đọc hiểu vấn đề tốt hơn. Không bắt mọi đoạn phải theo cùng một cấu trúc.
+- **Tiêu đề khối** nên nói rõ nội dung hoặc đặt ra một câu hỏi có ý nghĩa. Tránh nhãn chung chung như *Giới thiệu*, *Tổng quan* nếu chúng không giúp định hướng.
+- **Danh sách** dùng khi các mục thực sự song song hoặc người đọc cần quét nhanh. Nếu các ý nối với nhau bằng lập luận, viết thành văn xuôi.
 - **Số:**
   - đếm thì viết bằng chữ số (*5 phần*, *4 hướng*); riêng "một" trong văn kể thì viết bằng chữ (*một phép kiểm*);
   - thập phân dùng dấu phẩy (0,6), hàng nghìn dùng dấu chấm (9.100);
@@ -165,7 +167,7 @@
 
 ## 7. Câu vui của mascot
 
-- Mỗi phần 1–2 câu, ≤ 15 âm tiết, và **luôn đúng ý của đoạn**. Người đọc cười vì nhận ra điều đó, không phải vì một trò chơi chữ vô nghĩa.
+- Mỗi phần nên có 1–2 câu, và **luôn đúng ý của đoạn**. Đây là gợi ý về nhịp giao diện, không phải giới hạn cứng; có thể thay đổi nếu bố cục hoặc nội dung cần. Người đọc cười vì nhận ra điều đó, không phải vì một trò chơi chữ vô nghĩa.
 - Tự trào về Claude. Không chế người đọc, không hạ thấp nghề nào.
 - Không meme, không tiếng lóng dễ cũ, không emoji.
 - Không nói điều sai sự thật về Claude: không "mình mệt", không "mình buồn".
@@ -179,14 +181,14 @@
 
 ## 8. Kiểm trước khi gửi duyệt
 
-- [ ] Câu đầu của mỗi đoạn là ý chính; đọc riêng các câu đầu vẫn hiểu bài.
+- [ ] Mạch đoạn rõ; người đọc theo được ý chính và quan hệ giữa các câu mà không phải tự đoán.
 - [ ] Mỗi câu nói về hành động có chủ thể rõ: bạn, Claude hay Claude Code.
 - [ ] Sự kiện có ngày khi dùng *đã/vừa*; không có *vừa* cho chuyện đã cũ.
-- [ ] Không còn chữ nào trong bảng §4.
+- [ ] Đã rà các dấu hiệu ở §4 và sửa những chỗ làm câu khó đọc (bảng là gợi ý, không phải danh sách cấm).
 - [ ] Thuật ngữ tiếng Anh lần đầu có in nghiêng và giải nghĩa; không có tiếng Anh bị chia hay ghép.
 - [ ] Mọi con số và câu trích có nguồn; chỗ diễn giải có nhãn `Diễn giải của trang`.
 - [ ] Đã đọc to một lượt và viết lại những chỗ vấp.
-- [ ] Không quá 5 golden word mỗi phần; câu hook ≤ 30 âm tiết; câu chốt ≤ 40 âm tiết.
+- [ ] Hook, câu chốt và các cụm nhấn mạnh phù hợp với nội dung, không bị ép theo giới hạn độ dài máy móc.
 - [ ] `type-check.cjs` không còn cảnh báo `punctuation` trên trang mới.
 
 ## 9. Chữ trên giao diện: bài học từ các lần chủ dự án sửa (11/11/2026)

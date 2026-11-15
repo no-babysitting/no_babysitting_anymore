@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Văn phong: độ dài câu và đoạn thành mốc tham khảo, không còn là luật cứng (14/11/2026, D85, Refs #79)
+
+**Site không đổi, không có chữ mới (chỉ tài liệu quy trình).** Chủ dự án quyết bỏ các luật cứng không cần thiết nhưng giữ thông tin tham khảo. `docs/16-writing-guide.md` lấy đúng bản của PR #78 ("đoạn ≤ 4 câu", "câu đầu là ý chính", ≤ 40 âm tiết, mascot ≤ 15, hook ≤ 30, câu chốt ≤ 40, ≤ 5 cụm nhấn thành mốc tham khảo kèm lý do và ngoại lệ), thêm khung "cái gì là luật, cái gì là mốc" ở đầu file, nới hai chỗ còn tuyệt đối ở §4 và §8. Giữ là luật: xưng hô, thuật ngữ, độ chính xác, nguồn, nhãn tự đứng được, dấu câu. Không đụng `editorial/VIETNAMESE-NATURAL-VOICE.md`, #77 hay #78; phần đổi của #78 trong `docs/16` trùng chữ nên không gây xung đột khi #78 merge.
+
 ## Cập nhật khoá art cho 10 mảnh lệch sau ngày khoá (14/11/2026, D55)
 
 **Site không đổi, không có chữ mới; đổi `design-system/art-lock.json` (art đã khoá).** Cập nhật 10 mảnh `art-check` báo lệch: 8 mảnh theo số đo máy làm việc (`water` kích thước canvas, và `spark-fresco`, `spark-hands`, `spark-light`, hai khổ mỗi mảnh) và 2 mảnh điện thoại `hero-logo@phone`, `menu-art@phone` theo số đo của chính CI (chủ dự án chọn "Sinh số khoá hai mảnh này trên CI một lần", 14/11/2026), vì hai mảnh này chỉ lệch trên CI từ trước. Sáu mảnh còn lại giữ nguyên. Ảnh trước (khoá cũ, dựng ở `c2a2c24`) và sau (hiện tại) đã được chủ dự án xem ở PR #75; thư mục ảnh được gỡ trước khi merge nên không vào `main`. Số của hai mảnh điện thoại lấy từ một lần chạy CI thử (PR #76, đã đóng, không merge).
