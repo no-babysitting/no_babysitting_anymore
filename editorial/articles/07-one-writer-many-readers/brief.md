@@ -1,5 +1,6 @@
 ---
-status: draft
+status: published
+publishedAt: "2026-11-15"
 topic: 7
 slug: one-writer-many-readers
 working_title: Một người viết, nhiều người đọc

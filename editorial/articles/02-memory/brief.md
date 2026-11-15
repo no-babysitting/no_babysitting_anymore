@@ -1,5 +1,6 @@
 ---
-status: draft
+status: published
+publishedAt: "2026-11-15"
 topic: 5
 order: 2
 slug:
