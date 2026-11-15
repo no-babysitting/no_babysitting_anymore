@@ -69,6 +69,7 @@ Mức độ: P1 = người đọc thấy ngay, ở đầu trang hoặc trong met
 | F17 | `config.ts` (`descriptionVi`) | "giao trọn việc số cho Claude Code…" | "giao trọn công việc cho Claude Code…" | P2 | P2 |
 | F18 | `c02/index.astro` | `"không phải vậy, thử lại"` | `“không phải vậy, thử lại”` | P8 | P3 |
 | F19 | `layouts/Base.astro` (CSS) | Đoạn văn tự xuống dòng, nhiều đoạn kết thúc bằng một từ lẻ (112 dòng như vậy trên `main` ở hai khổ nghiệm thu) | Thêm `text-wrap: pretty` cho `p`, `li`, `dd`, `figcaption` trong `main`; không áp cho khối tách bằng SplitText (`data-reveal` lines, words, fill). Không dùng `<br>` | P9 | P2 |
+| F20 | `tools/make-brand-assets.js`, `site/public/og.png` | Ảnh chia sẻ in sẵn "…giao trọn phần thực thi cho em nó." | "…giao trọn phần thực thi cho nó." (dựng lại ảnh, cùng câu với meta description và tuyên ngôn) | P1 | P1 |
 
 ## 5. Quyết định biên tập có chủ đích, **không** sửa
 
@@ -80,7 +81,7 @@ Mức độ: P1 = người đọc thấy ngay, ở đầu trang hoặc trong met
 
 ## 6. Việc chưa làm trong lát này và vì sao
 
-- **Chữ trong ảnh chia sẻ (`og.png`)**: chưa xác minh chữ có nằm trong ảnh hay không. Nếu có, đổi chữ phải dựng lại ảnh. Cần chủ dự án xác nhận trước khi tôi đụng tới.
+- ~~Chữ trong ảnh chia sẻ (`og.png`)~~: **đã xác minh và sửa** (F20): ảnh có câu "…giao trọn phần thực thi cho em nó." nằm trong ảnh, lệch với meta description mới. Đã đổi trong `tools/make-brand-assets.js` rồi dựng lại bằng `node tools/make-brand-assets.js`; chỉ đoạn cuối câu đổi, `favicon.svg` không đổi (đã xem ảnh).
 - **Chữ trong `components/ds/*`**: bản xem trước hệ thiết kế, phần lớn không hiện trên route nào; lát sau nếu bạn muốn.
 - **Bố cục hai khổ 1920×1080 và 428×926** là hai khổ mới so với các bộ kiểm hiện có (1440×900, 390×844); kết quả ở mục 8, kiểm bằng script tạm ngoài repo.
 
