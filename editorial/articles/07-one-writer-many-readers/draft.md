@@ -1,144 +1,149 @@
 ---
-title: Một người viết, nhiều người đọc
-description: Khi nào thêm agent cho việc code là có lời, “xong” nghĩa là gì và hóa đơn đi đâu: bằng chứng tháng 11/2026 về multi-agent coding.
-verifiedAt: 2026-11-13
+title: "Xây dựng AI Agent đáng tin cậy: một người viết, nhiều người đọc"
+description: Từ context, memory và model đến quyền thực thi, kiểm chứng và multi-agent: cách thiết kế một hệ agent có thể giao việc mà không phải trông từng bước.
+verifiedAt: 2026-11-14
 art: default
-related: ['04']
-# publishedAt and order are filled when the article is published (docs/24 section 6). Standalone article: no series.
+related: ['01', '02', '03', '08']
 ---
 
-Ngày 13/11/2026, GitHub báo PR [#35](https://github.com/no-babysitting/no_babysitting_anymore/pull/35) của tôi xung đột với `main`. Agent gộp `main` vào nhánh, giải quyết xong rồi đẩy lên. Ngay sau đó, PR xung đột lần nữa.
+Một agent viết được code chưa có nghĩa là bạn có thể giao cho nó một công việc rồi yên tâm quay lại sau. Muốn giao việc mà không phải trông từng bước, bạn cần biết nó được cung cấp thông tin gì, được phép làm gì, kiểm tra kết quả bằng cách nào và ai chịu trách nhiệm khi có sai sót.
 
-Cả hai lần chỉ có một file xung đột là `CHANGELOG.md`. Ba PR cùng thêm một mục mới ở đầu file: PR của tôi, [#42](https://github.com/no-babysitting/no_babysitting_anymore/pull/42) và [#46](https://github.com/no-babysitting/no_babysitting_anymore/pull/46). Git không biết mục nào đứng trước nên dừng lại hỏi. Agent giữ cả ba mục, rồi dời mục của PR tôi xuống dưới các mục cùng ngày để lần sau không ai chèn đúng chỗ đó.
+Đó là bài toán engineering, không phải bài toán chọn model. Model giỏi giúp agent phán đoán tốt hơn; nó không tự tạo ra ranh giới quyền hạn, nguồn sự thật hay bằng chứng rằng công việc đã hoàn tất.
 
-Xung đột này vô hại: chỉ là một dòng nhật ký, không phải code. Nhưng nó là ví dụ nhỏ của kiểu va chạm mà các nghiên cứu về <em lang="en">multi-agent coding</em> (nhiều agent cùng làm một việc code) đo trên quy mô lớn. Ba PR ấy chạy song song trên cùng một repo, đúng tình huống đó. Quy ước của repo có hẳn một ngoại lệ cho việc này: commit chỉ gộp `main` để giải xung đột `CHANGELOG.md` không cần chờ CI chạy lại ([AGENTS.md](https://github.com/no-babysitting/no_babysitting_anymore/blob/main/AGENTS.md), mục 2).
+## Một agent đáng tin cậy cần nhiều lớp
 
-Bài này gom bằng chứng tháng 11/2026 về chuyện thêm agent: khi nào có lời, “xong” nghĩa là gì, bạn nên đứng ở đâu và hóa đơn đi đâu. Kết luận trước: với việc code hằng ngày, hãy để một agent ghi và cho các agent khác đọc.
+Tôi nhìn một hệ AI Agent qua bốn lớp. Chúng liên quan chặt chẽ nhưng không thay thế nhau.
 
-## Mặc định hợp lý là một agent ghi code
-
-Với việc code hằng ngày, một agent ghi là mặc định hợp lý. Bằng chứng không ủng hộ ý nghĩ rằng càng nhiều agent thì càng tốt.
-
-Nghiên cứu có kiểm soát lớn nhất mà bài này dựa vào là của nhóm Google Research, Google DeepMind và MIT ([arXiv 2512.08296](https://arxiv.org/abs/2512.08296), bản 3 ngày 8/4/2026). Họ chạy 260 cấu hình trên sáu bài đo (<em lang="en">benchmark</em>), với năm kiến trúc và ba họ model, giữ nguyên công cụ, prompt và ngân sách token. Phối hợp tập trung cải thiện kết quả 80,8% trên một tác vụ chia nhỏ được (Finance-Agent). Trên bài lập kế hoạch tuần tự (PlanCraft), mọi biến thể multi-agent đều kém hơn, từ 39% đến 70%.
-
-Khi điểm của agent đơn đã vượt khoảng 45%, thêm phối hợp chỉ cho lợi ích giảm dần. Theo các bản tóm tắt thứ cấp, trên SWE-bench Verified mọi kiến trúc multi-agent đều kém hơn đôi chút. Lỗi cũng lan theo cấu trúc: agent độc lập khuếch đại lỗi lên 17,2 lần, còn khi có điều phối viên trung tâm thì 4,4 lần, theo một bản tóm tắt của bài báo.
-
-Hai nguồn từ phía nhà sản xuất đi cùng hướng. [Cognition](https://cognition.com/blog/multi-agents-working) viết (22/4/2026) rằng các nhận định cũ vẫn đúng với bầy nhiều agent cùng ghi code, và thứ chạy được là nhiều agent góp hiểu biết trong khi việc ghi vẫn đơn luồng. Tài liệu agent teams của Claude Code (tháng 11/2026) nói thẳng: với việc tuần tự, sửa chung file hoặc nhiều phụ thuộc, một phiên đơn hoặc một <em lang="en">subagent</em> (agent phụ, có context riêng) hiệu quả hơn.
-
-Hai kết quả nữa đáng cân nhắc. Kết quả thứ nhất đến từ [Anthropic](https://www.anthropic.com/engineering/multi-agent-research-system) (6/2025): hệ nghiên cứu multi-agent của họ tốt hơn 90,2% so với một Opus 4 đơn trên bộ đánh giá nội bộ. Riêng lượng token đã giải thích 80% phương sai hiệu năng trên BrowseComp. Đó là nghiên cứu web, không phải code, và con số 80% gợi ý rằng phần lớn lợi ích đến từ việc chi nhiều token hơn.
-
-Kết quả thứ hai là một nghiên cứu của Stanford ([arXiv 2604.02460](https://arxiv.org/abs/2604.02460), 11/4/2026). Họ giữ cố định số token suy luận và thấy agent đơn luôn bằng hoặc hơn multi-agent trên bài suy luận nhiều bước. Họ thử trên Qwen3, DeepSeek-R1-Distill-Llama và Gemini 2.5.
-
-Từ những số đo trên, tôi rút ra hai danh sách. Thêm agent có lời ở bốn chỗ: tìm kiếm và nghiên cứu theo chiều rộng, giả thuyết debug cạnh tranh, review với context sạch, và vài ticket thật sự độc lập. Với ticket độc lập, mỗi ticket chạy trong một <em lang="en">worktree</em> (thư mục làm việc git riêng cho từng nhánh). Thêm agent thua ở sửa chung file, chuỗi phụ thuộc, refactor xuyên suốt, và mọi việc mà các agent “ngầm quyết định” khác nhau về style hay edge case.
-
-Song song hóa mua tốc độ bằng token. Theo Anthropic (6/2025), một agent đơn dùng khoảng 4 lần token so với chat, còn hệ multi-agent khoảng 15 lần. Một thử nghiệm của người dùng, không công bố phương pháp, đo được nhanh hơn khoảng 35% và tốn gần 3 lần token.
-
-Worktree chỉ tách file, không tách merge. Nghiên cứu [arXiv 2607.04697](https://arxiv.org/abs/2607.04697) (7/2026) xem 33.596 PR của agent trên 2.807 repo và thấy 79,4% số PR chạy chồng thời gian với một PR khác. Xung đột văn bản xảy ra ở 19,8% cặp PR của cùng một agent và 41,7% cặp của hai agent khác nhau, và 84,4% file xung đột là mã nguồn. Dữ liệu lấy từ PR công khai năm 2024–2025, trước khi worktree thành mặc định ở nhiều công cụ, nên số hiện nay có thể thấp hơn.
-
-Vụ `CHANGELOG.md` ở đầu bài thuộc phần còn lại, vô hại về nghĩa. Worktree cũng không tách cổng mạng, database dev hay dịch vụ dùng chung; đây là giai thoại của người dùng, chưa có số đo.
-
-Bảng dưới xếp các mẫu thường gặp theo chi phí và độ chín.
-
-| Mẫu | Hợp với | Chi phí so với một phiên | Độ chín |
-|---|---|---|---|
-| Một agent, kèm test và hook | Hầu hết việc code hằng ngày | 1 lần (mốc) | Cao |
-| Subagent chỉ đọc (tìm kiếm, khám phá) | Codebase lạ, câu hỏi rộng | Tăng; thêm 74% đến 221% nếu ép dùng cho tìm kiếm thông thường | Cao |
-| Reviewer ở context sạch | Mọi PR không tầm thường | Thêm một lượt review | Cao |
-| Worktree song song, bạn là người điều phối | 2–4 ticket độc lập | Gần như tuyến tính theo số phiên | Cao |
-| Điều phối viên và công nhân | Việc lớn chia được, có kiểm chứng tự động | 4–15 lần | Trung bình |
-| Bầy tự do (<em lang="en">swarm</em>) | Không khuyến nghị | Rất cao | Thấp |
-
-Về bầy tự do, nghiên cứu [MAST](https://arxiv.org/abs/2503.13657) (NeurIPS 2025; 1.642 trace, 7 framework) đo tỷ lệ thất bại từ 41% đến 86,7%.
-
-## “Xong” phải là một lệnh trả về đạt hoặc không đạt
-
-Agent tự review code do chính nó viết là lưới an toàn yếu. Nghiên cứu của các tác giả AWS ([arXiv 2605.21537](https://arxiv.org/abs/2605.21537), 5/2026) gọi 11 model thuộc 7 họ, tổng cộng 1.980 lần. Model sinh code âm thầm chấp thuận 31,7% (83 trên 262) trường hợp lệch ngữ nghĩa do chính nó tạo ra. Tỷ lệ bỏ sót theo từng model dao động từ 0% đến 100%.
-
-Context sạch giúp ích. Cognition cho biết Devin Review tìm được trung bình 2 lỗi mỗi PR, khoảng 58% là nghiêm trọng, và hiệu quả nhất khi agent viết với agent review không chia sẻ context nào. Claude Code có [`/code-review`](https://code.claude.com/docs/en/commands) chạy trong một subagent mới, chưa từng thấy hội thoại. Phần 04 của Lộ trình chính dạy đúng việc này: nhờ một <em lang="en">reviewer</em> (người duyệt, ở đây là một phiên agent khác) ở context mới.
-
-Reviewer khác hãng cho kết quả tốt hơn trong một nghiên cứu. Song Tae-Eun ([arXiv 2610.01471](https://arxiv.org/abs/2610.01471), 6/10/2026) chạy 900 phiên review trên 150 lỗi cài sẵn. Với cùng hai lần gọi, một review context sạch cộng một review bằng model khác bắt được 56,7% lỗi, so với 42,7% của hai review context sạch cùng model (p = 0,006). Hai cách tìm ra các tập lỗi chỉ trùng một phần (chỉ số Jaccard 41,2%), và reviewer khác hãng nhưng là model nhẹ thì không tốt hơn.
-
-Kết quả này có hai hạn chế. Ở hạng model cao nhất, reviewer khác hãng không khác biệt có ý nghĩa về F1 so với review cùng model ở phiên mới, và tác giả không tách được hiệu ứng “khác model” khỏi hiệu ứng “reviewer mạnh”. Đây cũng là một bản thảo chưa bình duyệt (<em lang="en">preprint</em>) của một tác giả, dùng lỗi cài sẵn.
-
-Lặp review trong cùng một phiên còn phản tác dụng: một bản thảo trước của cùng tác giả thấy dương tính giả tăng 62%, với độ tin thấp. Cognition lập luận ngược lại: cùng một model vẫn review tốt vì nó “không có cái tôi”, còn thiên lệch chung đến từ huấn luyện.
-
-Vì vậy tôi xếp thứ tự ưu tiên cho “xong” như sau:
-
-1. Test và typecheck, chạy bằng <em lang="en">Stop hook</em> (hook chạy khi agent định dừng, để agent không báo xong sớm).
-2. Một reviewer chỉ có quyền đọc, ở context sạch.
-3. Một reviewer khác hãng, chỉ cho đường rủi ro cao như auth, thanh toán, migration và xóa dữ liệu.
-4. Bạn duyệt merge.
-
-Luôn đòi bằng chứng: lệnh đã chạy và output của nó. Đừng nhận câu “tất cả test đều qua”.
-
-## Điểm duyệt của bạn nên là lúc merge, không phải từng lệnh
-
-Quyền tự chủ của agent có hai lớp. Lớp phán đoán gồm bộ phân loại (<em lang="en">classifier</em>) và `CLAUDE.md`. Lớp tất định gồm quy tắc từ chối, <em lang="en">sandbox</em> (môi trường cô lập, agent có hỏng cũng không chạm ra ngoài), hook và bảo vệ nhánh. Tài liệu [best practices của Claude Code](https://code.claude.com/docs/en/best-practices) (tháng 11/2026) xếp câu hỏi “ai có tiếng nói cuối cùng” vào lớp tất định, gồm bảo vệ nhánh và một người duyệt merge.
-
-Auto mode giảm số lần hỏi quyền nhưng không phải ranh giới an ninh. [Tài liệu](https://code.claude.com/docs/en/permission-modes) viết thẳng rằng nó không đảm bảo an toàn, dù từ Claude Code v2.1.283 đây là chế độ khởi đầu mặc định. Theo số đo nội bộ của [Anthropic](https://www.anthropic.com/engineering/claude-code-sandboxing) (20/10/2025), sandbox giảm 84% số lần hỏi quyền.
-
-Một đánh giá độc lập ([arXiv 2604.04978](https://arxiv.org/abs/2604.04978), 4/2026) thấy auto mode chỉ mang lại lợi ích ròng khiêm tốn trên tác vụ mơ hồ. Trong đó, 36,8% hành động thay đổi trạng thái đi qua đường sửa file mà bộ phân loại không xét.
-
-Duyệt kế hoạch cũng không tự động có nghĩa là có người duyệt. Trong [agent teams](https://code.claude.com/docs/en/agent-teams), nếu một teammate chạy ở plan mode mà bạn chưa đổi permission mode của nó, kế hoạch được tự động chấp thuận (tài liệu Claude Code, tháng 11/2026).
-
-Khi số luồng tăng, sự chú ý của bạn thành nút cổ chai. Codex app 26.224 (2/2026) thêm duyệt song song, và [changelog của Codex CLI](https://developers.openai.com/codex/changelog) ghi rằng yêu cầu duyệt từ một luồng không hoạt động có thể hiện lên khi bạn đang xem luồng chính. Cognition cũng nêu đúng điểm này.
-
-Khi bạn vắng mặt, dùng `/goal` hoặc Stop hook để agent không dừng sớm. Đặt `--max-turns` và `--max-budget-usd` khi chạy với cờ `-p`. Chạy trong container hoặc máy ảo khi bỏ hỏi quyền. Gom câu hỏi vào một file hoặc issue thay vì để agent chờ.
-
-Quy tắc mặc định tôi đề xuất cho người không code toàn thời gian: agent làm mọi thứ trong sandbox và trên nhánh riêng, nhưng không tự merge vào `main` và không chạm production. Điểm duyệt của bạn là lúc merge PR, không phải từng lệnh.
-
-## Hóa đơn đến từ số lượt và bộ đệm, không đến từ độ dài output
-
-Phần lớn hóa đơn là context được gửi lại ở mỗi lượt. Weinberger và Hozez (PointFive; [arXiv 2607.12161](https://arxiv.org/abs/2607.12161), 7/2026) xem khoảng 5.500 lần chạy có hóa đơn thật. Việc ghi và đọc bộ đệm (<em lang="en">prompt cache</em>) chiếm khoảng 87% chi phí dựng lại, tức khoảng 80% hóa đơn thực, còn phần người dùng can thiệp được chỉ chiếm khoảng 6% chi phí.
-
-Vì thế cắt token chưa chắc cắt tiền. Cùng nghiên cứu cho thấy nén output của công cụ giảm 38,4% token nhưng tăng 6,8% chi phí và giảm tỷ lệ hoàn thành. Nhiều công cụ “tiết kiệm token” đang được quảng cáo có thể phản tác dụng theo cách này.
-
-Subagent có chi phí khởi động cố định: system prompt, `CLAUDE.md` và schema công cụ, khoảng 37.000 token theo một người dùng đo. [Tài liệu Claude Code](https://code.claude.com/docs/en/costs) nói chi phí của subagent chủ yếu là token và khuyên xem `/usage` theo từng loại. [Tài liệu Codex](https://developers.openai.com/codex/subagents) cũng ghi workflow subagent tốn token hơn chạy đơn tương đương.
-
-Một thí nghiệm của người dùng, có đăng ký trước, thêm “use subagents” vào việc tìm kiếm code thông thường qua 216 lần chạy. Chi phí tăng 74–116% với Haiku 5.5 và 143–221% với Opus 5.5, còn tỷ lệ tìm thấy không đổi (97–100%). Chạy ở chế độ không giao diện (<em lang="en">headless</em>), kết quả của subagent có thể về muộn, nên script CI phải đọc mọi sự kiện kết quả.
-
-Bộ đệm làm con số “15 lần token” bớt đáng sợ về tiền. Theo [tài liệu prompt caching của Claude Platform](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) (tháng 11/2026), đọc từ bộ đệm tính 0,1 lần giá input cơ bản, và chỉ 0,05 lần trên Claude Opus 5.5 và Sonnet 5.5 (0,025 lần trên Fable và Mythos 5.1–5.2). Một tổng hợp có dẫn nghiên cứu của PwC (hơn 500 phiên) báo cáo prompt caching giảm 41–80% chi phí.
-
-Song song hóa vẫn có thể đáng tiền nếu giá trị của bạn nằm ở thời gian chờ chứ không ở token. Với gói thuê bao, thứ bạn tiêu là hạn mức 5 giờ và hạn mức tuần, không phải đô la, nên multi-agent đốt hạn mức nhanh hơn tương ứng.
-
-Các việc đáng làm để cắt chi phí, theo thứ tự tiết kiệm trên công sức:
-
-| Việc | Tiết kiệm đo được | Độ chắc của bằng chứng |
+| Lớp | Câu hỏi cần trả lời | Thành phần điển hình |
 |---|---|---|
-| Dùng một phiên khi chưa cần song song | Tránh 3–15 lần token (Anthropic, 6/2025; thử nghiệm của người dùng) | Số đo không công bố phương pháp; giai thoại |
-| Không ép “use subagents” cho tìm kiếm thông thường | Tránh thêm 74–221% chi phí | Thí nghiệm của người dùng, không công bố phương pháp |
-| Rút gọn `CLAUDE.md` và `AGENTS.md`, bỏ phần do LLM sinh | Trung bình hơn 20% chi phí suy luận ([arXiv 2602.11988](https://arxiv.org/abs/2602.11988)) | Nghiên cứu có công bố phương pháp |
-| Giữ phần đầu prompt ổn định để cache còn hiệu lực: không bật tắt auto mode, không đổi model hay công cụ MCP giữa phiên | Mức tiết kiệm của cache: 41–80% so với không có cache | Số đo không công bố phương pháp |
-| Dùng model rẻ cho subagent chỉ đọc (`model: haiku` trong frontmatter, hoặc `CLAUDE_CODE_SUBAGENT_MODEL`) | Chưa có số đo độc lập; theo bảng giá, bằng tỷ lệ giá giữa các hạng | Ước tính |
-| Tắt MCP server không dùng | Chưa có số đo; tài liệu xác nhận schema chiếm context | Tài liệu của hãng |
-| Theo dõi bằng `/usage` theo loại subagent; đặt `--max-budget-usd` cho chạy nền | Không tiết kiệm trực tiếp, giúp tìm chỗ rò | Tài liệu của hãng |
-| Bỏ công cụ nén output trừ khi đo được chi phí trên mỗi lần thành công | Tránh thêm 6,8% chi phí ([arXiv 2607.12161](https://arxiv.org/abs/2607.12161)) | Nghiên cứu có công bố phương pháp |
+| Context và instructions | Agent cần biết gì để làm đúng việc? | System prompt, CLAUDE.md, skills, tài liệu và ví dụ |
+| Memory và state | Điều gì cần được giữ qua phiên, và nguồn nào đáng tin? | Memory, state store, database nghiệp vụ, event log |
+| Model và reasoning | Model nào đủ năng lực, cần suy nghĩ sâu đến đâu? | Model selection, effort, routing, escalation |
+| Execution và verification | Agent được phép làm gì, và bằng chứng nào xác nhận kết quả? | Tools, permissions, sandbox, hooks, tests, CI, human review |
+
+Chi phí chạy hệ thống đi xuyên cả bốn lớp. Đừng chỉ đo token; hãy đo chi phí để tạo ra một kết quả được chấp nhận, gồm cả thời gian người phải sửa, review và xử lý sự cố.
+
+## Context phải đủ, nhưng không cần nhồi tất cả vào prompt
+
+Agent chỉ có thể phán đoán từ những gì nó nhìn thấy và truy cập được. Nếu yêu cầu nằm trong một ticket, quy ước nằm trong repo, còn tiêu chí nghiệm thu chỉ được nói trong một cuộc họp, agent không thể tự ghép chúng thành một đặc tả hoàn chỉnh nếu bạn không đưa chúng vào đúng ngữ cảnh.
+
+Không phải mọi thứ đều cần nằm trong system prompt. Chỉ dẫn chung nên ngắn và ổn định; kiến thức dự án đặt trong file chỉ dẫn; quy trình chuyên biệt có thể nạp qua skill; dữ liệu thay đổi thường xuyên nên được lấy từ nguồn có thẩm quyền.
+
+Bài 01 phân tích vì sao giảm lời dặn không đồng nghĩa với giảm kiểm soát. Điểm mấu chốt là đặt thông tin vào đúng nơi, và không dùng prompt để thay thế một cơ chế thực thi.
+
+## Memory không phải nguồn sự thật mặc định
+
+Memory giúp giảm việc nhắc lại, nhưng có ba vấn đề khác nhau: thông tin có được lưu không, có được truy xuất đúng lúc không, và agent có dùng nó đúng không.
+
+Sở thích cá nhân có thể giao cho harness ghi nhớ nếu người dùng xem và sửa được. Quy ước repo cần được ghi vào file có version control. Trạng thái nghiệp vụ như “đã thanh toán”, “đã gửi” hoặc “đã phê duyệt” cần được đọc từ hệ thống ghi nhận giao dịch, không lấy từ một câu agent nhớ lại.
+
+Khi có nhiều agent, vấn đề còn rõ hơn. Hai agent có thể giữ hai phiên bản khác nhau của cùng một quyết định. Nếu không có nguồn sự thật chung và quy tắc cập nhật state, việc thêm agent có thể nhân bản sự không nhất quán thay vì tăng năng lực.
+
+## Model và effort là núm năng lực, không phải núm quyền hạn
+
+Model mạnh hơn hoặc effort cao hơn có thể giúp xử lý tác vụ phức tạp, nhiều trường hợp biên. Nhưng chúng không nên tự động kéo theo quyền truy cập rộng hơn.
+
+Bắt đầu ở mặc định phù hợp của đúng model và bề mặt, sau đó đo trên các tác vụ đại diện. Nếu chất lượng tăng đủ để bù chi phí và độ trễ, mới nâng effort hoặc định tuyến sang model khác. Nếu một tác vụ chỉ đọc dữ liệu nhưng khó suy luận, có thể cần reasoning sâu mà không cần quyền ghi. Một thao tác xóa dữ liệu có thể rất đơn giản nhưng vẫn cần xác nhận và quyền hạn chế.
+
+Nguyên tắc vận hành: **leo thang năng lực khi có bằng chứng; leo thang quyền hạn chỉ khi được cho phép rõ ràng.** Bài 03 đi sâu vào cách chọn model và effort.
+
+## Quyền hạn cần được thiết kế ngoài lời dặn
+
+Prompt có thể nói “không sửa production”, nhưng câu đó vẫn là hướng dẫn cho model. Một hệ thống đáng tin cậy cần những ranh giới được thực thi bởi harness và hạ tầng.
+
+- Permissions xác định công cụ và tài nguyên agent được dùng.
+- Sandbox giới hạn vùng agent có thể tác động khi chạy lệnh hoặc sửa file.
+- Hooks thực thi các điều kiện tại những thời điểm xác định trong vòng đời agent.
+- Branch protection và phê duyệt giữ quyền merge ở người có trách nhiệm.
+- Secrets và credentials cần phạm vi tối thiểu, thời hạn phù hợp và không đưa vào context không cần thiết.
+
+Không phải mọi rủi ro đều giải quyết bằng cùng một lớp. Permission rules không thay thế sandbox; sandbox không thay thế review; review không thay thế kiểm soát production.
+
+## “Xong” phải có bằng chứng kiểm chứng được
+
+Một agent nói “đã hoàn tất” chỉ là một báo cáo. Hãy định nghĩa đầu ra và điều kiện nghiệm thu trước khi giao việc: file nào cần thay đổi, hành vi nào phải đúng, test nào phải qua, điều gì không được làm và khi nào phải dừng để hỏi người.
+
+Sau đó thiết kế các cổng kiểm tra theo mức độ:
+
+1. **Trong phiên:** agent chạy test, typecheck, lint hoặc phép kiểm phù hợp và đọc kết quả.
+2. **Tại điểm kết thúc:** Stop hook có thể chạy điều kiện bắt buộc hoặc yêu cầu agent xử lý khi phép kiểm thất bại.
+3. **Trên pull request:** CI chạy lại các check trong môi trường repo, độc lập với lời tự báo cáo của agent.
+4. **Trước merge:** branch protection yêu cầu các check bắt buộc đạt; reviewer kiểm tra diff, yêu cầu và rủi ro.
+5. **Trước production:** quy trình triển khai, quyền truy cập và phê duyệt riêng cho môi trường có hậu quả thực tế.
+
+CI xanh không chứng minh phần mềm hoàn toàn đúng. Nó chỉ chứng minh các check đã cấu hình đạt trong môi trường đã chạy. Test có thể thiếu; build có thể xanh nhưng sai yêu cầu; migration có thể qua test nhưng gây sự cố ở dữ liệu thật. Vì vậy cần kết hợp kiểm tra tự động với review theo rủi ro.
+
+## Một người viết, nhiều người đọc
+
+Đến đây mới nên hỏi có cần nhiều agent không. Multi-agent không phải chế độ mặc định cho mọi công việc. Nó là một cách phân bổ công việc, có lợi khi phần việc độc lập, có thể chạy song song và có đầu ra dễ hợp nhất.
+
+Một nguyên tắc thực dụng là để một agent ghi vào một vùng code tại một thời điểm, còn agent khác làm việc đọc: tìm hiểu codebase, đề xuất phương án, rà yêu cầu, tìm lỗi hoặc review diff. Điều này giảm xung đột khi nhiều agent cùng sửa một file hoặc cùng quyết định những chi tiết ngầm như style và cấu trúc.
+
+Nghiên cứu có kiểm soát của nhóm Google Research, Google DeepMind và MIT cho thấy phối hợp có thể cải thiện kết quả trên tác vụ chia nhỏ được, nhưng các biến thể multi-agent kém hơn trên tác vụ lập kế hoạch tuần tự. Đây không phải bằng chứng rằng một agent luôn tốt hơn; nó cho thấy lợi ích phụ thuộc cấu trúc công việc. Một nghiên cứu khác về agent coding trên PR công khai ghi nhận xung đột giữa các thay đổi song song, nhưng dữ liệu được thu thập trong giai đoạn 2024–2025 nên không thể coi là tỷ lệ hiện tại cho mọi công cụ.
+
+Vụ ba PR cùng chèn đầu file CHANGELOG trong repo này là một ví dụ nhỏ về xung đột tích hợp. Nó không phải thử nghiệm multi-agent và không chứng minh cả ba PR do agent tạo ra. Nó chỉ cho thấy nhiều thay đổi độc lập vẫn có thể va vào cùng một điểm khi tích hợp.
+
+Thêm agent thường hợp với:
+- Tìm kiếm và nghiên cứu theo chiều rộng.
+- Các giả thuyết debug độc lập.
+- Review trong context sạch, chỉ đọc.
+- Ticket độc lập, tách bằng worktree và có ranh giới file rõ.
+
+Thêm agent thường không hợp với:
+- Chuỗi công việc tuần tự có phụ thuộc chặt.
+- Nhiều agent cùng sửa một file hoặc cùng một vùng dữ liệu.
+- Refactor xuyên suốt cần một quyết định kiến trúc thống nhất.
+- Công việc mà kết quả của agent này liên tục làm thay đổi giả định của agent kia.
+
+Worktree tách thư mục làm việc, không tự giải quyết xung đột ngữ nghĩa, migration, database dùng chung hay merge. Bạn vẫn cần một người hoặc một agent tích hợp duy nhất, có trách nhiệm chạy lại phép kiểm sau mỗi lần merge.
+
+## Reviewer độc lập hữu ích, nhưng không phải oracle
+
+Agent tự review code của chính nó có thể bỏ qua lỗi mà nó vừa tạo ra. Một reviewer ở context sạch có cơ hội nhìn diff mà không bị neo vào lập luận trước đó. Reviewer khác model hoặc khác nhà cung cấp có thể bổ sung góc nhìn, nhất là với thay đổi rủi ro cao.
+
+Tuy nhiên, không nên biến điều này thành nghi thức gọi thêm agent cho mọi pull request. Bằng chứng về lợi ích của reviewer khác model còn phụ thuộc nghiên cứu, loại lỗi và năng lực reviewer. Một reviewer yếu hoặc không có tiêu chí rõ ràng chỉ tạo thêm output để người khác đọc.
+
+Hãy giao reviewer một nhiệm vụ hẹp: tìm lỗi có thể chỉ ra bằng file, dòng, điều kiện tái hiện và hậu quả. Reviewer chỉ đọc; agent sửa là người khác. Cuối cùng, test và người duyệt quyết định việc có chấp nhận thay đổi hay không.
+
+## Đo chi phí trên kết quả được chấp nhận
+
+Chi phí multi-agent không chỉ là giá token. Mỗi agent có thể cần system prompt, context, schema công cụ và kết quả trung gian. Một workflow nhanh hơn nhưng tạo nhiều lỗi, review lâu hơn hoặc cần người hợp nhất phức tạp chưa chắc rẻ hơn.
+
+Tôi sẽ theo dõi ít nhất năm chỉ số:
+
+- Tỷ lệ task được chấp nhận ngay lần đầu.
+- Số lỗi nghiêm trọng lọt qua review hoặc test.
+- Thời gian từ lúc giao đến lúc kết quả được chấp nhận.
+- Tổng chi phí model, công cụ và hạ tầng.
+- Thời gian con người dành cho điều phối, sửa và duyệt.
+
+Chỉ số quan trọng nhất là **cost per accepted outcome**: tổng chi phí để có một kết quả được chấp nhận, không phải giá của một lượt gọi model. Nếu thêm agent làm tăng token nhưng giảm đáng kể thời gian chờ và lỗi, nó có thể đáng tiền. Nếu chỉ tạo thêm báo cáo và merge conflict, hãy bỏ.
 
 ## Năm mặc định để bắt đầu
 
-Các mặc định dưới đây giả định bạn dùng Claude Code theo gói thuê bao, làm trên vài repo cỡ nhỏ đến vừa, có test ở mức cơ bản và dành vài giờ mỗi tuần để trông. Lĩnh vực này đổi hàng tháng, nên mọi mốc ở đây là của tháng 11/2026.
+1. Một agent thực thi; agent khác chủ yếu đọc, tìm kiếm hoặc review.
+2. Chỉ dẫn thường xuyên nằm trong file dự án; quy trình chuyên biệt nạp khi cần; dữ liệu nghiệp vụ lấy từ nguồn có thẩm quyền.
+3. Quyền tối thiểu, sandbox phù hợp và không cho agent tự merge hoặc chạm production nếu chưa được cấp quyền rõ ràng.
+4. “Xong” có phép kiểm cụ thể; CI và branch protection giữ cổng độc lập với lời tự báo cáo.
+5. Chỉ bật multi-agent khi công việc độc lập, lợi ích đo được và có cách tích hợp kết quả.
 
-1. **“Xong” là một lệnh.** Mặc định là một lệnh test hoặc typecheck do Stop hook chạy. Không có kiểm chứng thì multi-agent chỉ nhân lỗi lên.
-2. **Một người viết.** Nghiên cứu của Google và MIT, bài của Cognition và tài liệu Claude Code cùng chỉ về một hướng.
-3. **Review ở context sạch, chỉ đọc,** cho mọi thay đổi không tầm thường. Thêm reviewer khác hãng cho auth, thanh toán, migration và xóa dữ liệu, nhưng nhớ rằng bằng chứng cho việc này mới là một bản thảo.
-4. **Song song là tùy chọn, mặc định tắt.** Bật worktree khi có từ hai ticket độc lập trở lên, chia theo thư mục, merge lần lượt, chạy lại test sau mỗi lần merge, và để một phiên duy nhất xử lý xung đột.
-5. **Ngân sách theo hạn mức.** Theo dõi `/usage`, đặt `--max-budget-usd` cho chạy nền, và chỉ dùng agent teams hay mẫu điều phối viên và công nhân sau khi đo được nhu cầu.
+## Điều gì sẽ khiến tôi đổi ý?
 
-## Điều chưa ai đo, và điều sẽ làm tôi đổi ý
+Tôi sẽ thay đổi các mặc định này nếu có bằng chứng trên repo và workflow tương tự cho thấy multi-agent cải thiện đồng thời chất lượng, thời gian và tổng chi phí; nếu cơ chế chia sẻ state giảm được xung đột ngữ nghĩa; hoặc nếu các công cụ kiểm chứng và quyền hạn mới thay đổi đáng kể chi phí điều phối.
 
-Chưa thấy thử nghiệm ngẫu nhiên nào so sánh multi-agent với agent đơn cho người làm một mình, trên repo thật, về thời gian, chất lượng và chi phí. Bằng chứng về năng suất của con người nói chung cũng yếu. [METR](https://metr.org/blog/2026-02-24-uplift-update/) (24/2/2026) công bố nghiên cứu tiếp nối và tự gọi kết quả là “không đáng tin”, vì 30–50% người tham gia né những tác vụ họ không muốn làm khi thiếu AI.
+Hiện tại, tôi không xem “nhiều agent” là mục tiêu. Mục tiêu là một hệ thống có thể giao việc, kiểm tra được kết quả và giới hạn được hậu quả khi agent sai. Một người viết, nhiều người đọc là mặc định hữu ích để bắt đầu, không phải quy luật cho mọi bài toán.
 
-Bằng chứng cho reviewer khác hãng chỉ là một bản thảo của một tác giả, dùng lỗi cài sẵn. Dữ liệu xung đột merge lấy từ PR năm 2024–2025. Các số đo của Anthropic và Cognition đều là dữ liệu nội bộ.
+## Ghi chú về bằng chứng
 
-Tôi sẽ đổi khuyến nghị nếu:
+Bài này kết hợp tài liệu sản phẩm, nghiên cứu học thuật, báo cáo từ nhà cung cấp và ví dụ từ repo. Các số liệu từ nghiên cứu chỉ có ý nghĩa trong điều kiện, benchmark và phiên bản mà nguồn công bố. Một số nguồn trong sổ nghiên cứu trước đây chưa được mở lại độc lập; các số liệu chưa xác minh không được dùng làm cơ sở cho kết luận định lượng trong bản này. Trước khi xuất bản, cần đối chiếu lại từng nguồn gốc và cập nhật ngày xác minh.
 
-- agent teams rời trạng thái thử nghiệm, kèm bài đo công khai;
-- có giao thức để các agent ghi song song chia sẻ quyết định ngầm của nhau, và nó giảm được xung đột về nghĩa;
-- giá đọc bộ đệm hoặc hạn mức thuê bao đổi mạnh;
-- có bằng chứng auto mode hoặc bộ phân loại chặn được prompt injection có chủ đích.
+## Nguồn tham khảo
 
-Bằng chứng còn thiếu ở hai chỗ nữa: chi phí duy trì dài hạn của hệ điều phối tự dựng, và tỷ lệ lỗi về nghĩa sau một lần merge sạch.
-
-## Thêm agent là đổi chỗ trông, không phải bớt trông
-
-Thêm agent không làm bạn bớt phải trông. Nó đổi chỗ bạn phải trông, từ từng lệnh sang merge, review và hạn mức. Một người viết, nhiều người đọc giữ chỗ đó ở một nơi. Đây là quan điểm của tôi: không nghiên cứu nào ở trên đo trực tiếp chuyện này.
+- [Claude Code best practices](https://code.claude.com/docs/en/best-practices)
+- [Claude Code memory](https://code.claude.com/docs/en/memory)
+- [Claude Code model configuration](https://code.claude.com/docs/en/model-config)
+- [Google Research / Google DeepMind / MIT multi-agent study](https://arxiv.org/abs/2512.08296)
+- [Anthropic: Multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
+- [Cognition: Multi-agents working](https://cognition.com/blog/multi-agents-working)
+- [Agent PR conflict study](https://arxiv.org/abs/2607.04697)
+- [MAST: Multi-Agent Systems Failure Taxonomy](https://arxiv.org/abs/2503.13657)
