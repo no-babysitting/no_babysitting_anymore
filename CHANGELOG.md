@@ -2,6 +2,10 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Bài viết: chỉnh giọng văn bản nháp 03, 07, 08 theo `VIETNAMESE-NATURAL-VOICE.md` (15/11/2026, Refs #79)
+
+**Site không đổi; bản nháp bài viết vẫn `draft`, tác giả chưa đọc và chưa đặt `approved`.** Tách các câu từ 40 từ trở lên ở bài 03 (2 câu) và bài 07 (6 câu) thành câu ngắn hơn; bỏ "context sạch" (2 chỗ ở bài 07, thay bằng "context mới"); bỏ một chỗ "Hãy" thừa ở bài 08; đổi "được thực thi bởi" thành "do … thực thi". Không đổi luận điểm, nhãn sổ nguồn hay nguồn. Thêm hàng bài 08 vào bảng trạng thái `editorial/README.md`.
+
 ## D86: bài 07 mở rộng thành bài vận hành AI agent, thêm bài 08 tổng quan (15/11/2026, Refs #79)
 
 **Site không đổi, không có chữ mới (chỉ ghi quyết định).** Chủ dự án chọn "Theo #77: mở rộng 07, thêm 08". `docs/08` ghi D86: thay phần phạm vi của D81 và D84 cho bài 07; bài 08 là bài tổng quan; vị trí và thứ tự đăng của bài 08 chưa quyết. Các bản trong #77 vẫn là tham chiếu `draft`.
