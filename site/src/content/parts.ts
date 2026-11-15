@@ -82,8 +82,8 @@ export const PARTS: Part[] = [
       question: 'Claude chỉ cần ít lời dặn đến thế, vậy sao bạn vẫn còn phải ngồi trông?', src: ['S1'],
     },
     core: [
-      { t: 'h', text: 'Khi những lời dặn chỏi nhau' },
-      { t: 'p', src: ['S1'], html: `Khi đọc lại các phiên làm việc trong nội bộ, nhóm làm Claude Code nhận ra có những yêu cầu mang theo các lời dặn trái ngược nhau. Chỉ dẫn hệ thống thì bảo “để lại tài liệu khi cần”. Một ${T('skill', 'bộ hướng dẫn đóng gói sẵn')} lại bảo “KHÔNG thêm chú thích”. Còn người dùng thì nói “cứ làm cho chạy như bản cũ”. Claude vẫn đoán ra được ý, nhưng phải nghĩ kỹ hơn hẳn mới gỡ nổi mấy chỗ chỏi nhau ấy.` },
+      { t: 'h', text: 'Khi những lời dặn mâu thuẫn nhau' },
+      { t: 'p', src: ['S1'], html: `Khi đọc lại các phiên làm việc trong nội bộ, nhóm làm Claude Code nhận ra có những yêu cầu mang theo các lời dặn trái ngược nhau. Chỉ dẫn hệ thống thì bảo “để lại tài liệu khi cần”. Một ${T('skill', 'bộ hướng dẫn đóng gói sẵn')} lại bảo “KHÔNG thêm chú thích”. Còn người dùng thì nói “cứ làm cho chạy như bản cũ”. Claude vẫn đoán ra được ý, nhưng phải nghĩ kỹ hơn hẳn mới gỡ nổi mấy chỗ mâu thuẫn ấy.` },
       { t: 'h', text: 'Vì sao bây giờ bỏ bớt được' },
       { t: 'p', src: ['S1'], html: `Những lời dặn ấy đã từng rất cần, để tránh các tình huống tệ nhất như lỡ tay xoá nhầm file. Nhưng các ${T('model', 'mô hình AI')} mới đã ${G('phán đoán')} tốt hơn nhiều. Vì thế nhóm Claude Code mới mạnh dạn xoá bớt, và để Claude tự dựa vào ${T('context', 'ngữ cảnh, tức mọi thứ Claude đang nhìn thấy')} xung quanh mà quyết.` },
       { t: 'thenNow', main: true, src: ['S1', 'S3'],
@@ -126,7 +126,7 @@ export const PARTS: Part[] = [
     ],
     close: {
       line: `Thôi cầm tay chỉ việc không có nghĩa là buông tay hẳn. Bạn vẫn ${G('đặt tay đúng hai chỗ')}: lúc làm rõ công việc, và lúc duyệt kết quả.`,
-      prompt: all((id) => `Đây là ${PASTE[id][0]}: [${PASTE[id][1]}]. Tôi muốn rút gọn nó lại. Hãy chỉ ra giúp tôi ba nhóm: dòng nào bạn vẫn tự làm đúng mà không cần tôi dặn, những dòng nào đang chỏi nhau, và còn điều gì chỉ có tôi biết mà tôi chưa nói ra. Chỗ nào bạn chưa chắc thì hỏi lại tôi, đừng đoán.`),
+      prompt: all((id) => `Đây là ${PASTE[id][0]}: [${PASTE[id][1]}]. Tôi muốn rút gọn nó lại. Hãy chỉ ra giúp tôi ba nhóm: dòng nào bạn vẫn tự làm đúng mà không cần tôi dặn, những dòng nào đang mâu thuẫn nhau, và còn điều gì chỉ có tôi biết mà tôi chưa nói ra. Chỗ nào bạn chưa chắc thì hỏi lại tôi, đừng đoán.`),
     },
     sources: ['S1', 'S3', 'S18', 'S19'],
   },
@@ -324,7 +324,7 @@ export const PARTS: Part[] = [
         media: [['Chuyện xảy ra', 'Phụ đề nên theo đúng từng lời nói, hay theo bản đã biên tập lại? Claude hỏi bạn.']],
         design: [['Chuyện xảy ra', 'Màn hình thanh toán còn thiếu trạng thái báo lỗi, nên Claude hỏi bạn muốn xử lý thế nào.']],
         sales: [['Chuyện xảy ra', 'Có một khách hỏi xin giảm giá ngoài chính sách. Claude hỏi lại bạn, chứ không tự ý hứa.']],
-        spec: [['Chuyện xảy ra', 'Hai yêu cầu trong SPEC chỏi nhau, nên Claude dừng lại hỏi bạn chọn bên nào.']],
+        spec: [['Chuyện xảy ra', 'Hai yêu cầu trong SPEC mâu thuẫn nhau, nên Claude dừng lại hỏi bạn chọn bên nào.']],
       } },
     ],
     close: {
