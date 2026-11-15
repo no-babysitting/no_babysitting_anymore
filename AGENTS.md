@@ -51,7 +51,7 @@ Chữ mới là mọi chữ người đọc thấy mà chưa nằm trên site: c
 |---|---|
 | Quyết định đã chốt (D1–D86) | `docs/08` |
 | Nội dung và nguồn | `docs/14`, `docs/17` §3 (nguồn chính thức), `docs/06` |
-| Văn phong, chữ trên giao diện | `docs/16` |
+| Văn phong, chữ trên giao diện | `docs/16`; `editorial/VIETNAMESE-NATURAL-VOICE.md` (tiếng Việt tự nhiên: mốc tham khảo, không phải luật) |
 | Chữ, chuyển động, design system | `docs/09`, `docs/11`, `docs/13`, `docs/15`, `design-system/SOURCE-OF-TRUTH.md` |
 | Kế hoạch UI/UX và khoá art | `docs/19` |
 | Phương pháp học | `docs/21`, `docs/23` |

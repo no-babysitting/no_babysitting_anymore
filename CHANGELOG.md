@@ -10,6 +10,10 @@ Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế ho�
 
 Ảnh chia sẻ `site/public/og.png` có sẵn câu "…cho em nó." trong ảnh nên được dựng lại (`tools/make-brand-assets.js`) để khớp meta description. Chưa làm: chữ của bài 01, 02, 03, 07, 08 (lát sau) và các trạng thái tương tác ngoài những trạng thái đã đo; chi tiết ở mục 6 và 7 của báo cáo.
 
+## Trỏ tới hướng dẫn tiếng Việt tự nhiên từ `AGENTS.md` và `editorial/CLAUDE.md` (15/11/2026, Refs #79)
+
+**Site không đổi, không có chữ mới (chỉ tài liệu quy trình).** Thêm một dòng trỏ tới `editorial/VIETNAMESE-NATURAL-VOICE.md` ở `AGENTS.md` §5 (hàng "Văn phong") và ở `editorial/CLAUDE.md`, để phiên mới mở repo thấy file này. Không chép lại nội dung; vẫn là mốc tham khảo (D85).
+
 ## D86: bài 07 mở rộng thành bài vận hành AI agent, thêm bài 08 tổng quan (15/11/2026, Refs #79)
 
 **Site không đổi, không có chữ mới (chỉ ghi quyết định).** Chủ dự án chọn "Theo #77: mở rộng 07, thêm 08". `docs/08` ghi D86: thay phần phạm vi của D81 và D84 cho bài 07; bài 08 là bài tổng quan; vị trí và thứ tự đăng của bài 08 chưa quyết. Các bản trong #77 vẫn là tham chiếu `draft`.
