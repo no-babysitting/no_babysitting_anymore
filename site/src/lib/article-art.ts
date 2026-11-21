@@ -24,8 +24,22 @@ export interface ArtPiece {
   flow?: boolean;
 }
 
+/* Colour stops below are the brand sunset of docs/15 §5 (sky #0e1034 > #3a2668 > #b24868 > #f6a058, glow #ffbe78, lake #2e1e4a > #0a0914);
+   each piece moves the sun, the hour or the number of ridges and stays within the hues of that sunset (night is the same sky, darker). */
+const NIGHT = [[0, [5, 6, 26]], [0.5, [14, 16, 52]], [0.82, [58, 38, 104]], [1, [178, 72, 104]]];
+const NOON = [[0, [58, 38, 104]], [0.4, [178, 72, 104]], [0.75, [246, 160, 88]], [1, [255, 206, 138]]];
+
 export const PIECES: Record<string, ArtPiece> = {
+  /* the brand dawn: sun right of centre */
   default: { source: 'dawn', options: {}, mode: 'color', breathe: 0.02 },
+  /* low sun on the left, a wide lake: "less, in the right place" (system prompt) */
+  dusk: { source: 'dawn', options: { sunX: 0.22, horizon: 0.56, seed: 9 }, mode: 'color', breathe: 0.02 },
+  /* night, a small warm sun low in the middle: what is kept when the session ends (memory) */
+  night: { source: 'dawn', options: { sky: NIGHT, sun: [255, 206, 138], sunX: 0.5, horizon: 0.7, seed: 13 }, mode: 'color', breathe: 0.02 },
+  /* high bright sky, sun left of centre: more light for more effort (model and effort) */
+  noon: { source: 'dawn', options: { sky: NOON, sun: [255, 206, 138], sunX: 0.36, horizon: 0.66, seed: 21, ridges: [[120, 70, 110], [74, 46, 104], [50, 32, 84]] }, mode: 'color', breathe: 0.02 },
+  /* five ridges, one behind the other: many readers of one thing (one writer, many readers) */
+  ridges: { source: 'dawn', options: { sunX: 0.84, horizon: 0.6, seed: 17, ridges: [[96, 60, 112], [74, 46, 104], [58, 36, 92], [44, 28, 74], [30, 22, 60]] }, mode: 'color', breathe: 0.02 },
 };
 
 export const ART_IDS: readonly string[] = Object.keys(PIECES);

@@ -2,6 +2,14 @@
 
 Mỗi đợt kaizen ghi một mục: đã đổi gì, đo được gì. Kế hoạch: `docs/08-kaizen-go-live.md`.
 
+## Mục Bài viết: một loạt bài, tranh riêng cho từng bài, thứ tự chỉ mục (21/11/2026, D87 đến D89, Refs #44)
+
+**Có chữ mới (một nhãn: tên loạt bài), chờ chủ dự án duyệt; chưa merge.** Chụp năm bài và chỉ mục ở 1440×900 và 390×844 trước khi sửa. Giao diện bài không lỗi (0 cuộn ngang, bảng thành thẻ trên điện thoại, mục lục ổn). Ba lỗi ở cấp nội dung đã sửa: (1) chỉ mục xếp lộn xộn (memory, 07, model-effort, 08, system-prompt) vì năm bài cùng ngày và không có `series`; (2) cả năm bài dùng chung một tranh; (3) nút "bài cũ, bài mới" cuối bài nối theo tên file. Đã làm: `series: "Giao việc cho AI agent"` và `order` 1 đến 5 (08, 01, 02, 03, 07); năm tranh `dawn` khác nhau (`default`, `dusk`, `night`, `noon`, `ridges`); `loadArticles` xếp bài lẻ cùng ngày theo `order` rồi tên file. Không đổi claim, số, nguồn, route, `site/scripts/`, `art-lock.json`.
+
+Bộ kiểm trên máy làm việc: build qua; `check.cjs` qua (cảnh báo axe `heading-order` ở `/articles/` đã hết vì giờ có tiêu đề nhóm); `type-check` 0 lỗi, 52 cảnh báo; `design-check` qua; `art-check`: hai mảnh `hero-logo@phone` và `menu-art@phone` lệch giống hệt trên `main` (D55: khoá theo số đo CI), không do PR này. Thêm bản nháp bài 09 ở `editorial/` (chưa lên site).
+
+**Bản ghi duyệt: chưa có.** Quyết định D87 đến D89 do agent đưa ra theo lệnh "yolo" của chủ dự án, không phải câu duyệt chữ (`AGENTS.md` §3).
+
 ## Chữ tiếng Việt trên site, lát 1: bớt "em nó", sửa lối dịch sát, dòng cuối không còn một từ (14/11/2026, #79)
 
 **Có chữ mới (45 dòng nguồn đổi chữ và ảnh `og.png`).** Không đổi claim, con số, nguồn, route hay art; không đụng `site/scripts/`, `art-lock.json`, `type-rules.json` hay workflow. Rà 23 route và toàn bộ nguồn chữ tiếng Việt; sửa 19 nhóm lỗi (bảng F01 đến F19 ở `docs/25-vietnamese-copy-audit.md`, danh sách đầy đủ trước/sau ở Phụ lục A): "em nó" 31 lần thành *Claude*, *nó* hoặc lược chủ thể (kể cả meta description và tên phần 03, vốn lệch với liên kết quay lại); lối dịch sát ("context sạch sẽ", "một cây gồm nhiều file ngắn", "việc số"); câu cụt; chữ nhấn cắt đôi "đầu tiên"; nháy thẳng ở `/c02/`. Thêm một luật CSS `text-wrap: pretty` cho đoạn văn (`Base.astro`). Đo bằng script tạm ngoài repo, 23 route × 1920×1080 và 428×926 × (giảm chuyển động, bật chuyển động) = 92 tổ hợp: 0 tràn ngang, 0 chữ bị cắt; dòng cuối chỉ còn một từ (không kể nhãn nguồn S1…) giảm từ 112 trên `main` xuống 16. Luật `punctuation` của `type-check` hết cảnh báo ở `/c02/`. Thêm theo quyết định của chủ dự án: "chỏi nhau" thành "mâu thuẫn" ở cả 6 chỗ.

@@ -21,7 +21,13 @@ Bài lẻ, ngoài cụm (ra khi sẵn sàng, không đổi thứ tự cụm):
 | # | Bài | Chủ đề | Trạng thái | Ghi chú |
 |---|---|---|---|---|
 | 07 | Một người viết, nhiều người đọc (multi-agent coding) | 7 (mới, ngoài sáu chủ đề đầu) | `published` | Issue #57. Nguồn là báo cáo của tác giả; tác giả quyết không mở lại nguồn, ngoại lệ ghi ở `ledger.md` |
-| 08 | Một AI agent đáng tin cậy cần những gì (tổng quan) | tổng quan cho cụm bài vận hành agent | `published` | D86, Refs #79. Không có sổ nguồn vì không trích nguồn ngoài; trỏ về 01, 02, 03, 07; `order: 8`, vị trí trong danh sách chưa quyết |
+| 08 | Một AI agent đáng tin cậy cần những gì (tổng quan) | tổng quan cho cụm bài vận hành agent | `published` | D86, Refs #79. Không có sổ nguồn vì không trích nguồn ngoài; trỏ về 01, 02, 03, 07; từ 21/11/2026 đứng đầu loạt "Giao việc cho AI agent" (D87) |
+
+Bài hướng dẫn đi kèm `problem2outcome` (21/11/2026, soạn dưới chế độ "yolo"; chưa phải giọng tác giả):
+
+| # | Bài | Chủ đề | Trạng thái | Ghi chú |
+|---|---|---|---|---|
+| 09 | Từ chưa có gì đến việc đầu tiên với problem2outcome | 9 (mới) | `draft` | Theo F-L4-01, F-L5-02, F-L5-04 của đánh giá độc lập PR #4. Có sổ nguồn; ba điều chưa kiểm không vào bài (dòng 11 đến 13). Chưa đăng được trước khi repo `problem2outcome` công khai |
 
 Ý nghĩa của từng trạng thái và ai đặt: [`CLAUDE.md`](CLAUDE.md).
 

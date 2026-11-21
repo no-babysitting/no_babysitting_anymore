@@ -3,8 +3,9 @@ title: "Xây dựng AI Agent đáng tin cậy: một người viết, nhiều ng
 description: "Từ context, memory và model đến quyền thực thi, kiểm chứng và multi-agent: cách thiết kế một hệ agent có thể giao việc mà không phải trông từng bước."
 publishedAt: "2026-11-15"
 verifiedAt: "2026-11-13"
-order: 7
-art: default
+order: 5
+art: ridges
+series: "Giao việc cho AI agent"
 ---
 Một agent viết được code chưa có nghĩa là bạn có thể giao cho nó một công việc rồi yên tâm quay lại sau. Muốn giao việc mà không phải trông từng bước, bạn cần biết nó được cung cấp thông tin gì, được phép làm gì, kiểm tra kết quả bằng cách nào và ai chịu trách nhiệm khi có sai sót.
 

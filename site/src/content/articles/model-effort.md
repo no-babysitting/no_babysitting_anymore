@@ -3,8 +3,9 @@ title: "Model và effort: bắt đầu ở mặc định, nâng lên khi có b�
 description: "Mức effort mặc định khác nhau giữa Claude Code và API, tên mức không cùng giá trị giữa các model, và mọi chỉ dẫn của Anthropic đều dặn tự đo. Từ đó, một cách chọn đơn giản."
 publishedAt: "2026-11-15"
 verifiedAt: "2026-11-14"
-order: 3
-art: default
+order: 4
+art: noon
+series: "Giao việc cho AI agent"
 ---
 Có hai núm khi giao việc cho Claude: model nào, và effort bao nhiêu. Anthropic đã có một bài dạy cách dùng effort: [Using Claude Code: Spending your effort](https://claude.dev/blog/spending-your-effort/) (Thariq Shihipar, 25/9/2026). Bài này không lặp lại nó. Đây là ba điều đáng chú ý khi đối chiếu tài liệu ngày 14/11/2026, và một cách chọn rút ra từ đó. Các mức và mặc định đổi nhanh nên mọi con số ở đây đi kèm ngày.
 

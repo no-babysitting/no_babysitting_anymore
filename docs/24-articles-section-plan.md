@@ -115,7 +115,7 @@ Con trỏ, không phải luật: giọng và chữ ở `16-writing-guide.md` §1
 2. ~~**URL chuẩn của bài six shifts**~~ **Đã chốt 14/11/2026:** `claude.dev/blog/...`; `claude.com/blog/...` trả 308 sang đó (`editorial/articles/01-system-prompt/ledger.md` dòng 4). Site đã dẫn đúng.
 3. **Memory của Chat và Cowork:** memo 5 và `05-surface-matrix.md` nói chưa khớp nhau (`02-memory/ledger.md` dòng 13).
 4. **Ai rà ở bước `review`:** tác giả quyết ở bài đầu tiên.
-5. **Tên cụm** và tên tiếng Việt của nó.
+5. ~~**Tên cụm** và tên tiếng Việt của nó.~~ **Agent chọn 21/11/2026 (D87), chờ chủ dự án xác nhận:** "Giao việc cho AI agent", gồm cả năm bài đã đăng; vị trí bài 08 là đầu loạt.
 6. **Xem lại sau cụm 3 bài (D61):** quy trình có chạy không; nháp có gây tốn token không; bài có nói được điều docs chưa nói không; số liệu GoatCounter và phản hồi. Từ đó quyết định tách repo, mở rộng nhịp, hay dừng.
 
 ## 10. Rủi ro

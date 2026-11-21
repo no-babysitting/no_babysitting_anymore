@@ -48,7 +48,7 @@ function check(kind: string, entries: CollectionEntry<'articles'>[], reserved: b
   if (errors.length) throw new Error(`Articles: ${errors.length} problem(s)\n - ${errors.join('\n - ')}`);
 }
 
-/* Published articles: by series, then `order` inside a series; standalone pieces after the series, newest first. Throws on any problem above. */
+/* Published articles: by series, then `order` inside a series; standalone pieces after the series, newest first (ties: `order`, then slug). Throws on any problem above. */
 let cached: Promise<Article[]> | undefined;
 /* cached in a build (every page's header asks whether anything is published); in dev the content can change under it */
 export function loadArticles(): Promise<Article[]> { return import.meta.env.PROD ? (cached ??= load()) : load(); }
@@ -61,7 +61,8 @@ async function load(): Promise<Article[]> {
     if (a.data.series && b.data.series) return a.data.series.localeCompare(b.data.series) || a.data.order - b.data.order;
     if (a.data.series) return -1;
     if (b.data.series) return 1;
-    return date(b).localeCompare(date(a));
+    /* same day (a batch published together): by `order`, then by file name, so the list does not depend on the file system */
+    return date(b).localeCompare(date(a)) || a.data.order - b.data.order || a.id.localeCompare(b.id);
   });
 }
 
