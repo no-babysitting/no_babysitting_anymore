@@ -3,8 +3,9 @@ title: "AI Agent đáng tin cậy: từ model đến hệ thống"
 description: "Một framework tổng quan để thiết kế AI Agent: context, memory, reasoning, execution, verification và trách nhiệm của con người."
 publishedAt: "2026-11-15"
 verifiedAt: "2026-11-15"
-order: 8
+order: 1
 art: default
+series: "Giao việc cho AI agent"
 ---
 Một model có thể viết code, gọi công cụ, tìm kiếm tài liệu và hoàn thành nhiều bước liên tiếp. Nhưng khả năng làm được nhiều việc không đồng nghĩa với khả năng được giao việc mà không cần giám sát.
 

@@ -3,8 +3,9 @@ title: "Memory: “nhớ tôi” khác “biết cách làm việc trong repo n�
 description: "Chữ memory gom nhiều cơ chế khác nhau. Bài này phân biệt điều harness tự ghi nhớ, chỉ dẫn của dự án và những gì bạn vẫn phải kiểm soát."
 publishedAt: "2026-11-15"
 verifiedAt: "2026-11-14"
-order: 2
-art: default
+order: 3
+art: night
+series: "Giao việc cho AI agent"
 ---
 Khi hỏi Claude có memory không, bạn có thể đang hỏi hai chuyện khác nhau. Claude có nhớ cách bạn thích làm việc, những lần bạn sửa nó và bối cảnh cá nhân không? Hay Claude có biết quy ước, lệnh build và cách nhóm làm việc trong repo này?
 

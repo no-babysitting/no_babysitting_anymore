@@ -3,8 +3,9 @@ title: "80% system prompt: con số của Anthropic, không phải của bạn"
 description: "Anthropic nói họ bỏ hơn 80% system prompt của Claude Code. Con số đó đo cái gì, điều gì được chuyển đi, và vì sao kiểm soát không đồng nghĩa với viết thêm lời dặn."
 publishedAt: "2026-11-15"
 verifiedAt: "2026-11-14"
-order: 1
-art: default
+order: 2
+art: dusk
+series: "Giao việc cho AI agent"
 ---
 Ngày 24/7/2026, Thariq Shihipar đăng bài *The new rules of context engineering for Claude 5 generation models* trên blog Claude. Một con số trong bài dễ bị biến thành lời khuyên: Anthropic đã bỏ hơn 80% system prompt của Claude Code mà không đo được suy giảm trên các bài đánh giá code.
 
