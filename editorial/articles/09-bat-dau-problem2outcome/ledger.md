@@ -17,3 +17,4 @@ Nhãn và dòng nào được vào bài: `editorial/CLAUDE.md`. Cột "Mở ngà
 | 11 | Cách mở thư mục trong app Claude trên máy tính; chữ trên nút | UNVERIFIED | | | | **Không vào bài**; bài chỉ nói "mở thư mục bằng app hoặc terminal" |
 | 12 | Gói ChatGPT nào dùng được Codex; lệnh cài Codex ở Windows | UNVERIFIED | | | | **Không vào bài** |
 | 13 | `problem2outcome` chạy tốt trên Codex | UNVERIFIED | đánh giá độc lập F-L5-04: chưa ai chạy | 2026-11-21 | | Bài nói thẳng là chưa thử |
+| 14 | Trong các lần chạy thử, kể cả khi người dùng ép, agent chưa lần nào nhận kết quả thay người dùng | MEASURED | `findings.md` của đánh giá độc lập PR #4, mục 1 (persona 04 Sonnet và Haiku, 03a) | 2026-11-21 | Claude Code, Sonnet 5.5 và Haiku 5.5, `AGENTS.md` ở commit e649d63 | Mẫu nhỏ (vài persona); đánh giá chưa công khai, nên bài chỉ nói "trong các lần chạy thử", không nói "luôn". Cần công bố hoặc ghi lại log trước khi đăng |

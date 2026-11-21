@@ -34,10 +34,24 @@ Docs của hai hãng nói cách cài từng công cụ, không nói cho người
 
 Xem `ledger.md`. Còn thiếu: lệnh cài Codex cho Windows, npm và Homebrew; gói ChatGPT nào dùng được Codex; cách xem hay tắt lịch sử phiên của Claude Code và Codex ở bản đang dùng; cách mở thư mục trong app Claude trên máy tính.
 
+## Trước khi đăng (agent đã chạy thử như một bài thật ngày 21/11/2026)
+
+Thử bằng cách đặt tạm bài vào `site/src/content/articles/` (không commit): build qua; `check.cjs` qua; `type-check` 0 lỗi (chỉ nhóm cảnh báo `measure` như các bài khác); chụp 1440 và 390: bắt được một lỗi là chú thích dùng địa chỉ trần gây cuộn ngang trên điện thoại (`check.cjs` không báo), đã sửa bằng liên kết có tên. Frontmatter gợi ý: `series: "Giao việc cho AI agent"`, `order: 6`, `art: dusk` hoặc một tranh mới, `related: ["00"]`.
+
+Còn chặn đăng:
+1. Repo `problem2outcome` phải công khai (bài dẫn người đọc tải thư mục về).
+2. Dòng 14 của sổ nguồn: đánh giá độc lập chưa công bố; hoặc công bố, hoặc bỏ câu "trong các lần chạy thử... chưa lần nào nhận kết quả thay họ".
+3. Mở lại ba trang docs gốc và so lại lệnh (đã đọc qua công cụ tải trang).
+4. Tác giả đọc, sửa giọng và đặt `approved`.
+
+## Đoạn ngắn cho README của `problem2outcome` (để luồng README dán vào khi bài đã đăng)
+
+> **Chưa có Claude Code hay Codex?** Đọc [Từ chưa có gì đến việc đầu tiên](LINK-KHI-BÀI-ĐĂNG): cài, mở đúng thư mục, và điều phương pháp này lưu hay không lưu. Mới thử trên Claude Code; Codex chưa được kiểm.
+
 ## Câu hỏi mở cho tác giả
 
-1. Để ở Bài viết hay README của `problem2outcome`? (Đề xuất của agent: Bài viết, README chỉ dẫn link.)
-2. Link tới repo `problem2outcome`: repo còn riêng tư, bài chưa thể đăng trước khi repo công khai.
+1. ~~Để ở Bài viết hay README?~~ Đã chốt 21/11/2026 (điều phối, yolo): Bài viết; README chỉ có đoạn trỏ sang.
+2. Link tới repo `problem2outcome`: repo còn riêng tư, bài giữ `draft` cho tới khi repo công khai.
 3. Có cho người đọc lệnh `curl ... | bash` không, hay chỉ dẫn tới trang cài của hãng? (Đề xuất: chép đúng lệnh của hãng kèm dòng nhắc nên đọc trang gốc.)
 
 ## Nguồn để bắt đầu (chưa thẩm định)

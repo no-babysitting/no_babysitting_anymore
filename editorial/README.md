@@ -27,7 +27,7 @@ Bài hướng dẫn đi kèm `problem2outcome` (21/11/2026, soạn dưới chế
 
 | # | Bài | Chủ đề | Trạng thái | Ghi chú |
 |---|---|---|---|---|
-| 09 | Từ chưa có gì đến việc đầu tiên với problem2outcome | 9 (mới) | `draft` | Theo F-L4-01, F-L5-02, F-L5-04 của đánh giá độc lập PR #4. Có sổ nguồn; ba điều chưa kiểm không vào bài (dòng 11 đến 13). Chưa đăng được trước khi repo `problem2outcome` công khai |
+| 09 | Từ chưa có gì đến việc đầu tiên với problem2outcome | 9 (mới) | `draft` | Theo F-L4-01, F-L5-02, F-L5-04 của đánh giá độc lập PR #4. Có sổ nguồn; ba điều chưa kiểm không vào bài (dòng 11 đến 13). Giữ `draft` cho tới khi repo `problem2outcome` công khai (điều phối, 21/11/2026) |
 
 Ý nghĩa của từng trạng thái và ai đặt: [`CLAUDE.md`](CLAUDE.md).
 
